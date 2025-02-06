@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>libtrossen_arm</name>
+  <version>1.2.0</version>
+  <description>Library used to control Trossen Arms</description>
+
+  <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
+  <maintainer email="trsupport@trossenrobotics.com">Shiming Liang</maintainer>
+
+  <license>BSD-3-Clause</license>
+
+  <url type="website">https://www.trossenrobotics.com/</url>
+
+  <export/>
+</package>

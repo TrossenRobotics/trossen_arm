@@ -44,95 +44,119 @@
 namespace trossen_arm
 {
 
-// Modes
+/// @brief Operation modes of a joint
 enum class Mode : uint8_t {
+  /// @brief Idle mode: arm joints are braked, the gripper joint closing with a safe force
   idle,
+  /// @brief Position mode: control the joint to a desired position
   position,
+  /// @brief Velocity mode: control the joint to a desired velocity
   velocity,
-  torque,
+  /// @brief Effort mode: control the joint to a desired effort
+  effort,
 };
 
-// IP methods
+/// @brief IP methods
 enum class IPMethod : uint8_t {
+  /// @brief Manual: use the manual IP address specified in the configuration
   manual,
+  /// @brief DHCP: use the DHCP to obtain the IP address, if failed, use the default IP address
   dhcp,
 };
 
-// Models
+/// @brief Robot models
 enum class Model : uint8_t {
+  /// @brief WXAI V0
   wxai_v0,
 };
 
-// Joint input
+/// @brief Joint input
+/// @details The joint input is used to command a motion to a joint. Three types of motion are
+///   supported and are corresponding to the three non-idle modes: position, velocity, and effort.
+///   The position, velocity, and effort fields are mandatory for the respective modes. Leaving
+///   the feedforward terms as zero is fine but filling them with the values corresponding to the
+///   trajectory is recommended for smoother motion.
 struct JointInput
 {
-  // Command of what mode does the union represent
-  // One of Mode::idle, Mode::position, Mode::velocity, Mode::torque
-  Mode mode;
+  /// @brief The mode of the joint input
+  /// @note If this mode is different from the configured mode, the robot will enter error state
+  Mode mode{Mode::idle};
   union {
-    // Command for position mode
+    /// @brief Input corresponding to position mode
     struct
     {
-      // Desired position in radians
-      float desired_position;
-      // Feedforward velocity in radians per second
+      /// @brief Position in rad for arm joints or m for the gripper joint
+      float position;
+      /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
       float feedforward_velocity;
-      // Feedforward acceleration in radians per second squared
+      /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
       float feedforward_acceleration;
-    } position;
-    // Command for velocity mode
+    } position{0.0f, 0.0f, 0.0f};
+    /// @brief Input corresponding to velocity mode
     struct
     {
-      // Desired velocity in radians per second
-      float desired_velocity;
-      // Feedforward acceleration in radians per second squared
+      /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
+      float velocity;
+      /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
       float feedforward_acceleration;
     } velocity;
-    // Command for torque mode
+    /// @brief Input corresponding to effort mode
     struct
     {
-      // Desired torque in Newton meters
-      float desired_torque;
-    } torque;
+      /// @brief Effort in Nm for arm joints or N for the gripper joint
+      float effort;
+    } effort;
   };
 };
 
-// Joint output
+/// @brief Joint output
 struct JointOutput
 {
-  // joint position in radians
+  /// @brief Joint position in rad for arm joints or m for the gripper joint
   float position;
-  // joint velocity in radians per second
+  /// @brief Joint velocity in rad/s for arm joints or m/s for the gripper joint
   float velocity;
-  // joint torque in Newton meters
-  float torque;
-  // external torque in Newton meters
-  float external_torque;
+  /// @brief Joint effort in Nm for arm joints or N for the gripper joint
+  float effort;
+  /// @brief External effort in Nm for arm joints or N for the gripper joint
+  float external_effort;
 };
 
-// End effector properties
+/// @brief Link properties
 struct LinkProperties
 {
-  // mass in kg
+  /// @brief mass in kg
   float mass;
-  // inertia in kg m^2
+  /// @brief inertia in kg m^2
   std::array<float, 9> inertia;
-  // inertia frame translation measured in link frame in meters
+  /// @brief inertia frame translation measured in link frame in m
   std::array<float, 3> origin_xyz;
-  // inertia frame RPY angles measured in link frame in radians
+  /// @brief inertia frame RPY angles measured in link frame in rad
   std::array<float, 3> origin_rpy;
 };
+
+/// @brief End effector properties
 struct EndEffectorProperties
 {
+  /// @brief Properties of the palm link
   LinkProperties palm;
+
+  /// @brief Properties of the left finger link
   LinkProperties finger_left;
+
+  /// @brief Properties of the right finger link
   LinkProperties finger_right;
+
+  /// @brief Offset from the palm center to the left carriage center in m in home configuration
   float offset_finger_left;
+
+  /// @brief Offset from the palm center to the right carriage center in m in home configuration
   float offset_finger_right;
 };
 
-// Standard end effector variants
+/// @brief End effector properties for the standard variants
 struct StandardEndEffector {
+  /// @brief WXAI V0 base variant
   static constexpr EndEffectorProperties wxai_v0_base{
     .palm = {
       .mass = 0.51498747f,
@@ -167,6 +191,8 @@ struct StandardEndEffector {
     .offset_finger_left = 0.02165f,
     .offset_finger_right = -0.02165f
   };
+
+  /// @brief WXAI V0 leader variant
   static constexpr EndEffectorProperties wxai_v0_leader{
     .palm = {
       .mass = 0.58782068f,
@@ -201,6 +227,8 @@ struct StandardEndEffector {
     .offset_finger_left = 0.01485f,
     .offset_finger_right = -0.01485f
   };
+
+  /// @brief WXAI V0 follower variant
   static constexpr EndEffectorProperties wxai_v0_follower{
     .palm = {
       .mass = 0.63463466f,
@@ -237,12 +265,11 @@ struct StandardEndEffector {
   };
 };
 
+/// @brief Trossen Arm Driver
 class TrossenArmDriver
 {
 public:
-  /**
-   * @brief Destroy the Trossen Arm Driver object
-   */
+  /// @brief Destroy the Trossen Arm Driver object
   ~TrossenArmDriver();
 
   /**
@@ -269,21 +296,22 @@ public:
    * @brief Move the arm joints to the desired positions
    *
    * @param goal_time Time to reach the goal positions in seconds
-   * @param goal_positions Desired positions in radians
-   * @param goal_velocities Optional: desired velocities in radians per second
-   * @param goal_accelerations Optional: desired accelerations in radians per second squared
+   * @param goal_positions Positions in rad
+   * @param goal_velocities Optional: desired velocities in rad/s
+   * @param goal_accelerations Optional: desired accelerations in rad/s^2
    *
    * @details It does the following:
-   *   1. Check the size of the vectors
-   *   2. Check the goal time
-   *   3. Construct a vector of quintic Hermite interpolators
-   *   4. Construct vectors for the robot input
-   *   5. Get the robot output
-   *   6. Compute the coefficients for the interpolators
-   *   7. Set arm mode to position
+   *   1. Check the compatibility of the modes and the joint inputs
+   *   2. Check the size of the vectors
+   *   3. Check the goal time
+   *   4. Construct a vector of quintic Hermite interpolators
+   *   5. Construct vectors for the robot input
+   *   6. Get the joint outputs
+   *   7. Compute the coefficients for the interpolators
    *   8. Move the arm joints along the trajectory
    *
-   * @note The gripper joint will use the previous joint input
+   * @warning The previous gripper input is used throughout the trajectory
+   * @note The arm joints need to be in position mode
    */
   void move_arm_to(
     float goal_time,
@@ -292,14 +320,15 @@ public:
     const std::optional<std::vector<float>> & goal_accelerations = std::nullopt);
 
   /**
-   * @brief Set the positions of the robot
+   * @brief Set the positions of all joints
    *
-   * @param positions Desired positions in radians
-   * @param feedforward_velocities Optional: feedforward velocities in radians per second
-   * @param feedforward_accelerations Optional: feedforward accelerations in radians per second
-   *   squared
+   * @param positions Positions in rad for arm joints and m for the gripper joint
+   * @param feedforward_velocities Optional: feedforward velocities in rad/s for arm joints and m/s
+   *   for the gripper joint
+   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm joints
+   *   and m/s^2 for the gripper joint
    */
-  void set_positions(
+  void set_all_positions(
     const std::vector<float> & positions,
     const std::optional<std::vector<float>> & feedforward_velocities = std::nullopt,
     const std::optional<std::vector<float>> & feedforward_accelerations = std::nullopt);
@@ -307,10 +336,11 @@ public:
   /**
    * @brief Set the positions of the arm joints
    *
-   * @param positions Desired positions in radians
-   * @param feedforward_velocities Optional: feedforward velocities in radians per second
-   * @param feedforward_accelerations Optional: feedforward accelerations in radians per second
-   *   squared
+   * @param positions Positions in rad
+   * @param feedforward_velocities Optional: feedforward velocities in rad/s
+   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2
+   *
+   * @warning The previous gripper input is used
    */
   void set_arm_positions(
     const std::vector<float> & positions,
@@ -320,10 +350,11 @@ public:
   /**
    * @brief Set the position of the gripper
    *
-   * @param position Desired position in meters
-   * @param feedforward_velocity Optional: feedforward velocity in meters per second
-   * @param feedforward_acceleration
-   *   Optional: feedforward acceleration in meters per second squared
+   * @param position Position in m
+   * @param feedforward_velocity Optional: feedforward velocity in m/s
+   * @param feedforward_acceleration Optional: feedforward acceleration in m/s^2
+   *
+   * @warning The previous arm inputs are used
    */
   void set_gripper_position(
     float position,
@@ -331,22 +362,23 @@ public:
     const std::optional<float> & feedforward_acceleration = std::nullopt);
 
   /**
-   * @brief Set the velocities of the robot
+   * @brief Set the velocities of all joints
    *
-   * @param velocities Desired velocities in radians per second
-   * @param feedforward_accelerations
-   *   Optional: feedforward accelerations in radians per second squared
+   * @param velocities Velocities in rad/s for arm joints and m/s for the gripper joint
+   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm joints
+   *   and m/s^2 for the gripper joint
    */
-  void set_velocities(
+  void set_all_velocities(
     const std::vector<float> & velocities,
     const std::optional<std::vector<float>> & feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the velocities of the arm joints
    *
-   * @param velocities Desired velocities in radians per second
-   * @param feedforward_accelerations
-   *   Optional: feedforward accelerations in radians per second squared
+   * @param velocities Velocities in rad
+   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2
+   *
+   * @warning The previous gripper input is used
    */
   void set_arm_velocities(
     const std::vector<float> & velocities,
@@ -355,59 +387,66 @@ public:
   /**
    * @brief Set the velocity of the gripper
    *
-   * @param velocity Desired velocity in meters per second
-   * @param feedforward_acceleration
-   *   Optional: feedforward acceleration in meters per second squared
+   * @param velocity Velocity in m/s
+   * @param feedforward_acceleration Optional: feedforward acceleration in m/s^2
+   *
+   * @warning The previous arm inputs are used
    */
   void set_gripper_velocity(
     float velocity,
     const std::optional<float> & feedforward_acceleration = std::nullopt);
 
   /**
-   * @brief Set the torques of the robot
+   * @brief Set the efforts of all joints
    *
-   * @param torques Desired torques in Newton meters
+   * @param efforts Efforts in Nm for arm joints and N for the gripper joint
    */
-  void set_torques(const std::vector<float> & torques);
+  void set_all_efforts(const std::vector<float> & efforts);
 
   /**
-   * @brief Set the torques of the arm joints
+   * @brief Set the efforts of the arm joints
    *
-   * @param torques Desired torques in Newton meters
+   * @param efforts Efforts in Nm
+   *
+   * @warning The previous gripper input is used
    */
-  void set_arm_torques(const std::vector<float> & torques);
+  void set_arm_efforts(const std::vector<float> & efforts);
 
   /**
-   * @brief Set the torque of the gripper
+   * @brief Set the effort of the gripper
    *
-   * @param torque Desired torque in Newton meters
+   * @param effort Effort in N
+   *
+   * @warning The previous arm inputs are used
    */
-  void set_gripper_torque(float torque);
+  void set_gripper_effort(float effort);
 
   /**
-   * @brief Set the robot input
+   * @brief Set the joint inputs
    *
-   * @param robot_input Desired robot input
+   * @param joint_inputs A vector of joint inputs
+   *
+   * @note The joint inputs' modes should be consistent with the configured modes
    */
-  void set_robot_input(const std::vector<JointInput> & robot_input);
+  void set_joint_inputs(const std::vector<JointInput> & joint_inputs);
 
   /**
-   * @brief Request the robot output
+   * @brief Request the joint outputs
    */
-  void request_robot_output();
+  void request_joint_outputs();
 
   /**
-   * @brief Receive the robot output
+   * @brief Receive the joint outputs
    *
-   * @return true Successfully received the robot output
-   * @return false Failed to receive the robot output
+   * @return true Successfully received the joint outputs
+   * @return false Failed to receive the joint outputs within the timeout
    */
-  bool receive_robot_output();
+  bool receive_joint_outputs();
 
   /**
    * @brief Set the factory reset flag
    *
-   * @param flag Reset the configurations to factory defaults at the next startup
+   * @param flag Whether to reset the configurations to factory defaults at the next startup
    */
   void set_factory_reset_flag(bool flag = true);
 
@@ -447,14 +486,14 @@ public:
   void set_subnet(const std::string subnet = "255.255.255.0");
 
   /**
-   * @brief Set the torque correction
+   * @brief Set the effort correction
    *
-   * @param torque_correction The torque correction to set
+   * @param effort_correction The effort correction to set
    *
-   * @note This configuration is used to map the torques in Nm to the motor
-   *   torque unit, i.e., torque_correction = (motor torque unit) / (Nm)
+   * @note This configuration is used to map the efforts in Nm or N to the motor
+   *   effort unit, i.e., effort_correction = motor effort unit / Nm or N
    */
-  void set_torque_correction(const std::vector<float> & torque_correction);
+  void set_effort_correction(const std::vector<float> & effort_correction);
 
   /**
    * @brief Reset the error state of the robot
@@ -462,15 +501,15 @@ public:
   void reset_error_state();
 
   /**
-   * @brief Set the modes of the robot
+   * @brief Set the modes of each joint
    *
    * @param modes Desired modes for each joint, one of
    *   Mode::idle
    *   Mode::position
    *   Mode::velocity
-   *   Mode::torque
+   *   Mode::effort
    */
-  void set_modes(const std::vector<Mode> & modes);
+  void set_joint_modes(const std::vector<Mode> & modes);
 
   /**
    * @brief Set all joints to the same mode
@@ -479,9 +518,9 @@ public:
    *   Mode::idle
    *   Mode::position
    *   Mode::velocity
-   *   Mode::torque
+   *   Mode::effort
    */
-  void set_mode(Mode mode = Mode::idle);
+  void set_all_modes(Mode mode = Mode::idle);
 
   /**
    * @brief Set the mode of the arm joints
@@ -490,25 +529,29 @@ public:
    *   Mode::idle
    *   Mode::position
    *   Mode::velocity
-   *   Mode::torque
+   *   Mode::effort
+   *
+   * @warning This method does not change the gripper joint's mode
    */
-  void set_arm_mode(Mode mode = Mode::idle);
+  void set_arm_modes(Mode mode = Mode::idle);
 
   /**
-   * @brief Set the mode of the gripper joints
+   * @brief Set the mode of the gripper joint
    *
-   * @param mode Desired mode for the gripper joints, one of
+   * @param mode Desired mode for the gripper joint, one of
    *   Mode::idle
    *   Mode::position
    *   Mode::velocity
-   *   Mode::torque
+   *   Mode::effort
+   *
+   * @warning This method does not change the arm joints' mode
    */
   void set_gripper_mode(Mode mode = Mode::idle);
 
   /**
-   * @brief Set the end effector mass properties
+   * @brief Set the end effector properties
    *
-   * @param end_effector The end effector mass property structure
+   * @param end_effector The end effector properties
    */
   void set_end_effector(const EndEffectorProperties & end_effector);
 
@@ -522,37 +565,37 @@ public:
   /**
    * @brief Get the positions
    *
-   * @return Positions in radians
+   * @return Positions in rad for arm joints and m for the gripper joint
    */
   std::vector<float> get_positions() const;
 
   /**
    * @brief Get the velocities
    *
-   * @return Velocities in radians per second
+   * @return Velocities in rad/s for arm joints and m/s for the gripper joint
    */
   std::vector<float> get_velocities() const;
 
   /**
-   * @brief Get the torques
+   * @brief Get the efforts
    *
-   * @return Torques in Newton meters
+   * @return Efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_torques() const;
+  std::vector<float> get_efforts() const;
 
   /**
-   * @brief Get the external torques
+   * @brief Get the external efforts
    *
-   * @return External torques in Newton meters
+   * @return External efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_external_torques() const;
+  std::vector<float> get_external_efforts() const;
 
   /**
-   * @brief Get the robot output
+   * @brief Get the joint outputs
    *
-   * @return Robot output, a vector of JointOutput
+   * @return A vector of JointOutput
    */
-  std::vector<JointOutput> get_robot_output() const;
+  std::vector<JointOutput> get_joint_outputs() const;
 
   /**
    * @brief Get the factory reset flag
@@ -598,14 +641,14 @@ public:
   std::string get_subnet();
 
   /**
-   * @brief Get the torque correction
+   * @brief Get the effort correction
    *
-   * @return Torque correction
+   * @return Effort correction
    *
-   * @note This configuration is used to map the torques in Nm to the motor
-   *   torque unit, i.e., torque_correction = (motor torque unit) / (Nm)
+   * @note This configuration is used to map the efforts in Nm or N to the motor
+   *  effort unit, i.e., effort_correction = motor effort unit / Nm or N
    */
-  std::vector<float> get_torque_correction();
+  std::vector<float> get_effort_correction();
 
   /**
    * @brief Get the error information of the robot
@@ -615,9 +658,9 @@ public:
   std::string get_error_information();
 
   /**
-   * @brief Get the modes of the robot
+   * @brief Get the modes
    *
-   * @return Modes of the robot, a vector of Mode
+   * @return Modes of all joints, a vector of Modes
    */
   std::vector<Mode> get_modes();
 
@@ -651,11 +694,12 @@ private:
   enum class RobotCommandIndicator : uint8_t
   {
     handshake,
-    set_robot_input,
-    get_robot_output,
+    set_joint_inputs,
+    get_joint_outputs,
     set_home,
     set_configuration,
-    get_configuration
+    get_configuration,
+    get_log,
   };
 
   // ErrorState
@@ -704,7 +748,7 @@ private:
     dns,
     gateway,
     subnet,
-    torque_correction,
+    effort_correction,
     error_state,
     modes,
     end_effector
@@ -739,10 +783,10 @@ private:
   bool configured_{false};
 
   // Robot input
-  std::vector<JointInput> robot_input_;
+  std::vector<JointInput> joint_inputs_;
 
-  // Robot output
-  std::vector<JointOutput> robot_output_;
+  // Joint outputs
+  std::vector<JointOutput> joint_outputs_;
 
   /**
    * @brief Common steps for setting configurations
@@ -757,6 +801,13 @@ private:
    * @param clear_error Whether to clear the error state without throwing an exception
    */
   void check_error_state(bool clear_error);
+
+  /**
+   * @brief Get the more detailed log message from the arm controller
+   *
+   * @return The last log message
+   */
+  std::string get_detailed_log();
 };
 
 }  // namespace trossen_arm

@@ -23,6 +23,10 @@ message(STATUS "Building for '${ARCH}' architecture")
 
 add_library(${LIBRARY_NAME} STATIC IMPORTED)
 
+if (BUILD_DEMOS)
+  add_subdirectory(demos/cpp)
+endif()
+
 set_target_properties(${LIBRARY_NAME} PROPERTIES
   IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ARCH}/${LIBRARY_NAME}.a"
   INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include"

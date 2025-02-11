@@ -1,9 +1,9 @@
-clean:
-	rm -rf build
-
 build:
 	mkdir -p build
 	cd build && cmake .. && make
+
+clean:
+	rm -rf build
 
 build-demos:
 	mkdir -p build

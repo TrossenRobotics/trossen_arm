@@ -5,6 +5,7 @@ project(
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})
+option(BUILD_DEMOS "Build C++ Demos" OFF)
 
 # Set the C++ standard to 17 if not already set
 if(NOT CMAKE_CXX_STANDARD)
@@ -22,6 +23,11 @@ endif()
 message(STATUS "Building for '${ARCH}' architecture")
 
 add_library(${LIBRARY_NAME} STATIC IMPORTED)
+
+if(BUILD_DEMOS)
+  message(STATUS "Building C++ Demos")
+  add_subdirectory(demos/cpp)
+endif()
 
 set_target_properties(${LIBRARY_NAME} PROPERTIES
   IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ARCH}/${LIBRARY_NAME}.a"

@@ -11,3 +11,8 @@ build-demos:
 
 install: build
 	cd build && make install
+
+deb:
+	mkdir -p build
+	cd build && cmake ..
+	cd build && make package

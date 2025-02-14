@@ -1,6 +1,6 @@
 @PACKAGE_INIT@
 
-# Define the imported target for libtrossen_arm.
+# Define the imported target for libtrossen_arm
 if(NOT TARGET libtrossen_arm)
   add_library(libtrossen_arm STATIC IMPORTED)
   set_target_properties(libtrossen_arm PROPERTIES

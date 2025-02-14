@@ -1,15 +1,20 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(
   libtrossen_arm
-  VERSION 1.3.0
+  VERSION 1.3.1
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})
 option(BUILD_DEMOS "Build C++ Demos" OFF)
 
-# Set the C++ standard to 17 if not already set
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 17)
+# Set the C++ standard to 17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Set the build type to Release if not already set
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
 endif()
 
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
@@ -57,10 +62,18 @@ configure_package_config_file(
   NO_CHECK_REQUIRED_COMPONENTS_MACRO
 )
 
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}ConfigVersion.cmake
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY SameMinorVersion
+)
+
 install(
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}Config.cmake
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${LIBRARY_NAME}Version.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}ConfigVersion.cmake
   DESTINATION
     lib/cmake/${LIBRARY_NAME}
 )
+
+include(cmake/Packaging.cmake)

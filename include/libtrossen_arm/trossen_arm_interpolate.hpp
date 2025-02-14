@@ -34,11 +34,22 @@
 namespace trossen_arm
 {
 
-// Interpolation class
+/// @brief Quintic Hermite Interpolator
 class QuinticHermiteInterpolator
 {
 public:
-  // Compute the coefficients
+  /**
+   * @brief Compute the coefficients for the quintic hermite interpolation y = f(x)
+   *
+   * @param x0 Initial x value
+   * @param x1 Final x value
+   * @param y0 Initial y value, f(x0)
+   * @param y1 Final y value, f(x1)
+   * @param dy0 Initial first order derivative, f'(x0)
+   * @param dy1 Final first order derivative, f'(x1)
+   * @param ddy0 Initial second order derivative, f''(x0)
+   * @param ddy1 Final second order derivative, f''(x1)
+   */
   void compute_coefficients(
     float x0,
     float x1,
@@ -49,13 +60,13 @@ public:
     float ddy0,
     float ddy1);
 
-  // Compute the value of y at x
+  /// @brief Evaluate f(x)
   float y(float x);
 
-  // Compute the value of dy at x
+  /// @brief Evaluate f'(x)
   float dy(float x);
 
-  // Compute the value of ddy at x
+  /// @brief Evaluate f''(x)
   float ddy(float x);
 
 private:

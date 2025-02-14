@@ -70,6 +70,33 @@ enum class Model : uint8_t {
   wxai_v0,
 };
 
+/// @brief Structure for joint input corresponding to the position mode
+struct JointInputPosition
+{
+  /// @brief Position in rad for arm joints or m for the gripper joint
+  float position;
+  /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
+  float feedforward_velocity;
+  /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
+  float feedforward_acceleration;
+};
+
+/// @brief Structure for joint input corresponding to the velocity mode
+struct JointInputVelocity
+{
+  /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
+  float velocity;
+  /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
+  float feedforward_acceleration;
+};
+
+/// @brief Structure for joint input corresponding to the effort mode
+struct JointInputEffort
+{
+  /// @brief Effort in Nm for arm joints or N for the gripper joint
+  float effort;
+};
+
 /// @brief Joint input
 /// @details The joint input is used to command a motion to a joint. Three types of motion are
 ///   supported and are corresponding to the three non-idle modes: position, velocity, and effort.
@@ -83,29 +110,11 @@ struct JointInput
   Mode mode{Mode::idle};
   union {
     /// @brief Input corresponding to position mode
-    struct
-    {
-      /// @brief Position in rad for arm joints or m for the gripper joint
-      float position;
-      /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
-      float feedforward_velocity;
-      /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
-      float feedforward_acceleration;
-    } position{0.0f, 0.0f, 0.0f};
+    JointInputPosition position{0.0f, 0.0f, 0.0f};
     /// @brief Input corresponding to velocity mode
-    struct
-    {
-      /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
-      float velocity;
-      /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
-      float feedforward_acceleration;
-    } velocity;
+    JointInputVelocity velocity;
     /// @brief Input corresponding to effort mode
-    struct
-    {
-      /// @brief Effort in Nm for arm joints or N for the gripper joint
-      float effort;
-    } effort;
+    JointInputEffort effort;
   };
 };
 

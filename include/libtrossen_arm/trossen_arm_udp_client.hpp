@@ -39,7 +39,7 @@
 namespace trossen_arm
 {
 
-// UDP class
+/// @brief UDP client class
 class UDP_Client
 {
 private:
@@ -73,34 +73,25 @@ public:
    *
    * @param serv_ip IP address of the server
    * @param port Port number of the server
-   * @param timeout_us Timeout in microseconds for receiving UDP packets
-   * @return true Successfully configured the UDP client
-   * @return false Failed to configure the UDP client
    */
   void configure(const std::string serv_ip, uint16_t port);
 
   /**
    * @brief Cleanup the UDP client
-   *
-   * @return true Successfully cleaned up the UDP client
-   * @return false Failed to clean up the UDP client
    */
   void cleanup();
 
   /**
    * @brief Send data to the server
    *
-   * @param data Data to send
    * @param size Size of the data
-   * @return true Successfully sent the data
-   * @return false Failed to send the data
    */
   void send(size_t size);
 
   /**
    * @brief Receive data from the server
    *
-   * @param data Data received
+   * @param timeout_us Timeout in microseconds for receiving UDP packets
    * @return ssize_t Size of the data received
    */
   ssize_t receive(uint32_t timeout_us);
@@ -114,7 +105,7 @@ public:
    */
   void guaranteed_transmission(size_t size, uint8_t max_attempts, uint32_t timeout_us);
 
-  // UDP packet
+  /// @brief UDP packet
   uint8_t data[MAX_PACKET_SIZE];
 };
 

@@ -71,6 +71,7 @@ static Level _level = Level::INFO;
 /**
  * @brief Log a message
  * @param level The level with which to log the message
+ * @param fmt The formatted message
  */
 void log(Level level, const char * fmt, ...);
 
@@ -84,7 +85,7 @@ void set_level(Level level);
  * @brief Set the logging level
  * @param level the new logging level
  */
-void set_level(std::string);
+void set_level(std::string level);
 
 /**
  * @brief Get the logging level

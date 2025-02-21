@@ -67,12 +67,6 @@ if __name__=='__main__':
     print("Moving to home positions...")
     driver.set_all_modes(trossen_arm.Mode.position)
 
-    time.sleep(1)
-    while True:
-        driver.request_joint_outputs()
-        if driver.receive_joint_outputs():
-            break
-
     sleep_positions = np.array(driver.get_positions())
     home_positions = np.zeros(driver.get_num_joints())
     home_positions[1] = np.pi/2
@@ -85,9 +79,6 @@ if __name__=='__main__':
     interpolator_feedforward_velocity = interpolator_position.derivative()
     interpolator_feedforward_acceleration = interpolator_feedforward_velocity.derivative()
 
-    start_time = time.time()
-    end_time = start_time + timepoints[-1]
-
     log_dict = {
         'time': [],
         'positions': [],
@@ -95,6 +86,9 @@ if __name__=='__main__':
         'efforts': [],
         'external_efforts': [],
     }
+
+    start_time = time.time()
+    end_time = start_time + timepoints[-1]
 
     while time.time() < end_time:
         loop_start_time = time.time()
@@ -104,9 +98,13 @@ if __name__=='__main__':
         feedforward_velocity = interpolator_feedforward_velocity(current_time)
         feedforward_acceleration = interpolator_feedforward_acceleration(current_time)
 
-        driver.set_all_positions(positions, feedforward_velocity, feedforward_acceleration)
-
-        driver.receive_joint_outputs()
+        driver.set_all_positions(
+            positions,
+            0.0,
+            False,
+            feedforward_velocity,
+            feedforward_acceleration
+        )
 
         log_dict['time'].append(current_time)
         log_dict['positions'].append(driver.get_positions())

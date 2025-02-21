@@ -59,8 +59,11 @@ int main() {
 
   // Start gravity compensation
   driver.set_all_modes(trossen_arm::Mode::effort);
-  driver.set_all_efforts({0, 0, 0, 0, 0, 0, 0});
-  driver.receive_joint_outputs();
+  driver.set_all_efforts(
+    {0, 0, 0, 0, 0, 0, 0},
+    0.0f,
+    false
+  );
 
   // Wait until the user presses enter
   std::cout << "Press Enter to end gravity compensation..." << std::endl;

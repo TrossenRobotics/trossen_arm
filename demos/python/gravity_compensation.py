@@ -59,8 +59,11 @@ if __name__=='__main__':
 
     # Start gravity compensation
     driver.set_all_modes(trossen_arm.Mode.effort)
-    driver.set_all_efforts([0, 0, 0, 0, 0, 0, 0])
-    driver.receive_joint_outputs()
+    driver.set_all_efforts(
+        [0, 0, 0, 0, 0, 0, 0],
+        0.0,
+        False
+    )
 
     # Wait until the user presses enter
     input("Press Enter to end gravity compensation...")

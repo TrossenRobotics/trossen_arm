@@ -60,27 +60,24 @@ if __name__=='__main__':
 
     print("Opening the gripper...")
     driver.set_gripper_mode(trossen_arm.Mode.effort)
-    driver.set_gripper_effort(10.0)
-    driver.receive_joint_outputs()
+    driver.set_gripper_effort(50.0, 5.0, True)
 
-    input("Press Enter to start moving the arm...")
     print("Moving the arm...")
     driver.set_arm_modes(trossen_arm.Mode.position)
-    driver.move_arm_to(
-        2.0,
+    driver.set_arm_positions(
         np.array([0.0, np.pi/2, np.pi/2, 0.0, 0.0, 0.0]),
+        2.0,
+        True
     )
 
-    input("Press Enter to close the gripper...")
     print("Closing the gripper...")
     driver.set_gripper_mode(trossen_arm.Mode.effort)
-    driver.set_gripper_effort(-10.0)
-    driver.receive_joint_outputs()
+    driver.set_gripper_effort(-50.0, 5.0, True)
 
-    input("Press Enter to move the arm again...")
     print("Moving the arm again...")
     driver.set_arm_modes(trossen_arm.Mode.position)
-    driver.move_arm_to(
+    driver.set_arm_positions(
+        np.zeros(driver.get_num_joints() - 1),
         2.0,
-        np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0]),
+        True
     )

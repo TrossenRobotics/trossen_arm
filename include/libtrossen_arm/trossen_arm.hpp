@@ -29,11 +29,14 @@
 #ifndef LIBTROSSEN_ARM__TROSSEN_ARM_HPP_
 #define LIBTROSSEN_ARM__TROSSEN_ARM_HPP_
 
+#include <atomic>
 #include <cstdint>
 #include <cstring>
 #include <map>
+#include <mutex>
 #include <optional>
 #include <string>
+#include <thread>
 #include <vector>
 
 #include "libtrossen_arm/trossen_arm_config.hpp"
@@ -68,67 +71,6 @@ enum class IPMethod : uint8_t {
 enum class Model : uint8_t {
   /// @brief WXAI V0
   wxai_v0,
-};
-
-/// @brief Structure for joint input corresponding to the position mode
-struct JointInputPosition
-{
-  /// @brief Position in rad for arm joints or m for the gripper joint
-  float position;
-  /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
-  float feedforward_velocity;
-  /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
-  float feedforward_acceleration;
-};
-
-/// @brief Structure for joint input corresponding to the velocity mode
-struct JointInputVelocity
-{
-  /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
-  float velocity;
-  /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
-  float feedforward_acceleration;
-};
-
-/// @brief Structure for joint input corresponding to the effort mode
-struct JointInputEffort
-{
-  /// @brief Effort in Nm for arm joints or N for the gripper joint
-  float effort;
-};
-
-/// @brief Joint input
-/// @details The joint input is used to command a motion to a joint. Three types of motion are
-///   supported and are corresponding to the three non-idle modes: position, velocity, and effort.
-///   The position, velocity, and effort fields are mandatory for the respective modes. Leaving
-///   the feedforward terms as zero is fine but filling them with the values corresponding to the
-///   trajectory is recommended for smoother motion.
-struct JointInput
-{
-  /// @brief The mode of the joint input
-  /// @note If this mode is different from the configured mode, the robot will enter error state
-  Mode mode{Mode::idle};
-  union {
-    /// @brief Input corresponding to position mode
-    JointInputPosition position{0.0f, 0.0f, 0.0f};
-    /// @brief Input corresponding to velocity mode
-    JointInputVelocity velocity;
-    /// @brief Input corresponding to effort mode
-    JointInputEffort effort;
-  };
-};
-
-/// @brief Joint output
-struct JointOutput
-{
-  /// @brief Joint position in rad for arm joints or m for the gripper joint
-  float position;
-  /// @brief Joint velocity in rad/s for arm joints or m/s for the gripper joint
-  float velocity;
-  /// @brief Joint effort in Nm for arm joints or N for the gripper joint
-  float effort;
-  /// @brief External effort in Nm for arm joints or N for the gripper joint
-  float external_effort;
 };
 
 /// @brief Link properties
@@ -197,8 +139,8 @@ struct StandardEndEffector {
       .origin_xyz = {0.00780824f, 0.00528691f, 0.00221090f},
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
-    .offset_finger_left = 0.02165f,
-    .offset_finger_right = -0.02165f
+    .offset_finger_left = 0.0227f,
+    .offset_finger_right = -0.0227f
   };
 
   /// @brief WXAI V0 leader variant
@@ -269,8 +211,8 @@ struct StandardEndEffector {
       .origin_xyz = {0.00780824f, 0.00528691f, 0.00221090f},
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
-    .offset_finger_left = 0.02165f,
-    .offset_finger_right = -0.02165f
+    .offset_finger_left = 0.0227f,
+    .offset_finger_right = -0.0227f
   };
 };
 
@@ -302,155 +244,213 @@ public:
   void cleanup();
 
   /**
-   * @brief Move the arm joints to the desired positions
-   *
-   * @param goal_time Time to reach the goal positions in seconds
-   * @param goal_positions Positions in rad
-   * @param goal_velocities Optional: desired velocities in rad/s
-   * @param goal_accelerations Optional: desired accelerations in rad/s^2
-   *
-   * @details It does the following:
-   *   1. Check the compatibility of the modes and the joint inputs
-   *   2. Check the size of the vectors
-   *   3. Check the goal time
-   *   4. Construct a vector of quintic Hermite interpolators
-   *   5. Construct vectors for the robot input
-   *   6. Get the joint outputs
-   *   7. Compute the coefficients for the interpolators
-   *   8. Move the arm joints along the trajectory
-   *
-   * @warning The previous gripper input is used throughout the trajectory
-   * @note The arm joints need to be in position mode
-   */
-  void move_arm_to(
-    float goal_time,
-    const std::vector<float> & goal_positions,
-    const std::optional<std::vector<float>> & goal_velocities = std::nullopt,
-    const std::optional<std::vector<float>> & goal_accelerations = std::nullopt);
-
-  /**
    * @brief Set the positions of all joints
    *
-   * @param positions Positions in rad for arm joints and m for the gripper joint
-   * @param feedforward_velocities Optional: feedforward velocities in rad/s for arm joints and m/s
-   *   for the gripper joint
-   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm joints
-   *   and m/s^2 for the gripper joint
+   * @param goal_positions Positions in rad for arm joints and m for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal positions should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal positions are reached, default true
+   * @param goal_feedforward_velocities Optional: feedforward velocities in rad/s for arm joints
+   *   and m/s for the gripper joint, default zeros
+   * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm
+   *   joints and m/s^2 for the gripper joint, default zeros
+   *
+   * @note The size of the vectors should be equal to the number of joints
    */
   void set_all_positions(
-    const std::vector<float> & positions,
-    const std::optional<std::vector<float>> & feedforward_velocities = std::nullopt,
-    const std::optional<std::vector<float>> & feedforward_accelerations = std::nullopt);
+    const std::vector<float> & goal_positions,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    const std::optional<std::vector<float>> & goal_feedforward_velocities = std::nullopt,
+    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the positions of the arm joints
    *
-   * @param positions Positions in rad
-   * @param feedforward_velocities Optional: feedforward velocities in rad/s
-   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2
+   * @param goal_positions Positions in rad
+   * @param goal_time Optional: goal time in s when the goal positions should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal positions are reached, default true
+   * @param goal_feedforward_velocities Optional: feedforward velocities in rad/s, default zeros
+   * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2, default
+   *   zeros
    *
-   * @warning The previous gripper input is used
+   * @note The size of the vectors should be equal to the number of arm joints
    */
   void set_arm_positions(
-    const std::vector<float> & positions,
-    const std::optional<std::vector<float>> & feedforward_velocities = std::nullopt,
-    const std::optional<std::vector<float>> & feedforward_accelerations = std::nullopt);
+    const std::vector<float> & goal_positions,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    const std::optional<std::vector<float>> & goal_feedforward_velocities = std::nullopt,
+    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the position of the gripper
    *
-   * @param position Position in m
-   * @param feedforward_velocity Optional: feedforward velocity in m/s
-   * @param feedforward_acceleration Optional: feedforward acceleration in m/s^2
-   *
-   * @warning The previous arm inputs are used
+   * @param goal_position Position in m
+   * @param goal_time Optional: goal time in s when the goal position should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal position is reached, default true
+   * @param goal_feedforward_velocity Optional: feedforward velocity in m/s, default zero
+   * @param goal_feedforward_acceleration Optional: feedforward acceleration in m/s^2, default zero
    */
   void set_gripper_position(
-    float position,
-    const std::optional<float> & feedforward_velocity = std::nullopt,
-    const std::optional<float> & feedforward_acceleration = std::nullopt);
+    float goal_position,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    float goal_feedforward_velocity = 0.0f,
+    float goal_feedforward_acceleration = 0.0f);
+
+  /**
+   * @brief Set the position of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @param goal_position Position in rad for arm joints and m for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal position should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal position is reached, default true
+   * @param goal_feedforward_velocity Optional: feedforward velocity in rad/s for arm joints and
+   *   m/s for the gripper joint, default zero
+   * @param goal_feedforward_acceleration Optional: feedforward acceleration in rad/s^2 for arm
+   *   joints and m/s^2 for the gripper joint, default zero
+   */
+  void set_joint_position(
+    uint8_t joint_index,
+    float goal_position,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    float goal_feedforward_velocity = 0.0f,
+    float goal_feedforward_acceleration = 0.0f
+  );
 
   /**
    * @brief Set the velocities of all joints
    *
-   * @param velocities Velocities in rad/s for arm joints and m/s for the gripper joint
-   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm joints
-   *   and m/s^2 for the gripper joint
+   * @param goal_velocities Velocities in rad/s for arm joints and m/s for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal velocities should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal velocities are reached, default true
+   * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm
+   *   joints and m/s^2 for the gripper joint, default zeros
+   *
+   * @note The size of the vectors should be equal to the number of joints
    */
   void set_all_velocities(
-    const std::vector<float> & velocities,
-    const std::optional<std::vector<float>> & feedforward_accelerations = std::nullopt);
+    const std::vector<float> & goal_velocities,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the velocities of the arm joints
    *
-   * @param velocities Velocities in rad
-   * @param feedforward_accelerations Optional: feedforward accelerations in rad/s^2
+   * @param goal_velocities Velocities in rad
+   * @param blocking Optional: whether to block until the goal velocities are reached, default true
+   * @param goal_time Optional: goal time in s when the goal velocities should be reached, default
+   *   2.0s
+   * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2, default
+   *   zeros
    *
-   * @warning The previous gripper input is used
+   * @note The size of the vectors should be equal to the number of arm joints
    */
   void set_arm_velocities(
-    const std::vector<float> & velocities,
-    const std::optional<std::vector<float>> & feedforward_accelerations = std::nullopt);
+    const std::vector<float> & goal_velocities,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the velocity of the gripper
    *
-   * @param velocity Velocity in m/s
-   * @param feedforward_acceleration Optional: feedforward acceleration in m/s^2
-   *
-   * @warning The previous arm inputs are used
+   * @param goal_velocity Velocity in m/s
+   * @param goal_time Optional: goal time in s when the goal velocity should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal velocity is reached, default true
+   * @param goal_feedforward_acceleration Optional: feedforward acceleration in m/s^2, default zero
    */
   void set_gripper_velocity(
-    float velocity,
-    const std::optional<float> & feedforward_acceleration = std::nullopt);
+    float goal_velocity,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    float goal_feedforward_acceleration = 0.0f
+  );
+
+  /**
+   * @brief Set the velocity of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @param goal_velocity Velocity in rad/s for arm joints and m/s for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal velocity should be reached, default
+   *   2.0s
+   * @param blocking Optional: whether to block until the goal velocity is reached, default true
+   * @param goal_feedforward_acceleration Optional: feedforward acceleration in rad/s^2 for arm
+   *   joints and m/s^2 for the gripper joint, default zero
+   */
+  void set_joint_velocity(
+    uint8_t joint_index,
+    float goal_velocity,
+    float goal_time = 2.0f,
+    bool blocking = true,
+    float goal_feedforward_acceleration = 0.0f
+  );
 
   /**
    * @brief Set the efforts of all joints
    *
-   * @param efforts Efforts in Nm for arm joints and N for the gripper joint
+   * @param goal_efforts Efforts in Nm for arm joints and N for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal efforts should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal efforts are reached, default true
+   *
+   * @note The size of the vectors should be equal to the number of joints
    */
-  void set_all_efforts(const std::vector<float> & efforts);
+  void set_all_efforts(
+    const std::vector<float> & goal_efforts,
+    float goal_time = 2.0f,
+    bool blocking = true
+  );
 
   /**
    * @brief Set the efforts of the arm joints
    *
-   * @param efforts Efforts in Nm
+   * @param goal_efforts Efforts in Nm
+   * @param goal_time Optional: goal time in s when the goal efforts should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal efforts are reached, default true
    *
-   * @warning The previous gripper input is used
+   * @note The size of the vectors should be equal to the number of arm joints
    */
-  void set_arm_efforts(const std::vector<float> & efforts);
+  void set_arm_efforts(
+    const std::vector<float> & goal_efforts,
+    float goal_time = 2.0f,
+    bool blocking = true
+  );
 
   /**
    * @brief Set the effort of the gripper
    *
-   * @param effort Effort in N
-   *
-   * @warning The previous arm inputs are used
+   * @param goal_effort Effort in N
+   * @param goal_time Optional: goal time in s when the goal effort should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal effort is reached, default true
    */
-  void set_gripper_effort(float effort);
+  void set_gripper_effort(
+    float goal_effort,
+    float goal_time = 2.0f,
+    bool blocking = true
+  );
 
   /**
-   * @brief Set the joint inputs
+   * @brief Set the effort of a joint
    *
-   * @param joint_inputs A vector of joint inputs
-   *
-   * @note The joint inputs' modes should be consistent with the configured modes
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @param goal_effort Effort in Nm for arm joints and N for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal effort should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal effort is reached, default true
    */
-  void set_joint_inputs(const std::vector<JointInput> & joint_inputs);
-
-  /**
-   * @brief Request the joint outputs
-   */
-  void request_joint_outputs();
-
-  /**
-   * @brief Receive the joint outputs
-   *
-   * @return true Successfully received the joint outputs
-   * @return false Failed to receive the joint outputs within the timeout
-   */
-  bool receive_joint_outputs();
+  void set_joint_effort(
+    uint8_t joint_index,
+    float goal_effort,
+    float goal_time = 2.0f,
+    bool blocking = true
+  );
 
   /**
    * @brief Set the factory reset flag
@@ -503,11 +503,6 @@ public:
    *   effort unit, i.e., effort_correction = motor effort unit / Nm or N
    */
   void set_effort_correction(const std::vector<float> & effort_correction);
-
-  /**
-   * @brief Reset the error state of the robot
-   */
-  void reset_error_state();
 
   /**
    * @brief Set the modes of each joint
@@ -576,35 +571,28 @@ public:
    *
    * @return Positions in rad for arm joints and m for the gripper joint
    */
-  std::vector<float> get_positions() const;
+  std::vector<float> get_positions();
 
   /**
    * @brief Get the velocities
    *
    * @return Velocities in rad/s for arm joints and m/s for the gripper joint
    */
-  std::vector<float> get_velocities() const;
+  std::vector<float> get_velocities();
 
   /**
    * @brief Get the efforts
    *
    * @return Efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_efforts() const;
+  std::vector<float> get_efforts();
 
   /**
    * @brief Get the external efforts
    *
    * @return External efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_external_efforts() const;
-
-  /**
-   * @brief Get the joint outputs
-   *
-   * @return A vector of JointOutput
-   */
-  std::vector<JointOutput> get_joint_outputs() const;
+  std::vector<float> get_external_efforts();
 
   /**
    * @brief Get the factory reset flag
@@ -698,6 +686,54 @@ private:
     float offset_finger_right;
   };
 
+  /// @brief Joint input
+  /// @details The joint input is used to command a motion to a joint. Three types of motion are
+  ///   supported and are corresponding to the three non-idle modes: position, velocity, and effort.
+  ///   The position, velocity, and effort fields are mandatory for the respective modes. Leaving
+  ///   the feedforward terms as zero is fine but filling them with the values corresponding to the
+  ///   trajectory is recommended for smoother motion.
+  struct JointInput
+  {
+    /// @brief The mode of the joint input
+    /// @note If this mode is different from the configured mode, the robot will enter error state
+    Mode mode{Mode::idle};
+    union {
+      /// @brief Joint input corresponding to the position mode
+      struct {
+        /// @brief Position in rad for arm joints or m for the gripper joint
+        float position;
+        /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
+        float feedforward_velocity;
+        /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
+        float feedforward_acceleration;
+      } position{0.0f, 0.0f, 0.0f};
+      /// @brief Joint input corresponding to the velocity mode
+      struct {
+        /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
+        float velocity;
+        /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
+        float feedforward_acceleration;
+      } velocity;
+      /// @brief Joint input corresponding to the effort mode
+      struct {
+        /// @brief Effort in Nm for arm joints or N for the gripper joint
+        float effort;
+      } effort;
+    };
+  };
+
+  /// @brief Joint output
+  struct JointOutput
+  {
+    /// @brief Joint position in rad for arm joints or m for the gripper joint
+    float position;
+    /// @brief Joint velocity in rad/s for arm joints or m/s for the gripper joint
+    float velocity;
+    /// @brief Joint effort in Nm for arm joints or N for the gripper joint
+    float effort;
+    /// @brief External effort in Nm for arm joints or N for the gripper joint
+    float external_effort;
+  };
 
   // Robot command indicators
   enum class RobotCommandIndicator : uint8_t
@@ -781,8 +817,20 @@ private:
   // Model name
   static const std::map<Model, std::string> MODEL_NAME;
 
-  // UDP client
-  UDP_Client udp_client_;
+  // Mode name
+  static const std::map<Mode, std::string> MODE_NAME;
+
+  // Interpolators for joint trajectories
+  std::vector<QuinticHermiteInterpolator> trajectories_;
+
+  // Trajectory start time
+  std::vector<std::chrono::time_point<std::chrono::steady_clock>> trajectory_start_times_;
+
+  // Robot input
+  std::vector<JointInput> joint_inputs_;
+
+  // Joint outputs
+  std::vector<JointOutput> joint_outputs_;
 
   // Number of joints
   uint8_t num_joints_{0};
@@ -791,11 +839,71 @@ private:
   // true if configured, false if not configured
   bool configured_{false};
 
-  // Robot input
-  std::vector<JointInput> joint_inputs_;
+  // UDP client
+  UDP_Client udp_client_;
 
-  // Joint outputs
-  std::vector<JointOutput> joint_outputs_;
+  // Atomic flag for maintaining and stopping the daemon thread
+  std::atomic<bool> activated_{false};
+
+  // Multithreading design
+  //
+  // Goal
+  //
+  // - only one thread can run at a time
+  // - another thread cannot cut in until the full communication cycle is completed
+  //   for example, set_joint_inputs --nothing-in-between--> receive_joint_outputs
+  // - the other thread has priority to run after the current thread finishes
+  //
+  // Mutex ownership
+  //
+  // call mutex_preempt_ 1 and mutex_data_ 2 for simplicity
+  // daemon: |-|-1-|-12-|-2-|--------|-1-|-12-|-2-|-|
+  // main:   |------------|-1-|-12-|-2-|------------|
+  //
+  // Exception handling
+  //
+  // - if an exception is thrown in the main thread
+  //   - the daemon thread gets std::terminate
+  //   - the main thread unwind the stack: ~TrossenArmDriver() -> cleanup()
+  // - if an exception is thrown in the daemon thread
+  //   - the exception is stored in exception_ptr_
+  //   - the daemon thread returns
+  //   - the main thread gets the exception and rethrows it at the next operation
+  //   - the main thread unwind the stack: ~TrossenArmDriver() -> cleanup()
+  //
+  // Notes
+  //
+  // - the mutex claiming cannot be nested or there will be deadlocks, i.e., |-1-|-12-|-2-|-12-|-2-|
+  //   is not allowed
+  // - when an exception is thrown by the main thread, the program is expected to terminate either
+  //   immediately or right after cleaning up the resources not related to the driver
+
+  // Daemon thread
+  std::thread daemon_thread_;
+
+  // Mutex for data access
+  std::mutex mutex_data_;
+
+  // Mutex for preempting the next slot to run
+  std::mutex mutex_preempt_;
+
+  // Shared exception pointer
+  std::exception_ptr exception_ptr_;
+
+  /**
+   * @brief Set the joint inputs
+   *
+   * @note The joint inputs' modes should be consistent with the configured modes
+   */
+  void set_joint_inputs();
+
+  /**
+   * @brief Receive the joint outputs
+   *
+   * @return true Successfully received the joint outputs
+   * @return false Failed to receive the joint outputs within the timeout
+   */
+  bool receive_joint_outputs();
 
   /**
    * @brief Common steps for setting configurations
@@ -812,11 +920,27 @@ private:
   void check_error_state(bool clear_error);
 
   /**
+   * @brief Reset the error state of the robot
+   */
+  void reset_error_state();
+
+  /**
    * @brief Get the more detailed log message from the arm controller
    *
    * @return The last log message
    */
   std::string get_detailed_log();
+
+  /**
+   * @brief Function to be executed by the daemon thread
+   *
+   * @details The daemon thread will repeatedly do the following:
+   *   1. Break if the driver is not configured
+   *   2. Set the joint inputs
+   *   3. Receive the joint outputs
+   *   4. Block and wait for a main thread operation if there is any
+   */
+  void daemon();
 };
 
 }  // namespace trossen_arm

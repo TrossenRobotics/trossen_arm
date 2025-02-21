@@ -76,15 +76,17 @@ int main(int argc, char** argv)
   );
 
   std::cout << "Moving to home positions..." << std::endl;
-  driver_leader.set_arm_modes(trossen_arm::Mode::position);
-  driver_leader.move_arm_to(
-    2.0,
-    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0}
+  driver_leader.set_all_modes(trossen_arm::Mode::position);
+  driver_leader.set_all_positions(
+    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0, 0.0},
+    2.0f,
+    true
   );
-  driver_follower.set_arm_modes(trossen_arm::Mode::position);
-  driver_follower.move_arm_to(
-    2.0,
-    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0}
+  driver_follower.set_all_modes(trossen_arm::Mode::position);
+  driver_follower.set_all_positions(
+    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0, 0.0},
+    2.0f,
+    true
   );
 
   std::cout << "Starting to teleoperate the robots..." << std::endl;
@@ -102,37 +104,46 @@ int main(int argc, char** argv)
     for (size_t i = 0; i < driver_leader.get_num_joints(); ++i) {
       efforts_leader.at(i) *= -force_feedback_gain;
     }
-    driver_leader.set_all_efforts(efforts_leader);
+    driver_leader.set_all_efforts(
+      efforts_leader,
+      0.0f,
+      false
+    );
     // Feed the positions from the leader robot to the follower robot
-    driver_follower.set_all_positions(driver_leader.get_positions());
-
-    // Receive the robot outputs
-    driver_leader.receive_joint_outputs();
-    driver_follower.receive_joint_outputs();
+    driver_follower.set_all_positions(
+      driver_leader.get_positions(),
+      0.0f,
+      false,
+      driver_leader.get_velocities()
+    );
   }
 
   std::cout << "Moving to home positions..." << std::endl;
-  driver_leader.set_arm_modes(trossen_arm::Mode::position);
-  driver_leader.move_arm_to(
-    2.0,
-    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0}
+  driver_leader.set_all_modes(trossen_arm::Mode::position);
+  driver_leader.set_all_positions(
+    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0, 0.0},
+    2.0f,
+    true
   );
-  driver_follower.set_arm_modes(trossen_arm::Mode::position);
-  driver_follower.move_arm_to(
-    2.0,
-    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0}
+  driver_follower.set_all_modes(trossen_arm::Mode::position);
+  driver_follower.set_all_positions(
+    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0, 0.0},
+    2.0f,
+    true
   );
 
   std::cout << "Moving to sleep positions..." << std::endl;
-  driver_leader.set_arm_modes(trossen_arm::Mode::position);
-  driver_leader.move_arm_to(
-    2.0,
-    {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+  driver_leader.set_all_modes(trossen_arm::Mode::position);
+  driver_leader.set_all_positions(
+    std::vector<float>(driver_leader.get_num_joints(), 0.0),
+    2.0f,
+    true
   );
-  driver_follower.set_arm_modes(trossen_arm::Mode::position);
-  driver_follower.move_arm_to(
-    2.0,
-    {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+  driver_follower.set_all_modes(trossen_arm::Mode::position);
+  driver_follower.set_all_positions(
+    std::vector<float>(driver_leader.get_num_joints(), 0.0),
+    2.0f,
+    true
   );
 
   return 0;

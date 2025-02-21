@@ -77,16 +77,6 @@ if __name__=='__main__':
     leader_driver.set_all_modes(trossen_arm.Mode.position)
     follower_driver.set_all_modes(trossen_arm.Mode.position)
 
-    time.sleep(1)
-    while True:
-        leader_driver.request_joint_outputs()
-        if leader_driver.receive_joint_outputs():
-            break
-    while True:
-        follower_driver.request_joint_outputs()
-        if follower_driver.receive_joint_outputs():
-            break
-
     leader_sleep_positions = np.array(leader_driver.get_positions())
     follower_sleep_positions = np.array(follower_driver.get_positions())
     home_positions = np.zeros(leader_driver.get_num_joints())
@@ -138,14 +128,15 @@ if __name__=='__main__':
 
         leader_driver.set_all_positions(
             positions_leader,
+            0.0,
+            False,
             feedforward_velocities_leader,
             feedforward_accelerations_leader
         )
         follower_driver.set_all_positions(
             positions_follower,
+            0.0,
+            False,
             feedforward_velocities_follower,
             feedforward_accelerations_follower
         )
-
-        leader_driver.receive_joint_outputs()
-        follower_driver.receive_joint_outputs()

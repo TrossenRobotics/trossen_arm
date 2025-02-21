@@ -61,32 +61,26 @@ int main() {
 
   std::cout << "Opening the gripper..." << std::endl;
   driver.set_gripper_mode(trossen_arm::Mode::effort);
-  driver.set_gripper_effort(10.0);
-  driver.receive_joint_outputs();
+  driver.set_gripper_effort(50.0, 5.0, true);
 
-  std::cout << "Press Enter to start moving the arm..." << std::endl;
-  std::cin.get();
   std::cout << "Moving the arm..." << std::endl;
   driver.set_arm_modes(trossen_arm::Mode::position);
-  driver.move_arm_to(
-    2.0,
-    std::vector<float>{0.0, M_PI/2, M_PI/2, 0.0, 0.0, 0.0}
+  driver.set_arm_positions(
+    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0},
+    2.0f,
+    true
   );
 
-  std::cout << "Press Enter to close the gripper..." << std::endl;
-  std::cin.get();
   std::cout << "Closing the gripper..." << std::endl;
   driver.set_gripper_mode(trossen_arm::Mode::effort);
-  driver.set_gripper_effort(-10.0);
-  driver.receive_joint_outputs();
+  driver.set_gripper_effort(-50.0, 5.0, true);
 
-  std::cout << "Press Enter to move the arm again..." << std::endl;
-  std::cin.get();
   std::cout << "Moving the arm again..." << std::endl;
   driver.set_arm_modes(trossen_arm::Mode::position);
-  driver.move_arm_to(
-    2.0,
-    std::vector<float>{0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+  driver.set_arm_positions(
+    std::vector<float>(driver.get_num_joints() - 1, 0.0),
+    2.0f,
+    true
   );
 
   return 0;

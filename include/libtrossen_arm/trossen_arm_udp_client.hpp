@@ -105,8 +105,11 @@ public:
    */
   void guaranteed_transmission(size_t size, uint8_t max_attempts, uint32_t timeout_us);
 
-  /// @brief UDP packet
-  uint8_t data[MAX_PACKET_SIZE];
+  /// @brief Send buffer
+  uint8_t send_buffer[MAX_PACKET_SIZE];
+
+  /// @brief Receive buffer
+  uint8_t receive_buffer[MAX_PACKET_SIZE];
 };
 
 }  // namespace trossen_arm

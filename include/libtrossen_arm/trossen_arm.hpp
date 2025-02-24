@@ -103,6 +103,10 @@ struct EndEffectorProperties
 
   /// @brief Offset from the palm center to the right carriage center in m in home configuration
   float offset_finger_right;
+
+  /// @brief Scaling factor for the max gripper force
+  /// @note It must be within [0.0, 1.0], 0.0 for no force, 1.0 for max force in the specifications
+  float t_max_factor;
 };
 
 /// @brief End effector properties for the standard variants
@@ -140,7 +144,8 @@ struct StandardEndEffector {
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
     .offset_finger_left = 0.0227f,
-    .offset_finger_right = -0.0227f
+    .offset_finger_right = -0.0227f,
+    .t_max_factor = 0.5f
   };
 
   /// @brief WXAI V0 leader variant
@@ -176,7 +181,8 @@ struct StandardEndEffector {
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
     .offset_finger_left = 0.01485f,
-    .offset_finger_right = -0.01485f
+    .offset_finger_right = -0.01485f,
+    .t_max_factor = 0.5f
   };
 
   /// @brief WXAI V0 follower variant
@@ -212,7 +218,8 @@ struct StandardEndEffector {
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
     .offset_finger_left = 0.0227f,
-    .offset_finger_right = -0.0227f
+    .offset_finger_right = -0.0227f,
+    .t_max_factor = 0.5f
   };
 };
 
@@ -499,8 +506,12 @@ public:
    *
    * @param effort_correction The effort correction to set
    *
-   * @note This configuration is used to map the efforts in Nm or N to the motor
+   * @details This configuration is used to map the efforts in Nm or N to the motor
    *   effort unit, i.e., effort_correction = motor effort unit / Nm or N
+   *
+   * @note The size of the vector should be equal to the number of joints
+   *
+   * @note Each element in the vector should be within the range [0.5, 2.0]
    */
   void set_effort_correction(const std::vector<float> & effort_correction);
 
@@ -512,6 +523,8 @@ public:
    *   Mode::position
    *   Mode::velocity
    *   Mode::effort
+   *
+   * @note The size of the vector should be equal to the number of joints
    */
   void set_joint_modes(const std::vector<Mode> & modes);
 
@@ -558,6 +571,15 @@ public:
    * @param end_effector The end effector properties
    */
   void set_end_effector(const EndEffectorProperties & end_effector);
+
+  /**
+   * @brief Set the gripper force limit scaling factor
+   *
+   * @param scaling_factor Scaling factor for the max gripper force
+   *
+   * @note It must be within [0.0, 1.0], 0.0 for no force, 1.0 for max force in the specifications
+   */
+  void set_gripper_force_limit_scaling_factor(float scaling_factor = 0.5f);
 
   /**
    * @brief Get the number of joints
@@ -641,9 +663,6 @@ public:
    * @brief Get the effort correction
    *
    * @return Effort correction
-   *
-   * @note This configuration is used to map the efforts in Nm or N to the motor
-   *  effort unit, i.e., effort_correction = motor effort unit / Nm or N
    */
   std::vector<float> get_effort_correction();
 
@@ -668,6 +687,14 @@ public:
    */
   EndEffectorProperties get_end_effector();
 
+  /**
+   * @brief Get the gripper force limit scaling factor
+   *
+   * @return Scaling factor for the max gripper force, 0.0 for no force, 1.0 for max force in the
+   *   specifications
+   */
+  float get_gripper_force_limit_scaling_factor();
+
 private:
   // Raw counterparts of LinkProperties and EndEffectorProperties
   struct LinkRaw
@@ -684,6 +711,7 @@ private:
     LinkRaw finger_right;
     float offset_finger_left;
     float offset_finger_right;
+    float t_max_factor;
   };
 
   /// @brief Joint input

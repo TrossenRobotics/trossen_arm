@@ -1,11 +1,14 @@
 # Building the docs
 
-To build the docs, run the following commands:
+To build the docs, run the following commands from the repository root:
 
 ```bash
+# Create a virtual environment and install the required packages
 $ python3 -m venv venv
 $ source venv/bin/activate
+# Install the Python packages required to build the docs
 $ python3 -m pip install -r requirements.txt
+# Run the make target to build the docs
 $ make docs
 ```
 

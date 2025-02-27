@@ -1,0 +1,8 @@
+pip
+breathe
+docutils
+exhale
+sphinx
+sphinx-rtd-theme
+sphinx-copybutton
+sphinx-tabs

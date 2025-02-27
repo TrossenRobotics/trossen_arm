@@ -7,7 +7,7 @@ To build the docs, run the following commands from the repository root:
 $ python3 -m venv venv
 $ source venv/bin/activate
 # Install the Python packages required to build the docs
-$ python3 -m pip install -r requirements.txt
+$ python3 -m pip install -r docs/requirements.txt
 # Run the make target to build the docs
 $ make docs
 ```

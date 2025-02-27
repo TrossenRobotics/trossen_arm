@@ -11,11 +11,6 @@ project = 'Trossen Robotics Trossen Arm Documentation'
 author = 'Trossen Robotics'
 copyright = "{}, {}".format(time.strftime("%Y"), author)
 
-# The short X.Y version
-version = ''
-# The full version, including alpha/beta/rc tags
-release = ''
-
 # Add any Sphinx extension module names here, as strings. They can be extensions coming with Sphinx
 # (named 'sphinx.ext.*') or your custom ones.
 extensions = [
@@ -24,9 +19,6 @@ extensions = [
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages',
-    'sphinx.ext.graphviz',
-    'sphinx.ext.imgmath',
-    'sphinxcontrib.youtube',
     'breathe',
     'exhale',
 ]
@@ -76,11 +68,7 @@ html_scaled_image_link = False
 # Set the html page title
 html_title = "Trossen Robotics Trossen Arm Documentation"
 
-# Activate the bootstrap theme.
-# html_theme_path = ['_themes']
-# html_theme = 'bootstrap'
-
-# Theme options are theme-specific and customize the look and feel of a theme further.  For a list
+# Theme options are theme-specific and customize the look and feel of a theme further. For a list
 # of options available for each theme, see the documentation.
 html_theme_options = {
     # If enabled, navigation entries are not expandable
@@ -94,8 +82,6 @@ html_theme_options = {
     'includehidden': True,
     # When enabled, page subheadings are not included in the navigation.
     'titles_only': False,
-    # If True, the version number is shown at the top of the sidebar.
-    'display_version': False,
     # Only display the logo image, do not display the project name at the top of the sidebar
     'logo_only': True,
     # Add an icon next to external links.
@@ -128,9 +114,9 @@ html_show_sourcelink = False
 html_sourcelink_suffix = ''
 
 html_context = {
-    'display_github': False, # Integrate GitHub
+    'display_github': True, # Integrate GitHub
     'github_user': 'TrossenRobotics', # Username
-    'github_repo': 'trossen_arm_docs', # Repo name
+    'github_repo': 'libtrossen_arm', # Repo name
     'github_version': 'main/', # Version
     'conf_py_path': 'docs/', # Path in the checkout to the docs root
     'source_suffix': '.rst', # Change source suffix to rst
@@ -138,9 +124,6 @@ html_context = {
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'TrossenRoboticsTrossen ArmDocumentation'
-
-# make external links open in new tab
-#   https://stackoverflow.com/a/61669375
 
 # Setup the breathe extension
 breathe_projects = {'Trossen Arm API Documentation': './doxygen/xml'}
@@ -163,6 +146,9 @@ primary_domain = 'cpp'
 
 # Tell sphinx what the pygments highlight language should be.
 highlight_language = 'cpp'
+
+# make external links open in new tab
+#   https://stackoverflow.com/a/61669375
 
 from sphinx.writers.html import HTMLTranslator
 from docutils import nodes

@@ -1,8 +1,9 @@
-pip
 breathe
 docutils
 exhale
+pip
 sphinx
-sphinx-rtd-theme
 sphinx-copybutton
+sphinx-multiversion
+sphinx-rtd-theme
 sphinx-tabs

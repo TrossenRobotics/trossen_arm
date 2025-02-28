@@ -46,6 +46,6 @@ STEP Files / CAD Solids
 WidowX AI STEP Files
 --------------------
 
--   :download:`WidowX AI Base </_downloads/wxai_base_steps.zip>`
--   :download:`WidowX AI Leader </_downloads/wxai_leader_steps.zip>`
--   :download:`WidowX AI Follower </_downloads/wxai_follower_steps.zip>`
+-   :download:`WidowX AI Base </_downloads/wxai_v0_base_steps.zip>`
+-   :download:`WidowX AI Leader </_downloads/wxai_v0_leader_steps.zip>`
+-   :download:`WidowX AI Follower </_downloads/wxai_v0_follower_steps.zip>`

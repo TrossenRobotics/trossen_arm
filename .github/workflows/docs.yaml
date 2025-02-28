@@ -31,6 +31,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade --requirement ./docs/requirements.txt
+          sudo apt-get install -yqq doxygen
 
       - name: Build Multiversion Docs
         run: make docs-multiversion

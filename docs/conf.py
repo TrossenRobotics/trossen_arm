@@ -14,13 +14,14 @@ copyright = "{}, {}".format(time.strftime("%Y"), author)
 # Add any Sphinx extension module names here, as strings. They can be extensions coming with Sphinx
 # (named 'sphinx.ext.*') or your custom ones.
 extensions = [
+    'breathe',
+    'exhale',
     'sphinx_copybutton',
+    'sphinx_multiversion',
     'sphinx_tabs.tabs',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
     'sphinx.ext.githubpages',
-    'breathe',
-    'exhale',
 ]
 
 # Enable AutoSectionLabel
@@ -34,6 +35,15 @@ copybutton_prompt_text = '$ '
 templates_path = [
     '_templates'
 ]
+
+# Whitelist pattern for branches (set to None to ignore all branches)
+# Set to a regex that will filter branches based on:
+# * 'main'
+# * 'v$MAJOR.$MINOR' (e.g. 'v1.2')
+
+smv_branch_whitelist = r'^main$|^v\d+\.\d+$'
+
+smv_latest_version = 'main'
 
 # The suffix(es) of source filenames. You can specify multiple suffix as a list of string:
 source_suffix = '.rst'
@@ -50,7 +60,7 @@ language = 'en'
 
 # List of patterns, relative to source directory, that match files and directories to ignore when
 # looking for source files. This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -126,7 +136,7 @@ html_context = {
 htmlhelp_basename = 'TrossenRoboticsTrossen ArmDocumentation'
 
 # Setup the breathe extension
-breathe_projects = {'Trossen Arm API Documentation': './doxygen/xml'}
+breathe_projects = {'Trossen Arm API Documentation': '/tmp/doxygen/xml'}
 breathe_default_project = 'Trossen Arm API Documentation'
 
 # Setup the exhale extension
@@ -139,6 +149,16 @@ exhale_args = {
     "rootFileTitle":         "C++ API",
     # Suggested optional arguments
     "createTreeView":        True,
+    "exhaleExecutesDoxygen": True,
+    "exhaleDoxygenStdin":    """
+    PROJECT_NAME           = "Trossen Arm API Documentation"
+    INPUT                  = ../include
+    EXCLUDE_PATTERNS       = trossen_arm_*.hpp
+    EXCLUDE_SYMBOLS        = TrossenArmDriver::LinkRaw \
+                             TrossenArmDriver::EndEffectorRaw \
+                             TrossenArmDriver::JointInput \
+                             TrossenArmDriver::JointOutput
+    """,
 }
 
 # Tell sphinx what the primary language being documented is.

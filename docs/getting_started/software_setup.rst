@@ -196,6 +196,19 @@ To update the controller firmware, follow these steps.
         # Flash the firmware
         teensy_loader_cli --mcu=TEENSY41 -s firmware-wxai_v0.hex
 
+.. warning::
+
+    Upgrading the firmware will reset all configurations to the factory settings.
+
+    If you have made any customized configurations, we assume you are already familiar with :ref:`setting and getting the configurations <configuration>` using the driver.
+
+    A typical workflow is given below.
+
+    1.  Use the driver compatible with the current firmware to backup all customized configurations.
+    2.  Update the driver to the latest version.
+    3.  Flash the latest firmware.
+    4.  Set the customized configurations using the latest driver.
+
 What's Next?
 ------------
 

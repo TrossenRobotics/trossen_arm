@@ -146,10 +146,16 @@ exhale_args = {
     "rootFileName":          "library_root.rst",
     "doxygenStripFromPath":  "..",
     # Heavily encouraged optional argument (see docs)
-    "rootFileTitle":         "C++ API",
+    "rootFileTitle":         "Trossen Arm Driver API",
     # Suggested optional arguments
     "createTreeView":        True,
     "exhaleExecutesDoxygen": True,
+    "afterTitleDescription": """
+.. note::
+
+    These API docs are generated based on the C++ library.
+    The Python package is not explicitly documented due to its similarity with the C++ API.
+""",
     "exhaleDoxygenStdin":    """
     PROJECT_NAME           = "Trossen Arm API Documentation"
     INPUT                  = ../include
@@ -157,7 +163,8 @@ exhale_args = {
     EXCLUDE_SYMBOLS        = TrossenArmDriver::LinkRaw \
                              TrossenArmDriver::EndEffectorRaw \
                              TrossenArmDriver::JointInput \
-                             TrossenArmDriver::JointOutput
+                             TrossenArmDriver::JointOutput \
+                             TrossenArmDriver::JointCharacteristicName
     """,
 }
 

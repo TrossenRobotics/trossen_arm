@@ -27,18 +27,14 @@ Firmware releases for the Trossen Arm Controller are listed in the table below:
 
     * - Version
       - Download
-    * - v1.5.0 (Latest)
+    * - v1.6.0 (Latest)
+      - :download:`wxai_v0 (v1.6.0) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.6.0.zip>`
+    * - v1.5.0
       - :download:`wxai_v0 (v1.5.0) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.5.0.zip>`
     * - v1.4.0
       - :download:`wxai_v0 (v1.4.0) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.4.0.zip>`
     * - v1.3.0
       - :download:`wxai_v0 (v1.3.0) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.3.0.zip>`
-
-.. note::
-
-  The latest firmware release will be statically available at `this link`_.
-
-.. _this link: http://docs.trossenrobotics.com/trossen_arm/main/_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-latest.zip
 
 STEP Files / CAD Solids
 =======================

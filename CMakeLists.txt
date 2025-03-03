@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(
   libtrossen_arm
-  VERSION 1.5.0
+  VERSION 1.6.0
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})
 option(BUILD_DEMOS "Build C++ Demos" OFF)
-option(BUILD_DOCS "Build the documentation" OFF)
 
 # Set the C++ standard to 17
 set(CMAKE_CXX_STANDARD 17)
@@ -78,4 +77,3 @@ install(
 )
 
 include(cmake/Packaging.cmake)
-include(cmake/Docs.cmake)

@@ -60,8 +60,8 @@ int main() {
   );
 
   std::cout << "Opening the gripper..." << std::endl;
-  driver.set_gripper_mode(trossen_arm::Mode::effort);
-  driver.set_gripper_effort(50.0, 5.0, true);
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(50.0, 5.0, true);
 
   std::cout << "Moving the arm..." << std::endl;
   driver.set_arm_modes(trossen_arm::Mode::position);
@@ -72,8 +72,8 @@ int main() {
   );
 
   std::cout << "Closing the gripper..." << std::endl;
-  driver.set_gripper_mode(trossen_arm::Mode::effort);
-  driver.set_gripper_effort(-50.0, 5.0, true);
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(-50.0, 5.0, true);
 
   std::cout << "Moving the arm again..." << std::endl;
   driver.set_arm_modes(trossen_arm::Mode::position);

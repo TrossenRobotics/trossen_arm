@@ -31,7 +31,7 @@
 
 // Version passed from CMakeLists.txt
 #define DRIVER_VERSION_MAJOR 1
-#define DRIVER_VERSION_MINOR 5
+#define DRIVER_VERSION_MINOR 6
 #define DRIVER_VERSION_PATCH 0
 
 #endif  // LIBTROSSEN_ARM__TROSSEN_ARM_CONFIG_HPP_

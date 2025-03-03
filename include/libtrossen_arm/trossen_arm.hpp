@@ -43,27 +43,28 @@
 #include "libtrossen_arm/trossen_arm_interpolate.hpp"
 #include "libtrossen_arm/trossen_arm_logging.hpp"
 #include "libtrossen_arm/trossen_arm_udp_client.hpp"
+#include "yaml-cpp/yaml.h"
 
 namespace trossen_arm
 {
 
 /// @brief Operation modes of a joint
 enum class Mode : uint8_t {
-  /// @brief Idle mode: arm joints are braked, the gripper joint closing with a safe force
+  /// @brief Arm joints are braked, the gripper joint closing with a safe force
   idle,
-  /// @brief Position mode: control the joint to a desired position
+  /// @brief Control the joint to a desired position
   position,
-  /// @brief Velocity mode: control the joint to a desired velocity
+  /// @brief Control the joint to a desired velocity
   velocity,
-  /// @brief Effort mode: control the joint to a desired effort
-  effort,
+  /// @brief Control the joint to a desired external effort
+  external_effort,
 };
 
 /// @brief IP methods
 enum class IPMethod : uint8_t {
-  /// @brief Manual: use the manual IP address specified in the configuration
+  /// @brief Use the manual IP address specified in the configuration
   manual,
-  /// @brief DHCP: use the DHCP to obtain the IP address, if failed, use the default IP address
+  /// @brief Use DHCP to obtain the IP address, if failed, use the default IP address
   dhcp,
 };
 
@@ -71,6 +72,26 @@ enum class IPMethod : uint8_t {
 enum class Model : uint8_t {
   /// @brief WXAI V0
   wxai_v0,
+};
+
+/// @brief Joint characteristic
+struct JointCharacteristic
+{
+  /// @brief Effort correction in motor effort unit / Nm or N
+  /// @note It must be within [0.5, 2.0]
+  float effort_correction;
+  /// @brief Friction transition velocity in rad/s for arm joints or m/s for the gripper joint
+  /// @note It must be positive
+  float friction_transition_velocity;
+  /// @brief Friction constant term in Nm for arm joints or N for the gripper joint
+  float friction_constant_term;
+  /// @brief Friction coulomb coef in Nm/Nm for arm joints or N/N for the gripper joint
+  float friction_coulomb_coef;
+  /// @brief Friction viscous coef in Nm/(rad/s) for arm joints or N/(m/s) for the gripper joint
+  float friction_viscous_coef;
+  /// @brief Scaling factor in 1 that scales the base continuity constraint
+  /// @note It must be within [1.0, 10.0]
+  float continuity_factor;
 };
 
 /// @brief Link properties
@@ -255,12 +276,12 @@ public:
    *
    * @param goal_positions Positions in rad for arm joints and m for the gripper joint
    * @param goal_time Optional: goal time in s when the goal positions should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal positions are reached, default true
    * @param goal_feedforward_velocities Optional: feedforward velocities in rad/s for arm joints
-   *   and m/s for the gripper joint, default zeros
+   * and m/s for the gripper joint, default zeros
    * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm
-   *   joints and m/s^2 for the gripper joint, default zeros
+   * joints and m/s^2 for the gripper joint, default zeros
    *
    * @note The size of the vectors should be equal to the number of joints
    */
@@ -276,11 +297,11 @@ public:
    *
    * @param goal_positions Positions in rad
    * @param goal_time Optional: goal time in s when the goal positions should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal positions are reached, default true
    * @param goal_feedforward_velocities Optional: feedforward velocities in rad/s, default zeros
    * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2, default
-   *   zeros
+   * zeros
    *
    * @note The size of the vectors should be equal to the number of arm joints
    */
@@ -296,7 +317,7 @@ public:
    *
    * @param goal_position Position in m
    * @param goal_time Optional: goal time in s when the goal position should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal position is reached, default true
    * @param goal_feedforward_velocity Optional: feedforward velocity in m/s, default zero
    * @param goal_feedforward_acceleration Optional: feedforward acceleration in m/s^2, default zero
@@ -314,12 +335,12 @@ public:
    * @param joint_index The index of the joint in [0, num_joints - 1]
    * @param goal_position Position in rad for arm joints and m for the gripper joint
    * @param goal_time Optional: goal time in s when the goal position should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal position is reached, default true
    * @param goal_feedforward_velocity Optional: feedforward velocity in rad/s for arm joints and
-   *   m/s for the gripper joint, default zero
+   * m/s for the gripper joint, default zero
    * @param goal_feedforward_acceleration Optional: feedforward acceleration in rad/s^2 for arm
-   *   joints and m/s^2 for the gripper joint, default zero
+   * joints and m/s^2 for the gripper joint, default zero
    */
   void set_joint_position(
     uint8_t joint_index,
@@ -335,10 +356,10 @@ public:
    *
    * @param goal_velocities Velocities in rad/s for arm joints and m/s for the gripper joint
    * @param goal_time Optional: goal time in s when the goal velocities should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal velocities are reached, default true
    * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2 for arm
-   *   joints and m/s^2 for the gripper joint, default zeros
+   * joints and m/s^2 for the gripper joint, default zeros
    *
    * @note The size of the vectors should be equal to the number of joints
    */
@@ -354,9 +375,9 @@ public:
    * @param goal_velocities Velocities in rad
    * @param blocking Optional: whether to block until the goal velocities are reached, default true
    * @param goal_time Optional: goal time in s when the goal velocities should be reached, default
-   *   2.0s
+   * 2.0s
    * @param goal_feedforward_accelerations Optional: feedforward accelerations in rad/s^2, default
-   *   zeros
+   * zeros
    *
    * @note The size of the vectors should be equal to the number of arm joints
    */
@@ -371,7 +392,7 @@ public:
    *
    * @param goal_velocity Velocity in m/s
    * @param goal_time Optional: goal time in s when the goal velocity should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal velocity is reached, default true
    * @param goal_feedforward_acceleration Optional: feedforward acceleration in m/s^2, default zero
    */
@@ -388,10 +409,10 @@ public:
    * @param joint_index The index of the joint in [0, num_joints - 1]
    * @param goal_velocity Velocity in rad/s for arm joints and m/s for the gripper joint
    * @param goal_time Optional: goal time in s when the goal velocity should be reached, default
-   *   2.0s
+   * 2.0s
    * @param blocking Optional: whether to block until the goal velocity is reached, default true
    * @param goal_feedforward_acceleration Optional: feedforward acceleration in rad/s^2 for arm
-   *   joints and m/s^2 for the gripper joint, default zero
+   * joints and m/s^2 for the gripper joint, default zero
    */
   void set_joint_velocity(
     uint8_t joint_index,
@@ -402,62 +423,76 @@ public:
   );
 
   /**
-   * @brief Set the efforts of all joints
+   * @brief Set the external efforts of all joints
    *
-   * @param goal_efforts Efforts in Nm for arm joints and N for the gripper joint
-   * @param goal_time Optional: goal time in s when the goal efforts should be reached, default 2.0s
-   * @param blocking Optional: whether to block until the goal efforts are reached, default true
+   * @param goal_external_efforts External efforts in Nm for arm joints and N for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal external efforts should be
+   * reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal external efforts are reached, default
+   * true
    *
    * @note The size of the vectors should be equal to the number of joints
    */
-  void set_all_efforts(
-    const std::vector<float> & goal_efforts,
+  void set_all_external_efforts(
+    const std::vector<float> & goal_external_efforts,
     float goal_time = 2.0f,
     bool blocking = true
   );
 
   /**
-   * @brief Set the efforts of the arm joints
+   * @brief Set the external efforts of the arm joints
    *
-   * @param goal_efforts Efforts in Nm
-   * @param goal_time Optional: goal time in s when the goal efforts should be reached, default 2.0s
-   * @param blocking Optional: whether to block until the goal efforts are reached, default true
+   * @param goal_external_efforts External efforts in Nm
+   * @param goal_time Optional: goal time in s when the goal external efforts should be
+   * reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal external efforts are reached, default
+   * true
    *
    * @note The size of the vectors should be equal to the number of arm joints
    */
-  void set_arm_efforts(
-    const std::vector<float> & goal_efforts,
+  void set_arm_external_efforts(
+    const std::vector<float> & goal_external_efforts,
     float goal_time = 2.0f,
     bool blocking = true
   );
 
   /**
-   * @brief Set the effort of the gripper
+   * @brief Set the external effort of the gripper
    *
-   * @param goal_effort Effort in N
-   * @param goal_time Optional: goal time in s when the goal effort should be reached, default 2.0s
-   * @param blocking Optional: whether to block until the goal effort is reached, default true
+   * @param goal_external_effort External effort in N
+   * @param goal_time Optional: goal time in s when the goal external effort should be
+   * reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal external effort is reached, default
+   * true
    */
-  void set_gripper_effort(
-    float goal_effort,
+  void set_gripper_external_effort(
+    float goal_external_effort,
     float goal_time = 2.0f,
     bool blocking = true
   );
 
   /**
-   * @brief Set the effort of a joint
+   * @brief Set the external effort of a joint
    *
    * @param joint_index The index of the joint in [0, num_joints - 1]
-   * @param goal_effort Effort in Nm for arm joints and N for the gripper joint
-   * @param goal_time Optional: goal time in s when the goal effort should be reached, default 2.0s
-   * @param blocking Optional: whether to block until the goal effort is reached, default true
+   * @param goal_external_effort External effort in Nm for arm joints and N for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal external effort should be
+   * reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal external effort is reached, default
+   * true
    */
-  void set_joint_effort(
+  void set_joint_external_effort(
     uint8_t joint_index,
-    float goal_effort,
+    float goal_external_effort,
     float goal_time = 2.0f,
     bool blocking = true
   );
+
+  /**
+   * @brief Load configurations from a YAML file and set them
+   * @param file_path The file path to load the configurations
+   */
+  void load_configs_from_file(const std::string & file_path);
 
   /**
    * @brief Set the factory reset flag
@@ -502,27 +537,103 @@ public:
   void set_subnet(const std::string subnet = "255.255.255.0");
 
   /**
-   * @brief Set the effort correction
+   * @brief Set the joint characteristics
    *
-   * @param effort_correction The effort correction to set
+   * @param joint_characteristics Joint characteristics
+   *
+   * @note The size of the vector should be equal to the number of joints
+   *
+   * @note Some joint characteristics are required to be within the following ranges
+   *
+   * - effort_correction: [0.5, 2.0]
+   *
+   * - friction_transition_velocity: positive
+   *
+   * - continuity_factor: [1.0, 10.0]
+   */
+  void set_joint_characteristics(const std::vector<JointCharacteristic> & joint_characteristics);
+
+  /**
+   * @brief Set the effort corrections
+   *
+   * @param effort_corrections Effort corrections in motor effort unit / Nm or N
    *
    * @details This configuration is used to map the efforts in Nm or N to the motor
-   *   effort unit, i.e., effort_correction = motor effort unit / Nm or N
+   * effort unit, i.e., effort_correction = motor effort unit / Nm or N
    *
    * @note The size of the vector should be equal to the number of joints
    *
    * @note Each element in the vector should be within the range [0.5, 2.0]
    */
-  void set_effort_correction(const std::vector<float> & effort_correction);
+  void set_effort_corrections(const std::vector<float> & effort_corrections);
+
+  /**
+   * @brief Set the friction transition velocities
+   *
+   * @param friction_transition_velocities Friction transition velocities in rad/s for arm joints
+   * and m/s for the gripper joint
+   *
+   * @note The size of the vector should be equal to the number of joints
+   *
+   * @note Each element in the vector should be positive
+   */
+  void set_friction_transition_velocities(
+    const std::vector<float> & friction_transition_velocities
+  );
+
+  /**
+   * @brief Set the friction constant terms
+   *
+   * @param friction_constant_terms Friction constant terms in Nm for arm joints and N for the
+   * gripper joint
+   *
+   * @note The size of the vector should be equal to the number of joints
+   */
+  void set_friction_constant_terms(const std::vector<float> & friction_constant_terms);
+
+  /**
+   * @brief Set the friction coulomb coefs
+   *
+   * @param friction_coulomb_coefs Friction coulomb coefs in Nm/Nm for arm joints and N/N for the
+   * gripper joint
+   *
+   * @note The size of the vector should be equal to the number of joints
+   */
+  void set_friction_coulomb_coefs(const std::vector<float> & friction_coulomb_coefs);
+
+  /**
+   * @brief Set the friction viscous coefs
+   *
+   * @param friction_viscous_coefs Friction viscous coefs in Nm/(rad/s) for arm joints and N/(m/s)
+   * for the gripper joint
+   *
+   * @note The size of the vector should be equal to the number of joints
+   */
+  void set_friction_viscous_coefs(const std::vector<float> & friction_viscous_coefs);
+
+  /**
+   * @brief Set the continuity factors
+   *
+   * @param continuity_factors Continuity factors in 1 that scales the base continuity constraint
+   *
+   * @note The size of the vector should be equal to the number of joints
+   *
+   * @note Each element in the vector should be within the range [1.0, 10.0]
+   */
+  void set_continuity_factors(const std::vector<float> & continuity_factors);
 
   /**
    * @brief Set the modes of each joint
    *
    * @param modes Desired modes for each joint, one of
-   *   Mode::idle
-   *   Mode::position
-   *   Mode::velocity
-   *   Mode::effort
+   *
+   * - Mode::idle
+   *
+   * - Mode::position
+   *
+   * - Mode::velocity
+   *
+   * - Mode::external_effort
    *
    * @note The size of the vector should be equal to the number of joints
    */
@@ -532,10 +643,14 @@ public:
    * @brief Set all joints to the same mode
    *
    * @param mode Desired mode for all joints, one of
-   *   Mode::idle
-   *   Mode::position
-   *   Mode::velocity
-   *   Mode::effort
+   *
+   * - Mode::idle
+   *
+   * - Mode::position
+   *
+   * - Mode::velocity
+   *
+   * - Mode::external_effort
    */
   void set_all_modes(Mode mode = Mode::idle);
 
@@ -543,10 +658,14 @@ public:
    * @brief Set the mode of the arm joints
    *
    * @param mode Desired mode for the arm joints, one of
-   *   Mode::idle
-   *   Mode::position
-   *   Mode::velocity
-   *   Mode::effort
+   *
+   * - Mode::idle
+   *
+   * - Mode::position
+   *
+   * - Mode::velocity
+   *
+   * - Mode::external_effort
    *
    * @warning This method does not change the gripper joint's mode
    */
@@ -556,10 +675,14 @@ public:
    * @brief Set the mode of the gripper joint
    *
    * @param mode Desired mode for the gripper joint, one of
-   *   Mode::idle
-   *   Mode::position
-   *   Mode::velocity
-   *   Mode::effort
+   *
+   * - Mode::idle
+   *
+   * - Mode::position
+   *
+   * - Mode::velocity
+   *
+   * - Mode::external_effort
    *
    * @warning This method does not change the arm joints' mode
    */
@@ -617,6 +740,12 @@ public:
   std::vector<float> get_external_efforts();
 
   /**
+   * @brief Save configurations to a YAML file
+   * @param file_path The file path to store the configurations
+   */
+  void save_configs_to_file(const std::string & file_path);
+
+  /**
    * @brief Get the factory reset flag
    *
    * @return true The configurations will be reset to factory defaults at the next startup
@@ -660,11 +789,53 @@ public:
   std::string get_subnet();
 
   /**
-   * @brief Get the effort correction
+   * @brief Get the joint characteristics
    *
-   * @return Effort correction
+   * @return Joint characteristics
    */
-  std::vector<float> get_effort_correction();
+  std::vector<JointCharacteristic> get_joint_characteristics();
+
+  /**
+   * @brief Get the effort corrections
+   *
+   * @return Effort corrections in motor effort unit / Nm or N
+   */
+  std::vector<float> get_effort_corrections();
+
+  /**
+   * @brief Get the friction transition velocities
+   *
+   * @return Friction transition velocities in rad/s for arm joints and m/s for the gripper joint
+   */
+  std::vector<float> get_friction_transition_velocities();
+
+  /**
+   * @brief Get the friction constant terms
+   *
+   * @return Friction constant terms in Nm for arm joints and N for the gripper joint
+   */
+  std::vector<float> get_friction_constant_terms();
+
+  /**
+   * @brief Get the friction coulomb coefs
+   *
+   * @return Friction coulomb coefs in Nm/Nm for arm joints and N/N for the gripper joint
+   */
+  std::vector<float> get_friction_coulomb_coefs();
+
+  /**
+   * @brief Get the friction viscous coefs
+   *
+   * @return Friction viscous coefs in Nm/(rad/s) for arm joints and N/(m/s) for the gripper joint
+   */
+  std::vector<float> get_friction_viscous_coefs();
+
+  /**
+   * @brief Get the continuity factors
+   *
+   * @return Continuity factors in 1 that scales the base continuity constraint
+   */
+  std::vector<float> get_continuity_factors();
 
   /**
    * @brief Get the error information of the robot
@@ -691,7 +862,7 @@ public:
    * @brief Get the gripper force limit scaling factor
    *
    * @return Scaling factor for the max gripper force, 0.0 for no force, 1.0 for max force in the
-   *   specifications
+   * specifications
    */
   float get_gripper_force_limit_scaling_factor();
 
@@ -714,12 +885,14 @@ private:
     float t_max_factor;
   };
 
-  /// @brief Joint input
-  /// @details The joint input is used to command a motion to a joint. Three types of motion are
-  ///   supported and are corresponding to the three non-idle modes: position, velocity, and effort.
-  ///   The position, velocity, and effort fields are mandatory for the respective modes. Leaving
-  ///   the feedforward terms as zero is fine but filling them with the values corresponding to the
-  ///   trajectory is recommended for smoother motion.
+  /**
+   * @brief Joint input
+   * @details The joint input is used to command a motion to a joint. Three types of motion are
+   * supported and are corresponding to the three non-idle modes: position, velocity, and
+   * external_effort. The position, velocity, and external_effort fields are mandatory for the
+   * respective modes. Leaving the feedforward terms as zero is fine but filling them with the
+   * values corresponding to the trajectory is recommended for smoother motion.
+   */
   struct JointInput
   {
     /// @brief The mode of the joint input
@@ -742,11 +915,11 @@ private:
         /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
         float feedforward_acceleration;
       } velocity;
-      /// @brief Joint input corresponding to the effort mode
+      /// @brief Joint input corresponding to the external_effort mode
       struct {
-        /// @brief Effort in Nm for arm joints or N for the gripper joint
-        float effort;
-      } effort;
+        /// @brief external effort in Nm for arm joints or N for the gripper joint
+        float external_effort;
+      } external_effort;
     };
   };
 
@@ -787,6 +960,8 @@ private:
     joint_command_failed,
     // Controller's CAN interface failed to receive a message
     joint_feedback_failed,
+    // Joint clear error command failed
+    joint_clear_error_failed,
     // Joint enable command failed
     joint_enable_failed,
     // Joint disable command failed
@@ -821,7 +996,7 @@ private:
     dns,
     gateway,
     subnet,
-    effort_correction,
+    joint_characteristics,
     error_state,
     modes,
     end_effector
@@ -847,6 +1022,20 @@ private:
 
   // Mode name
   static const std::map<Mode, std::string> MODE_NAME;
+
+  // Configuration name
+  static const std::map<ConfigurationAddress, std::string> CONFIGURATION_NAME;
+
+  // Joint characteristic name
+  static const struct JointCharacteristicName
+  {
+    std::string effort_correction;
+    std::string friction_transition_velocity;
+    std::string friction_constant_term;
+    std::string friction_coulomb_coef;
+    std::string friction_viscous_coef;
+    std::string continuity_factor;
+  } JOINT_CHARACTERISTIC_NAME;
 
   // Interpolators for joint trajectories
   std::vector<QuinticHermiteInterpolator> trajectories_;
@@ -963,10 +1152,14 @@ private:
    * @brief Function to be executed by the daemon thread
    *
    * @details The daemon thread will repeatedly do the following:
-   *   1. Break if the driver is not configured
-   *   2. Set the joint inputs
-   *   3. Receive the joint outputs
-   *   4. Block and wait for a main thread operation if there is any
+   *
+   * 1. Break if the driver is not configured
+   *
+   * 2. Set the joint inputs
+   *
+   * 3. Receive the joint outputs
+   *
+   * 4. Block and wait for a main thread operation if there is any
    */
   void daemon();
 };

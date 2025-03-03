@@ -91,21 +91,21 @@ int main(int argc, char** argv)
 
   std::cout << "Starting to teleoperate the robots..." << std::endl;
   std::this_thread::sleep_for(std::chrono::seconds(1));
-  driver_leader.set_all_modes(trossen_arm::Mode::effort);
+  driver_leader.set_all_modes(trossen_arm::Mode::external_effort);
   driver_follower.set_all_modes(trossen_arm::Mode::position);
 
   auto start_time = std::chrono::steady_clock::now();
   auto end_time = start_time + std::chrono::seconds(20);
   float force_feedback_gain = 0.1;
-  std::vector<float> efforts_leader(driver_leader.get_num_joints());
+  std::vector<float> external_efforts_leader(driver_leader.get_num_joints());
   while (std::chrono::steady_clock::now() < end_time) {
-    // Feed the external efforts from the follower robot to the leader robot
-    efforts_leader = driver_follower.get_external_efforts();
+    // Feed the external external efforts from the follower robot to the leader robot
+    external_efforts_leader = driver_follower.get_external_efforts();
     for (size_t i = 0; i < driver_leader.get_num_joints(); ++i) {
-      efforts_leader.at(i) *= -force_feedback_gain;
+      external_efforts_leader.at(i) *= -force_feedback_gain;
     }
-    driver_leader.set_all_efforts(
-      efforts_leader,
+    driver_leader.set_all_external_efforts(
+      external_efforts_leader,
       0.0f,
       false
     );

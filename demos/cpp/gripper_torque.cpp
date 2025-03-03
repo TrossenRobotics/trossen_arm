@@ -58,26 +58,26 @@ int main() {
     std::cout << "Press Enter to open the gripper..." << std::endl;
     std::cin.get();
     std::cout << "Open gripper with 10N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::effort);
-    driver.set_gripper_effort(10.0, 0.0, false);
+    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+    driver.set_gripper_external_effort(10.0, 0.0, false);
 
-    std::cout << "Press Enter to increase the effort..." << std::endl;
+    std::cout << "Press Enter to increase the external effort..." << std::endl;
     std::cin.get();
-    std::cout << "Increase effort to 100N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::effort);
-    driver.set_gripper_effort(100.0, 5.0, true);
+    std::cout << "Increase external effort to 100N..." << std::endl;
+    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+    driver.set_gripper_external_effort(100.0, 5.0, true);
 
     std::cout << "Press Enter to close the gripper..." << std::endl;
     std::cin.get();
     std::cout << "Close gripper with 10N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::effort);
-    driver.set_gripper_effort(-10.0, 0.0, false);
+    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+    driver.set_gripper_external_effort(-10.0, 0.0, false);
 
-    std::cout << "Press Enter to increase the effort..." << std::endl;
+    std::cout << "Press Enter to increase the external effort..." << std::endl;
     std::cin.get();
-    std::cout << "Increase effort to 100N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::effort);
-    driver.set_gripper_effort(-100.0, 5.0, true);
+    std::cout << "Increase external effort to 100N..." << std::endl;
+    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+    driver.set_gripper_external_effort(-100.0, 5.0, true);
 
     std::cout << "Press Enter to end the demo..." << std::endl;
     std::cin.get();

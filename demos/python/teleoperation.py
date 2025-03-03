@@ -95,14 +95,14 @@ if __name__=='__main__':
 
     print("Starting to teleoperate the robots...")
     time.sleep(1)
-    driver_leader.set_all_modes(trossen_arm.Mode.effort)
+    driver_leader.set_all_modes(trossen_arm.Mode.external_effort)
     driver_follower.set_all_modes(trossen_arm.Mode.position)
 
     start_time = time.time()
     end_time = start_time + teleoperation_time
     while time.time() < end_time:
         # Feed the external efforts from the follower robot to the leader robot
-        driver_leader.set_all_efforts(
+        driver_leader.set_all_external_efforts(
             -force_feedback_gain * np.array(driver_follower.get_external_efforts()),
             0.0,
             False,

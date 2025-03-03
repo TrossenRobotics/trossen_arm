@@ -27,17 +27,19 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 // Purpose:
-// This script demonstrates how to set the effort corrections values in the EEPROM.
+// This script demonstrates how to set the joint characteristics in the EEPROM, using the effort
+// corrections as an example.
 //
 // Hardware setup:
 // 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 //
 // The script does the following:
 // 1. Initializes the driver
-// 2. Configures the driver with the follower configuration
-// 3. Sets the effort correction
-// 4. The driver cleans up automatically at the destructor
-// 5. Power cycle to apply the new effort corrections
+// 2. Configures the driver with the leader configuration
+// 3. Sets the effort corrections via joint characteristics
+// 4. Sets the effort corrections via dedicated helper function
+// 5. The driver cleans up automatically at the destructor
+// 6. Power cycle to apply the new effort corrections
 
 #include <iostream>
 
@@ -55,20 +57,45 @@ int main() {
     false
   );
 
-  // Print the current effort correction
-  std::cout << "Current effort correction: ";
-  for (const auto& correction : driver.get_effort_correction()) {
+  // Print the current effort corrections via joint characteristics
+  std::cout << "Current effort corrections: ";
+  for (const auto& joint_characteristic : driver.get_joint_characteristics()) {
+    std::cout << joint_characteristic.effort_correction << " ";
+  }
+  std::cout << std::endl;
+
+  // Set the effort corrections via joint characteristics
+  std::vector<trossen_arm::JointCharacteristic> joint_characteristics = driver.get_joint_characteristics();
+  joint_characteristics[0].effort_correction = 1.1;
+  joint_characteristics[1].effort_correction = 1.1;
+  joint_characteristics[2].effort_correction = 1.1;
+  joint_characteristics[3].effort_correction = 1.25;
+  joint_characteristics[4].effort_correction = 1.15;
+  joint_characteristics[5].effort_correction = 1.15;
+  joint_characteristics[6].effort_correction = 1.15;
+  driver.set_joint_characteristics(joint_characteristics);
+
+  // Print the new effort corrections via joint characteristics
+  std::cout << "New effort corrections: ";
+  for (const auto& joint_characteristic : driver.get_joint_characteristics()) {
+    std::cout << joint_characteristic.effort_correction << " ";
+  }
+  std::cout << std::endl;
+
+  // Print the current effort corrections via dedicated helper function
+  std::cout << "Current effort corrections: ";
+  for (const auto& correction : driver.get_effort_corrections()) {
     std::cout << correction << " ";
   }
   std::cout << std::endl;
 
-  // Set the effort correction
-  std::vector<float> effort_correction = {1.2, 1.2, 1.2, 1.15, 1.0, 1.0, 1.1};
-  driver.set_effort_correction(effort_correction);
+  // Set the effort corrections via dedicated helper function
+  std::vector<float> effort_corrections = {1.1, 1.1, 1.1, 1.25, 1.15, 1.15, 1.15};
+  driver.set_effort_corrections(effort_corrections);
 
-  // Print the new effort correction
-  std::cout << "New effort correction: ";
-  for (const auto& correction : driver.get_effort_correction()) {
+  // Print the new effort corrections via dedicated helper function
+  std::cout << "New effort corrections: ";
+  for (const auto& correction : driver.get_effort_corrections()) {
     std::cout << correction << " ";
   }
   std::cout << std::endl;

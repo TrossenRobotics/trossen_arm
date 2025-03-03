@@ -28,17 +28,19 @@
 
 '''
 Purpose:
-This script demonstrates how to set the effort corrections values in the EEPROM.
+This script demonstrates how to set the joint characteristics in the EEPROM, using the effort
+corrections as an example.
 
 Hardware setup:
 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
 The script does the following:
 1. Initializes the driver
-2. Configures the driver with the follower configuration
-3. Sets the effort correction
-4. The driver cleans up automatically at the destructor
-5. Power cycle to apply the new effort corrections
+2. Configures the driver with the leader configuration
+3. Sets the effort corrections via joint characteristics
+4. Sets the effort corrections via dedicated helper function
+5. The driver cleans up automatically at the destructor
+6. Power cycle to apply the new effort corrections
 '''
 
 import trossen_arm
@@ -55,14 +57,39 @@ if __name__=='__main__':
         False
     )
 
-    # Print the current effort correction
-    print("Current effort correction: ", driver.get_effort_correction())
+    # Print the current effort corrections via joint characteristics
+    joint_characteristics = driver.get_joint_characteristics()
+    print(
+        "Current effort corrections: ",
+        [joint_characteristic.effort_correction for joint_characteristic in joint_characteristics]
+    )
 
-    # Set the effort correction
-    driver.set_effort_correction([1.1, 1.1, 1.1, 1.25, 1.15, 1.15, 1.15])
+    # Set the effort corrections via joint characteristics
+    joint_characteristics = driver.get_joint_characteristics()
+    joint_characteristics[0].effort_correction = 1.1
+    joint_characteristics[1].effort_correction = 1.1
+    joint_characteristics[2].effort_correction = 1.1
+    joint_characteristics[3].effort_correction = 1.25
+    joint_characteristics[4].effort_correction = 1.15
+    joint_characteristics[5].effort_correction = 1.15
+    joint_characteristics[6].effort_correction = 1.15
+    driver.set_joint_characteristics(joint_characteristics)
 
-    # Print the new effort correction
-    print("New effort correction: ", driver.get_effort_correction())
+    # Print the new effort corrections via joint characteristics
+    joint_characteristics = driver.get_joint_characteristics()
+    print(
+        "New effort corrections: ",
+        [joint_characteristic.effort_correction for joint_characteristic in joint_characteristics]
+    )
+
+    # Print the current effort corrections via dedicated helper function
+    print("Current effort corrections: ", driver.get_effort_corrections())
+
+    # Set the effort corrections via dedicated helper function
+    driver.set_effort_corrections([1.1, 1.1, 1.1, 1.25, 1.15, 1.15, 1.15])
+
+    # Print the new effort corrections via dedicated helper function
+    print("New effort corrections: ", driver.get_effort_corrections())
 
     # Power cycle to apply the new effort corrections
     print("Power cycle the robot to apply the new effort corrections.")

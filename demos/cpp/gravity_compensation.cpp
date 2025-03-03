@@ -36,7 +36,7 @@
 // The script does the following:
 // 1. Initializes the driver
 // 2. Configures the driver
-// 3. Sets the efforts to 0s
+// 3. Sets the external efforts to 0s
 // 4. Waits for the user to press enter
 // 5. Sets the mode to idle
 // 6. The driver automatically sets the mode to idle at the destructor
@@ -58,8 +58,8 @@ int main() {
   );
 
   // Start gravity compensation
-  driver.set_all_modes(trossen_arm::Mode::effort);
-  driver.set_all_efforts(
+  driver.set_all_modes(trossen_arm::Mode::external_effort);
+  driver.set_all_external_efforts(
     {0, 0, 0, 0, 0, 0, 0},
     0.0f,
     false

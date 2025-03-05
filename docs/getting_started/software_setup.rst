@@ -148,8 +148,8 @@ To install and use the C++ driver, follow these steps.
 
         ./path/to/install/bin/my_script
 
-Controller Firmware Update
---------------------------
+Software Upgrade
+================
 
 A controller firmware is compatible with a driver if their major and minor versions match exactly.
 For example, the driver v1.3.x is compatible with the controller firmware v1.3.x.
@@ -157,7 +157,7 @@ For example, the driver v1.3.x is compatible with the controller firmware v1.3.x
 Typically a controller comes with the firmware compatible with the latest driver as of the manufacturing date.
 As a result, when a new driver is released, the controller firmware may need to be updated.
 
-To update the controller firmware, follow these steps.
+To upgrade, follow these steps.
 
 1.  Install the Teensy Loader CLI if not already installed
 

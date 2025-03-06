@@ -36,6 +36,13 @@ Firmware releases for the Trossen Arm Controller are listed in the table below:
     * - v1.3.0
       - :download:`wxai_v0 (v1.3.0) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.3.0.zip>`
 
+URDF Files
+==========
+
+You can find description files for the Trossen Arms in the `trossen_arm_description`_ repository on GitHub.
+
+.. _trossen_arm_description: https://github.com/TrossenRobotics/trossen_arm_description
+
 STEP Files / CAD Solids
 =======================
 

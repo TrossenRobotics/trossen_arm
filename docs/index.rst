@@ -26,6 +26,8 @@ Table of Contents:
 
     specifications.rst
     getting_started.rst
+    tutorials.rst
     downloads.rst
     troubleshooting.rst
     api/library_root
+

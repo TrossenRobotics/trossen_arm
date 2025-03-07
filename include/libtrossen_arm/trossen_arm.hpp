@@ -740,6 +740,13 @@ public:
   std::vector<float> get_external_efforts();
 
   /**
+   * @brief Get the compensation efforts
+   *
+   * @return Compensation efforts in Nm for arm joints and N for the gripper joint
+   */
+  std::vector<float> get_compensation_efforts();
+
+  /**
    * @brief Save configurations to a YAML file
    * @param file_path The file path to store the configurations
    */

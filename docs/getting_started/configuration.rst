@@ -202,6 +202,8 @@ Vice versa, the effort returned by the driver is given by the following expressi
 
     \text{external_effort} = \frac{\text{effort}_\text{motor}}{\text{effort_correction}} - \text{effort}_\text{compensation}
 
+Default values: ``arm specific``
+
 friction_transition_velocities, friction_constant_terms, friction_coulomb_coefs, and friction_viscous_coefs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -226,6 +228,18 @@ The resulting compensation effort is given below, where :math:`\text{effort}_\te
         - \text{effort}_\text{friction} & \text{if } \text{velocity} \lt -\text{transition_velocity} \\
         + \text{effort}_\text{friction} \times \frac{\text{velocity}}{\text{transition_velocity}} & \text{otherwise}
     \end{cases}
+
+Default values: ``arm specific``
+
+.. note::
+
+    Each controller-arm pair comes with calibrated effort corrections and friction parameters.
+    They should work decently for most applications.
+    However, you can always fine-tune them according to personal preferences.
+
+.. warning::
+
+    Since these configurations are arm specific, interchanging the arm or controller may cause deterioration in performance.
 
 continuity_factors
 ^^^^^^^^^^^^^^^^^^

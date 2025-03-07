@@ -2,8 +2,7 @@
 Tutorials
 =========
 
-These getting started guides provide users with step-by-step instructions on unboxing, assembling, mounting, and preparing their new Trossen Arm for operation.
-See the table of contents below for each relevant section.
+These tutorials provide step-by-step guides for using the Trossen Arm with LeRobot for Imitation Learning.
 
 
 .. toctree::

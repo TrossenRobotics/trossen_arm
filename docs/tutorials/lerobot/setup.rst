@@ -10,21 +10,10 @@ Install LeRobot
 
 On your computer:
 
-#. Install Miniconda (`Miniconda Installation Guide <https://docs.anaconda.com/miniconda/#quick-command-line-install>`_):
+#. Install Miniconda:
 
-   .. code-block:: bash
-
-      mkdir -p ~/miniconda3
-      wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-      bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-      rm ~/miniconda3/miniconda.sh
-      ~/miniconda3/bin/conda init bash
-
-#. Restart shell or run:
-
-   .. code-block:: bash
-
-      source ~/.bashrc
+   We use Miniconda to manage Python environments and dependencies.
+   To install Miniconda, download the installer for your Linux operating system from the `Miniconda Installation Guide <https://www.anaconda.com/docs/getting-started/miniconda/install#quickstart-install-instructions>`_.
 
 #. Create and activate a fresh Conda environment for LeRobot:
 
@@ -36,7 +25,7 @@ On your computer:
 
    .. code-block:: bash
 
-      git clone https://github.com/Interbotix/lerobot.git ~/lerobot
+      git clone -b trossen-ai https://github.com/Interbotix/lerobot.git ~/lerobot
 
 #. Install LeRobot with dependencies for the Trossen AI arms (`trossen-arm`) and cameras (`intelrealsense`):
 

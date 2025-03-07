@@ -13,6 +13,7 @@ What's Here
 
 *   :doc:`specifications` - Contains specification information for the Trossen Arms and related hardware.
 *   :doc:`getting_started` - These guides will walk you through the setup process for your Trossen Arm.
+*   :doc:`tutorials` - Step-by-step guides for using the Trossen Arm with LeRobot for Imitation Learning.
 *   :doc:`downloads` - Downloadable content related to the Trossen Arm.
 *   :doc:`troubleshooting` - Common issues and their solutions.
 *   :doc:`api/library_root` - Trossen Arm C++ API.
@@ -30,4 +31,3 @@ Table of Contents:
     downloads.rst
     troubleshooting.rst
     api/library_root
-

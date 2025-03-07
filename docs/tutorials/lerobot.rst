@@ -2,15 +2,14 @@
 LeRobot
 =======
 
-These getting started guides provide users with step-by-step instructions on unboxing, assembling, mounting, and preparing their new Trossen Arm for operation.
-See the table of contents below for each relevant section.
-
+This page contains tutorials for using the Trossen Arm with LeRobot for Imitation Learning.
 
 .. toctree::
     :maxdepth: 1
     :caption: Contents:
 
     lerobot/setup.rst
+    lerobot/configuration.rst
     lerobot/teleoperation.rst
     lerobot/record_episode.rst
     lerobot/visualize.rst

@@ -5,7 +5,9 @@ Training and Evaluating a Policy
 Training a Policy
 =================
 
-To train a policy to control your robot, use the :guilabel:`python lerobot/scripts/train.py` script. A few arguments are required. Here is an example command:
+To train a policy to control your robot, use the :guilabel:`python lerobot/scripts/train.py` script.
+A few arguments are required.
+Here is an example command:
 
 .. code-block:: bash
 
@@ -32,8 +34,11 @@ Explanation of the Command
 
       wandb login
 
-**Training will take several hours.** Checkpoints will be saved in:
-:guilabel:`outputs/train/act_trossen_ai_bimanual_test/checkpoints`.
+
+.. note::
+
+    **Training will take several hours.** Checkpoints will be saved in:
+    :guilabel:`outputs/train/act_trossen_ai_bimanual_test/checkpoints`.
 
 
 Evaluating Your Policy

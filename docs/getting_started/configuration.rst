@@ -244,10 +244,10 @@ Here is a guideline to tune the effort corrections and friction parameters.
 2.  Tune the joints one by one from gripper to base
 
     -   Increase the ``effort_correction`` if the links onwards are pulled down by gravity
-    -   Move the joint at low speed and increase the ``friction_coulomb_coef`` if the resistance is stronger when the joint is compensating for gravity than in a balanced position
-    -   Move the joint at varying speed and increase the ``friction_viscous_coef`` if there's more resistance at higher speed
-    -   Increase the ``friction_constant_term`` to reduce the resistance
-    -   Increase the ``friction_transition_velocity`` if quiet operation is preferred over overcoming stiction via high-frequency oscillations
+    -   Move the joint at low velocity and increase the ``friction_coulomb_coef`` if the resistance is stronger when the joint is compensating for gravity than in a balanced position
+    -   Move the joint at varying velocities and increase the ``friction_viscous_coef`` if there's more resistance at higher velocity
+    -   Increase the ``friction_constant_term`` to uniformly reduce the resistance up til the joint starts moving spontaneously
+    -   Increase the ``friction_transition_velocity`` if quiet operation and large stiction is preferred over reduced stiction with high-frequency oscillations
 
 Default values are arm specific and calibrated at the factory.
 

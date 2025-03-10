@@ -218,7 +218,7 @@ Default values are arm specific and calibrated at the factory.
 friction_transition_velocities, friction_constant_terms, friction_coulomb_coefs, and friction_viscous_coefs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We model a joint friction as a function of velocity and effort of three components: Coulomb, viscous, and constant.
+We model joint friction as a function of velocity and effort of three components: Coulomb, viscous, and constant.
 
 - The Coulomb friction is proportional to the magnitude of the effort.
 - The viscous friction is proportional to the velocity.

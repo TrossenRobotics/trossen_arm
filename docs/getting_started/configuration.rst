@@ -48,7 +48,7 @@ the configurations are divided into four categories as given in the following ta
             -   gripper_force_limit_scaling_factor
         -   -   factory_reset_flag
 
-The driver provides methods to get and set theses configurations.
+The driver provides methods to get and set these configurations.
 An example of a configuration script is given here.
 
 .. tabs::

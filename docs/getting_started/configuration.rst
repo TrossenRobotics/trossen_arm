@@ -182,7 +182,7 @@ Default value: ``manual``
 manual_ip, dns, gateway, subnet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If the IP method is set to manual, the manual IP address, DNS, gateway, and subnet are used.
+If the IP method is set to ``manual``, the manual IP address, DNS, gateway, and subnet are used.
 
 Default values:
 

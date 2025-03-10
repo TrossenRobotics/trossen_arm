@@ -207,7 +207,7 @@ Vice versa, the effort returned by the driver is given by the following expressi
 
     \text{external_effort} = \frac{\text{effort}_\text{motor}}{\text{effort_correction}} - \text{effort}_\text{compensation}
 
-Default values: ``arm specific``
+Default values are arm specific and calibrated at the factory.
 
 friction_transition_velocities, friction_constant_terms, friction_coulomb_coefs, and friction_viscous_coefs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -249,7 +249,7 @@ Here is a guideline to tune the effort corrections and friction parameters.
     -   Increase the ``friction_constant_term`` to reduce the resistance
     -   Increase the ``friction_transition_velocity`` if quiet operation is preferred over overcoming stiction via high-frequency oscillations
 
-Default values: ``arm specific``
+Default values are arm specific and calibrated at the factory.
 
 .. warning::
 

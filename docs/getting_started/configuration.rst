@@ -253,7 +253,7 @@ Default values are arm specific and calibrated at the factory.
 
 .. warning::
 
-    Since these configurations are arm specific, interchanging the arm or controller may cause deterioration in performance.
+    Since these configurations are arm specific, mixed usage of controller and arm with different serial numbers may cause deterioration in performance.
 
 continuity_factors
 ^^^^^^^^^^^^^^^^^^

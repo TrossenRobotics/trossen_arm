@@ -3,6 +3,7 @@ docutils
 exhale
 pip
 sphinx
+sphinxcontrib-mermaid
 sphinx-copybutton
 sphinx-multiversion
 sphinx-rtd-theme

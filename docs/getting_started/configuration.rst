@@ -261,22 +261,13 @@ continuity_factors
 The arm controller uses this factor to determine whether the commanded joint position is continuous.
 If not, the controller enter the :ref:`troubleshooting:16: robot input discontinuous` error state.
 
-The maximum position displacement between two consecutive commands is given by the following expression.
-
-.. math::
-
-    \text{max_position_displacement} = \text{continuity_factor} \times \frac{\text{max_velocity}}{\text{control_frequency}}
-
-The :math:`\text{max_velocity}` is the maximum velocity of the joint given in :doc:`/specifications`.
-The :math:`\text{control_frequency}` is the frequency at which the arm controller runs, which is approximately 650 Hz.
-
 Default value: ``2.0``
 
 .. tip::
 
     If you run into the :ref:`troubleshooting:16: robot input discontinuous` error state, please
 
-    - check that the frequency of the control loop is at least 650 Hz if the built-in interpolator is disabled, i.e., the ``goal_time`` is zero
+    - check that the frequency of the control loop is at least 300 Hz if the built-in interpolator is disabled, i.e., the ``goal_time`` is zero
     - otherwise, check that the ``goal_time`` is long enough compared to looping time so that the joint can feasibly reach ``goal_position`` within ``goal_time``
     - finally, if you're confident that there's no implementation mistake in the script, increase the continuity factor with discretion
 

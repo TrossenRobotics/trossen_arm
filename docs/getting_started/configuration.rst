@@ -2,7 +2,7 @@
 Configuration
 =============
 
-This section walks you through the configurations that can be set on a Trossen Robotics arm.
+This section walks you through the configurations that can be set on a Trossen AI arm.
 Properly configuring the arm for your application is crucial to ensure the arm operates as expected.
 
 What You Need

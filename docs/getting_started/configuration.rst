@@ -293,7 +293,7 @@ Link Properties
 
 The :class:`trossen_arm::LinkProperties` members of the end effector define the three links of an end effector.
 
-- plam: the whole end effector excluding the fingers
+- palm: the whole end effector excluding the fingers
 - left finger: the finger on the left side
 - right finger: the finger on the right side
 

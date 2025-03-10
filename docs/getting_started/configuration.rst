@@ -294,7 +294,7 @@ Otherwise, the controller won't be able to properly compensate for the end effec
 Link Properties
 ^^^^^^^^^^^^^^^
 
-The :class:`trossen_arm::LinkProperties` members of the end effector define the three parts of an end effector.
+The :class:`trossen_arm::LinkProperties` members of the end effector define the three links of an end effector.
 
 - plam: the whole end effector excluding the fingers
 - left finger: the finger on the left side

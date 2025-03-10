@@ -5,7 +5,7 @@ Hardware Setup
 This section walks you through the hardware setup for a new Trossen Arm.
 
 What You Need
--------------
+=============
 
 To get started, you will need the following:
 
@@ -16,7 +16,7 @@ To get started, you will need the following:
 -   Ethernet Switch (Optional)
 
 Mounting the Arm
-----------------
+================
 
 The Trossen Arm comes pre-assembled, so you will only need to mount it to a sturdy surface.
 The dimensions of the mounting holes at the base are shown below.
@@ -26,7 +26,7 @@ The dimensions of the mounting holes at the base are shown below.
     :align: center
 
 Connecting the Cables
----------------------
+=====================
 
 After securing the arm, the next step is to connect the cables.
 The following diagram shows the connections between the hardware components.
@@ -78,7 +78,7 @@ The closeup pictures for each component are provided below.
     Please connect to the switch only the devices required by your application.
     Low-quality connections can cause the arm to behave unexpectedly.
 
-What's Next?
-------------
+What's Next
+===========
 
 Now that you have completed the hardware setup, you can move on to the :doc:`/getting_started/software_setup` section to install the necessary software.

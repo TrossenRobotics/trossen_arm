@@ -297,7 +297,7 @@ Link Properties
 The mass, inertia, origin_xyz, and origin_rpy of these three links are required.
 These values follow the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
 
-The left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector.
+The left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector when the joints are in home positions.
 
 - plam: the whole end effector excluding the fingers
 - left finger: the finger on the left side

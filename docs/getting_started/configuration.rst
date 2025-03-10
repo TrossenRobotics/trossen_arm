@@ -146,7 +146,7 @@ Here is a breakdown of how the configurations affect the behavior of the arm.
 factory_reset_flag
 ------------------
 
-If the factory reset flag is set to true, all configurations are reset to their default values at the next boot.
+If the factory reset flag is set to true, all configurations are reset to their factory default values at the next boot.
 
 Default value: ``false``
 

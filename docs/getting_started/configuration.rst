@@ -164,13 +164,13 @@ The procedure is as follows.
 ip_method
 ^^^^^^^^^
 
-The IP method can be set to dhcp or manual.
+The IP method can be set to ``dhcp`` or ``manual``.
 
 Default value: ``manual``
 
 .. note::
 
-    If the IP method is set to dhcp, we expect a DHCP server to be present in the network.
+    If the IP method is set to ``dhcp``, we expect a DHCP server to be present in the network.
     It can be a router or a computer with a DHCP server running.
 
 manual_ip, dns, gateway, subnet

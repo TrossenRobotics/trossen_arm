@@ -283,25 +283,25 @@ Default value: ``2.0``
 End Effector
 ------------
 
-The end effector properties allow the usage of different end effectors.
+The :class:`trossen_arm::EndEffectorProperties` allow the usage of different end effectors.
 It's important to match the end effector properties with the actual end effector attached to the arm.
 Otherwise, the controller won't be able to properly compensate for the end effector's weight and inertia.
 
 .. tip::
 
-    The :class:`trossen_arm::StandardEndEffector` are provided in the driver.
+    The commonly used :class:`trossen_arm::StandardEndEffector` are provided in the driver.
 
 Link Properties
 ^^^^^^^^^^^^^^^
 
-The mass, inertia, origin_xyz, and origin_rpy of these three links are required.
-These values follow the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
-
-The left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector when the joints are in home positions.
+The :class:`trossen_arm::LinkProperties` members of the end effector define the three parts of an end effector.
 
 - plam: the whole end effector excluding the fingers
 - left finger: the finger on the left side
 - right finger: the finger on the right side
+
+where the mass, inertia, origin_xyz, and origin_rpy values follow the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
+And the left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector when the joints are in home positions.
 
 Finger Offsets
 ^^^^^^^^^^^^^^

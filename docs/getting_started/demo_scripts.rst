@@ -38,6 +38,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //   - trossen_arm.Mode.position
           //   - trossen_arm.Mode.velocity
           //   - trossen_arm.Mode.external_effort
+          //   - trossen_arm.Mode.effort
           auto xxxs = driver.get_modes();
 
           //   Set the mode[s] of the joint[s]
@@ -67,6 +68,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //     - velocities
           //     - efforts
           //     - external_efforts
+          //     - efforts
           std::vector<float> zzzs = driver.get_zzzs();
 
           //     Some more logic
@@ -97,6 +99,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #     - trossen_arm.Mode.position
             #     - trossen_arm.Mode.velocity
             #     - trossen_arm.Mode.external_effort
+            #     - trossen_arm.Mode.effort
             xxxs = driver.get_modes()
 
             #     Set the mode[s] of the joint[s]
@@ -126,6 +129,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #         - velocities
             #         - efforts
             #         - external_efforts
+            #         - efforts
             zzzs = driver.get_zzzs()
 
             #         Some more logic

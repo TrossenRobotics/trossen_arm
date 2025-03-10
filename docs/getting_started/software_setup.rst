@@ -5,12 +5,12 @@ Software Setup
 This section describes how to set up the software environment.
 
 What You Need
--------------
+=============
 
-To get started, please make sure you have gone through the :doc:`hardware_setup`.
+To get started, please make sure you have gone through the :doc:`/getting_started/hardware_setup`.
 
 Ethernet Setup
---------------
+==============
 
 The Trossen Arm Controller communicates with the Linux PC via Ethernet.
 As a result, the following network configurations are required on the Linux PC.
@@ -31,12 +31,12 @@ As a result, the following network configurations are required on the Linux PC.
     -   DNS: ``8.8.8.8``
 
 Installing the Drivers
-----------------------
+======================
 
 A Trossen Arm can be controlled using either the C++ or Python driver.
 
 Python
-^^^^^^
+------
 
 To install and use the Python driver, follow these steps.
 
@@ -67,7 +67,7 @@ To install and use the Python driver, follow these steps.
         python3 my_script.py
 
 C++
-^^^
+---
 
 To install and use the C++ driver, follow these steps.
 
@@ -148,8 +148,8 @@ To install and use the C++ driver, follow these steps.
 
         ./path/to/install/bin/my_script
 
-Controller Firmware Update
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Software Upgrade
+================
 
 A controller firmware is compatible with a driver if their major and minor versions match exactly.
 For example, the driver v1.3.x is compatible with the controller firmware v1.3.x.
@@ -157,7 +157,7 @@ For example, the driver v1.3.x is compatible with the controller firmware v1.3.x
 Typically a controller comes with the firmware compatible with the latest driver as of the manufacturing date.
 As a result, when a new driver is released, the controller firmware may need to be updated.
 
-To update the controller firmware, follow these steps.
+To upgrade, follow these steps.
 
 1.  Install the Teensy Loader CLI if not already installed
 
@@ -200,7 +200,7 @@ To update the controller firmware, follow these steps.
 
     Upgrading the firmware will reset all configurations to the factory settings.
 
-    If you have made any customized configurations, we assume you are already familiar with :ref:`setting and getting the configurations <configuration>` using the driver.
+    If you have made any customized configurations, we assume you are already familiar with :doc:`/getting_started/configuration` using the driver.
 
     A typical workflow is given below.
 
@@ -209,7 +209,7 @@ To update the controller firmware, follow these steps.
     3.  Flash the latest firmware.
     4.  Set the customized configurations using the latest driver.
 
-What's Next?
-------------
+What's Next
+===========
 
-Now that you have completed the software setup, an assorted collection of :doc:`/getting_started/demo_scripts` is available to help you get started with controlling the arm.
+After setting up the software, let's :doc:`configure </getting_started/configuration>` the arm for your specific application.

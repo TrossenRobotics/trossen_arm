@@ -162,3 +162,4 @@ Select the error code from the list below to view the description and solution:
 **Description:** Discontinuous robot input received.
 
 **Solution:** Check that the joint inputs are continuous and are sent at higher than 300 Hz.
+For more details, please refer to :ref:`getting_started/configuration:continuity_factors`.

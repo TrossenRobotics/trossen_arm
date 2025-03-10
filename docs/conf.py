@@ -16,6 +16,7 @@ copyright = "{}, {}".format(time.strftime("%Y"), author)
 extensions = [
     'breathe',
     'exhale',
+    'sphinxcontrib.mermaid',
     'sphinx_copybutton',
     'sphinx_multiversion',
     'sphinx_tabs.tabs',

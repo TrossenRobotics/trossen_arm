@@ -169,6 +169,7 @@ After configuring for your specific application, we move on to the script that c
           //   - trossen_arm.Mode.position
           //   - trossen_arm.Mode.velocity
           //   - trossen_arm.Mode.external_effort
+          //   - trossen_arm.Mode.effort
           auto xxxs = driver.get_modes();
 
           //   Set the mode[s] of the joint[s]
@@ -198,6 +199,7 @@ After configuring for your specific application, we move on to the script that c
           //     - velocities
           //     - efforts
           //     - external_efforts
+          //     - efforts
           std::vector<float> zzzs = driver.get_zzzs();
 
           //     Some more logic
@@ -228,6 +230,7 @@ After configuring for your specific application, we move on to the script that c
             #     - trossen_arm.Mode.position
             #     - trossen_arm.Mode.velocity
             #     - trossen_arm.Mode.external_effort
+            #     - trossen_arm.Mode.effort
             xxxs = driver.get_modes()
 
             #     Set the mode[s] of the joint[s]
@@ -257,6 +260,7 @@ After configuring for your specific application, we move on to the script that c
             #         - velocities
             #         - efforts
             #         - external_efforts
+            #         - efforts
             zzzs = driver.get_zzzs()
 
             #         Some more logic

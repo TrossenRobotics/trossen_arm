@@ -5,12 +5,21 @@ Visualize
 Online Visualization
 ====================
 
-If you uploaded your dataset to the Hugging Face Hub using ``--control.push_to_hub=true``, you can `visualize your dataset online <https://huggingface.co/spaces/lerobot/visualize_dataset>`_
-by copying and pasting your repository ID, which can be obtained with:
+If you uploaded your dataset to the Hugging Face Hub using ``--control.push_to_hub=true``, you can `visualize your dataset online <https://huggingface.co/spaces/lerobot/visualize_dataset>`_.
+To do so, copy and paste your repository ID into the provided field. Your repository ID follows the format:
+
+.. code-block:: bash
+
+   <huggingface-username>/<dataset-id>
+
+You can retrieve your repository ID by running the following command in your terminal:
 
 .. code-block:: bash
 
    echo ${HF_USER}/trossen_ai_bimanual_test
+
+Here, **${HF_USER}** represents your **Hugging Face username**, and **trossen_ai_bimanual_test** is the **dataset ID** you provided during the upload.
+
 
 Local Visualization
 ===================

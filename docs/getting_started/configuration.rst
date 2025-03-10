@@ -285,7 +285,7 @@ End Effector
 
 The end effector properties allow the usage of different end effectors.
 It's important to match the end effector properties with the actual end effector attached to the arm.
-Otherwise, the controller won't be able to compensate for the end effector's weight and inertia.
+Otherwise, the controller won't be able to properly compensate for the end effector's weight and inertia.
 
 .. tip::
 

@@ -156,10 +156,15 @@ Ethernet Configuration
 At startup, the arm controller tries to connect to the network.
 The procedure is as follows.
 
-.. image:: images/wxai_v0_ethernet.jpg
-    :alt: Ethernet Connection
-    :align: center
-    :width: 40%
+.. mermaid::
+
+    flowchart LR
+        A(Power on) --> B{ip_method?}
+        B -->|dhcp| C(Acquire IP from DHCP server)
+        B -->|manual| D(Set up ethernet according to the configurations)
+        C --> E{success?}
+        E -->|yes| F(Set up ethernet as DHCP server directs)
+        E -->|no| D
 
 ip_method
 ^^^^^^^^^

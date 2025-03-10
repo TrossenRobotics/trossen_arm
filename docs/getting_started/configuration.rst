@@ -157,6 +157,7 @@ At startup, the arm controller tries to connect to the network.
 The procedure is as follows.
 
 .. mermaid::
+    :align: center
 
     flowchart LR
         A(Power on) --> B{ip_method?}

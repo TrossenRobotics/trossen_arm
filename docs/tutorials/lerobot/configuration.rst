@@ -6,7 +6,6 @@ In order to use the Trossen AI Arms with LeRobot, you need to first configure th
 The specifications include the IP address, model_name, and camera serial numbers.
 The following steps will guide you on how to configure the Trossen AI Arms with LeRobot.
 
-
 This is an example of a configuration file for the Trossen AI Arms with LeRobot, you can find this in :guilabel:`lerobot/common/robot_devices/robots/configs.py`:
 
 .. code-block:: python
@@ -83,19 +82,17 @@ This is an example of a configuration file for the Trossen AI Arms with LeRobot,
 
     mock: bool = False
 
-
 Setup IP Address
 ----------------
 
 To set up the IP address for the Trossen AI Arms, you must first ensure that the arms are connected to the same network as your computer.
-Refer to `Ethernet Setup <https://docs.trossenrobotics.com/trossen_arm/main/getting_started/software_setup.html#ethernet-setup>`_ for correct connection instructions.
-Once connected, you can find or configure the IP address using the `Configuration Demo <https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/configure_cleanup.py>`_ or `Set IP Address Demo <https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_ip_method.py>`_.
-
+Refer to :ref:`Ethernet Setup <getting_started/software_setup:Ethernet Setup>` for correct connection instructions.
+Once connected, you can find or configure the IP address using the :ref:`getting_started/demo_scripts:`configure_cleanup`_` demo or the :ref:`getting_started/demo_scripts:`set_ip_method`_` and :ref:`getting_started/demo_scripts:`set_manual_ip`_` demos.
 
 Camera Serial Number
 --------------------
 
-#. Open realsense-viewer
+#.  Open realsense-viewer
 
     .. code-block:: bash
 
@@ -105,15 +102,16 @@ Camera Serial Number
 
         If realsense-viewer is not already installed on your machine, follow `these steps on the librealsense GitHub repository <https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md>`_  to install ``librealsense2-utils``.
 
-#. Plug in a single camera and check the sidebar for its entry. If it does not show up in the side bar, click Add Source and find the Intel RealSense D405 in the drop down.
+#.  Plug in a single camera and check the sidebar for its entry.
+    If it does not show up in the side bar, click Add Source and find the Intel RealSense D405 in the drop down.
 
-#. Click on Info for the camera, find the Serial Number, and copy it.
+#.  Click on Info for the camera, find the Serial Number, and copy it.
 
     .. image:: images/rsviewer_serialno2.png
         :alt: Realsense Viewer
         :align: center
 
-#. Put the camera serial number in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
+#.  Put the camera serial number in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
 
-#. Repeat for the rest of the cameras. If the workspace has not been symbolically-linked, a rebuild may be necessary.
+#.  Repeat for the rest of the cameras.
 

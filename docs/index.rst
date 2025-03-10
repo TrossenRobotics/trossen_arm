@@ -13,7 +13,7 @@ What's Here
 
 *   :doc:`specifications` - Contains specification information for the Trossen Arms and related hardware.
 *   :doc:`getting_started` - These guides will walk you through the setup process for your Trossen Arm.
-*   :doc:`tutorials` - Step-by-step guides for using the Trossen Arm with different softwares like ROS2, Mujoco, LeRobot, etc.
+*   :doc:`tutorials` - Step-by-step guides for using the Trossen Arm with third party packages and frameworks.
 *   :doc:`downloads` - Downloadable content related to the Trossen Arm.
 *   :doc:`troubleshooting` - Common issues and their solutions.
 *   :doc:`api/library_root` - Trossen Arm C++ API.

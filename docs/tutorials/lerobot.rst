@@ -2,7 +2,7 @@
 LeRobot
 =======
 
-This page contains tutorials for using the Trossen Arm with LeRobot for Imitation Learning.
+This page contains tutorials for using the Trossen Arm with LeRobot for data collection and imitation learning.
 
 .. toctree::
     :maxdepth: 1
@@ -15,4 +15,3 @@ This page contains tutorials for using the Trossen Arm with LeRobot for Imitatio
     lerobot/visualize.rst
     lerobot/replay.rst
     lerobot/train_and_evaluate.rst
-

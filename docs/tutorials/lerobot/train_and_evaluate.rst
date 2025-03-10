@@ -5,7 +5,7 @@ Training and Evaluating a Policy
 Training a Policy
 =================
 
-To train a policy to control your robot, use the :guilabel:`python lerobot/scripts/train.py` script.
+To train a policy to control your robot, use the :guilabel:`train.py` script.
 A few arguments are required.
 Here is an example command:
 
@@ -23,7 +23,7 @@ Explanation of the Command
 --------------------------
 
 #. We provided the dataset using ``--dataset.repo_id=${HF_USER}/trossen_ai_bimanual_test``.
-#. We specified the policy with ``--policy.type=act``, which loads configurations from :guilabel:`configuration_act.py <../lerobot/common/policies/act/configuration_act.py>`.
+#. We specified the policy with ``--policy.type=act``, which loads configurations from `configuration_act.py <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/policies/act/configuration_act.py>`_.
    This policy will automatically adapt to the **number of motor states, motor actions, and cameras** recorded in your dataset.
 #. We set ``--device=cuda`` to train on an **NVIDIA GPU**.
    If using Apple Silicon, you can replace it with ``--device=mps``.
@@ -40,6 +40,34 @@ Explanation of the Command
     **Training will take several hours.** Checkpoints will be saved in:
     :guilabel:`outputs/train/act_trossen_ai_bimanual_test/checkpoints`.
 
+
+Training Pipeline Configuration
+-------------------------------
+
+The training pipeline can be configured using the following parameters:
+
+- ``dataset``: Configuration for the dataset.
+- ``env``: Configuration for the environment. Can be ``None``.
+- ``policy``: Configuration for the pre-trained policy. Can be ``None``.
+- ``output_dir``: Directory to save all run outputs. If another training session is run with the same value, its contents will be overwritten unless ``resume`` is set to true.
+- ``job_name``: Name of the job. Can be ``None``.
+- ``resume``: Set to true to resume a previous run. Ensure ``output_dir`` is the directory of an existing run with at least one checkpoint.
+- ``device``: Device to use for training (e.g., ``cuda``, ``cpu``, ``mps``).
+- ``use_amp``: Determines whether to use Automatic Mixed Precision (AMP) for training and evaluation.
+- ``seed``: Seed for training and evaluation environments.
+- ``num_workers``: Number of workers for the dataloader.
+- ``batch_size``: Batch size for training.
+- ``eval_freq``: Frequency of evaluation during training.
+- ``log_freq``: Frequency of logging during training.
+- ``save_checkpoint``: Whether to save checkpoints during training.
+- ``save_freq``: Frequency of saving checkpoints.
+- ``offline``: Configuration for offline training.
+- ``online``: Configuration for online training.
+- ``use_policy_training_preset``: Whether to use policy training preset.
+- ``optimizer``: Configuration for the optimizer. Can be ``None``.
+- ``scheduler``: Configuration for the learning rate scheduler. Can be ``None``.
+- ``eval``: Configuration for evaluation.
+- ``wandb``: Configuration for Weights & Biases logging.
 
 Evaluating Your Policy
 ======================

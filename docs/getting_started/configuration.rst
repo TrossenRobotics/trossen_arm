@@ -168,10 +168,15 @@ The IP method can be set to dhcp or manual.
 
 Default value: ``manual``
 
+.. note::
+
+    If the IP method is set to dhcp, we expect a DHCP server to be present in the network.
+    It can be a router or a computer with a DHCP server running.
+
 manual_ip, dns, gateway, subnet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If the IP method is set to MANUAL, the manual IP address, DNS, gateway, and subnet are used.
+If the IP method is set to manual, the manual IP address, DNS, gateway, and subnet are used.
 
 Default values:
 
@@ -229,13 +234,22 @@ The resulting compensation effort is given below, where :math:`\text{effort}_\te
         + \text{effort}_\text{friction} \times \frac{\text{velocity}}{\text{transition_velocity}} & \text{otherwise}
     \end{cases}
 
+Each controller-arm pair comes with calibrated effort corrections and friction parameters as defaults.
+They should work decently for most applications.
+However, you can always fine-tune them according to personal preferences.
+
+Here is a guideline to tune the effort corrections and friction parameters.
+
+1.  Put the arm in gravity compensation, i.e., all external efforts are zero
+2.  Tune the joints one by one from gripper to base
+
+    -   Increase the ``effort_correction`` if the links onwards are pulled down by gravity
+    -   Move the joint at low speed and increase the ``friction_coulomb_coef`` if the resistance is stronger when the joint is compensating for gravity than in a balanced position
+    -   Move the joint at varying speed and increase the ``friction_viscous_coef`` if there's more resistance at higher speed
+    -   Increase the ``friction_constant_term`` to reduce the resistance
+    -   Increase the ``friction_transition_velocity`` if quiet operation is preferred over overcoming stiction via high-frequency oscillations
+
 Default values: ``arm specific``
-
-.. note::
-
-    Each controller-arm pair comes with calibrated effort corrections and friction parameters.
-    They should work decently for most applications.
-    However, you can always fine-tune them according to personal preferences.
 
 .. warning::
 
@@ -257,6 +271,14 @@ The :math:`\text{max_velocity}` is the maximum velocity of the joint given in :d
 The :math:`\text{control_frequency}` is the frequency at which the arm controller runs, which is approximately 650 Hz.
 
 Default value: ``2.0``
+
+.. tip::
+
+    If you run into the :ref:`troubleshooting:16: robot input discontinuous` error state, please
+
+    - check that the frequency of the control loop is at least 650 Hz if the built-in interpolator is disabled, i.e., the ``goal_time`` is zero
+    - otherwise, check that the ``goal_time`` is long enough compared to looping time so that the joint can feasibly reach ``goal_position`` within ``goal_time``
+    - finally, if you're confident that there's no implementation mistake in the script, increase the continuity factor with discretion
 
 End Effector
 ------------

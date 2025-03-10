@@ -6,7 +6,7 @@ This page contains tutorials for using the Trossen Arm with LeRobot for Imitatio
 
 .. note::
 
-    You should have a matching version of Trossen Arm Firmware on your controller and the Trossen Arm Python package installed on your computer.
+    You should have a **matching version** of **Trossen Arm Firmware** on your controller and the **Trossen Arm Python** package installed on your computer.
     For more information about firmware update follow the `Trossen Arm Firmware Update <add link>`_.
 
 .. toctree::

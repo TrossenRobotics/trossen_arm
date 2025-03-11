@@ -8,10 +8,11 @@ Upcoming
 Trossen Arm Driver
 ------------------
 
-* Effort mode: full control over commanded effort without built-in compensation
-* Cartesian control: control the end effector in Cartesian space
+* Added a new ``effort`` mode.
+  It allows the user to command the effort of the joints without any built-in compensation like in the ``external_effort`` mode.
+  This mode is useful for applications where full control of the joint efforts is desired.
 
 Trossen Arm Controller Firmware
 -------------------------------
 
-* Effort mode
+* Added the associated interfaces for the new ``effort`` mode.

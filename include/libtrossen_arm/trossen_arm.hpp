@@ -201,8 +201,8 @@ struct StandardEndEffector {
       .origin_xyz = {-0.00423309f, 0.00167373f, -0.00451087f},
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
-    .offset_finger_left = 0.01485f,
-    .offset_finger_right = -0.01485f,
+    .offset_finger_left = 0.0185f,
+    .offset_finger_right = -0.0185f,
     .t_max_factor = 0.5f
   };
 

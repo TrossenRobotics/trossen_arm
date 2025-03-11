@@ -16,6 +16,7 @@ What's Here
 *   :doc:`tutorials` - Step-by-step guides for using the Trossen Arm with third party packages and frameworks.
 *   :doc:`downloads` - Downloadable content related to the Trossen Arm.
 *   :doc:`troubleshooting` - Common issues and their solutions.
+*   :doc:`changelog` - Changes and updates to the Trossen Arm software.
 *   :doc:`api/library_root` - Trossen Arm C++ API.
 
 Table of Contents:
@@ -30,4 +31,5 @@ Table of Contents:
     tutorials.rst
     downloads.rst
     troubleshooting.rst
+    changelog.rst
     api/library_root

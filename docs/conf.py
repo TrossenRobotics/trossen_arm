@@ -146,7 +146,7 @@ exhale_args = {
     "rootFileName":          "library_root.rst",
     "doxygenStripFromPath":  "..",
     "rootFileTitle":         "Trossen Arm Driver API",
-    "createTreeView":        False,
+    "createTreeView":        True,
     "exhaleExecutesDoxygen": True,
     "afterTitleDescription": """
 .. note::

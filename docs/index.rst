@@ -17,7 +17,7 @@ What's Here
 *   :doc:`downloads` - Downloadable content related to the Trossen Arm.
 *   :doc:`troubleshooting` - Common issues and their solutions.
 *   :doc:`changelog` - Changes and updates to the Trossen Arm software.
-*   :doc:`api/library_root` - Trossen Arm C++ API.
+*   :doc:`api/library_root` - Trossen Arm API documentation.
 
 Table of Contents:
 ==================

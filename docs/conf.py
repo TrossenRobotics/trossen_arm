@@ -142,20 +142,17 @@ breathe_default_project = 'Trossen Arm API Documentation'
 
 # Setup the exhale extension
 exhale_args = {
-    # These arguments are required
     "containmentFolder":     "./api",
     "rootFileName":          "library_root.rst",
     "doxygenStripFromPath":  "..",
-    # Heavily encouraged optional argument (see docs)
     "rootFileTitle":         "Trossen Arm Driver API",
-    # Suggested optional arguments
     "createTreeView":        True,
     "exhaleExecutesDoxygen": True,
     "afterTitleDescription": """
 .. note::
 
     These API docs are generated based on the C++ library.
-    The Python package is not explicitly documented due to its similarity with the C++ API.
+    The Python package is not explicitly documented due to its similarity to the C++ API.
 """,
     "exhaleDoxygenStdin":    """
     PROJECT_NAME           = "Trossen Arm API Documentation"

@@ -4,70 +4,14 @@ Hardware Setup
 
 This section walks you through the hardware setup for a new Trossen Arm.
 
-What You Need
-=============
+Assembly
+========
 
-To get started, you will need the following:
+Download the assembly guide for your arm model and variant from the options below:
 
--   Trossen Arm
--   Trossen Arm Controller
--   24V Power Supply
--   Linux PC
--   Ethernet Switch (Optional)
-
-Mounting the Arm
-================
-
-The Trossen Arm comes pre-assembled, so you will only need to mount it to a sturdy surface.
-The dimensions of the mounting holes at the base are shown below.
-
-.. image:: images/mounting_holes.png
-    :alt: Mounting Holes
-    :align: center
-
-Connecting the Cables
-=====================
-
-After securing the arm, the next step is to connect the cables.
-The following diagram shows the connections between the hardware components.
-
-.. image:: images/overview.png
-    :alt: Overview
-    :align: center
-
-The closeup pictures for each component are provided below.
-
-.. list-table::
-    :width: 100%
-    :class: borderless
-    :align: center
-
-    *   -   .. image:: images/closeup_arm.png
-                :alt: Arm
-                :align: center
-
-        -   .. image:: images/closeup_controller_one_socket.jpeg
-                :alt: Controller Side with One Socket
-                :align: center
-
-        -   .. image:: images/closeup_controller_two_socket.jpeg
-                :alt: Controller Side with Two Sockets
-                :align: center
-
-    *   -   .. image:: images/closeup_switch.jpeg
-                :alt: Switch
-                :align: center
-
-        -   .. image:: images/closeup_pc.jpeg
-                :alt: PC
-                :align: center
-
-        -
-
-.. note::
-
-    If only one arm is being used, the Arm Controller can connect directly to the PC via the provided Ethernet cable.
-    In this case, the Ethernet switch is not needed.
+-  :download:`WidowX AI Base Assembly Guide </_downloads/WidowX AI Base Assembly Guide.pdf>`
+-  :download:`WidowX AI Leader Assembly Guide </_downloads/WidowX AI Follower Assembly Guide.pdf>`
+-  :download:`WidowX AI Follower Assembly Guide </_downloads/WidowX AI Follower Assembly Guide.pdf>`
 
 .. warning::
 
@@ -75,8 +19,16 @@ The closeup pictures for each component are provided below.
 
 .. warning::
 
-    Please connect to the switch only the devices required by your application.
-    Low-quality connections can cause the arm to behave unexpectedly.
+    If using a network switch to interface with multiple arms, make sure to only the connect the devices required by your application.
+    Low-quality connections can cause degraded performance.
+
+.. note::
+
+    As an alternative to using the Base Clamp Plate, you can instead create a custom fixture using the dimensions below:
+
+        .. image:: images/mounting_holes.png
+            :align: center
+            :width: 600px
 
 What's Next
 ===========

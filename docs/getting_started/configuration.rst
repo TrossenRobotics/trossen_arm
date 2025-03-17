@@ -150,6 +150,8 @@ If the factory reset flag is set to true, all configurations are reset to their 
 
 Default value: ``false``
 
+Range: ``true``, ``false``
+
 Ethernet Configuration
 ----------------------
 
@@ -174,6 +176,8 @@ The IP method can be set to ``dhcp`` or ``manual``.
 
 Default value: ``manual``
 
+Ranges: ``dhcp``, ``manual``
+
 .. note::
 
     If the IP method is set to ``dhcp``, we expect a DHCP server to be present in the network.
@@ -190,6 +194,8 @@ Default values:
 - dns: ``8.8.8.8``
 - gateway: ``192.168.1.1``
 - subnet: ``255.255.255.0``
+
+Ranges: valid IPv4 addresses
 
 Joint Characteristics
 ---------------------
@@ -214,6 +220,8 @@ Vice versa, the effort returned by the driver is given by the following expressi
     \text{external_effort} = \frac{\text{effort}_\text{motor}}{\text{effort_correction}} - \text{effort}_\text{compensation}
 
 Default values are arm specific and calibrated at the factory.
+
+Range: :math:`[0.5, 2.0]`
 
 friction_transition_velocities, friction_constant_terms, friction_coulomb_coefs, and friction_viscous_coefs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -257,6 +265,11 @@ Here is a guideline to tune the effort corrections and friction parameters.
 
 Default values are arm specific and calibrated at the factory.
 
+Ranges:
+
+-    friction_transition_velocities: :math:`\mathbb{R}_{\gt 0}`
+-    others: :math:`\mathbb{R}`
+
 .. warning::
 
     Since these configurations are arm specific, mixed usage of controller and arm with different serial numbers may cause deterioration in performance.
@@ -267,7 +280,9 @@ continuity_factors
 The arm controller uses this factor to determine whether the commanded joint position is continuous.
 If not, the controller enter the :ref:`troubleshooting:16: robot input discontinuous` error state.
 
-Default value: ``2.0``
+Default value: ``5.0``
+
+Range: :math:`[1.0, 10.0]`
 
 .. tip::
 
@@ -319,6 +334,8 @@ The force limit is given by the following expression where :math:`\text{max_forc
     \text{actual_max_force} = \text{t_max_factor} \times \text{max_force}
 
 Default value: ``0.5``
+
+Range: :math:`[0.0, 1.0]`
 
 What's Next?
 ============

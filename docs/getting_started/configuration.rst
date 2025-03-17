@@ -150,7 +150,7 @@ If the factory reset flag is set to true, all configurations are reset to their 
 
 Default value: ``false``
 
-Range: ``true``, ``false``
+Choices: ``true``, ``false``
 
 Ethernet Configuration
 ----------------------
@@ -176,7 +176,7 @@ The IP method can be set to ``dhcp`` or ``manual``.
 
 Default value: ``manual``
 
-Ranges: ``dhcp``, ``manual``
+Choices: ``dhcp``, ``manual``
 
 .. note::
 

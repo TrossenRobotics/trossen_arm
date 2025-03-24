@@ -40,7 +40,6 @@ The script does the following:
 3. Sets the effort corrections via joint characteristics
 4. Sets the effort corrections via dedicated helper function
 5. The driver cleans up automatically at the destructor
-6. Power cycle to apply the new effort corrections
 '''
 
 import trossen_arm
@@ -90,6 +89,3 @@ if __name__=='__main__':
 
     # Print the new effort corrections via dedicated helper function
     print("New effort corrections: ", driver.get_effort_corrections())
-
-    # Power cycle to apply the new effort corrections
-    print("Power cycle the robot to apply the new effort corrections.")

@@ -97,7 +97,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        True
+        False
     )
 
     # Print the current state of the driver

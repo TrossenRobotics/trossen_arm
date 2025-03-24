@@ -189,6 +189,21 @@ The intermediate demos give examples on commonly-used configurations and applica
 
 This script demonstrates how to exchange persistent configurations via a YAML file.
 
+`error_recovery`_
+^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to recover from an error in the driver.
+
+`move`_
+^^^^^^^
+
+This script demonstrates how to write a control loop to move the robot to different positions and record the states.
+
+`move_two`_
+^^^^^^^^^^^
+
+This script demonstrates how to move two robots to different positions using interpolation.
+
 `set_factory_reset_flag`_
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -203,16 +218,6 @@ This script demonstrates how to set the IP method to DHCP or MANUAL.
 ^^^^^^^^^^^^^^^^
 
 This script demonstrates how to set the manual IP address.
-
-`move_two`_
-^^^^^^^^^^^
-
-This script demonstrates how to move two robots to different positions using interpolation.
-
-`move`_
-^^^^^^^
-
-This script demonstrates how to write a control loop to move the robot to different positions and record the states.
 
 `teleoperation`_
 ^^^^^^^^^^^^^^^^
@@ -232,6 +237,8 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 .. _`configuration_in_yaml`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configuration_in_yaml.py
 
 .. _`configure_cleanup`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configure_cleanup.py
+
+.. _`error_recovery`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/error_recovery.py
 
 .. _`gravity_compensation`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/gravity_compensation.py
 

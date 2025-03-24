@@ -50,7 +50,7 @@ namespace trossen_arm
 
 /// @brief Operation modes of a joint
 enum class Mode : uint8_t {
-  /// @brief Arm joints are braked, the gripper joint closing with a safe force
+  /// @brief All joints are braked
   idle,
   /// @brief Control the joint to a desired position
   position,
@@ -135,17 +135,17 @@ struct StandardEndEffector {
   /// @brief WXAI V0 base variant
   static constexpr EndEffectorProperties wxai_v0_base{
     .palm = {
-      .mass = 0.55469347f,
+      .mass = 0.53780000f,
       .inertia = {
-        0.00086769f, -0.00000054f, 0.00000011f,
-        -0.00000054f, 0.00051326f, 0.00000004f,
-        0.00000011f, 0.00000004f, 0.00114318f
+        0.00079919, -0.00000049, 0.00000010,
+        -0.00000049, 0.00047274, 0.00000004,
+        0.00000010, 0.00000004, 0.00105293
       },
       .origin_xyz = {0.04572768f, -0.00000726f, 0.00001402f},
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
     .finger_left = {
-      .mass = 0.08127100f,
+      .mass = 0.05945000f,
       .inertia = {
         0.00001875f, 0.00000309f, -0.00000149f,
         0.00000309f, 0.00002614f, -0.00000124f,
@@ -155,7 +155,7 @@ struct StandardEndEffector {
       .origin_rpy = {0.0f, 0.0f, 0.0f}
     },
     .finger_right = {
-      .mass = 0.08127100f,
+      .mass = 0.05945000f,
       .inertia = {
         0.00001930f, -0.00000309f, 0.00000359f,
         -0.00000309f, 0.00002670f, -0.00000064f,
@@ -712,6 +712,20 @@ public:
   uint8_t get_num_joints() const;
 
   /**
+   * @brief Get driver version
+   *
+   * @return Driver version
+   */
+  std::string get_driver_version() const;
+
+  /**
+   * @brief Get controller firmware version
+   *
+   * @return Controller firmware version
+   */
+  std::string get_controller_version() const;
+
+  /**
    * @brief Get the positions
    *
    * @return Positions in rad for arm joints and m for the gripper joint
@@ -1058,6 +1072,12 @@ private:
 
   // Number of joints
   uint8_t num_joints_{0};
+
+  // Driver version
+  std::string driver_version_;
+
+  // Controller firmware version
+  std::string controller_version_;
 
   // Whether the driver is properly configured for the robot to be controlled
   // true if configured, false if not configured

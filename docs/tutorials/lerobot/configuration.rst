@@ -231,6 +231,12 @@ This is an example of a configuration file for the Trossen AI Arms with LeRobot,
 Setup IP Address
 ----------------
 
+.. note::
+
+    By default, the IP address for the Trossen AI Arms is set to `192.168.1.2`. 
+    Make sure to set unique IP addresses for each arm to avoid conflicts.
+    Correctly identify the IP address of each arm and set it in the configuration file.
+    
 To set up the IP address for the Trossen AI Arms, you must first ensure that the arms are connected to the same network as your computer.
 Refer to :ref:`Ethernet Setup <getting_started/software_setup:Ethernet Setup>` for correct connection instructions.
 Once connected, you can find or configure the IP address using the :ref:`getting_started/demo_scripts:`configure_cleanup`_` demo or the :ref:`getting_started/demo_scripts:`set_ip_method`_` and :ref:`getting_started/demo_scripts:`set_manual_ip`_` demos.

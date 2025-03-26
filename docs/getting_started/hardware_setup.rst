@@ -7,11 +7,27 @@ This section walks you through the hardware setup for a new Trossen Arm.
 Assembly
 ========
 
-Download the assembly guide for your arm model and variant from the options below:
+Download the assembly guide or watch the YouTube video for your arm model and variant from the options below:
 
--  :download:`WidowX AI Base Assembly Guide </_downloads/WidowX AI Base Assembly Guide.pdf>`
--  :download:`WidowX AI Leader Assembly Guide </_downloads/WidowX AI Leader Assembly Guide.pdf>`
--  :download:`WidowX AI Follower Assembly Guide </_downloads/WidowX AI Follower Assembly Guide.pdf>`
+.. list-table::
+    :align: center
+    :header-rows: 1
+
+    * - WidowX AI Base
+      - WidowX AI Leader
+      - WidowX AI Follower
+    * - :download:`WidowX AI Base Assembly Guide </_downloads/WidowX AI Base Assembly Guide.pdf>`
+      - :download:`WidowX AI Leader Assembly Guide </_downloads/WidowX AI Leader Assembly Guide.pdf>`
+      - :download:`WidowX AI Follower Assembly Guide </_downloads/WidowX AI Follower Assembly Guide.pdf>`
+    * - .. youtube:: BDlKgnniVJ8
+          :align: center
+          :width: 300px
+      - .. youtube:: hdPAw-pwMm4
+          :align: center
+          :width: 300px
+      - .. youtube:: w5s9EzMBmsU
+          :align: center
+          :width: 300px
 
 .. warning::
 

@@ -4,15 +4,51 @@ Replaying an Episode
 
 Now try to replay the first recorded episode on your robot:
 
-.. code-block:: bash
 
-   python lerobot/scripts/control_robot.py \
-     --robot.type=trossen_ai_bimanual \
-     --robot.max_relative_target=null \
-     --control.type=replay \
-     --control.fps=30 \
-     --control.repo_id=${HF_USER}/trossen_ai_bimanual_test \
-     --control.episode=0
+.. tabs::
+
+  .. group-tab:: Trossen AI Stationary
+
+    .. code-block:: bash
+
+      python lerobot/scripts/control_robot.py \
+        --robot.type=trossen_ai_stationary \
+        --robot.max_relative_target=null \
+        --control.type=replay \
+        --control.fps=30 \
+        --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
+        --control.episode=0 \
+    
+  .. group-tab:: Trossen AI Mobile
+
+    .. note::
+
+      The Trossen AI Mobile robot needs the base torque to be enabled to move in replay mode.
+      You can enable it by adding ``--robot.enable_motor_torque=true`` to the command line.
+
+    .. code-block:: bash
+
+      python lerobot/scripts/control_robot.py \
+        --robot.type=trossen_ai_mobile \
+        --robot.max_relative_target=null \
+        --control.type=replay \
+        --control.fps=30 \
+        --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+        --control.episode=0 \
+        --robot.enable_motor_torque=true
+
+    
+  .. group-tab:: Trossen AI Solo
+
+    .. code-block:: bash
+
+      python lerobot/scripts/control_robot.py \
+        --robot.type=trossen_ai_solo \
+        --robot.max_relative_target=null \
+        --control.type=replay \
+        --control.fps=30 \
+        --control.repo_id=${HF_USER}/trossen_ai_solo_test \
+        --control.episode=0 \
 
 
 Replay Configuration

@@ -25,43 +25,129 @@ Recording and Uploading a Dataset
 
 Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
 
-.. code-block:: bash
+.. tabs::
 
-   python lerobot/scripts/control_robot.py \
-     --robot.type=trossen_ai_bimanual \
-     --robot.max_relative_target=null \
-     --control.type=record \
-     --control.fps=30 \
-     --control.single_task="Grasp a lego block and put it in the bin." \
-     --control.repo_id=${HF_USER}/trossen_ai_bimanual_test \
-     --control.tags='["tutorial"]' \
-     --control.warmup_time_s=5 \
-     --control.episode_time_s=30 \
-     --control.reset_time_s=30 \
-     --control.num_episodes=2 \
-     --control.push_to_hub=true
+   .. group-tab:: Trossen AI Stationary
+
+      .. code-block:: bash
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_stationary \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Stationary." \
+         --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true
+   
+   .. group-tab:: Trossen AI Mobile
+      
+      .. code-block:: bash
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_mobile \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Mobile." \
+         --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true
+
+   .. group-tab:: Trossen AI Solo
+      
+      .. code-block:: bash
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_solo \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Solo." \
+         --control.repo_id=${HF_USER}/trossen_ai_solo_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true
 
 Handling Camera FPS Issues
 ==========================
 
-**Note:** If the camera FPS is **unstable**, consider increasing the number of **image writers per thread**.
+**Note:** If the camera FPS is **unstable**, consider increasing the number of **image writers per thread** or **disable camera display**.
 
-.. code-block:: bash
 
-   python lerobot/scripts/control_robot.py \
-     --robot.type=trossen_ai_bimanual \
-     --robot.max_relative_target=null \
-     --control.type=record \
-     --control.fps=30 \
-     --control.single_task="Grasp a lego block and put it in the bin." \
-     --control.repo_id=${HF_USER}/trossen_ai_bimanual_test \
-     --control.tags='["tutorial"]' \
-     --control.warmup_time_s=5 \
-     --control.episode_time_s=30 \
-     --control.reset_time_s=30 \
-     --control.num_episodes=2 \
-     --control.push_to_hub=true \
-     --control.num_image_writer_threads_per_camera=8
+.. tabs::
+    
+   .. group-tab:: Trossen AI Stationary
+
+      .. code-block:: bash
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_stationary\
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Stationary." \
+         --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false
+   
+   .. group-tab:: Trossen AI Mobile
+      
+      .. code-block:: bash
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_mobile \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Mobile." \
+         --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false
+   
+   .. group-tab:: Trossen AI Solo
+      
+      .. code-block:: bash
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_solo \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Solo." \
+         --control.repo_id=${HF_USER}/trossen_ai_solo_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false
 
 
 

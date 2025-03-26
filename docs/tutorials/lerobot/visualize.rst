@@ -14,11 +14,27 @@ To do so, copy and paste your repository ID into the provided field. Your reposi
 
 You can retrieve your repository ID by running the following command in your terminal:
 
-.. code-block:: bash
+.. tabs::
 
-   echo ${HF_USER}/trossen_ai_bimanual_test
+   .. group-tab:: Trossen AI Stationary
 
-Here, **${HF_USER}** represents your **Hugging Face username**, and **trossen_ai_bimanual_test** is the **dataset ID** you provided during the upload.
+      .. code-block:: bash
+
+         echo ${HF_USER}/trossen_ai_stationary_test
+
+   .. group-tab:: Trossen AI Mobile
+      
+      .. code-block:: bash
+
+         echo ${HF_USER}/trossen_ai_mobile_test
+   
+   .. group-tab:: Trossen AI Solo
+      
+      .. code-block:: bash
+
+         echo ${HF_USER}/trossen_ai_solo_test
+
+Here, **${HF_USER}** represents your **Hugging Face username**, and **trossen_ai_xxxxxxx_test** is the **dataset ID** you provided during the upload.
 
 
 Local Visualization
@@ -26,8 +42,29 @@ Local Visualization
 
 If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``), you can still visualize it locally with:
 
-.. code-block:: bash
 
-   python lerobot/scripts/visualize_dataset_html.py \
-     --repo-id ${HF_USER}/trossen_ai_bimanual_test \
-     --local-files-only 1
+.. tabs::
+
+   .. group-tab:: Trossen AI Stationary
+
+      .. code-block:: bash
+
+         python lerobot/scripts/visualize_dataset_html.py \
+           --repo-id ${HF_USER}/trossen_ai_stationary_test \
+           --local-files-only 1
+
+   .. group-tab:: Trossen AI Mobile
+      
+      .. code-block:: bash
+
+         python lerobot/scripts/visualize_dataset_html.py \
+           --repo-id ${HF_USER}/trossen_ai_mobile_test \
+           --local-files-only 1
+   
+   .. group-tab:: Trossen AI Solo
+      
+      .. code-block:: bash
+
+         python lerobot/scripts/visualize_dataset_html.py \
+           --repo-id ${HF_USER}/trossen_ai_solo_test \
+           --local-files-only 1

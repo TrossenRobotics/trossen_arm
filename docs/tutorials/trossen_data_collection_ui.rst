@@ -103,7 +103,7 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 
     - Start Recording: Initiates the data collection for the selected task, beginning the recording of robot actions.
     - Stop Recording: Ends the current data collection session.
-    - Re-Record: Enables the user to re-record the current episode in case of any errors during data collection, helping ensure high-quality and accurate datasets.
+    - Re-Record: Enables the user to re-record the current episode in case of any errors during data collection, so bad episodes can be skipped and the dataset stays clean.
 
 #. Progress Tracking
 
@@ -121,13 +121,3 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 #. Quit Button
 
     - The application features a Quit button in the menu that lets you exit safely, making sure all your data is saved and everything shuts down properly.
-
-Hardware Setup
-==============
-
-For detailed instructions on the hardware setup, please refer to the official documentation:
-
-`Trossen AI Hardware Setup Guide <https://docs.trossenrobotics.com/trossen_arm/main/getting_started/hardware_setup.html>`_
-
-
-

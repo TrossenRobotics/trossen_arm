@@ -2,7 +2,7 @@
 LeRobot
 =======
 
-This page contains tutorials for using the Trossen Arm with LeRobot for data collection and imitation learning.
+This page contains tutorials for using the Trossen AI Kits with LeRobot for data collection and imitation learning.
 
 .. toctree::
     :maxdepth: 1

@@ -36,8 +36,9 @@ By running the following code, you can start your first **SAFE** teleoperation:
 By adding ``--robot.max_relative_target=5``, we override the default value for **max_relative_target** defined in
 `Trossen AI Robot Configurations <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/robots/configs.py>`_.
 
-It is expected to be **5** to limit the magnitude of the movement for **safety**, but the teleoperation **won't be smooth**.
-When you feel confident, you can disable this limit by adding ``--robot.max_relative_target=null`` to the command line:
+This limit is in place to prioritize **safety** by restricting the magnitude of movement.
+However, it may result in **less smooth** teleoperation.
+Once you're confident in controlling the robot safely, you can remove this restriction by setting ``--robot.max_relative_target=null`` in the command line.
 
 
 .. tabs:: 

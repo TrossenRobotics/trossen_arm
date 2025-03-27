@@ -20,12 +20,7 @@ Now try to replay the first recorded episode on your robot:
         --control.episode=0 \
     
   .. group-tab:: Trossen AI Mobile
-
-    .. note::
-
-      The Trossen AI Mobile robot needs the base torque to be enabled to move in replay mode.
-      You can enable it by adding ``--robot.enable_motor_torque=true`` to the command line.
-
+    
     .. code-block:: bash
 
       python lerobot/scripts/control_robot.py \
@@ -36,6 +31,11 @@ Now try to replay the first recorded episode on your robot:
         --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
         --control.episode=0 \
         --robot.enable_motor_torque=true
+    
+    .. note::
+
+      The Trossen AI Mobile robot needs the base torque to be enabled to move in replay mode.
+      You can enable it by adding ``--robot.enable_motor_torque=true`` to the command line.
 
     
   .. group-tab:: Trossen AI Solo

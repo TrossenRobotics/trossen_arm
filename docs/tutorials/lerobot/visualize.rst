@@ -2,7 +2,7 @@
 Visualize
 =========
 
-Online Visualization
+Remote Visualization
 ====================
 
 If you uploaded your dataset to the Hugging Face Hub using ``--control.push_to_hub=true``, you can `visualize your dataset online <https://huggingface.co/spaces/lerobot/visualize_dataset>`_.

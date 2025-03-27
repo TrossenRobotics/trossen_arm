@@ -9,3 +9,4 @@ These comprehensive tutorials offer step-by-step guidance on utilizing the Tross
     :caption: Contents:
 
     tutorials/lerobot.rst
+    tutorials/trossen_data_collection_ui.rst

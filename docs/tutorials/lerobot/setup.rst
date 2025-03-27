@@ -2,9 +2,6 @@
 LeRobot Installation Guide
 ==========================
 
-Follow the `Trossen Robotics documentation <https://docs.trossenrobotics.com/trossen_arm/main/getting_started/hardware_setup.html>`_
-for setting up the hardware.
-
 Install LeRobot
 ===============
 

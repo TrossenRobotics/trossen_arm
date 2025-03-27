@@ -46,6 +46,7 @@ Once you're confident in controlling the robot safely, you can remove this restr
   .. group-tab:: Trossen AI Stationary
 
       .. code-block:: bash
+        :emphasize-lines: 3
 
          python lerobot/scripts/control_robot.py \
            --robot.type=trossen_ai_stationary \
@@ -55,6 +56,7 @@ Once you're confident in controlling the robot safely, you can remove this restr
   .. group-tab:: Trossen AI Mobile
 
       .. code-block:: bash
+        :emphasize-lines: 3
 
          python lerobot/scripts/control_robot.py \
            --robot.type=trossen_ai_mobile \
@@ -64,6 +66,7 @@ Once you're confident in controlling the robot safely, you can remove this restr
   .. group-tab:: Trossen AI Solo
 
       .. code-block:: bash
+        :emphasize-lines: 3
 
         python lerobot/scripts/control_robot.py \
           --robot.type=trossen_ai_solo \

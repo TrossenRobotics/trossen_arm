@@ -75,13 +75,13 @@ To install and use the C++ driver, follow these steps.
 
     .. code-block:: bash
 
-        git clone https://github.com/TrossenRobotics/libtrossen_arm.git
+        git clone https://github.com/TrossenRobotics/trossen_arm.git
 
 2.  Install the driver
 
     .. code-block:: bash
 
-        cd libtrossen_arm
+        cd trossen_arm
         mkdir build
         cd build
         cmake .. [-DCMAKE_INSTALL_PREFIX=/path/to/install]

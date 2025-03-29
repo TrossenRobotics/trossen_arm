@@ -279,7 +279,7 @@ continuity_factors
 
 The arm controller uses this factor to determine whether the commanded joint position is continuous.
 If not, the controller enter the :ref:`troubleshooting:16: robot input discontinuous` error state.
-The gripper joint has an option to disable the continuity check by setting the factor to a negative value.
+The gripper joint has an option to disable the continuity check by setting its factor to a negative value.
 
 Default value: ``5.0``
 

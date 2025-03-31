@@ -292,6 +292,15 @@ Range: :math:`[1.0, 10.0]`
     - otherwise, check that the ``goal_time`` is long enough compared to looping time so that the joint can feasibly reach ``goal_position`` within ``goal_time``
     - finally, if you're confident that there's no implementation mistake in the script, increase the continuity factor with discretion
 
+.. note::
+
+    The gripper joint has an option to disable the continuity check by setting its factor to a negative value.
+
+    .. warning::
+
+        This is a potentially dangerous option as it allows users to command positions to the gripper that far exceed the physical limits.
+        Please use it with caution.
+
 End Effector
 ------------
 

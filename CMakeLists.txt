@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(
   libtrossen_arm
-  VERSION 1.7.5
+  VERSION 1.7.6
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})
@@ -18,15 +18,27 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
+# Determine the system architecture
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES "x86_64")
   set(ARCH "x86_64")
 elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "aarch64")
+  set(ARCH "aarch64")
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES "arm64")
   set(ARCH "aarch64")
 else()
   message(FATAL_ERROR "Unknown or Unsupported System Architecture: ${CMAKE_SYSTEM_PROCESSOR}")
 endif()
 
-message(STATUS "Building for '${ARCH}' architecture")
+# Determine the operating system
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  set(OS "macos")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+  set(OS "linux")
+else()
+  message(FATAL_ERROR "Unknown or Unsupported Operating System: ${CMAKE_SYSTEM_NAME}")
+endif()
+
+message(STATUS "Building for OS: '${OS}', architecture: '${ARCH}'.")
 
 add_library(${LIBRARY_NAME} STATIC IMPORTED)
 
@@ -36,7 +48,7 @@ if(BUILD_DEMOS)
 endif()
 
 set_target_properties(${LIBRARY_NAME} PROPERTIES
-  IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ARCH}/${LIBRARY_NAME}.a"
+  IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/lib/${OS}/${ARCH}/${LIBRARY_NAME}.a"
   INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include"
 )
 
@@ -46,14 +58,14 @@ install(
 )
 
 install(
-  FILES ${CMAKE_CURRENT_SOURCE_DIR}/lib/${ARCH}/${LIBRARY_NAME}.a
+  FILES ${CMAKE_CURRENT_SOURCE_DIR}/lib/${OS}/${ARCH}/${LIBRARY_NAME}.a
   DESTINATION lib
 )
 
 include(CMakePackageConfigHelpers)
 
 set(PACKAGE_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include")
-set(PACKAGE_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib")
+set(PACKAGE_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib/${OS}/${ARCH}")
 
 configure_package_config_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${LIBRARY_NAME}Config.cmake.in

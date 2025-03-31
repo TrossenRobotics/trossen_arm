@@ -549,7 +549,11 @@ public:
    *
    * - friction_transition_velocity: positive
    *
-   * - continuity_factor: [1.0, 10.0]
+   * - continuity_factor: [1.0, 10.0] for arm joints and additionally negative for the gripper joint
+   * to disable the continuity constraint
+   *
+   * @warning Disabling the continuity constraint for the gripper joint removes protection against
+   * drastic gripper movements caused by erroneous application logic
    */
   void set_joint_characteristics(const std::vector<JointCharacteristic> & joint_characteristics);
 
@@ -618,7 +622,11 @@ public:
    *
    * @note The size of the vector should be equal to the number of joints
    *
-   * @note Each element in the vector should be within the range [1.0, 10.0]
+   * @note Each element in the vector should be within the range [1.0, 10.0] for arm joints
+   * and additionally negative for the gripper joint to disable the continuity constraint
+   *
+   * @warning Disabling the continuity constraint for the gripper joint removes protection against
+   * drastic gripper movements caused by erroneous application logic
    */
   void set_continuity_factors(const std::vector<float> & continuity_factors);
 
@@ -919,9 +927,9 @@ private:
     /// @brief The mode of the joint input
     /// @note If this mode is different from the configured mode, the robot will enter error state
     Mode mode{Mode::idle};
-    union {
+    union JointInputCommand {
       /// @brief Joint input corresponding to the position mode
-      struct {
+      struct ComandPositionMode {
         /// @brief Position in rad for arm joints or m for the gripper joint
         float position;
         /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
@@ -930,18 +938,18 @@ private:
         float feedforward_acceleration;
       } position{0.0f, 0.0f, 0.0f};
       /// @brief Joint input corresponding to the velocity mode
-      struct {
+      struct ComandVelocityMode {
         /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
         float velocity;
         /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
         float feedforward_acceleration;
       } velocity;
       /// @brief Joint input corresponding to the external_effort mode
-      struct {
+      struct ComandExternalEffortMode {
         /// @brief external effort in Nm for arm joints or N for the gripper joint
         float external_effort;
       } external_effort;
-    };
+    } command;
   };
 
   /// @brief Joint output

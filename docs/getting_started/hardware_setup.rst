@@ -2,10 +2,13 @@
 Hardware Setup
 ==============
 
-This section walks you through the hardware setup for a new Trossen Arm.
+This section walks you through the hardware setup for a new Trossen AI Kit.
 
 Assembly
 ========
+
+Standalone Arm
+--------------
 
 Download the assembly guide or watch the YouTube video for your arm model and variant from the options below:
 
@@ -45,6 +48,15 @@ Download the assembly guide or watch the YouTube video for your arm model and va
         .. image:: images/mounting_holes.png
             :align: center
             :width: 600px
+
+Mobile AI Kit
+-------------
+
+Watch the YouTube video below for assembly instructions for the Mobile AI kit:
+
+.. youtube:: BDENPOcgwdU
+    :align: center
+    :width: 300px
 
 What's Next
 ===========

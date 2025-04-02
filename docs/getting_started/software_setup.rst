@@ -35,6 +35,29 @@ Installing the Drivers
 
 A Trossen Arm can be controlled using either the C++ or Python driver.
 
+Compatible Platforms
+--------------------
+
+Below is a list of compatible platforms for both drivers:
+
+.. list-table::
+    :align: center
+    :header-rows: 1
+    :class: centered-table
+
+    * -
+      - Ubuntu 22.04
+      - MacOS 14
+      - MacOS 15
+    * - x86_64
+      - ✅
+      -
+      -
+    * - arm64/aarch64
+      - ✅
+      - ✅
+      - ✅
+
 Python
 ------
 

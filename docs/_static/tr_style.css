@@ -217,3 +217,8 @@ div.highlight {
 label.static-container:hover .static {
     opacity: 0;
 }
+
+/* centered-table class centers table cell contents */
+.centered-table td {
+    text-align: center;
+}

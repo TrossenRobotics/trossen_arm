@@ -35,10 +35,10 @@ Installing the Drivers
 
 A Trossen Arm can be controlled using either the C++ or Python driver.
 
-Compatible Platforms
---------------------
+Supported Platforms
+-------------------
 
-Below is a list of compatible platforms for both drivers:
+Below is a list of compatible platforms for both the C++ and Python driver:
 
 .. list-table::
     :align: center
@@ -63,7 +63,7 @@ Python
 
 To install and use the Python driver, follow these steps.
 
-1.  Set up a virtual environment (optional)
+#.  Set up a virtual environment (optional)
 
     Some of the popular package and environment management tools are listed below.
     Please setup one that suits your needs.
@@ -72,7 +72,7 @@ To install and use the Python driver, follow these steps.
     -   `virtualenv <https://virtualenv.pypa.io/en/latest/installation.html>`_
     -   `conda <https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html>`_
 
-2.  Install the driver
+#.  Install the driver
 
     Depending on the nature your application, you can install the driver in a virtual environment or the system environment.
 
@@ -83,7 +83,7 @@ To install and use the Python driver, follow these steps.
 
         pip install trossen-arm
 
-3.  Run a script
+#.  Run a script
 
     .. code-block:: bash
 
@@ -94,13 +94,20 @@ C++
 
 To install and use the C++ driver, follow these steps.
 
-1.  Clone the repository
+#.  Install dependencies required to build the driver
+
+    .. code-block:: bash
+
+        sudo apt update
+        sudo apt install build-essential cmake libyaml-cpp-dev
+
+#.  Clone the repository
 
     .. code-block:: bash
 
         git clone https://github.com/TrossenRobotics/trossen_arm.git
 
-2.  Install the driver
+#.  Install the driver
 
     .. code-block:: bash
 
@@ -120,7 +127,7 @@ To install and use the C++ driver, follow these steps.
     -   static library and cmake configurations: ``/usr/local/lib``
     -   header files: ``/usr/local/include``.
 
-3.  Build a script
+#.  Build a script
 
     Here is the file structure of a minimal CMake project.
 
@@ -182,7 +189,7 @@ As a result, when a new driver is released, the controller firmware may need to 
 
 To upgrade, follow these steps.
 
-1.  Install the Teensy Loader CLI if not already installed
+#.  Install the Teensy Loader CLI if not already installed
 
     .. code:: bash
 
@@ -203,7 +210,7 @@ To upgrade, follow these steps.
         # Configure the udev rules
         sudo wget -O /etc/udev/rules.d/00-teensy.rules https://www.pjrc.com/teensy/00-teensy.rules
 
-2.  Flash the firmware
+#.  Flash the firmware
 
     Connect the controller to the Linux PC with a USB to micro-USB cable.
 
@@ -227,10 +234,10 @@ To upgrade, follow these steps.
 
     A typical workflow is given below.
 
-    1.  Use the driver compatible with the current firmware to backup all customized configurations.
-    2.  Update the driver to the latest version.
-    3.  Flash the latest firmware.
-    4.  Set the customized configurations using the latest driver.
+    #.  Use the driver compatible with the current firmware to backup all customized configurations.
+    #.  Update the driver to the latest version.
+    #.  Flash the latest firmware.
+    #.  Set the customized configurations using the latest driver.
 
 What's Next
 ===========

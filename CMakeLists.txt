@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(
   libtrossen_arm
-  VERSION 1.7.6
+  VERSION 1.7.7
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})
@@ -65,7 +65,7 @@ install(
 include(CMakePackageConfigHelpers)
 
 set(PACKAGE_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/include")
-set(PACKAGE_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib/${OS}/${ARCH}")
+set(PACKAGE_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib")
 
 configure_package_config_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${LIBRARY_NAME}Config.cmake.in

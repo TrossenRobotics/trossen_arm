@@ -204,6 +204,11 @@ This script demonstrates how to write a control loop to move the robot to differ
 
 This script demonstrates how to move two robots to different positions using interpolation.
 
+`reboot`_
+^^^^^^^^^
+
+This script demonstrates how to reboot an arm.
+
 `set_factory_reset_flag`_
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -247,6 +252,8 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 .. _`move_two`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/move_two.py
 
 .. _`move`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/move.py
+
+.. _`reboot`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/reboot.py
 
 .. _`set_factory_reset_flag`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_factory_reset_flag.py
 

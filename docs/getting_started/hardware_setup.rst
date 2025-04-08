@@ -56,7 +56,14 @@ Watch the YouTube video below for assembly instructions for the Mobile AI kit:
 
 .. youtube:: BDENPOcgwdU
     :align: center
-    :width: 300px
+
+Stationary AI Kit
+-----------------
+
+Watch the YouTube video below for assembly instructions for the Stationary AI kit:
+
+.. youtube:: LUU2ktpvOAo
+    :align: center
 
 What's Next
 ===========

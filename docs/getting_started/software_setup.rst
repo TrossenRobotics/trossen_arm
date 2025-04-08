@@ -239,6 +239,12 @@ To upgrade, follow these steps.
     #.  Flash the latest firmware.
     #.  Set the customized configurations using the latest driver.
 
+Video Overview
+==============
+
+.. youtube:: XoD0Zj9VfFk
+    :align: center
+
 What's Next
 ===========
 

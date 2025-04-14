@@ -51,11 +51,26 @@ STEP Files / CAD Solids
 WidowX AI STEP Files
 --------------------
 
--   :download:`WidowX AI Base </_downloads/wxai_v0_base_steps.zip>`
--   :download:`WidowX AI Leader </_downloads/wxai_v0_leader_steps.zip>`
--   :download:`WidowX AI Follower </_downloads/wxai_v0_follower_steps.zip>`
+-   :download:`WidowX AI Base STEPs</_downloads/wxai_v0_base_steps.zip>`
+-   :download:`WidowX AI Leader STEPs</_downloads/wxai_v0_leader_steps.zip>`
+-   :download:`WidowX AI Follower STEPs</_downloads/wxai_v0_follower_steps.zip>`
 
 Arm Controller STEP Files
 -------------------------
 
--   :download:`Arm Controller </_downloads/arm_controller_v0_steps.zip>`
+-   :download:`Arm Controller STEPs</_downloads/arm_controller_v0_steps.zip>`
+
+CAD Drawings
+============
+
+WidowX AI CAD Drawings
+----------------------
+
+-   :download:`WidowX AI Base Drawing</_downloads/Drawing WidowX AI Base.pdf>`
+-   :download:`WidowX AI Leader Drawing</_downloads/Drawing WidowX AI Leader.pdf>`
+-   :download:`WidowX AI Follower Drawing</_downloads/Drawing WidowX AI Follower.pdf>`
+
+Arm Controller CAD Drawings
+-----------------------
+
+-   :download:`Arm Controller Drawing</_downloads/Drawing Arm Controller.pdf>`

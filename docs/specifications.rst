@@ -92,11 +92,11 @@ Joint Limits
 
   .. math::
 
-    \text{effort}_\max = \text{effort}_\text{max_nominal} / \text{effort_correction}_i
+    \text{effort}_\max = \frac{\text{effort}_\text{max_nominal}}{\text{effort_correction}}
 
-  where :math:`\text{effort}_\text{nominal}` is the nominal effort limit,
-  :math:`\text{effort_correction}_i` is the effort correction factor for joint :math:`i`
-  , and :math:`\text{effort}_\max` is the actual effort limit.
+  where :math:`\text{effort_nominal}` is the nominal effort limit of a joint,
+  :math:`\text{effort_correction}` is the effort correction factor of this joint
+  , and :math:`\text{effort}_\max` is the actual effort limit of this joint.
 
   The effort corrections can be retrieved with
   :func:`trossen_arm::TrossenArmDriver::get_effort_corrections`.

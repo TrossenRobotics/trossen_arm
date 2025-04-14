@@ -108,7 +108,7 @@ Workspace
    :alt: WidowX AI Workspace
    :align: center
 
-Denavit–Hartenberg parameters
+Denavit-Hartenberg parameters
 -----------------------------
 
 Classic

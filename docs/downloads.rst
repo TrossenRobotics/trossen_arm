@@ -54,3 +54,8 @@ WidowX AI STEP Files
 -   :download:`WidowX AI Base </_downloads/wxai_v0_base_steps.zip>`
 -   :download:`WidowX AI Leader </_downloads/wxai_v0_leader_steps.zip>`
 -   :download:`WidowX AI Follower </_downloads/wxai_v0_follower_steps.zip>`
+
+Arm Controller STEP Files
+-------------------------
+
+-   :download:`Arm Controller </_downloads/arm_controller_v0_steps.zip>`

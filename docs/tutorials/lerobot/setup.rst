@@ -28,13 +28,12 @@ On your computer:
 
    .. code-block:: bash
 
-      cd ~/lerobot && pip install -e ".[trossen_ai]"
+      cd ~/lerobot && pip install --no-binary=av -e ".[trossen_ai]"
 
 #. For Linux only (not Mac), install extra dependencies for recording datasets:
 
    .. code-block:: bash
 
-      conda install -y -c conda-forge ffmpeg
-      pip uninstall -y opencv-python
-      conda install -y -c conda-forge "opencv>=4.10.0"
+      conda install -y -c conda-forge 'ffmpeg>=7.0'
+
 

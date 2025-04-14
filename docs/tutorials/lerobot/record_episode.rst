@@ -124,7 +124,7 @@ Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
 
    The units for each joint are as follows:
 
-   - **Joints 0-5**: Degrees (°)
+   - **Joints 0-5**: Radians
    - **Joint 6 (Gripper)**: Millimeters (mm)
 
 Handling Camera FPS Issues

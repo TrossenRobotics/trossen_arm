@@ -114,6 +114,11 @@ Denavit–Hartenberg parameters
 Classic
 ^^^^^^^
 
+This set of parameters follows the `classic Denavit-Hartenberg convention`_.
+
+.. _`classic Denavit-Hartenberg convention`:
+  https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters#Denavit%E2%80%93Hartenberg_convention
+
 .. list-table::
   :align: center
   :header-rows: 1
@@ -161,6 +166,11 @@ Classic
 
 Modified
 ^^^^^^^^
+
+This set of parameters follows the `modified Denavit-Hartenberg convention`_.
+
+.. _`modified Denavit-Hartenberg convention`:
+  https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters#Modified_DH_parameters
 
 .. list-table::
   :align: center

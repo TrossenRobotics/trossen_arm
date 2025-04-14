@@ -228,6 +228,8 @@ This is an example of a configuration file for the Trossen AI Kits with LeRobot,
 
             mock: bool = False
 
+.. _ip_address_setup:
+
 Setup IP Address
 ----------------
 
@@ -239,6 +241,8 @@ Setup IP Address
 To set up the IP address for the Trossen AI Arms, you must first ensure that the arms are connected to the same network as your computer.
 Refer to :ref:`Ethernet Setup <getting_started/software_setup:Ethernet Setup>` for correct connection instructions.
 Once connected, you can find or configure the IP address using the :ref:`getting_started/demo_scripts:`configure_cleanup`_` demo or the :ref:`getting_started/demo_scripts:`set_ip_method`_` and :ref:`getting_started/demo_scripts:`set_manual_ip`_` demos.
+
+.. _camera_serial_number_setup:
 
 Camera Serial Number
 --------------------

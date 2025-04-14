@@ -120,6 +120,13 @@ Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
          --control.num_episodes=2 \
          --control.push_to_hub=true
 
+.. note::
+
+   The units for each joint are as follows:
+
+   - **Joints 0-5**: Degrees (°)
+   - **Joint 6 (Gripper)**: Millimeters (mm)
+
 Handling Camera FPS Issues
 ==========================
 

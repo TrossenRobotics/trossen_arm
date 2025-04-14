@@ -80,10 +80,10 @@ Joint Limits
 
   * - Specification
     - Value
-  * - Max Gripper Opening [m]
-    - 0.088
-  * - Max Gripper Force [N]
-    - 400
+  * - Max Finger Displacement [m]
+    - 0.044
+  * - Max Gripping Force [N]
+    - :math:`\text{torque}_{6, \max} / \text{pitch raidus} = 3.0/0.00875 = 342.857`
 
 .. note::
 

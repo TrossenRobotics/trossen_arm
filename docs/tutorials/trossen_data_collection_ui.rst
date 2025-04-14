@@ -101,8 +101,8 @@ To configure the robot, follow these steps:
 
 To update specific parameters in the YAML file, refer to the following sections:
 
-#. :ref:`Update IP Address<ip_address_setup>`
-#. :ref:`Update Camera Serial Number<camera_serial_number_setup>`
+* :ref:`tutorials/lerobot/configuration:Setup IP Address`
+* :ref:`tutorials/lerobot/configuration:Camera Serial Number`
 
 Application Features
 ====================

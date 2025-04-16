@@ -89,6 +89,21 @@ Once the installation and post-installation setup are complete, you can launch t
 
         trossen_ai_data_collection_ui
 
+Configuring the Robots
+======================
+
+The Trossen AI Data Collection UI provides a user-friendly interface for configuring robot settings such as **camera serial numbers** and **arm IP addresses**.
+To configure the robot, follow these steps:
+
+#. Launch the application and click on ``Edit`` in the top-left menu. Then select ``Robot Configuration``.
+#. In the ``Robot Configuration`` window, you will be able to modify the YAML file that contains all robot-specific settings.
+#. Update the relevant fields such as camera serial numbers and arm IP addresses as needed.
+
+To update specific parameters in the YAML file, refer to the following sections:
+
+* :ref:`tutorials/lerobot/configuration:Setup IP Address`
+* :ref:`tutorials/lerobot/configuration:Camera Serial Number`
+
 Application Features
 ====================
 

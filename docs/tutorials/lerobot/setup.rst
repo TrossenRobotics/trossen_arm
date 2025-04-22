@@ -30,6 +30,17 @@ On your computer:
 
       cd ~/lerobot && pip install --no-binary=av -e ".[trossen_ai]"
 
+   .. note::
+
+    If you encounter build errors, you may need to install additional dependencies ``cmake``, ``build-essential``, and ``ffmpeg libs``.
+    On Linux, run: 
+    
+    .. code-block::
+      
+      sudo apt-get install cmake build-essential python3-dev pkg-config libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev pkg-config
+
+    For other systems, see: `Compiling PyAV <https://pyav.org/docs/develop/overview/installation.html#bring-your-own-ffmpeg>`_
+
 #. For Linux only (not Mac), install extra dependencies for recording datasets:
 
    .. code-block:: bash
@@ -37,25 +48,25 @@ On your computer:
       conda install -y -c conda-forge 'ffmpeg>=7.0'
 
 
-.. note::
-   
-   Installing ``ffmpeg>=7.0`` using the above command usually provides ``ffmpeg 7.X`` compiled with the ``libsvtav1`` encoder.  
-   If ``libsvtav1`` is **not** available on your system (you can verify by running ``ffmpeg -encoders``), you have two options:
-
-   - **Any platform**: Install a specific version of FFmpeg with conda:
+   .. note::
       
+      Installing ``ffmpeg>=7.0`` using the above command usually provides ``ffmpeg 7.X`` compiled with the ``libsvtav1`` encoder.  
+      If ``libsvtav1`` is **not** available on your system (you can verify by running ``ffmpeg -encoders``), you have two options:
+
+      - **Any platform**: Install a specific version of FFmpeg with conda:
+         
+         .. code-block:: bash
+
+            conda install ffmpeg=7.1.1 -c conda-forge
+
+      - **Linux only**: Manually install FFmpeg build dependencies and compile FFmpeg from source with `libsvtav1` support:  
+         Refer to the official guides below:
+         
+         - `FFmpeg build dependencies <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#GettheDependencies>`_  
+         - `Compile FFmpeg with libsvtav1 <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#libsvtav1>`_
+
+      After installation, confirm you're using the correct FFmpeg binary with:
+
       .. code-block:: bash
 
-         conda install ffmpeg=7.1.1 -c conda-forge
-
-   - **Linux only**: Manually install FFmpeg build dependencies and compile FFmpeg from source with `libsvtav1` support:  
-      Refer to the official guides below:
-      
-      - `FFmpeg build dependencies <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#GettheDependencies>`_  
-      - `Compile FFmpeg with libsvtav1 <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#libsvtav1>`_
-
-   After installation, confirm you're using the correct FFmpeg binary with:
-
-   .. code-block:: bash
-
-      which ffmpeg
+         which ffmpeg

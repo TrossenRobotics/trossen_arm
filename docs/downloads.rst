@@ -71,6 +71,6 @@ WidowX AI CAD Drawings
 -   :download:`WidowX AI Follower Drawing</_downloads/Drawing WidowX AI Follower.pdf>`
 
 Arm Controller CAD Drawings
------------------------
+---------------------------
 
 -   :download:`Arm Controller Drawing</_downloads/Drawing Arm Controller.pdf>`

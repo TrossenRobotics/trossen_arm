@@ -30,6 +30,17 @@ On your computer:
 
       cd ~/lerobot && pip install --no-binary=av -e ".[trossen_ai]"
 
+   .. note::
+
+    If you encounter build errors, you may need to install additional dependencies ``cmake``, ``build-essential``, and ``ffmpeg libs``.
+    On Linux, run: 
+    
+    .. code-block::
+      
+      sudo apt-get install cmake build-essential python3-dev pkg-config libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libswscale-dev libswresample-dev libavfilter-dev pkg-config
+
+    For other systems, see: `Compiling PyAV <https://pyav.org/docs/develop/overview/installation.html#bring-your-own-ffmpeg>`_
+
 #. For Linux only (not Mac), install extra dependencies for recording datasets:
 
    .. code-block:: bash

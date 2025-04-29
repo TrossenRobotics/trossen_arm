@@ -294,11 +294,11 @@ Range: :math:`[1.0, 10.0]`
 
 .. note::
 
-    The gripper joint has an option to disable the continuity check by setting its factor to a negative value.
+    Continuity checks can be disabled by setting a joint's continuity factor to a negative value.
 
     .. warning::
 
-        This is a potentially dangerous option as it allows users to command positions to the gripper that far exceed the physical limits.
+        This is a potentially dangerous option as it allows users to command positions to joints that far exceed physical limits.
         Please use it with caution.
 
 End Effector

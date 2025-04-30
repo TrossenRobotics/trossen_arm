@@ -109,8 +109,5 @@ int main() {
     std::cout << "Configurations after loading from the YAML file:" << std::endl;
     print_configurations(driver);
 
-    // Power cycle to apply the new IP method
-    std::cout << "Power cycle the robot to apply the new IP method." << std::endl;
-
     return 0;
 }

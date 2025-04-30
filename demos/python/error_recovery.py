@@ -44,6 +44,7 @@ The script does the following:
 '''
 
 import numpy as np
+
 import trossen_arm
 
 if __name__=='__main__':

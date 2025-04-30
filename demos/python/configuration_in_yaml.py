@@ -43,6 +43,7 @@ The script does the following:
 
 import trossen_arm
 
+
 def print_configurations(driver: trossen_arm.TrossenArmDriver):
     print("EEPROM factory reset flag: ", driver.get_factory_reset_flag())
     print("EEPROM IP method: ", driver.get_ip_method())
@@ -82,6 +83,3 @@ if __name__=='__main__':
     # Print the configurations
     print("Configurations after loading from the YAML file:")
     print_configurations(driver)
-
-    # Power cycle to apply the new IP method
-    print("Power cycle the robot to apply the new IP method.")

@@ -66,7 +66,8 @@ set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPA
 # A branding image that will be displayed inside the installer (used by GUI installers).
 # set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/images/Icon.ico")
 
-# An algorithm that will be used to generate an additional file with the checksum of the package. The output file name will be:
+# An algorithm that will be used to generate an additional file with the checksum of the package.
+# The output file name will be:
 # ${CPACK_PACKAGE_FILE_NAME}.${CPACK_PACKAGE_CHECKSUM}
 # Supported algorithms are those listed by the string(<HASH>) command.
 # set(CPACK_PACKAGE_CHECKSUM SHA256)
@@ -268,6 +269,6 @@ set(CPACK_DEBIAN_PACKAGE_CONTROL_STRICT_PERMISSION FALSE)
 # https://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Source
 set(CPACK_DEBIAN_PACKAGE_SOURCE "")
 
-SET(CPACK_OUTPUT_FILE_PREFIX "${CMAKE_SOURCE_DIR}/_packages")
+set(CPACK_OUTPUT_FILE_PREFIX "${CMAKE_SOURCE_DIR}/_packages")
 
 include(CPack)

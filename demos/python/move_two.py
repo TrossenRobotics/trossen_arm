@@ -49,6 +49,7 @@ import time
 
 import numpy as np
 from scipy.interpolate import PchipInterpolator
+
 import trossen_arm
 
 if __name__=='__main__':

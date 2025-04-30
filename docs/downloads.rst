@@ -27,8 +27,8 @@ Firmware releases for the Trossen Arm Controller are listed in the table below:
 
     * - Version
       - Download
-    * - v1.7.6 (Latest)
-      - :download:`wxai_v0 (v1.7.6) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.7.6.zip>`
+    * - v1.7.7 (Latest)
+      - :download:`wxai_v0 (v1.7.7) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.7.7.zip>`
     * - v1.6.0
       - :download:`wxai_v0 (v1.6.0) </_static/downloads/arm_controller_firmware/wxai_v0/firmware-wxai_v0-v1.6.0.zip>`
     * - v1.5.0

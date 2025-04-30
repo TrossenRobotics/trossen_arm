@@ -49,6 +49,7 @@ The script does the following:
 
 import trossen_arm
 
+
 def print_states(driver: trossen_arm.TrossenArmDriver):
     print("Number of joints: ", driver.get_num_joints())
     print("EEPROM factory reset flag: ", driver.get_factory_reset_flag())

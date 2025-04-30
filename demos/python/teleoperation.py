@@ -52,6 +52,7 @@ moving to home positions. Please let go of the leader when this happens.
 import time
 
 import numpy as np
+
 import trossen_arm
 
 if __name__=='__main__':

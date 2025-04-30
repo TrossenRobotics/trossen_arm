@@ -47,9 +47,10 @@ The script does the following:
 
 import time
 
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy.interpolate import PchipInterpolator
-import matplotlib.pyplot as plt
+
 import trossen_arm
 
 if __name__=='__main__':

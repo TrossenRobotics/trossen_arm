@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(
   libtrossen_arm
-  VERSION 1.7.7
+  VERSION 1.7.8
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})

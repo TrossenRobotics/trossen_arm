@@ -78,7 +78,7 @@ enum class Model : uint8_t {
 struct JointCharacteristic
 {
   /// @brief Effort correction in motor effort unit / Nm or N
-  /// @note It must be within [0.5, 2.0]
+  /// @note It must be within [0.2, 5.0]
   float effort_correction;
   /// @brief Friction transition velocity in rad/s for arm joints or m/s for the gripper joint
   /// @note It must be positive
@@ -545,15 +545,14 @@ public:
    *
    * @note Some joint characteristics are required to be within the following ranges
    *
-   * - effort_correction: [0.5, 2.0]
+   * - effort_correction: [0.2, 5.0]
    *
    * - friction_transition_velocity: positive
    *
-   * - continuity_factor: [1.0, 10.0] for arm joints and additionally negative for the gripper joint
-   * to disable the continuity constraint
+   * - continuity_factor: [1.0, 10.0]. Setting this negative will disable the continuity constraint
    *
-   * @warning Disabling the continuity constraint for the gripper joint removes protection against
-   * drastic gripper movements caused by erroneous application logic
+   * @warning Disabling the continuity constraint removes protection against drastic movements
+   * caused by erroneous application logic
    */
   void set_joint_characteristics(const std::vector<JointCharacteristic> & joint_characteristics);
 
@@ -567,7 +566,7 @@ public:
    *
    * @note The size of the vector should be equal to the number of joints
    *
-   * @note Each element in the vector should be within the range [0.5, 2.0]
+   * @note Each element in the vector should be within the range [0.2, 5.0]
    */
   void set_effort_corrections(const std::vector<float> & effort_corrections);
 
@@ -622,11 +621,11 @@ public:
    *
    * @note The size of the vector should be equal to the number of joints
    *
-   * @note Each element in the vector should be within the range [1.0, 10.0] for arm joints
-   * and additionally negative for the gripper joint to disable the continuity constraint
+   * @note Each element in the vector should be within the range [1.0, 10.0]. Setting this negative
+   * will disable the continuity constraint
    *
-   * @warning Disabling the continuity constraint for the gripper joint removes protection against
-   * drastic gripper movements caused by erroneous application logic
+   * @warning Disabling the continuity constraint removes protection against drastic movements
+   * caused by erroneous application logic
    */
   void set_continuity_factors(const std::vector<float> & continuity_factors);
 

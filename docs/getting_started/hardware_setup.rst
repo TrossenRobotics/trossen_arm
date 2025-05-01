@@ -52,7 +52,7 @@ Download the assembly guide or watch the YouTube video for your arm model and va
 Mobile AI Kit
 -------------
 
-Watch the YouTube video below for assembly instructions for the Mobile AI kit:
+Download :download:`this guide</_downloads/Mobile AI Assembly Guide.pdf>` or watch the YouTube video below for assembly instructions for the Mobile AI kit:
 
 .. youtube:: BDENPOcgwdU
     :align: center

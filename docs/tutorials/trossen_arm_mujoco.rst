@@ -2,6 +2,14 @@
 Trossen Arm MuJoCo
 ==================
 
+.. video:: trossen_arm_mujoco/sim_to_real.mp4
+    :nocontrols:
+    :autoplay:
+    :playsinline:
+    :muted:
+    :loop:
+    :width: 100%
+
 Overview
 ========
 

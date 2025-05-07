@@ -1,0 +1,573 @@
+==================
+Trossen Arm MuJoCo
+==================
+
+Overview
+========
+
+This package provides all the necessary tools for simulating Trossen AI robotic kits in MuJoCo.
+It includes URDFs, mesh models, and MuJoCo XML files for robot configuration, along with Python scripts for data collection, sim-to-real replay, and visualization.
+
+Supported simulation environments:
+
+#. **End-Effector (EE) Controlled Simulation** :guilabel:`ee_sim_env.py`: Utilizes motion capture bodies to control the arms, enabling smooth end-effector movements.
+#. **Joint-Controlled Simulation** :guilabel:`sim_env.py`: Employs joint position controllers for precise joint-level control, mimicking real-world robot behavior.
+
+Installation
+============
+
+#. Clone the repository:
+
+    .. code-block:: bash
+
+        git clone https://github.com/TrossenRobotics/trossen_arm_mujoco.git
+
+
+#. It is recommended to create a virtual environment before installing dependencies.
+   Create a Conda environment with Python 3.10 or above.
+
+    .. code-block:: bash
+
+        conda create --name trossen_mujoco_env python=3.10      
+        conda activate trossen_mujoco_env
+    
+#. Install the package and required dependencies using:
+
+    .. code-block:: bash
+
+        cd trossen_arm_mujoco
+        pip install -e .
+
+#. To verify the installation, run:
+
+    .. code-block:: bash
+
+        python trossen_arm_mujoco/ee_sim_env.py
+
+    If the simulation window appears, the setup was successful.
+
+Assets
+======
+
+The :guilabel:`assets/` folder, located in the root directory of the repository, is essential for customizing and extending the MuJoCo simulation environment.
+It contains all necessary configuration files, such as XML and URDF files, along with mesh models in STL and OBJ formats.
+These resources enable users to modify the environment by adjusting object placements, adding new objects, or altering constraints, as well as configure camera settings for different viewpoints.
+Additionally, users can customize robot models by editing physical properties like joint limits or link dimensions and include new objects by referencing mesh files.
+This flexibility makes the :guilabel:`assets/` folder a critical component for tailoring simulations to specific research or development needs.
+
+Key Files:
+----------
+
+* ``trossen_ai.xml``: Base model definition of the Trossen AI robot.
+* ``trossen_ai_scene.xml``: Uses mocap bodies to control the simulated arms.
+* ``trossen_ai_scene_joint.xml``: Uses joint controllers, similar to real hardware, to control the simulated arms.
+* ``wxai_follower.urdf`` & ``wxai_follower.xml``: URDF and XML descriptions of the follower arms.
+* ``meshes/``: Contains STL and OBJ files for the robot components, including arms, cameras, and environmental objects.
+
+Motion Capture vs Joint-Controlled Environments:
+------------------------------------------------
+
+* Motion Capture :guilabel:`trossen_ai_scene.xml`: Uses predefined mocap bodies that move the robot arms based on scripted end effector movements.
+* Joint Control :guilabel:`trossen_ai_scene_joint.xml`: Uses position controllers for each joint, similar to a real-world robot setup.
+
+Modules
+=======================================================
+
+The :guilabel:`trossen_arm_mujoco` folder contains all Python modules necessary for running simulations, executing policies, recording episodes, and visualizing results.
+
+Simulations
+-----------
+
+#. :guilabel:`ee_sim_env.py`
+
+    * Loads ``trossen_ai_scene.xml`` (motion capture-based control).
+    * The arms move by following the positions commanded to the mocap bodies.
+    * Used for generating scripted policies that control the robot’s arms in predefined ways.
+
+#. :guilabel:`sim_env.py`
+
+    * Loads ``trossen_ai_scene_joint.xml`` (position-controlled joints).
+    * Uses joint controllers instead of mocap bodies.
+    * Replays joint trajectories from :guilabel:`ee_sim_env.py`, enabling clean simulation visuals without mocap bodies visible in the rendered output.
+
+Scripted Policy Execution
+-------------------------
+
+#. :guilabel:`scripted_policy.py`
+
+    * Defines pre-scripted movements for the robot arms to perform tasks like picking up objects.
+    * Uses the motion capture bodies to generate smooth movement trajectories.
+    * In the current setup, a policy is designed to pick up a red block, with randomized block positions in the environment.
+
+How the Data Collection Works
+=============================
+
+The data collection process simulates robot behavior in two stages: a mocap-driven recording phase followed by a clean replay phase for observation.
+This pipeline allows you to define robot movements in Cartesian space, capture the corresponding joint trajectories, and then collect realistic sensor data without contaminating it with mocap artifacts.
+
+Motion Capture Bodies
+---------------------
+
+Motion capture (mocap) bodies are dummy rigid bodies welded to the final link ``link_6`` of each robot arm.
+This design enables intuitive motion definition and automatic inverse kinematics resolution:
+
+* **Welding Behavior**:  
+    The mocap body is rigidly attached to ``link_6`` using a weld constraint.
+    As the mocap body moves, the simulator ensures that the robot’s end-effector follows it.
+
+* **Cartesian Control**:  
+    Instead of manually commanding joint angles, you move the mocap body in 3D space ``x, y, z`` using a scripted policy.
+    The arm's joints are automatically adjusted to follow.
+
+* **Joint State Recording**:  
+    As the end-effector tracks the mocap body, the simulation records the joint configurations required at each timestep.
+    These are saved as the action trajectory.
+
+Replay in Joint-Controlled Environment
+--------------------------------------
+
+The recorded joint trajectories are later replayed in a second scene where:
+
+* The mocap bodies are removed (e.g., in ``trossen_ai_scene_joint.xml``).
+* The arm is directly controlled using joint position commands.
+* Observations are collected without the mocap artifacts.
+
+During replay:
+
+* Camera feeds from multiple viewpoints are captured.
+* Joint state feedback is logged.
+* Rewards and other metadata are recorded.
+
+Step-by-Step Process
+--------------------
+
+#. Run :guilabel:`record_sim_episodes.py`
+
+    #. Launch the mocap-driven simulation :guilabel:`ee_sim_env.py`.
+    #. Execute a scripted Cartesian policy.
+    #. Save the resulting joint position trajectory.
+    #. Replay the trajectory immediately in a clean joint-controlled simulation :guilabel:`sim_env.py` to collect observations.
+
+      * Camera feeds from 4 different viewpoints
+      * Joint states (actual positions during execution)
+      * Actions (input joint positions)
+      * Reward values indicating success or failure
+
+    To generate and save simulation episodes, use:
+
+    .. code-block:: bash
+
+        python trossen_arm_mujoco/scripts/record_sim_episodes.py \
+            --task_name sim_transfer_cube \
+            --data_dir sim_transfer_cube \
+            --num_episodes 5 \
+            --onscreen_render
+
+    Arguments:
+
+    - ``--task_name``: Name of the task to execute (default: sim_transfer_cube).
+    - ``--num_episodes``: Number of episodes to generate (default: 1).
+    - ``--data_dir``: Directory where episodes will be saved (required).
+    - ``--root_dir``: Root directory prefix for locating ``data_dir``. Default: ``~/.trossen/mujoco/data/``
+    - ``--episode_len``: Number of simulation steps per episode (default: 1000).
+    - ``--onscreen_render``: Enables on-screen rendering. Default: False (set to True to enable).
+    - ``--inject_noise``: Adds noise to actions for variability. Default: False (set to True to enable).
+    - ``--cam_names``: Comma-separated list of camera names for image collection (default: all available cameras).
+
+    .. note:: 
+
+        * The ``--task_name`` argument is used to load the corresponding configuration from :guilabel:`constants.py`.
+        * You can extend ``SIM_TASK_CONFIGS`` in :guilabel:`constants.py` to support new task configurations.
+        * All parameters loaded from :guilabel:`constants.py` can be individually overridden via command-line arguments.
+
+#. Save the Data
+
+    All observations and metadata are saved in .hdf5 format, with one file per episode:
+
+    .. code-block:: bash
+
+        ~/.trossen/mujoco/data/sim_transfer_cube/episode_0.hdf5
+        ~/.trossen/mujoco/data/sim_transfer_cube/episode_1.hdf5
+
+
+#. Visualizing the Data
+
+    Use the :guilabel:`visualize_eps.py` script to convert episodes into videos:
+
+    .. code-block:: bash
+
+        python trossen_arm_mujoco/scripts/visualize_eps.py \
+            --data_dir sim_transfer_cube \
+            --output_dir videos \
+            --fps 50
+
+    Arguments:
+
+    - ``--data_dir``: Directory containing :guilabel:`.hdf5` files (required), relative to ``--root_dir`` if provided.
+    - ``--root_dir``: Root path prefix for locating ``data_dir``. Default: ``~/.trossen/mujoco/data/``
+    - ``--output_dir``: Subdirectory inside ``data_dir`` where generated :guilabel:`.mp4` videos will be saved. Default: ``videos``
+    - ``--fps``: Frames per second for the generated videos. Default: `50`
+
+    .. note::
+
+        If you do not specify ``--root_dir``, videos will be saved to ``~/.trossen/mujoco/data/<data_dir>/<output_dir>``.
+        You can customize the output path by changing ``--root_dir``, ``--data_dir``, or ``--output_dir`` as needed.
+
+#. Sim-to-real
+
+    To deploy the episode on real hardware, run:
+
+    .. code-block:: bash
+
+        python trossen_arm_mujoco/scripts/replay_episode_real.py \
+            --data_dir sim_transfer_cube \
+            --episode_idx 0 \
+            --fps 10 \
+            --left_ip 192.168.1.5 \
+            --right_ip 192.168.1.4
+    
+    This script:
+
+        * Loads the selected joint trajectory (.hdf5)
+        * Sends joint commands to real arms at the specified IP addresses
+        * Logs the error between commanded vs actual joint positions
+        * Returns both arms to home and sleep positions after execution
+
+    Arguments:
+
+    - ``--data_dir``: Directory containing `.hdf5` files (required), relative to ``--root_dir`` if provided.
+    - ``--root_dir``: Root directory prefix for locating ``data_dir``. Default: `~/.trossen/mujoco/data/`
+    - ``--episode_idx``: Index of the episode to replay. Default: `0`.
+    - ``--fps``: Playback frame rate (Hz). Controls the action replay speed. Default: `10`.
+    - ``--left_ip``: IP address of the left Trossen arm. Default: `192.168.1.5`.
+    - ``--right_ip``: IP address of the right Trossen arm. Default: `192.168.1.4`.
+
+Customization
+=============
+
+Modifying Tasks
+---------------
+
+To create a custom task, modify :guilabel:`ee_sim_env.py` and define a new subclass of `TrossenAIStationaryEETask` this will be used for running the scripted policy.
+ Implement the following methods:
+
+- ``initialize_episode(self, physics)``: Sets up the initial environment state, including robot and object positions.
+- ``get_env_state(self, physics)``: Defines the data to be recorded as observations from the environment.
+- ``get_reward(self, physics)``: Implements the reward function to determine task success criteria.
+
+.. code-block:: python
+
+    class CustomTask(TrossenAIStationaryEETask):
+        def initialize_episode(self, physics):
+            # Set up the initial state of the environment
+            pass
+
+        def get_env_state(self, physics):
+            # Define the observations to be recorded
+            pass
+
+        def get_reward(self, physics):
+            # Implement the reward function
+            pass
+
+Example:
+
+.. code-block:: python
+
+    class TransferCubeTask(TrossenAIStationaryEETask):
+        def initialize_episode(self, physics):
+            # Set up the initial state of the environment
+            pass
+
+        def get_env_state(self, physics):
+            # Define the observations to be recorded
+            pass
+
+        def get_reward(self, physics):
+            # Implement the reward function
+            pass
+
+.. code-block:: python
+
+    def initialize_episode(self, physics: Physics) -> None:
+        """
+        Set up the simulation environment at the start of an episode.
+
+        :param physics: The simulation physics engine.
+        """
+        self.initialize_robots(physics)
+        # randomize box position
+        cube_pose = sample_box_pose()
+        box_start_idx = physics.model.name2id("red_box_joint", "joint")
+        np.copyto(physics.data.qpos[box_start_idx : box_start_idx + 7], cube_pose)
+
+        super().initialize_episode(physics)
+
+Here, ``sample_box_pose()`` is a function that generates a random pose for the red box.
+Then we get the joint index of the red box and set its position using `np.copyto()`.
+The ``initialize_robots()`` method is called to set the initial positions of the robot arms.
+The ``super().initialize_episode(physics)`` call ensures that the base class's initialization logic is executed, setting up the environment correctly.
+
+
+.. code-block:: python
+
+    @staticmethod
+    def get_env_state(physics: Physics) -> np.ndarray:
+        """
+        Retrieve the environment state specific to this task.
+
+        :param physics: The simulation physics engine.
+        :return: The state of the environment.
+        """
+        env_state = physics.data.qpos.copy()[16:]
+        return env_state
+
+The ``get_env_state()`` method retrieves the environment state, which includes the joint positions of the red box.
+The ``physics.data.qpos.copy()[16:]`` line extracts the joint positions starting from index 16, which corresponds to the red box's joint positions.
+The first 16 indices are reserved for the robot arms and other components.
+
+
+.. code-block:: python
+
+    def get_reward(self, physics: Physics) -> int:
+        """
+        Compute the reward based on the cube's interaction with the robot and the environment.
+
+        :param physics: The simulation physics engine.
+        :return: The computed reward.
+        """
+        # return whether left gripper is holding the box
+        all_contact_pairs = []
+        for i_contact in range(physics.data.ncon):
+            id_geom_1 = physics.data.contact[i_contact].geom1
+            id_geom_2 = physics.data.contact[i_contact].geom2
+            name_geom_1 = physics.model.id2name(id_geom_1, "geom")
+            name_geom_2 = physics.model.id2name(id_geom_2, "geom")
+            contact_pair = (name_geom_1, name_geom_2)
+            all_contact_pairs.append(contact_pair)
+        touch_left_gripper = (
+            "red_box",
+            "left/gripper_follower_left",
+        ) in all_contact_pairs
+        touch_right_gripper = (
+            "red_box",
+            "right/gripper_follower_left",
+        ) in all_contact_pairs
+        touch_table = ("red_box", "table") in all_contact_pairs
+
+        reward = 0
+        if touch_right_gripper:
+            reward = 1
+        if touch_right_gripper and not touch_table:  # lifted
+            reward = 2
+        if touch_left_gripper:  # attempted transfer
+            reward = 3
+        if touch_left_gripper and not touch_table:  # successful transfer
+            reward = 4
+        return reward
+
+The ``get_reward()`` method computes the reward based on the interactions between the robot arms and the red box.
+It checks for contact pairs between the red box and the left and right grippers, as well as the table.
+The reward is assigned based on the following conditions:
+- If the right gripper touches the red box, the reward is 1.
+- If the right gripper touches the red box and it is not touching the table, the reward is 2 (indicating that the box is lifted).
+- If the left gripper touches the red box, the reward is 3 (indicating an attempted transfer).
+- If the left gripper touches the red box and it is not touching the table, the reward is 4 (indicating a successful transfer).
+
+
+Similarly we will also have to modify the :guilabel:`sim_env.py` file to add the new task this will be used for running the joint controlled simulation.
+Similar to the :guilabel:`ee_sim_env.py` file, we will have to implement the following methods:
+
+- ``initialize_episode(self, physics)``: Sets up the initial environment state, including robot and object positions.
+- ``get_env_state(self, physics)``: Defines the data to be recorded as observations from the environment.
+- ``get_reward(self, physics)``: Implements the reward function to determine task success criteria.
+
+.. code-block:: python
+
+    class CustomTask(TrossenAIStationaryTask):
+        def initialize_episode(self, physics):
+            # Set up the initial state of the environment
+            pass
+
+        def get_env_state(self, physics):
+            # Define the observations to be recorded
+            pass
+
+        def get_reward(self, physics):
+            # Implement the reward function
+            pass
+
+Example:
+
+.. code-block:: python
+
+    class TransferCubeTask(TrossenAIStationaryTask):
+        def initialize_episode(self, physics):
+            # Set up the initial state of the environment
+            pass
+
+        def get_env_state(self, physics):
+            # Define the observations to be recorded
+            pass
+
+        def get_reward(self, physics):
+            # Implement the reward function
+            pass
+
+.. code-block:: python
+
+    def initialize_episode(self, physics: Physics) -> None:
+        """
+        Initializes the episode, resetting the robot's pose and cube position.
+
+        :param physics: The MuJoCo physics simulation instance.
+        """
+        # TODO Notice: this function does not randomize the env configuration. Instead, set
+        # BOX_POSE from outside reset qpos, control and box position
+        with physics.reset_context():
+            physics.named.data.qpos[:16] = START_ARM_POSE
+            assert BOX_POSE[0] is not None
+            physics.named.data.qpos[-7:] = BOX_POSE[0]
+
+        super().initialize_episode(physics)
+
+The ``initialize_episode()`` method sets the initial state of the environment, including the robot arms and the red box.
+The ``physics.named.data.qpos[:16] = START_ARM_POSE`` line sets the initial joint positions of the robot arms, while ``physics.named.data.qpos[-7:] = BOX_POSE[0]`` sets the position of the red box.
+We store the randomized box position in the ``BOX_POSE`` variable, which is passed to the ``initialize_episode()`` method.
+So that we can correctly set the position of the red box in the :guilabel:`sim_env.py` file whihc is used for running the joint controlled simulation.
+
+.. code-block:: python
+
+    @staticmethod
+    def get_env_state(physics: Physics) -> np.ndarray:
+        """
+        Retrieves the environment state, including joint positions and box position.
+
+        :param physics: The MuJoCo physics simulation instance.
+        :return: The environment state as a numpy array.
+        """
+        env_state = physics.data.qpos.copy()[16:]
+        return env_state
+
+The ``get_env_state()`` method remain the same as in the :guilabel:`ee_sim_env.py` file, retrieving the joint positions of the red box.
+You can change this to your liking if you want to add more information to the environment state.
+
+.. code-block:: python
+
+    def get_reward(self, physics: Physics) -> int:
+        """
+        Computes the reward based on whether the cube has been transferred successfully.
+
+        :param physics: The MuJoCo physics simulation instance.
+        :return: The computed reward which is whether left gripper is holding the box
+        """
+        all_contact_pairs = []
+        for i_contact in range(physics.data.ncon):
+            id_geom_1 = physics.data.contact[i_contact].geom1
+            id_geom_2 = physics.data.contact[i_contact].geom2
+            name_geom_1 = physics.model.id2name(id_geom_1, "geom")
+            name_geom_2 = physics.model.id2name(id_geom_2, "geom")
+            contact_pair = (name_geom_1, name_geom_2)
+            all_contact_pairs.append(contact_pair)
+
+        touch_left_gripper = (
+            "red_box",
+            "left/gripper_follower_left",
+        ) in all_contact_pairs
+        touch_right_gripper = (
+            "red_box",
+            "right/gripper_follower_left",
+        ) in all_contact_pairs
+        touch_table = ("red_box", "table") in all_contact_pairs
+
+        reward = 0
+        if touch_right_gripper:
+            reward = 1
+        # lifted
+        if touch_right_gripper and not touch_table:
+            reward = 2
+        # attempted transfer
+        if touch_left_gripper:
+            reward = 3
+        # successful transfer
+        if touch_left_gripper and not touch_table:
+            reward = 4
+        return reward
+
+The ``get_reward()`` method also remains the same as in the :guilabel:`ee_sim_env.py` file, computing the reward based on the interactions between the robot arms and the red box.
+You can change this to your liking if you want to add more information to the environment state.
+
+We see that ``get_env_state()`` and ``get_reward()`` methods are the same in both files, but we have to implement them in both files because they are used in different contexts.
+This is because the :guilabel:`ee_sim_env.py` file is used for running the scripted policy, while the :guilabel:`sim_env.py` file is used for running the joint controlled simulation.
+This allows us to have different implementations of the same methods in different contexts, which is useful for customizing the behavior of the robot arms in different scenarios.
+
+The ``initialize_episode()`` method is different in both as we randomize the box position in the :guilabel:`ee_sim_env.py` file, while in the :guilabel:`sim_env.py` file we set the box position to the value used in the :guilabel:`ee_sim_env.py` file.
+
+
+Changing Policy Behavior
+------------------------
+
+To define new behavior for the robotic arms, modify :guilabel:`scripted_policy.py`.
+Update the trajectory generation logic in ``PickAndTransferPolicy.generate_trajectory()`` or create a new class of your own.
+
+Each movement step in the trajectory is defined by:
+
+- ``t``: The time step at which the movement occurs.
+- ``xyz``: The target position of the end effector in 3D space.
+- ``quat``: The target orientation of the end effector, represented as a quaternion.
+- ``gripper``: The target gripper finger position (0 to 0.044, where 0 is closed and 0.044 is fully open).
+
+
+Example:
+
+.. code-block:: python
+
+    def generate_trajectory(self, ts_first: TimeStep):
+        self.left_trajectory = [
+            {"t": 0, "xyz": [0, 0, 0.4], "quat": [1, 0, 0, 0], "gripper": 0},
+            {"t": 100, "xyz": [0.1, 0, 0.3], "quat": [1, 0, 0, 0], "gripper": 0.044}
+        ]
+
+We define some fixed and dynamic waypoints as follows:
+
+.. code-block:: python
+
+    init_mocap_pose_right = ts_first.observation["mocap_pose_right"]
+    init_mocap_pose_left = ts_first.observation["mocap_pose_left"]
+
+    box_info = np.array(ts_first.observation["env_state"])
+    box_xyz = box_info[:3]
+    print(f"Generate trajectory for {box_xyz=}")
+
+    gripper_pick_quat = Quaternion(init_mocap_pose_right[3:])
+    gripper_pick_quat = gripper_pick_quat * Quaternion(
+        axis=[0.0, 1.0, 0.0], degrees=-45
+    )
+
+    meet_left_quat = Quaternion(axis=[1.0, 0.0, 0.0], degrees=90)
+
+    meet_xyz = np.array([0.0, 0.0, 0.3])
+
+
+Here we define the initial pose of the right and left grippers using the ``ts_first.observation["mocap_pose_right"]`` and ``ts_first.observation["mocap_pose_left"]`` values.
+We also define the box position using the ``ts_first.observation["env_state"]`` value, which contains the joint positions of the red box.
+We then define the quaternion for the gripper pick pose and the meet pose using the ``Quaternion`` class from the ``trossen_arm_mujoco.utils`` module.
+
+
+Adding New Environment Setups
+-----------------------------
+
+The simulation uses XML files stored in the :guilabel:`assets/` directory. To introduce a new environment setup:
+
+1. Create a new XML configuration file in :guilabel:`assets/` with the desired object placements and constraints.
+2. Modify :guilabel:`sim_env.py` to load the new environment by specifying the new XML file.
+3. Update the scripted policies in :guilabel:`scripted_policy.py` to accommodate new task goals and constraints.
+
+Troubleshooting
+===============
+
+If you encounter Mesa Loader or ``mujoco.FatalError: gladLoadGL error`` issues, use the following command:
+
+.. code-block:: bash
+
+    export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6

@@ -29,8 +29,8 @@ To convert your old datasets to the new format, you can use the following comman
 
 This script converts :guilabel:`LeRobot v2.1` datasets to the :guilabel:`LeRobot v2.1 Trossen v1.0` subversion by:
 
-* Converting joint angles from degrees to radians.
-* Reverting gripper states to their original millimeter representation.
+* Converting joint angles to radians.
+* Converting gripper positions to millimeters.
 * Updating dataset actions, states, and statistics.
 
 Arguments:
@@ -39,10 +39,7 @@ Arguments:
 * ``--push_to_hub``: Push the modified dataset to the Hugging Face Hub.
 * ``--private``: Upload the dataset to a private repository.
 * ``--tags``: Optional tags for the dataset on the Hugging Face Hub.
-
-
-We add :guilabel:`trossen_subversion` to the dataset metadata to indicate that this dataset was created using ``Interbix/lerobot`` 
+We add :guilabel:`trossen_subversion` to the dataset metadata to indicate that this dataset was created using ``Interbotix/lerobot`` 
 This also allows us to run ``backward compatibility`` checks in the future.
 The ``backward compatibility`` checks are run when you load a dataset using the ``Dataset`` class.
 The checks will verify that the dataset is compatible with the current version of the code.
-

@@ -51,10 +51,10 @@ Select the error code from the list below to view the description and solution:
 
 **Solution:** No action needed.
 
-1: UDP Init Failed
-^^^^^^^^^^^^^^^^^^
+1: Ethernet Init Failed
+^^^^^^^^^^^^^^^^^^^^^^^
 
-**Description:** Controller's UDP interface failed to initialize.
+**Description:** Controller's Ethernet manager failed to initialize.
 
 **Solution:** Check the network connection.
 
@@ -79,59 +79,59 @@ Select the error code from the list below to view the description and solution:
 
 **Solution:** Check the controller to arm connection.
 
-5: Joint Enable Failed
+5: Joint Clear Error Failed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description:** Joint clear error command failed.
+
+**Solution:** Check the controller to arm connection.
+
+6: Joint Enable Failed
 ^^^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Joint enable command failed.
 
 **Solution:** Check the controller to arm connection.
 
-6: Joint Disable Failed
+7: Joint Disable Failed
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Joint disable command failed.
 
 **Solution:** Check the controller to arm connection.
 
-7: Joint Set Home Failed
+8: Joint Set Home Failed
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Joint home calibration command failed.
 
 **Solution:** Check the controller to arm connection.
 
-8: Joint Disabled Unexpectedly
+9: Joint Disabled Unexpectedly
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Joint disabled unexpectedly.
 
 **Solution:** Check the controller to arm connection.
 
-9: Joint Overheated
-^^^^^^^^^^^^^^^^^^^
+10: Joint Overheated
+^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Joint overheated.
 
 **Solution:** Turn off the controller to cool down the joint.
 
-10: Invalid Mode
+11: Invalid Mode
 ^^^^^^^^^^^^^^^^
 
 **Description:** Invalid mode command received.
 
 **Solution:** Check that the driver version matches the controller firmware version.
 
-11: Invalid Robot Command
+12: Invalid Robot Command
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Invalid robot command indicator received.
-
-**Solution:** Check that the driver version matches the controller firmware version.
-
-12: Invalid Robot Command Size
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Description:** Robot command with unexpected size received.
 
 **Solution:** Check that the driver version matches the controller firmware version.
 
@@ -142,24 +142,28 @@ Select the error code from the list below to view the description and solution:
 
 **Solution:** Check that the driver version matches the controller firmware version.
 
-14: Invalid Pending Command
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-**Description:** Invalid pending command.
-
-**Solution:** Flash the controller firmware of a different version.
-
-15: Robot Input Mode Mismatch
+14: Robot Input Mode Mismatch
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Description:** Robot input with modes different than configured modes received.
 
 **Solution:** Verify that the sent joint inputs match the configured modes.
 
-16: Robot Input Discontinuous
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+15: Joint Limit Exceeded
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Description:** Discontinuous robot input received.
+**Description:** Joint limit exceeded.
 
-**Solution:** Check that the joint inputs are continuous and are sent at higher than 300 Hz.
-For more details, please refer to :ref:`getting_started/configuration:continuity_factors`.
+**Solution:** Check that the joint inputs are within the joint limits.
+Please refer to :ref:`getting_started/configuration:joint limits` for how the joint limits work.
+
+16: Robot Input Infinite
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Description:** Robot input with infinite values received.
+
+**Solution:** Check that the joint inputs are finite.
+Possible causes are:
+
+- Incorrect scripting logic
+- The robot is closed to a singular configuration while operating in Cartesian space

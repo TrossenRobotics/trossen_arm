@@ -273,14 +273,14 @@ Root Attributes
         * Data type: ``uint8`` (8-bit unsigned integers for pixel values).
         * Chunked storage: ``(1, 480, 640, 3)`` for efficient access to individual timesteps.
 
-    * ``qpos``: Joint positions of the robot arms.
+    * ``qpos``: Joint positions of the robot arms in :guilabel:`radians`.
         * Shape: ``(max_timesteps, 16)``, where:
             * ``max_timesteps``: Number of timesteps in the episode.
             * ``16``: Number of joints (8 per arm: 6 revolute + 2 prismatic).
-    * ``qvel``: Joint velocities of the robot arms.
+    * ``qvel``: Joint velocities of the robot arms in :guilabel:`radians/s`.
         * Shape: ``(max_timesteps, 16)``.
 
-* ``action``: Stores the joint position commands sent to the robot arms.
+* ``action``: Stores the joint position :guilabel:`radians` commands sent to the robot arms.
     * Shape: ``(max_timesteps, 16)``.
 
 Additional Data

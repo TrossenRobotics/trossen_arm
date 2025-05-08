@@ -162,6 +162,14 @@ Run the following command to record **10 evaluation episodes**:
            --control.policy.path=outputs/train/act_trossen_ai_solo_test/checkpoints/last/pretrained_model \
            --control.num_image_writer_processes=1
 
+
+.. note::
+
+   You can change the camera interface to use for recording by adding the following command line argument:
+   ``--robot.camera_interface='opencv'``.
+   This is useful if you have configured multiple camera interfaces as explained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
+
+   
 Key Differences from Training Data Recording
 --------------------------------------------
 

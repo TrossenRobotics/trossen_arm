@@ -201,6 +201,76 @@ Handling Camera FPS Issues
          --control.display_cameras=false
 
 
+If using ``IntelRealsense`` camera interface is causing fps issues, you can try using the ``OpenCV`` interface instead.
+Make sure that you have configured the cameras correctly as described in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
+
+.. tabs::
+
+   .. group-tab:: Trossen AI Stationary
+
+      .. code-block:: bash
+         :emphasize-lines: 16
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_stationary \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Stationary." \
+         --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false \
+         --camera.interface_type=opencv
+   
+   .. group-tab:: Trossen AI Mobile
+      
+      .. code-block:: bash
+         :emphasize-lines: 16
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_mobile \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Mobile." \
+         --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false \
+         --camera.interface_type=opencv
+   
+   .. group-tab:: Trossen AI Solo
+      
+      .. code-block:: bash
+         :emphasize-lines: 16
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_solo\
+         --robot.max_relative_target=null\
+         --control.type=record\
+         --control.fps=30\
+         --control.single_task="Test recording episode using Trossen AI Solo."\
+         --control.repo_id=${HF_USER}/trossen_ai_solo_test\
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false \
+         --camera.interface_type=opencv
 
 Recording Configuration
 =======================

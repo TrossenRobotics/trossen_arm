@@ -28,7 +28,7 @@ Installation
 
     .. code-block:: bash
 
-        git clone https://github.com/TrossenRobotics/trossen_arm_mujoco.git
+        git clone https://github.com/TrossenRobotics/trossen_arm_mujoco.git ~/trossen_arm_mujoco
 
 
 #. It is recommended to create a virtual environment before installing dependencies.
@@ -43,7 +43,7 @@ Installation
 
     .. code-block:: bash
 
-        cd trossen_arm_mujoco
+        cd ~/trossen_arm_mujoco
         pip install -e .
 
 #. To verify the installation, run:

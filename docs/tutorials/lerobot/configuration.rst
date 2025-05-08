@@ -1,6 +1,6 @@
-========================================
-Configuring Trossen AI Kits with LeRobot
-========================================
+========================
+Trossen AI Configuration
+========================
 
 In order to use the Trossen AI Kits with LeRobot, you need to first configure the arms with the necessary specifications.
 The specifications include the IP address, model_name, and camera serial numbers.
@@ -362,7 +362,8 @@ Camera Serial Number
 There are two ways to set up the camera serial numbers for the Trossen AI Kits with LeRobot: using the Intel RealSense interface or the OpenCV interface.
 Based on the camera interface you choose, follow the appropriate steps below to set up the camera serial numbers.
 You can setup both interfaces at the same time, and use the ``--robot.camera_interface`` argument to switch between them.
-By default, the camera interface is set to ``intel_realsense``. We will look at this in more detail in the next sections.
+By default, the camera interface is set to ``intel_realsense``.
+We will look at this in more detail in the next sections.
 
 .. tabs::
     .. group-tab:: Intel RealSense Interface

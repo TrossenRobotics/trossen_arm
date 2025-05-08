@@ -15,3 +15,4 @@ This page contains tutorials for using the Trossen AI Kits with LeRobot for data
     lerobot/visualize.rst
     lerobot/replay.rst
     lerobot/train_and_evaluate.rst
+    lerobot/changelog.rst

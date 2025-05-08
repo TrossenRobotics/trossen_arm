@@ -2,6 +2,13 @@
 Training and Evaluating a Policy
 ================================
 
+.. warning::
+
+   We have introdced a new change in how the values are saved in the dataset.
+   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
+   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
+   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
+
 Training a Policy
 =================
 
@@ -169,7 +176,7 @@ Run the following command to record **10 evaluation episodes**:
    ``--robot.camera_interface='opencv'``.
    This is useful if you have configured multiple camera interfaces as explained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
 
-   
+
 Key Differences from Training Data Recording
 --------------------------------------------
 

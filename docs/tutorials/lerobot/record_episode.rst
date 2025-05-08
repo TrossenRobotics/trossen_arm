@@ -124,10 +124,15 @@ Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
 
    The units for each joint are as follows:
 
-   - **Joints 0-5**: Degrees (°)
-   - **Joint 6 (Gripper)**: Millimeters (mm) * 10000
+   - **Joints 0-5**: Radians
+   - **Joint 6 (Gripper)**: Millimeters (mm)
 
-   The value scaling is done to preserve the precision of the gripper joint.
+.. warning::
+
+   We have introdced a new change in how the values are saved in the dataset.
+   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
+   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
+   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
 
 Handling Camera FPS Issues
 ==========================

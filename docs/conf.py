@@ -158,12 +158,9 @@ exhale_args = {
     "exhaleDoxygenStdin":    """
     PROJECT_NAME           = "Trossen Arm API Documentation"
     INPUT                  = ../include
-    EXCLUDE_PATTERNS       = trossen_arm_*.hpp
-    EXCLUDE_SYMBOLS        = TrossenArmDriver::LinkRaw \
-                             TrossenArmDriver::EndEffectorRaw \
-                             TrossenArmDriver::JointInput \
-                             TrossenArmDriver::JointOutput \
-                             TrossenArmDriver::JointCharacteristicName
+    EXCLUDE_SYMBOLS        = trossen_arm::TrossenArmDriver::RobotInput \
+                             trossen_arm::TrossenArmDriver::*Raw \
+                             trossen_arm::TrossenArmDriver::RobotCommandIndicator
     """,
 }
 

@@ -9,3 +9,4 @@ sphinx-rtd-theme
 sphinx-tabs
 sphinxcontrib-mermaid
 sphinxcontrib-youtube
+sphinxcontrib-video

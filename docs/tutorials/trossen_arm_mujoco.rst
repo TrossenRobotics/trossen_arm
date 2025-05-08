@@ -3,12 +3,13 @@ Trossen Arm MuJoCo
 ==================
 
 .. video:: trossen_arm_mujoco/sim_to_real.mp4
+    :align: center
     :nocontrols:
     :autoplay:
     :playsinline:
     :muted:
     :loop:
-    :width: 100%
+    :width: 80%
 
 Overview
 ========
@@ -53,6 +54,8 @@ Installation
         python trossen_arm_mujoco/ee_sim_env.py
 
     If the simulation window appears, the setup was successful.
+
+    In case of any issues, please refer to the `Troubleshooting`_ section.
 
 Assets
 ======
@@ -196,7 +199,8 @@ Step-by-Step Process
 
         ~/.trossen/mujoco/data/sim_transfer_cube/episode_0.hdf5
         ~/.trossen/mujoco/data/sim_transfer_cube/episode_1.hdf5
-
+    
+    Check the dataset structure in the `Dataset Structure`_ section for details on the saved data.
 
 #. Visualizing the Data
 
@@ -249,6 +253,45 @@ Step-by-Step Process
     - ``--fps``: Playback frame rate (Hz). Controls the action replay speed. Default: `10`.
     - ``--left_ip``: IP address of the left Trossen arm. Default: `192.168.1.5`.
     - ``--right_ip``: IP address of the right Trossen arm. Default: `192.168.1.4`.
+
+Dataset Structure
+=================
+
+We use the `HDF5 <https://docs.h5py.org/en/stable/index.html>`_ format to store the recorded data, which is efficient for large datasets and allows for easy access to specific parts of the data.
+
+Root Attributes
+---------------
+
+* ``sim``: A boolean attribute indicating whether the data was collected in simulation (``True``) or on real hardware (``False``).
+
+* ``observations`` :guilabel:`group`: Contains all the observations recorded during the simulation.
+    * ``images`` :guilabel:`subgroup`: Stores image data from multiple cameras.
+        * Each camera has its own dataset named after the camera (e.g., ``cam_name``).
+        * Dataset shape: ``(max_timesteps, 480, 640, 3)``, where:
+            * ``max_timesteps``: Number of timesteps in the episode.
+            * ``480, 640, 3``: Image dimensions (height, width, RGB channels).
+        * Data type: ``uint8`` (8-bit unsigned integers for pixel values).
+        * Chunked storage: ``(1, 480, 640, 3)`` for efficient access to individual timesteps.
+
+    * ``qpos``: Joint positions of the robot arms.
+        * Shape: ``(max_timesteps, 16)``, where:
+            * ``max_timesteps``: Number of timesteps in the episode.
+            * ``16``: Number of joints (8 per arm: 6 revolute + 2 prismatic).
+    * ``qvel``: Joint velocities of the robot arms.
+        * Shape: ``(max_timesteps, 16)``.
+
+* ``action``: Stores the joint position commands sent to the robot arms.
+    * Shape: ``(max_timesteps, 16)``.
+
+Additional Data
+---------------
+
+* Any additional data in ``data_dict`` is stored as separate datasets under the root group.
+    * Each dataset is named after the corresponding key in ``data_dict``.
+    * The data is written using ``root[name][...] = array``.
+
+This structure ensures efficient storage and retrieval of simulation data, supporting tasks like visualization, analysis, and sim-to-real transfer.
+
 
 Customization
 =============
@@ -332,7 +375,10 @@ The ``super().initialize_episode(physics)`` call ensures that the base class's i
 
 The ``get_env_state()`` method retrieves the environment state, which includes the joint positions of the red box.
 The ``physics.data.qpos.copy()[16:]`` line extracts the joint positions starting from index 16, which corresponds to the red box's joint positions.
-The first 16 indices are reserved for the robot arms and other components.
+`physics.data.qpos` is a numpy array that contains the positions of all joints in the simulation.
+Each arm has 6 revolute joints and 2 prismatic joints for gripper.
+Therefore the first 16 indices are occupied by the 2 robot arms.
+The rest are the joint states of the red box whihc is a free joint.
 
 
 .. code-block:: python

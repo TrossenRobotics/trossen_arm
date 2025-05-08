@@ -151,6 +151,11 @@ Basics
 
 The basic demos show the must-know functionalities to get the arm up and running.
 
+`cartesian_position`_
+^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to perform position control in Cartesian space.
+
 `configure_cleanup`_
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -183,6 +188,16 @@ Intermediate
 ------------
 
 The intermediate demos give examples on commonly-used configurations and application-specific control loops.
+
+`cartesian_external_effort`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to use external effort control in Cartesian space to do impedance control.
+
+`cartesian_velocity`_
+^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to use velocity control in Cartesian space to do admittance control.
 
 `configuration_in_yaml`_
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -233,6 +248,12 @@ The advanced demos show configurations that should be used with full understandi
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This script demonstrates how to set the joint characteristics in the EEPROM, using the effort corrections as an example.
+
+.. _`cartesian_external_effort`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_external_effort.py
+
+.. _`cartesian_position`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_position.py
+
+.. _`cartesian_velocity`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_velocity.py
 
 .. _`configuration_in_yaml`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configuration_in_yaml.py
 

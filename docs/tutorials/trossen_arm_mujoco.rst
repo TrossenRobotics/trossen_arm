@@ -292,7 +292,6 @@ Additional Data
 
 This structure ensures efficient storage and retrieval of simulation data, supporting tasks like visualization, analysis, and sim-to-real transfer.
 
-
 Customization
 =============
 
@@ -378,7 +377,7 @@ The ``physics.data.qpos.copy()[16:]`` line extracts the joint positions starting
 `physics.data.qpos` is a numpy array that contains the positions of all joints in the simulation.
 Each arm has 6 revolute joints and 2 prismatic joints for gripper.
 Therefore the first 16 indices are occupied by the 2 robot arms.
-The rest are the joint states of the red box whihc is a free joint.
+The rest are the joint states of the red box which is a free joint.
 
 
 .. code-block:: python

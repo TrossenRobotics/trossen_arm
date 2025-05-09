@@ -273,15 +273,17 @@ Root Attributes
         * Data type: ``uint8`` (8-bit unsigned integers for pixel values).
         * Chunked storage: ``(1, 480, 640, 3)`` for efficient access to individual timesteps.
 
-    * ``qpos``: Joint positions of the robot arms in :guilabel:`radians`.
+    * ``qpos``: Joint positions of the robot arms in :guilabel:`radians` and gripper positions in :guilabel:`meters`.
         * Shape: ``(max_timesteps, 16)``, where:
             * ``max_timesteps``: Number of timesteps in the episode.
-            * ``16``: Number of joints (8 per arm: 6 revolute + 2 prismatic).
-    * ``qvel``: Joint velocities of the robot arms in :guilabel:`radians/s`.
+            * ``16``: Number of joints (8 per arm: 6 revolute in radians + 2 prismatic in meters).
+    * ``qvel``: Joint velocities of the robot arms in :guilabel:`radians/s` and gripper velocities in :guilabel:`meters/s`.
         * Shape: ``(max_timesteps, 16)``.
 
-* ``action``: Stores the joint (:guilabel:`radians`) and gripper (:guilabel:`meters`) position commands sent to the robot arms.
-    * Shape: ``(max_timesteps, 16)``.
+* ``action``: Contains the commanded joint positions (in :guilabel:`radians`) and gripper positions (in :guilabel:`meters`) for the robot arms.
+    * Shape: ``(max_timesteps, 16)``, where:
+        * ``max_timesteps``: Number of timesteps in the episode.
+        * ``16``: Number of control dimensions (8 per arm: 6 revolute joints in radians + 2 prismatic joints in meters).
 
 Additional Data
 ---------------

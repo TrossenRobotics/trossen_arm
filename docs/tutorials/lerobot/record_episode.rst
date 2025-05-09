@@ -124,10 +124,15 @@ Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
 
    The units for each joint are as follows:
 
-   - **Joints 0-5**: Degrees (°)
-   - **Joint 6 (Gripper)**: Millimeters (mm) * 10000
+   - **Joints 0-5**: Radians
+   - **Joint 6 (Gripper)**: Millimeters (mm)
 
-   The value scaling is done to preserve the precision of the gripper joint.
+.. warning::
+
+   We have introdced a new change in how the values are saved in the dataset.
+   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
+   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
+   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
 
 Handling Camera FPS Issues
 ==========================
@@ -201,6 +206,76 @@ Handling Camera FPS Issues
          --control.display_cameras=false
 
 
+If using ``IntelRealsense`` camera interface is causing fps issues, you can try using the ``OpenCV`` interface instead.
+Make sure that you have configured the cameras correctly as described in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
+
+.. tabs::
+
+   .. group-tab:: Trossen AI Stationary
+
+      .. code-block:: bash
+         :emphasize-lines: 16
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_stationary \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Stationary." \
+         --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false \
+         --camera.interface_type=opencv
+   
+   .. group-tab:: Trossen AI Mobile
+      
+      .. code-block:: bash
+         :emphasize-lines: 16
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_mobile \
+         --robot.max_relative_target=null \
+         --control.type=record \
+         --control.fps=30 \
+         --control.single_task="Test recording episode using Trossen AI Mobile." \
+         --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false \
+         --camera.interface_type=opencv
+   
+   .. group-tab:: Trossen AI Solo
+      
+      .. code-block:: bash
+         :emphasize-lines: 16
+
+         python lerobot/scripts/control_robot.py \
+         --robot.type=trossen_ai_solo\
+         --robot.max_relative_target=null\
+         --control.type=record\
+         --control.fps=30\
+         --control.single_task="Test recording episode using Trossen AI Solo."\
+         --control.repo_id=${HF_USER}/trossen_ai_solo_test\
+         --control.tags='["tutorial"]' \
+         --control.warmup_time_s=5 \
+         --control.episode_time_s=30 \
+         --control.reset_time_s=30 \
+         --control.num_episodes=2 \
+         --control.push_to_hub=true \
+         --control.num_image_writer_threads_per_camera=8 \
+         --control.display_cameras=false \
+         --camera.interface_type=opencv
 
 Recording Configuration
 =======================

@@ -73,6 +73,45 @@ Once you're confident in controlling the robot safely, you can remove this restr
           --robot.max_relative_target=null \
           --control.type=teleoperate
 
+If you have configured multiple camera interfaces as exaplained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
+You can specify the camera interface to use for teleoperation by adding the following command line argument:
+
+.. tabs:: 
+
+  .. group-tab:: Trossen AI Stationary
+
+      .. code-block:: bash
+        :emphasize-lines: 5
+
+         python lerobot/scripts/control_robot.py \
+           --robot.type=trossen_ai_stationary \
+           --robot.max_relative_target=null \
+           --control.type=teleoperate \
+           --robot.camera_interface='opencv'
+
+  .. group-tab:: Trossen AI Mobile
+
+      .. code-block:: bash
+        :emphasize-lines: 5
+
+         python lerobot/scripts/control_robot.py \
+           --robot.type=trossen_ai_mobile \
+           --robot.max_relative_target=null \
+           --control.type=teleoperate \
+           --robot.camera_interface='opencv'
+
+   
+  .. group-tab:: Trossen AI Solo
+
+      .. code-block:: bash
+        :emphasize-lines: 5
+
+        python lerobot/scripts/control_robot.py \
+          --robot.type=trossen_ai_solo \
+          --robot.max_relative_target=null \
+          --control.type=teleoperate \
+          --robot.camera_interface='opencv'
+
 
 Teleoperation Configuration
 ===========================

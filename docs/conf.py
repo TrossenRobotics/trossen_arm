@@ -24,6 +24,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinxcontrib.mermaid',
     'sphinxcontrib.youtube',
+    'sphinxcontrib.video',
 ]
 
 # Enable AutoSectionLabel

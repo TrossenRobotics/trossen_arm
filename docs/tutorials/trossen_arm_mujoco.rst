@@ -10,6 +10,7 @@ Trossen Arm MuJoCo
     :muted:
     :loop:
     :width: 80%
+    :caption: Sim-to-Real Transfer Demo
 
 Overview
 ========
@@ -37,9 +38,9 @@ Installation
 
     .. code-block:: bash
 
-        conda create --name trossen_mujoco_env python=3.10      
+        conda create --name trossen_mujoco_env python=3.10
         conda activate trossen_mujoco_env
-    
+
 #. Install the package and required dependencies using:
 
     .. code-block:: bash
@@ -122,15 +123,15 @@ Motion Capture Bodies
 Motion capture (mocap) bodies are dummy rigid bodies welded to the final link ``link_6`` of each robot arm.
 This design enables intuitive motion definition and automatic inverse kinematics resolution:
 
-* **Welding Behavior**:  
+* **Welding Behavior**:
     The mocap body is rigidly attached to ``link_6`` using a weld constraint.
     As the mocap body moves, the simulator ensures that the robot’s end-effector follows it.
 
-* **Cartesian Control**:  
+* **Cartesian Control**:
     Instead of manually commanding joint angles, you move the mocap body in 3D space ``x, y, z`` using a scripted policy.
     The arm's joints are automatically adjusted to follow.
 
-* **Joint State Recording**:  
+* **Joint State Recording**:
     As the end-effector tracks the mocap body, the simulation records the joint configurations required at each timestep.
     These are saved as the action trajectory.
 
@@ -185,7 +186,7 @@ Step-by-Step Process
     - ``--inject_noise``: Adds noise to actions for variability. Default: False (set to True to enable).
     - ``--cam_names``: Comma-separated list of camera names for image collection (default: all available cameras).
 
-    .. note:: 
+    .. note::
 
         * The ``--task_name`` argument is used to load the corresponding configuration from :guilabel:`constants.py`.
         * You can extend ``SIM_TASK_CONFIGS`` in :guilabel:`constants.py` to support new task configurations.
@@ -199,7 +200,7 @@ Step-by-Step Process
 
         ~/.trossen/mujoco/data/sim_transfer_cube/episode_0.hdf5
         ~/.trossen/mujoco/data/sim_transfer_cube/episode_1.hdf5
-    
+
     Check the dataset structure in the `Dataset Structure`_ section for details on the saved data.
 
 #. Visualizing the Data
@@ -237,7 +238,7 @@ Step-by-Step Process
             --fps 10 \
             --left_ip 192.168.1.5 \
             --right_ip 192.168.1.4
-    
+
     This script:
 
         * Loads the selected joint trajectory (.hdf5)
@@ -262,26 +263,36 @@ We use the `HDF5 <https://docs.h5py.org/en/stable/index.html>`_ format to store 
 Root Attributes
 ---------------
 
-* ``sim``: A boolean attribute indicating whether the data was collected in simulation (``True``) or on real hardware (``False``).
+* ``sim`` A boolean attribute indicating whether the data was collected in simulation (``True``) or on real hardware (``False``).
 
 * ``observations`` :guilabel:`group`: Contains all the observations recorded during the simulation.
+
     * ``images`` :guilabel:`subgroup`: Stores image data from multiple cameras.
+
         * Each camera has its own dataset named after the camera (e.g., ``cam_name``).
         * Dataset shape: ``(max_timesteps, 480, 640, 3)``, where:
+
             * ``max_timesteps``: Number of timesteps in the episode.
             * ``480, 640, 3``: Image dimensions (height, width, RGB channels).
+
         * Data type: ``uint8`` (8-bit unsigned integers for pixel values).
         * Chunked storage: ``(1, 480, 640, 3)`` for efficient access to individual timesteps.
 
     * ``qpos``: Joint positions of the robot arms in :guilabel:`radians` and gripper positions in :guilabel:`meters`.
+
         * Shape: ``(max_timesteps, 16)``, where:
+
             * ``max_timesteps``: Number of timesteps in the episode.
             * ``16``: Number of joints (8 per arm: 6 revolute in radians + 2 prismatic in meters).
+
     * ``qvel``: Joint velocities of the robot arms in :guilabel:`radians/s` and gripper velocities in :guilabel:`meters/s`.
+
         * Shape: ``(max_timesteps, 16)``.
 
 * ``action``: Contains the commanded joint positions (in :guilabel:`radians`) and gripper positions (in :guilabel:`meters`) for the robot arms.
+
     * Shape: ``(max_timesteps, 16)``, where:
+
         * ``max_timesteps``: Number of timesteps in the episode.
         * ``16``: Number of control dimensions (8 per arm: 6 revolute joints in radians + 2 prismatic joints in meters).
 
@@ -289,6 +300,7 @@ Additional Data
 ---------------
 
 * Any additional data in ``data_dict`` is stored as separate datasets under the root group.
+
     * Each dataset is named after the corresponding key in ``data_dict``.
     * The data is written using ``root[name][...] = array``.
 
@@ -301,7 +313,7 @@ Modifying Tasks
 ---------------
 
 To create a custom task, modify :guilabel:`ee_sim_env.py` and define a new subclass of `TrossenAIStationaryEETask` this will be used for running the scripted policy.
- Implement the following methods:
+Implement the following methods:
 
 - ``initialize_episode(self, physics)``: Sets up the initial environment state, including robot and object positions.
 - ``get_env_state(self, physics)``: Defines the data to be recorded as observations from the environment.

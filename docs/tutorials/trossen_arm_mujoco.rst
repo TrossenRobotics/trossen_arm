@@ -280,7 +280,7 @@ Root Attributes
     * ``qvel``: Joint velocities of the robot arms in :guilabel:`radians/s`.
         * Shape: ``(max_timesteps, 16)``.
 
-* ``action``: Stores the joint position :guilabel:`radians` commands sent to the robot arms.
+* ``action``: Stores the joint (:guilabel:`radians`) and gripper (:guilabel:`meters`) position commands sent to the robot arms.
     * Shape: ``(max_timesteps, 16)``.
 
 Additional Data

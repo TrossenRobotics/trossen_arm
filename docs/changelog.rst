@@ -5,8 +5,8 @@ Changelog
 Upcoming
 ========
 
-1.7 --> 1.8
-===========
+1.7.8 --> 1.8.0
+===============
 
 Trossen Arm Driver
 ------------------
@@ -22,6 +22,19 @@ Trossen Arm Driver
   - :member:`trossen_arm::RobotOutput::Cartesian::positions`
   - :member:`trossen_arm::RobotOutput::Cartesian::velocities`
   - :member:`trossen_arm::RobotOutput::Cartesian::external_efforts`
+
+- Added helpful output getters to help slicing the vectors for C++ users.
+  For example:
+
+  - :func:`trossen_arm::TrossenArmDriver::get_all_positions`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_positions`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_position`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_position`
+
+  The old getters are deprecating.
+  For example:
+
+  - :func:`trossen_arm::TrossenArmDriver::get_positions`
 
 - Added methods for Cartesian inputs.
 
@@ -39,16 +52,15 @@ Trossen Arm Driver
     - :ref:`getting_started/configuration:joint limits`
     - :ref:`getting_started/configuration:motor parameters`
     - :ref:`getting_started/configuration:algorithm parameter`
+    - :member:`trossen_arm::EndEffector::pitch_circle_radius`
+    - :member:`trossen_arm::EndEffector::t_flange_tool`
 
-  - revised
+  - removed
 
-    - :ref:`getting_started/configuration:joint characteristics`
-    - :ref:`getting_started/configuration:end effector`
+    - removed ``continuity_factor`` in :class:`trossen_arm::JointCharacteristic`
+    - removed ``t_max_factor`` in :class:`trossen_arm::EndEffector`
 
-- The connection, disconnection, and data exchange is now handled more robustly.
-
-  - UDP is only used for control and TCP handles the rest of the communication.
-  - Made connection more user-friendly with retry, timeout, and allowing interruption.
+- Made driver-controller connection more user-friendly with retry, timeout, and allowing interruption.
 
 - For C++ users, ``double`` is now used instead of ``float`` for all the data types.
   This improves compatibility with other modern libraries.
@@ -64,6 +76,7 @@ Trossen Arm Controller Firmware
 - Removed deprecated continuity check.
 - The connection, disconnection, and data exchange is now handled more robustly.
 
+  - UDP is only used for control and TCP handles the rest of the communication.
   - The controller now return to idle mode if the connection is lost.
   - The controller now only accept one driver at a time.
 

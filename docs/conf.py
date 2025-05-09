@@ -143,6 +143,7 @@ breathe_projects = {'Trossen Arm API Documentation': '/tmp/doxygen/xml'}
 breathe_default_project = 'Trossen Arm API Documentation'
 
 # Setup the exhale extension
+import textwrap
 exhale_args = {
     "containmentFolder":     "./api",
     "rootFileName":          "library_root.rst",
@@ -150,22 +151,19 @@ exhale_args = {
     "rootFileTitle":         "Trossen Arm Driver API",
     "createTreeView":        True,
     "exhaleExecutesDoxygen": True,
-    "afterTitleDescription": """
-.. note::
+    "afterTitleDescription": textwrap.dedent("""
+        .. note::
 
-    These API docs are generated based on the C++ library.
-    The Python package is not explicitly documented due to its similarity to the C++ API.
-""",
-    "exhaleDoxygenStdin":    """
-    PROJECT_NAME           = "Trossen Arm API Documentation"
-    INPUT                  = ../include
-    EXCLUDE_PATTERNS       = trossen_arm_*.hpp
-    EXCLUDE_SYMBOLS        = TrossenArmDriver::LinkRaw \
-                             TrossenArmDriver::EndEffectorRaw \
-                             TrossenArmDriver::JointInput \
-                             TrossenArmDriver::JointOutput \
-                             TrossenArmDriver::JointCharacteristicName
-    """,
+            These API docs are generated based on the C++ library.
+            The Python package is not explicitly documented due to its similarity to the C++ API.
+    """),
+    "exhaleDoxygenStdin":    textwrap.dedent("""
+        PROJECT_NAME           = "Trossen Arm API Documentation"
+        INPUT                  = ../include
+        EXCLUDE_SYMBOLS        = trossen_arm::TrossenArmDriver::RobotInput \
+                                 trossen_arm::TrossenArmDriver::*Raw \
+                                 trossen_arm::TrossenArmDriver::RobotCommandIndicator
+    """),
 }
 
 # Tell sphinx what the primary language being documented is.

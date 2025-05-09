@@ -24,9 +24,6 @@ deb:
 
 # Build the current version of the documentation
 docs: clean
-	mkdir -p build
-	cd build && cmake -DBUILD_DOCS=ON ..
-	cd build && make doc
 	sphinx-build docs docs/build/html
 .PHONY: docs
 

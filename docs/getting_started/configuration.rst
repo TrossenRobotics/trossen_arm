@@ -221,7 +221,7 @@ Vice versa, the effort returned by the driver is given by the following expressi
 
 Default values are arm specific and calibrated at the factory.
 
-Range: :math:`[0.5, 2.0]`
+Range: :math:`[0.2, 5.0]`
 
 friction_transition_velocities, friction_constant_terms, friction_coulomb_coefs, and friction_viscous_coefs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

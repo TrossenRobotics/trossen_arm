@@ -134,6 +134,15 @@ An example of a configuration script is given here.
     We provide methods to exchange persistent configurations via a YAML file.
     Check out the :ref:`getting_started/demo_scripts:`configuration_in_yaml`_` demo for more details.
 
+Default Values
+==============
+
+The default values are given in `default_configurations_wxai_v0.yaml`_.
+
+.. _`default_configurations_wxai_v0.yaml`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/default_configurations_wxai_v0.yaml
+
+.. note:: The default value of the :ref:`getting_started/configuration:joint characteristics` is calibrated at manufacturing and different for each arm.
+
 How They Work?
 ==============
 
@@ -268,7 +277,7 @@ Otherwise, the controller won't be able to properly compensate for the end effec
 
 .. tip::
 
-    The commonly used :class:`trossen_arm::StandardEndEffector` are provided in the driver.
+    End effector variants supported by Trossen Robotics are provided in :class:`trossen_arm::StandardEndEffector`.
 
 .. note:: Currently, only rack-and-pinion end effectors are supported.
 
@@ -368,8 +377,7 @@ The block diagram of the control loop of the motor is given below.
 
 When the controller receives a command from the driver, it generates the command for a motor by clipping to the min and max limits.
 
--   position = max(position, :member:`trossen_arm::JointLimit::position_min`)
--   position = min(position, :member:`trossen_arm::JointLimit::position_max`)
+-   position = min(max(position, :member:`trossen_arm::JointLimit::position_min`), :member:`trossen_arm::JointLimit::position_max`)
 -   velocity = min(velocity, :member:`trossen_arm::JointLimit::velocity_max`)
 -   effort = min(effort, :member:`trossen_arm::JointLimit::effort_max`)
 
@@ -399,8 +407,8 @@ Motor Parameters
 
 The motor parameters define the control parameters of each motor.
 
-As shown in the block diagram above, each motor :class:`trossen_arm::MotorParameter` has two PID controllers :class:`trossen_arm::PIDParameter` for position and velocity regulation.
-Using different parameters, we can achieve the behavior of different :enum:`trossen_arm::Mode`.
+As shown in the block diagram above, each motor :class:`trossen_arm::MotorParameter` has two PID controllers for position and velocity regulation.
+By setting different parameters in :class:`trossen_arm::PIDParameter`, we can achieve the behavior of different :enum:`trossen_arm::Mode`.
 
 Ranges: :math:`\mathbb{R}`
 
@@ -421,15 +429,6 @@ This configuration defines the parameters used for robotic algorithms.
     where :math:`\text{pivot}_i` is the :math:`i`'th pivot of the QR decomposition of the Jacobian that maps joint velocities to Cartesian velocities.
 
     Range: :math:`\mathbb{R}`
-
-Default Values
-==============
-
-The default values are given in `default_configurations_wxai_v0.yaml`_.
-
-.. _`default_configurations_wxai_v0.yaml`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/default_configurations_wxai_v0.yaml
-
-.. note:: The default value of the :ref:`getting_started/configuration:joint characteristics` is calibrated at manufacturing and different for each arm.
 
 What's Next?
 ============

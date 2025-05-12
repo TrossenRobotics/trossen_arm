@@ -62,11 +62,11 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //     where yyy and zzz must be compatible with the mode set above
           //
           //     Alternatively, if the arm joints all have one of the following modes
-          //     - trossen_arm.Mode.position
+          //     - trossen_arm::Mode::position
           //       pose of the tool frame measured in the base frame
-          //     - trossen_arm.Mode.velocity
+          //     - trossen_arm::Mode::velocity
           //       linear and angular velocities of the tool frame measured in the base frame
-          //     - trossen_arm.Mode.external_effort
+          //     - trossen_arm::Mode::external_effort
           //       linear and angular efforts to be applied at the tool frame
           //       measured in the base frame while compensating for gravity and friction
           //     We can also command the arm joints to move in Cartesian space
@@ -77,7 +77,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //       Interpolate from start to goal state in Cartesian space
           driver.set_yyy_zzz[s](...); | driver.set_cartesian_zzzs(...);
 
-          //     Get the states of the joint[s] if needed
+          //     Get the robot outputs if needed
           //     The robot output includes
           //     - joint space states
           //       - positions
@@ -161,7 +161,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #           Interpolate from start to goal state in Cartesian space
             driver.set_yyy_zzz[s](...) | driver.set_cartesian_zzzs(...)
 
-            #         Get the states of the joint[s] if needed
+            #         Get the robot outputs if needed
             #         The robot output includes
             #         - joint space states
             #           - positions

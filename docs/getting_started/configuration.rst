@@ -281,7 +281,7 @@ The :class:`trossen_arm::Link` members of the end effector define the three link
 - :member:`trossen_arm::EndEffector::finger_left`: the finger on the left side
 - :member:`trossen_arm::EndEffector::finger_right`: the finger on the right side
 
-The definition of :class:`trossen_arm::Link` follow the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
+The definition of :class:`trossen_arm::Link` follows the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
 And the left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector when the joints are in home positions.
 
 Ranges:

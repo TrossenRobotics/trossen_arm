@@ -65,7 +65,8 @@ Trossen Arm Driver
   - :func:`trossen_arm::TrossenArmDriver::get_external_efforts`
   - :func:`trossen_arm::TrossenArmDriver::get_compensation_efforts`
 
-- Added methods for commanding Cartesian inputs with respect to an tool frame.
+- Added methods for commanding Cartesian inputs with respect to a tool frame.
+  These features are demonstrated in the scripts listed below:
 
   - :ref:`getting_started/demo_scripts:`cartesian_position`_`
   - :ref:`getting_started/demo_scripts:`cartesian_velocity`_`

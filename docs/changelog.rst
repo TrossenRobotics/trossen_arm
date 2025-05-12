@@ -5,8 +5,8 @@ Changelog
 Upcoming
 ========
 
-1.7.8 --> 1.8.0
-===============
+1.8.0
+=====
 
 Trossen Arm Driver
 ------------------
@@ -23,20 +23,49 @@ Trossen Arm Driver
   - :member:`trossen_arm::RobotOutput::Cartesian::velocities`
   - :member:`trossen_arm::RobotOutput::Cartesian::external_efforts`
 
-- Added helpful output getters to help slicing the vectors for C++ users.
-  For example:
+- Added helpful output getters to extract the members of :class:`trossen_arm::RobotOutput`.
 
   - :func:`trossen_arm::TrossenArmDriver::get_all_positions`
   - :func:`trossen_arm::TrossenArmDriver::get_arm_positions`
   - :func:`trossen_arm::TrossenArmDriver::get_gripper_position`
   - :func:`trossen_arm::TrossenArmDriver::get_joint_position`
+  - :func:`trossen_arm::TrossenArmDriver::get_cartesian_positions`
+  - :func:`trossen_arm::TrossenArmDriver::get_all_velocities`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_velocities`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_velocity`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_velocity`
+  - :func:`trossen_arm::TrossenArmDriver::get_cartesian_velocities`
+  - :func:`trossen_arm::TrossenArmDriver::get_all_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_effort`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_effort`
+  - :func:`trossen_arm::TrossenArmDriver::get_all_external_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_external_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_external_effort`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_external_effort`
+  - :func:`trossen_arm::TrossenArmDriver::get_cartesian_external_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_all_compensation_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_compensation_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_compensation_effort`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_compensation_effort`
+  - :func:`trossen_arm::TrossenArmDriver::get_all_rotor_temperatures`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_rotor_temperatures`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_rotor_temperature`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_rotor_temperature`
+  - :func:`trossen_arm::TrossenArmDriver::get_all_driver_temperatures`
+  - :func:`trossen_arm::TrossenArmDriver::get_arm_driver_temperatures`
+  - :func:`trossen_arm::TrossenArmDriver::get_gripper_driver_temperature`
+  - :func:`trossen_arm::TrossenArmDriver::get_joint_driver_temperature`
 
-  The old getters are deprecating.
-  For example:
+  The old getters are deprecating and will be removed in the next major release.
 
   - :func:`trossen_arm::TrossenArmDriver::get_positions`
+  - :func:`trossen_arm::TrossenArmDriver::get_velocities`
+  - :func:`trossen_arm::TrossenArmDriver::get_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_external_efforts`
+  - :func:`trossen_arm::TrossenArmDriver::get_compensation_efforts`
 
-- Added methods for Cartesian inputs.
+- Added methods for commanding Cartesian inputs with respect to an tool frame.
 
   - :ref:`getting_started/demo_scripts:`cartesian_position`_`
   - :ref:`getting_started/demo_scripts:`cartesian_velocity`_`
@@ -55,10 +84,10 @@ Trossen Arm Driver
     - :member:`trossen_arm::EndEffector::pitch_circle_radius`
     - :member:`trossen_arm::EndEffector::t_flange_tool`
 
-  - removed
+  - Removed
 
-    - removed ``continuity_factor`` in :class:`trossen_arm::JointCharacteristic`
-    - removed ``t_max_factor`` in :class:`trossen_arm::EndEffector`
+    - ``continuity_factor`` in :class:`trossen_arm::JointCharacteristic`
+    - ``t_max_factor`` in :class:`trossen_arm::EndEffector`
 
 - Made driver-controller connection more user-friendly with retry, timeout, and allowing interruption.
 

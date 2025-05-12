@@ -94,13 +94,6 @@ C++
 
 To install and use the C++ driver, follow these steps.
 
-#.  Install dependencies required to build the driver
-
-    .. code-block:: bash
-
-        sudo apt update
-        sudo apt install build-essential cmake git libyaml-cpp-dev
-
 #.  Clone the repository
 
     .. code-block:: bash

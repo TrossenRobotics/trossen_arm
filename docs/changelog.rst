@@ -43,7 +43,7 @@ Trossen Arm Driver
   - :ref:`getting_started/demo_scripts:`cartesian_external_effort`_`
 
 - Added the capability to soft reboot the controller via the driver.
-  This feature can be used in :ref:`getting_started/demo_scripts:`set_factory_reset_flag`_` for example.
+  This feature is demonstrated in :ref:`getting_started/demo_scripts:`set_factory_reset_flag`_`.
 
 - Added more configurations and revised some previous ones.
 

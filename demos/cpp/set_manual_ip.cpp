@@ -34,10 +34,10 @@
 //
 // The script does the following:
 // 1. Initializes the driver
-// 2. Configures the driver with the follower configuration
-// 3. Sets the IP address of the robot
-// 4. The driver cleans up automatically at the destructor
-// 5. Power cycle to apply the new IP address
+// 2. Configures the driver
+// 3. Gets and sets the manual IP address
+// 4. Reboots the controller to apply the new IP address
+// 5. Reconfigures the driver and checks the result
 
 #include <iostream>
 
@@ -58,14 +58,25 @@ int main() {
   // Print the current IP address
   std::cout << "Current IP address: " << driver.get_manual_ip() << std::endl;
 
-  // Set the IP address of the robot to 192.168.1.2
-  driver.set_manual_ip("192.168.1.2");
+  // Set the IP address of the robot to 192.168.1.3
+  driver.set_manual_ip("192.168.1.3");
 
   // Print the new IP address
   std::cout << "New IP address: " << driver.get_manual_ip() << std::endl;
 
-  // Power cycle to apply the new IP address
-  std::cout << "Power cycle the robot to apply the new IP address." << std::endl;
+  // Reboot the controller to apply the new IP address
+  driver.cleanup(true);  // or driver.reboot_controller();
+
+  // Reconfigure the driver
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    "192.168.1.3",
+    false
+  );
+
+  // Print the IP address after reboot
+  std::cout << "IP address after reboot: " << driver.get_manual_ip() << std::endl;
 
   return 0;
 }

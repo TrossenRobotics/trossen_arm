@@ -26,20 +26,18 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to reset the EEPROM to defaults.
+# Purpose:
+# This script demonstrates how to reset the EEPROM to defaults.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver
-3. Resets the EEPROM values to defaults
-4. The driver cleans up automatically at the destructor
-5. Power cycle to apply the default EEPROM settings
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver
+# 3. Gets and sets the factory reset flag
+# 4. Reboots the controller to apply the default EEPROM settings
+# 5. Reconfigures the driver and checks the result
 
 import trossen_arm
 
@@ -64,5 +62,16 @@ if __name__=='__main__':
     # Print the factory reset flag
     print("Factory reset flag set to: ", driver.get_factory_reset_flag())
 
-    # Power cycle to apply the default EEPROM settings
-    print("Power cycle the robot to apply the default EEPROM settings.")
+    # Reboot the controller to apply the default EEPROM settings
+    driver.cleanup(True)  # or driver.reboot_controller()
+
+    # Reconfigure the driver
+    driver.configure(
+        trossen_arm.Model.wxai_v0,
+        trossen_arm.StandardEndEffector.wxai_v0_leader,
+        "192.168.1.2",
+        False
+    )
+
+    # Print the factory reset flag after reboot
+    print("Factory reset flag after reboot: ", driver.get_factory_reset_flag())

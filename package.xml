@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>libtrossen_arm</name>
-  <version>1.7.8</version>
+  <version>1.8.0</version>
   <description>Library used to control Trossen Arms</description>
 
   <maintainer email="trsupport@trossenrobotics.com">Luke Schmitt</maintainer>
@@ -12,7 +12,7 @@
 
   <url type="website">https://docs.trossenrobotics.com/trossen_arm/</url>
 
-  <depend>yaml-cpp</depend>
+  <depend>boost</depend>
 
   <export/>
 </package>

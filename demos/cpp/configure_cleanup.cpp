@@ -46,7 +46,9 @@
 // 7. The driver automatically sets the mode to idle at the destructor
 
 #include <iostream>
+#include <map>
 #include <string>
+#include <vector>
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
@@ -59,33 +61,28 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
   std::cout << "EEPROM gateway: " << driver.get_gateway() << std::endl;
   std::cout << "EEPROM subnet: " << driver.get_subnet() << std::endl;
   std::cout << "EEPROM effort corrections: ";
-  for (float effort_correction : driver.get_effort_corrections()) {
+  for (double effort_correction : driver.get_effort_corrections()) {
     std::cout << effort_correction << " ";
   }
   std::cout << std::endl;
   std::cout << "EEPROM friction transition velocities: ";
-  for (float friction_transition_velocity : driver.get_friction_transition_velocities()) {
+  for (double friction_transition_velocity : driver.get_friction_transition_velocities()) {
     std::cout << friction_transition_velocity << " ";
   }
   std::cout << std::endl;
   std::cout << "EEPROM friction constant terms: ";
-  for (float friction_constant_term : driver.get_friction_constant_terms()) {
+  for (double friction_constant_term : driver.get_friction_constant_terms()) {
     std::cout << friction_constant_term << " ";
   }
   std::cout << std::endl;
   std::cout << "EEPROM friction coulomb coefs: ";
-  for (float friction_coulomb_coef : driver.get_friction_coulomb_coefs()) {
+  for (double friction_coulomb_coef : driver.get_friction_coulomb_coefs()) {
     std::cout << friction_coulomb_coef << " ";
   }
   std::cout << std::endl;
   std::cout << "EEPROM friction viscous coefs: ";
-  for (float friction_viscous_coef : driver.get_friction_viscous_coefs()) {
+  for (double friction_viscous_coef : driver.get_friction_viscous_coefs()) {
     std::cout << friction_viscous_coef << " ";
-  }
-  std::cout << std::endl;
-  std::cout << "EEPROM continuity factors: ";
-  for (float continuity_factor : driver.get_continuity_factors()) {
-    std::cout << continuity_factor << " ";
   }
   std::cout << std::endl;
   std::cout << "Error information: " << driver.get_error_information() << std::endl;
@@ -94,80 +91,164 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
     std::cout << static_cast<int>(mode) << " ";
   }
   std::cout << std::endl;
+  const trossen_arm::EndEffector& end_effector = driver.get_end_effector();
   std::cout << "End effector:" << std::endl;
   std::cout << "  palm:" << std::endl;
-  std::cout << "    mass: " << driver.get_end_effector().palm.mass << std::endl;
+  std::cout << "    mass: " << end_effector.palm.mass << std::endl;
   std::cout << "    inertia: ";
-  for (float inertia : driver.get_end_effector().palm.inertia) {
+  for (double inertia : end_effector.palm.inertia) {
     std::cout << inertia << " ";
   }
   std::cout << std::endl;
   std::cout << "    origin xyz: ";
-  for (float origin_xyz : driver.get_end_effector().palm.origin_xyz) {
+  for (double origin_xyz : end_effector.palm.origin_xyz) {
     std::cout << origin_xyz << " ";
   }
   std::cout << std::endl;
   std::cout << "    origin rpy: ";
-  for (float origin_rpy : driver.get_end_effector().palm.origin_rpy) {
+  for (double origin_rpy : end_effector.palm.origin_rpy) {
     std::cout << origin_rpy << " ";
   }
   std::cout << std::endl;
   std::cout << "  finger left:" << std::endl;
-  std::cout << "    mass: " << driver.get_end_effector().finger_left.mass << std::endl;
+  std::cout << "    mass: " << end_effector.finger_left.mass << std::endl;
   std::cout << "    inertia: ";
-  for (float inertia : driver.get_end_effector().finger_left.inertia) {
+  for (double inertia : end_effector.finger_left.inertia) {
     std::cout << inertia << " ";
   }
   std::cout << std::endl;
   std::cout << "    origin xyz: ";
-  for (float origin_xyz : driver.get_end_effector().finger_left.origin_xyz) {
+  for (double origin_xyz : end_effector.finger_left.origin_xyz) {
     std::cout << origin_xyz << " ";
   }
   std::cout << std::endl;
   std::cout << "    origin rpy: ";
-  for (float origin_rpy : driver.get_end_effector().finger_left.origin_rpy) {
+  for (double origin_rpy : end_effector.finger_left.origin_rpy) {
     std::cout << origin_rpy << " ";
   }
   std::cout << std::endl;
   std::cout << "  finger right:" << std::endl;
-  std::cout << "    mass: " << driver.get_end_effector().finger_right.mass << std::endl;
+  std::cout << "    mass: " << end_effector.finger_right.mass << std::endl;
   std::cout << "    inertia: ";
-  for (float inertia : driver.get_end_effector().finger_right.inertia) {
+  for (double inertia : end_effector.finger_right.inertia) {
     std::cout << inertia << " ";
   }
   std::cout << std::endl;
   std::cout << "    origin xyz: ";
-  for (float origin_xyz : driver.get_end_effector().finger_right.origin_xyz) {
+  for (double origin_xyz : end_effector.finger_right.origin_xyz) {
     std::cout << origin_xyz << " ";
   }
   std::cout << std::endl;
   std::cout << "    origin rpy: ";
-  for (float origin_rpy : driver.get_end_effector().finger_right.origin_rpy) {
+  for (double origin_rpy : end_effector.finger_right.origin_rpy) {
     std::cout << origin_rpy << " ";
   }
   std::cout << std::endl;
-  std::cout << "  offset finger left: " << driver.get_end_effector().offset_finger_left << std::endl;
-  std::cout << "  offset finger right: " << driver.get_end_effector().offset_finger_right << std::endl;
-  std::cout << "Positions: ";
-  for (float position : driver.get_positions()) {
+  std::cout << "  offset finger left: " << end_effector.offset_finger_left << std::endl;
+  std::cout << "  offset finger right: " << end_effector.offset_finger_right << std::endl;
+  std::cout << "  pitch circle radius: " << end_effector.pitch_circle_radius << std::endl;
+  std::cout << "  t flange tool: ";
+  for (double t_flange_tool : end_effector.t_flange_tool) {
+    std::cout << t_flange_tool << " ";
+  }
+  std::cout << std::endl;
+  const std::vector<trossen_arm::JointLimit>& joint_limits = driver.get_joint_limits();
+  std::cout << "Joint limits:" << std::endl;
+  for (size_t i = 0; i < joint_limits.size(); ++i) {
+    const trossen_arm::JointLimit& joint_limit = joint_limits.at(i);
+    std::cout << "  Joint " << i << ":" << std::endl;
+    std::cout << "    position min: " << joint_limit.position_min << std::endl;
+    std::cout << "    position max: " << joint_limit.position_max << std::endl;
+    std::cout << "    position tolerance: " << joint_limit.position_tolerance << std::endl;
+    std::cout << "    velocity max: " << joint_limit.velocity_max << std::endl;
+    std::cout << "    velocity tolerance: " << joint_limit.velocity_tolerance << std::endl;
+    std::cout << "    effort max: " << joint_limit.effort_max << std::endl;
+    std::cout << "    effort tolerance: " << joint_limit.effort_tolerance << std::endl;
+  }
+  const std::vector<std::map<trossen_arm::Mode, trossen_arm::MotorParameter>>& motor_parameters =
+    driver.get_motor_parameters();
+  std::cout << "Motor parameters:" << std::endl;
+  for (size_t i = 0; i < motor_parameters.size(); ++i) {
+    const std::map<trossen_arm::Mode, trossen_arm::MotorParameter>& motor_parameter =
+      motor_parameters.at(i);
+    std::cout << "  Joint " << i << ":" << std::endl;
+    for (const auto& [mode, parameter] : motor_parameter) {
+      std::cout << "    Mode " << static_cast<int>(mode) << ":" << std::endl;
+      std::cout << "      Position loop:";
+      std::cout << " kp: " << parameter.position.kp;
+      std::cout << ", ki: " << parameter.position.ki;
+      std::cout << ", kd: " << parameter.position.kd;
+      std::cout << ", imax: " << parameter.position.imax << std::endl;
+      std::cout << "      Velocity loop:";
+      std::cout << " kp: " << parameter.velocity.kp;
+      std::cout << ", ki: " << parameter.velocity.ki;
+      std::cout << ", kd: " << parameter.velocity.kd;
+      std::cout << ", imax: " << parameter.velocity.imax << std::endl;
+    }
+  }
+  const trossen_arm::RobotOutput& robot_output = driver.get_robot_output();
+  std::cout << "Robot output:" << std::endl;
+  std::cout << "  Joint outputs:" << std::endl;
+  std::cout << "    positions: ";
+  for (double position : robot_output.joint.all.positions) {
     std::cout << position << " ";
   }
   std::cout << std::endl;
-  std::cout << "Velocities: ";
-  for (float velocity : driver.get_velocities()) {
+  std::cout << "    velocities: ";
+  for (double velocity : robot_output.joint.all.velocities) {
     std::cout << velocity << " ";
   }
   std::cout << std::endl;
-  std::cout << "Efforts: ";
-  for (float effort : driver.get_efforts()) {
+  std::cout << "    efforts: ";
+  for (double effort : robot_output.joint.all.efforts) {
     std::cout << effort << " ";
   }
   std::cout << std::endl;
-  std::cout << "External efforts: ";
-  for (float external_effort : driver.get_external_efforts()) {
+  std::cout << "    external efforts: ";
+  for (double external_effort : robot_output.joint.all.external_efforts) {
     std::cout << external_effort << " ";
   }
   std::cout << std::endl;
+  std::cout << "    compensation efforts: ";
+  for (double compensation_effort : robot_output.joint.all.compensation_efforts) {
+    std::cout << compensation_effort << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "    driver temperatures: ";
+  for (double driver_temperature : robot_output.joint.all.driver_temperatures) {
+    std::cout << driver_temperature << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "    rotor temperatures: ";
+  for (double rotor_temperature : robot_output.joint.all.rotor_temperatures) {
+    std::cout << rotor_temperature << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "  Cartesian outputs:" << std::endl;
+  std::cout << "    positions: ";
+  for (double position : robot_output.cartesian.positions) {
+    std::cout << position << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "    velocities: ";
+  for (double velocity : robot_output.cartesian.velocities) {
+    std::cout << velocity << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "    accelerations: ";
+  for (double acceleration : robot_output.cartesian.accelerations) {
+    std::cout << acceleration << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "    external efforts: ";
+  for (double external_effort : robot_output.cartesian.external_efforts) {
+    std::cout << external_effort << " ";
+  }
+  std::cout << std::endl;
+  const trossen_arm::AlgorithmParameter& algorithm_parameter = driver.get_algorithm_parameter();
+  std::cout << "Algorithm parameter:" << std::endl;
+  std::cout << "  singularity threshold: ";
+  std::cout << algorithm_parameter.singularity_threshold << std::endl;
 }
 
 int main(int argc, char** argv)

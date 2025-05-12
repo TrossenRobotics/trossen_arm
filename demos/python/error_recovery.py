@@ -26,22 +26,22 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to recover from an error in the driver.
+# Purpose:
+# This script demonstrates how to recover from an error in the driver.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver
-3. Sets the arm to position mode
-4. Moves the arm to the home position
-5. Triggers an error by setting a joint position to an invalid value
-6. Recovers from the error
-7. Moves the arm to the sleep position
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver
+# 3. Sets the arm to position mode
+# 4. Moves the arm to the home position
+# 5. Triggers an error by setting a joint position to an invalid value
+# 6. Recovers from the error
+# 7. Moves the arm to the sleep position
+
+from time import sleep
 
 import numpy as np
 
@@ -61,7 +61,7 @@ if __name__=='__main__':
 
     driver.set_all_modes(trossen_arm.Mode.position)
 
-    sleep_positions = np.array(driver.get_positions())
+    sleep_positions = np.array(driver.get_all_positions())
     home_positions = np.zeros(driver.get_num_joints())
     home_positions[1] = np.pi/2
     home_positions[2] = np.pi/2
@@ -74,6 +74,7 @@ if __name__=='__main__':
         # which triggers an error for safety reasons
         home_positions[5] += np.pi
         driver.set_all_positions(home_positions, 0.0)
+        sleep(1.0)
         print("Moving the arm to the sleep position...")
         driver.set_all_positions(sleep_positions)
     except Exception as e:

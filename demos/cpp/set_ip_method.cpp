@@ -34,10 +34,11 @@
 //
 // The script does the following:
 // 1. Initializes the driver
-// 2. Configures the driver with the leader configuration
-// 3. Sets the IP method to DHCP / MANUAL
-// 4. Cleans up the driver
-// 5. Power cycle to apply the new IP method
+// 2. Configures the driver
+// 3. Gets and sets the IP method
+// 4. Reboots the controller to apply the new IP method
+// 5. Acquires the new IP address from the user
+// 6. Reconfigures the driver and checks the result
 
 #include <iostream>
 
@@ -67,8 +68,29 @@ int main() {
   // Print the new IP method
   std::cout << "New IP method: " << static_cast<int>(driver.get_ip_method()) << std::endl;
 
-  // Power cycle to apply the new IP method
-  std::cout << "Power cycle the robot to apply the new IP method." << std::endl;
+  // Reboot the controller to apply the new IP method
+  driver.cleanup(true);  // or driver.reboot_controller();
+
+  // Notify the user about the new IP address assignment
+  std::cout << "The new IP address will be assigned by the DHCP server." << std::endl;
+  std::cout << "You can find it using the command 'nmap -sn 192.168.1.0/24' in a new terminal.";
+  std::cout << std::endl;
+
+  // Acquire the new IP address from the user
+  std::string new_ip;
+  std::cout << "Enter the new IP address: ";
+  std::cin >> new_ip;
+
+  // Reconfigure the driver with the new IP address
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    new_ip,
+    false
+  );
+
+  // Print the IP method after reboot
+  std::cout << "IP method after reboot: " << static_cast<int>(driver.get_ip_method()) << std::endl;
 
   return 0;
 }

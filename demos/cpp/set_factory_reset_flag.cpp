@@ -35,9 +35,9 @@
 // The script does the following:
 // 1. Initializes the driver
 // 2. Configures the driver
-// 3. Resets the EEPROM values to defaults
-// 4. The driver cleans up automatically at the destructor
-// 5. Power cycle to apply the default EEPROM settings
+// 3. Gets and sets the factory reset flag
+// 4. Reboots the controller to apply the default EEPROM settings
+// 5. Reconfigures the driver and checks the result
 
 #include <iostream>
 
@@ -64,8 +64,19 @@ int main() {
   // Print the factory reset flag
   std::cout << "Factory reset flag set to: " << driver.get_factory_reset_flag() << std::endl;
 
-  // Power cycle to apply the default EEPROM settings
-  std::cout << "Power cycle the robot to apply the default EEPROM settings." << std::endl;
+  // Reboot the controller to apply the default EEPROM settings
+  driver.cleanup(true);  // or driver.reboot_controller();
+
+  // Reconfigure the driver
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    "192.168.1.2",
+    false
+  );
+
+  // Print the factory reset flag after reboot
+  std::cout << "Factory reset flag after reboot: " << driver.get_factory_reset_flag() << std::endl;
 
   return 0;
 }

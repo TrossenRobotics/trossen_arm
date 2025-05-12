@@ -26,22 +26,20 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to do gravity compensation, which is useful for
-manually moving the arm to teach a trajectory or record specific positions.
+# Purpose:
+# This script demonstrates how to do gravity compensation, which is useful for
+# manually moving the arm to teach a trajectory or record specific positions.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver
-3. Sets the external efforts to 0s
-4. Waits for the user to press enter
-5. Sets the mode to idle
-6. The driver automatically sets the mode to idle at the destructor
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver
+# 3. Sets the external efforts to 0s
+# 4. Waits for the user to press enter
+# 5. Sets the mode to idle
+# 6. The driver automatically sets the mode to idle at the destructor
 
 import trossen_arm
 

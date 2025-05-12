@@ -26,20 +26,18 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to open and close the gripper.
+# Purpose:
+# This script demonstrates how to open and close the gripper.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the drivers
-2. Configures the drivers
-3. Opens the gripper
-4. Closes the gripper
-5. The driver automatically sets the mode to idle at the destructor
-'''
+# The script does the following:
+# 1. Initializes the drivers
+# 2. Configures the drivers
+# 3. Opens the gripper
+# 4. Closes the gripper
+# 5. The driver automatically sets the mode to idle at the destructor
 
 import trossen_arm
 

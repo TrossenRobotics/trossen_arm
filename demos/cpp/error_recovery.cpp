@@ -43,7 +43,9 @@
 
 #include <cmath>
 #include <iostream>
+#include <thread>
 #include <vector>
+
 #include "libtrossen_arm/trossen_arm.hpp"
 
 int main() {
@@ -60,8 +62,8 @@ int main() {
 
   driver.set_all_modes(trossen_arm::Mode::position);
 
-  std::vector<float> sleep_positions = driver.get_positions();
-  std::vector<float> home_positions(driver.get_num_joints(), 0.0f);
+  std::vector<double> sleep_positions = driver.get_all_positions();
+  std::vector<double> home_positions(driver.get_num_joints(), 0.0f);
   home_positions[1] = M_PI_2;
   home_positions[2] = M_PI_2;
 
@@ -74,6 +76,8 @@ int main() {
     // which triggers an error for safety reasons
     home_positions[5] += M_PI;
     driver.set_all_positions(home_positions, 0.0f);
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     std::cout << "Moving the arm to the sleep position..." << std::endl;
     driver.set_all_positions(sleep_positions);

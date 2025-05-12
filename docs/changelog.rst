@@ -57,7 +57,7 @@ Trossen Arm Driver
   - :func:`trossen_arm::TrossenArmDriver::get_gripper_driver_temperature`
   - :func:`trossen_arm::TrossenArmDriver::get_joint_driver_temperature`
 
-  The old getters are deprecating and will be removed in the next major release.
+  The old getters are deprecated and will be removed in the next major release.
 
   - :func:`trossen_arm::TrossenArmDriver::get_positions`
   - :func:`trossen_arm::TrossenArmDriver::get_velocities`

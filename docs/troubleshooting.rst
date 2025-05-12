@@ -166,4 +166,4 @@ Please refer to :ref:`getting_started/configuration:joint limits` for how the jo
 Possible causes are:
 
 - Incorrect scripting logic
-- The robot is closed to a singular configuration while operating in Cartesian space
+- The robot is close to a singular configuration while operating in Cartesian space

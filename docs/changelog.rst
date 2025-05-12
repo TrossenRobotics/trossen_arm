@@ -14,7 +14,7 @@ Trossen Arm Driver
 - Added a new :enumerator:`trossen_arm::Mode::effort` mode.
   It allows commanding the effort of the joints without any built-in compensation like in the :enumerator:`trossen_arm::Mode::external_effort` mode.
   This mode is useful for applications where full control of the joint efforts is desired.
-- Grouped the outputs in :class:`trossen_arm::RobotOutput` and added more fields including
+- Grouped the outputs into a single new class :class:`trossen_arm::RobotOutput` and added the additional fields below:
 
   - :member:`trossen_arm::RobotOutput::Joint::All::compensation_efforts`
   - :member:`trossen_arm::RobotOutput::Joint::All::rotor_temperatures`

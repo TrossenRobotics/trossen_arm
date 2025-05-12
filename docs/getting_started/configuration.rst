@@ -310,7 +310,7 @@ The offsets of the left and right fingers define the home position specific to t
 
 Ranges: :math:`\mathbb{R}`
 
-Pitch circle radius
+pitch_circle_radius
 ^^^^^^^^^^^^^^^^^^^
 
 :member:`trossen_arm::EndEffector::pitch_circle_radius` specifies pitch circle radius of the pinion of the end effector.

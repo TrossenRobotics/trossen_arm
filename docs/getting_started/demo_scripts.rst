@@ -91,7 +91,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //       - positions
           //       - velocities
           //       - external_efforts
-          RobotOutput robot_output = driver.get_robot_output();
+          trossen_arm::RobotOutput robot_output = driver.get_robot_output();
 
           //     Some more logic
 

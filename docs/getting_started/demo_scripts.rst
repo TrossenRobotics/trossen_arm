@@ -20,7 +20,6 @@ The driver is designed to be flexible and easy to use for a wide range of applic
     .. code-tab:: c++
 
         // Include the header files
-        #include <vector>
         #include "libtrossen_arm/trossen_arm.hpp"
 
         int main(int argc, char** argv)
@@ -35,9 +34,10 @@ The driver is designed to be flexible and easy to use for a wide range of applic
 
           //   Get the modes of all joints if needed
           //   Here xxxs are the modes of all the joints where xxx can be
-          //   - trossen_arm.Mode.position
-          //   - trossen_arm.Mode.velocity
-          //   - trossen_arm.Mode.external_effort
+          //   - trossen_arm::Mode::position
+          //   - trossen_arm::Mode::velocity
+          //   - trossen_arm::Mode::external_effort
+          //   - trossen_arm::Mode::effort
           auto xxxs = driver.get_modes();
 
           //   Set the mode[s] of the joint[s]
@@ -53,21 +53,45 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //     Some logic
 
           //     Command the joint[s]
-          //     Here yyy and zzz must be compatible with the mode set above
-          //     A command includes
+          //
+          //     A joint command includes
           //     - goal[s]
           //     - time to reach the goal[s]
           //     - whether to block until reaching goal[s]
           //     - optionally the goal derivative[s]
-          driver.set_yyy_zzz[s](...);
+          //     where yyy and zzz must be compatible with the mode set above
+          //
+          //     Alternatively, if the arm joints all have one of the following modes
+          //     - trossen_arm::Mode::position
+          //       pose of the tool frame measured in the base frame
+          //     - trossen_arm::Mode::velocity
+          //       linear and angular velocities of the tool frame measured in the base frame
+          //     - trossen_arm::Mode::external_effort
+          //       linear and angular efforts to be applied at the tool frame
+          //       measured in the base frame while compensating for gravity and friction
+          //     We can also command the arm joints to move in Cartesian space
+          //     The Cartesian command includes an additional argument: interpolation space
+          //     - trossen_arm::InterpolationSpace::joint
+          //       Interpolate from start to goal state in joint space
+          //     - trossen_arm::InterpolationSpace::cartesian
+          //       Interpolate from start to goal state in Cartesian space
+          driver.set_yyy_zzz[s](...); | driver.set_cartesian_zzzs(...);
 
-          //     Get the states of the joint[s] if needed
-          //     Here zzzs can be
-          //     - positions
-          //     - velocities
-          //     - efforts
-          //     - external_efforts
-          std::vector<float> zzzs = driver.get_zzzs();
+          //     Get the robot outputs if needed
+          //     The robot output includes
+          //     - joint space states
+          //       - positions
+          //       - velocities
+          //       - external_efforts
+          //       - efforts
+          //       - compensation_efforts
+          //       - rotor_temperatures
+          //       - driver_temperatures
+          //     - Cartesian space states
+          //       - positions
+          //       - velocities
+          //       - external_efforts
+          trossen_arm::RobotOutput robot_output = driver.get_robot_output();
 
           //     Some more logic
 
@@ -97,6 +121,7 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #     - trossen_arm.Mode.position
             #     - trossen_arm.Mode.velocity
             #     - trossen_arm.Mode.external_effort
+            #     - trossen_arm.Mode.effort
             xxxs = driver.get_modes()
 
             #     Set the mode[s] of the joint[s]
@@ -112,21 +137,45 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #         Some logic
 
             #         Command the joint[s]
-            #         Here yyy and zzz must be compatible with the mode set above
-            #         A command includes
+            #
+            #         A joint command includes
             #         - goal[s]
             #         - time to reach the goal[s]
             #         - whether to block until reaching goal[s]
             #         - optionally the goal derivative[s]
-            driver.set_yyy_zzz[s](...)
+            #         where yyy and zzz must be compatible with the mode set above
+            #
+            #         Alternatively, if the arm joints all have one of the following modes
+            #         - trossen_arm.Mode.position
+            #           pose of the tool frame measured in the base frame
+            #         - trossen_arm.Mode.velocity
+            #           linear and angular velocities of the tool frame measured in the base frame
+            #         - trossen_arm.Mode.external_effort
+            #           linear and angular efforts to be applied at the tool frame
+            #           measured in the base frame while compensating for gravity and friction
+            #         We can also command the arm joints to move in Cartesian space
+            #         The Cartesian command includes an additional argument: interpolation space
+            #         - trossen_arm.InterpolationSpace.joint
+            #           Interpolate from start to goal state in joint space
+            #         - trossen_arm.InterpolationSpace.cartesian
+            #           Interpolate from start to goal state in Cartesian space
+            driver.set_yyy_zzz[s](...) | driver.set_cartesian_zzzs(...)
 
-            #         Get the states of the joint[s] if needed
-            #         Here zzzs can be
-            #         - positions
-            #         - velocities
-            #         - efforts
-            #         - external_efforts
-            zzzs = driver.get_zzzs()
+            #         Get the robot outputs if needed
+            #         The robot output includes
+            #         - joint space states
+            #           - positions
+            #           - velocities
+            #           - external_efforts
+            #           - efforts
+            #           - compensation_efforts
+            #           - rotor_temperatures
+            #           - driver_temperatures
+            #         - Cartesian space states
+            #           - positions
+            #           - velocities
+            #           - external_efforts
+            robot_output: trossen_arm.RobotOutput = driver.get_robot_output()
 
             #         Some more logic
 
@@ -150,6 +199,11 @@ Basics
 ------
 
 The basic demos show the must-know functionalities to get the arm up and running.
+
+`cartesian_position`_
+^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to perform position control in Cartesian space.
 
 `configure_cleanup`_
 ^^^^^^^^^^^^^^^^^^^^
@@ -183,6 +237,16 @@ Intermediate
 ------------
 
 The intermediate demos give examples on commonly-used configurations and application-specific control loops.
+
+`cartesian_external_effort`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to use external effort control in Cartesian space to do impedance control.
+
+`cartesian_velocity`_
+^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to use velocity control in Cartesian space to do admittance control.
 
 `configuration_in_yaml`_
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -233,6 +297,12 @@ The advanced demos show configurations that should be used with full understandi
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This script demonstrates how to set the joint characteristics in the EEPROM, using the effort corrections as an example.
+
+.. _`cartesian_external_effort`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_external_effort.py
+
+.. _`cartesian_position`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_position.py
+
+.. _`cartesian_velocity`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_velocity.py
 
 .. _`configuration_in_yaml`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configuration_in_yaml.py
 

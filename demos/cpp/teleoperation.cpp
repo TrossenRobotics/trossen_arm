@@ -96,11 +96,11 @@ int main(int argc, char** argv)
 
   auto start_time = std::chrono::steady_clock::now();
   auto end_time = start_time + std::chrono::seconds(20);
-  float force_feedback_gain = 0.1;
-  std::vector<float> external_efforts_leader(driver_leader.get_num_joints());
+  double force_feedback_gain = 0.1;
+  std::vector<double> external_efforts_leader(driver_leader.get_num_joints());
   while (std::chrono::steady_clock::now() < end_time) {
     // Feed the external external efforts from the follower robot to the leader robot
-    external_efforts_leader = driver_follower.get_external_efforts();
+    external_efforts_leader = driver_follower.get_all_external_efforts();
     for (size_t i = 0; i < driver_leader.get_num_joints(); ++i) {
       external_efforts_leader.at(i) *= -force_feedback_gain;
     }
@@ -111,10 +111,10 @@ int main(int argc, char** argv)
     );
     // Feed the positions from the leader robot to the follower robot
     driver_follower.set_all_positions(
-      driver_leader.get_positions(),
+      driver_leader.get_all_positions(),
       0.0f,
       false,
-      driver_leader.get_velocities()
+      driver_leader.get_all_velocities()
     );
   }
 
@@ -135,13 +135,13 @@ int main(int argc, char** argv)
   std::cout << "Moving to sleep positions..." << std::endl;
   driver_leader.set_all_modes(trossen_arm::Mode::position);
   driver_leader.set_all_positions(
-    std::vector<float>(driver_leader.get_num_joints(), 0.0),
+    std::vector<double>(driver_leader.get_num_joints(), 0.0),
     2.0f,
     true
   );
   driver_follower.set_all_modes(trossen_arm::Mode::position);
   driver_follower.set_all_positions(
-    std::vector<float>(driver_leader.get_num_joints(), 0.0),
+    std::vector<double>(driver_leader.get_num_joints(), 0.0),
     2.0f,
     true
   );

@@ -26,24 +26,22 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to write a control loop to move the robot to different positions and
-record the states.
+# Purpose:
+# This script demonstrates how to write a control loop to move the robot to different positions and
+# record the states.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver
-3. Sets the robots to position mode
-4. Records the sleep positions
-5. Generates trajectory: sleep -> sleep -> home -> home -> sleep -> sleep
-6. Moves the robot along the trajectory
-7. Sets the robot to the idle mode
-8. The driver automatically sets the mode to idle at the destructor
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver
+# 3. Sets the robots to position mode
+# 4. Records the sleep positions
+# 5. Generates trajectory: sleep -> sleep -> home -> home -> sleep -> sleep
+# 6. Moves the robot along the trajectory
+# 7. Sets the robot to the idle mode
+# 8. The driver automatically sets the mode to idle at the destructor
 
 import time
 
@@ -68,7 +66,7 @@ if __name__=='__main__':
     print("Moving to home positions...")
     driver.set_all_modes(trossen_arm.Mode.position)
 
-    sleep_positions = np.array(driver.get_positions())
+    sleep_positions = np.array(driver.get_all_positions())
     home_positions = np.zeros(driver.get_num_joints())
     home_positions[1] = np.pi/2
     home_positions[2] = np.pi/2
@@ -108,10 +106,10 @@ if __name__=='__main__':
         )
 
         log_dict['time'].append(current_time)
-        log_dict['positions'].append(driver.get_positions())
-        log_dict['velocities'].append(driver.get_velocities())
-        log_dict['efforts'].append(driver.get_efforts())
-        log_dict['external_efforts'].append(driver.get_external_efforts())
+        log_dict['positions'].append(driver.get_all_positions())
+        log_dict['velocities'].append(driver.get_all_velocities())
+        log_dict['efforts'].append(driver.get_all_efforts())
+        log_dict['external_efforts'].append(driver.get_all_external_efforts())
 
     plt.subplot(2, 2, 1)
     plt.plot(log_dict['time'], log_dict['positions'])

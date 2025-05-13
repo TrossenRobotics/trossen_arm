@@ -29,218 +29,147 @@
 #ifndef LIBTROSSEN_ARM__TROSSEN_ARM_HPP_
 #define LIBTROSSEN_ARM__TROSSEN_ARM_HPP_
 
-#include <atomic>
 #include <cstdint>
-#include <cstring>
+
+#include <array>
+#include <atomic>
 #include <map>
+#include <memory>
 #include <mutex>
 #include <optional>
 #include <string>
 #include <thread>
+#include <variant>
 #include <vector>
 
-#include "libtrossen_arm/trossen_arm_config.hpp"
-#include "libtrossen_arm/trossen_arm_interpolate.hpp"
-#include "libtrossen_arm/trossen_arm_logging.hpp"
-#include "libtrossen_arm/trossen_arm_udp_client.hpp"
-#include "yaml-cpp/yaml.h"
+#include "libtrossen_arm/trossen_arm_type.hpp"
 
 namespace trossen_arm
 {
 
-/// @brief Operation modes of a joint
-enum class Mode : uint8_t {
-  /// @brief All joints are braked
-  idle,
-  /// @brief Control the joint to a desired position
-  position,
-  /// @brief Control the joint to a desired velocity
-  velocity,
-  /// @brief Control the joint to a desired external effort
-  external_effort,
-};
+/// @brief Forward declaration of the QuinticHermiteInterpolator class
+class QuinticHermiteInterpolator;
 
-/// @brief IP methods
-enum class IPMethod : uint8_t {
-  /// @brief Use the manual IP address specified in the configuration
-  manual,
-  /// @brief Use DHCP to obtain the IP address, if failed, use the default IP address
-  dhcp,
-};
+/// @brief Forward declaration of the EthernetManager class
+class EthernetManager;
 
-/// @brief Robot models
-enum class Model : uint8_t {
-  /// @brief WXAI V0
-  wxai_v0,
-};
-
-/// @brief Joint characteristic
-struct JointCharacteristic
-{
-  /// @brief Effort correction in motor effort unit / Nm or N
-  /// @note It must be within [0.2, 5.0]
-  float effort_correction;
-  /// @brief Friction transition velocity in rad/s for arm joints or m/s for the gripper joint
-  /// @note It must be positive
-  float friction_transition_velocity;
-  /// @brief Friction constant term in Nm for arm joints or N for the gripper joint
-  float friction_constant_term;
-  /// @brief Friction coulomb coef in Nm/Nm for arm joints or N/N for the gripper joint
-  float friction_coulomb_coef;
-  /// @brief Friction viscous coef in Nm/(rad/s) for arm joints or N/(m/s) for the gripper joint
-  float friction_viscous_coef;
-  /// @brief Scaling factor in 1 that scales the base continuity constraint
-  /// @note It must be within [1.0, 10.0]
-  float continuity_factor;
-};
-
-/// @brief Link properties
-struct LinkProperties
-{
-  /// @brief mass in kg
-  float mass;
-  /// @brief inertia in kg m^2
-  std::array<float, 9> inertia;
-  /// @brief inertia frame translation measured in link frame in m
-  std::array<float, 3> origin_xyz;
-  /// @brief inertia frame RPY angles measured in link frame in rad
-  std::array<float, 3> origin_rpy;
-};
-
-/// @brief End effector properties
-struct EndEffectorProperties
-{
-  /// @brief Properties of the palm link
-  LinkProperties palm;
-
-  /// @brief Properties of the left finger link
-  LinkProperties finger_left;
-
-  /// @brief Properties of the right finger link
-  LinkProperties finger_right;
-
-  /// @brief Offset from the palm center to the left carriage center in m in home configuration
-  float offset_finger_left;
-
-  /// @brief Offset from the palm center to the right carriage center in m in home configuration
-  float offset_finger_right;
-
-  /// @brief Scaling factor for the max gripper force
-  /// @note It must be within [0.0, 1.0], 0.0 for no force, 1.0 for max force in the specifications
-  float t_max_factor;
-};
+/// @brief Forward declaration of the AlgorithmInterface class
+class AlgorithmInterface;
 
 /// @brief End effector properties for the standard variants
 struct StandardEndEffector {
   /// @brief WXAI V0 base variant
-  static constexpr EndEffectorProperties wxai_v0_base{
+  static constexpr EndEffector wxai_v0_base{
     .palm = {
-      .mass = 0.53780000f,
+      .mass = 0.53780000,
       .inertia = {
         0.00079919, -0.00000049, 0.00000010,
         -0.00000049, 0.00047274, 0.00000004,
         0.00000010, 0.00000004, 0.00105293
       },
-      .origin_xyz = {0.04572768f, -0.00000726f, 0.00001402f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.04572768, -0.00000726, 0.00001402},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
     .finger_left = {
-      .mass = 0.05945000f,
+      .mass = 0.05945000,
       .inertia = {
-        0.00001875f, 0.00000309f, -0.00000149f,
-        0.00000309f, 0.00002614f, -0.00000124f,
-        -0.00000149f, -0.00000124f, 0.00002995f
+        0.00001875, 0.00000309, -0.00000149,
+        0.00000309, 0.00002614, -0.00000124,
+        -0.00000149, -0.00000124, 0.00002995
       },
-      .origin_xyz = {0.00169016f, -0.00592796f, -0.00365701f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.00169016, -0.00592796, -0.00365701},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
     .finger_right = {
-      .mass = 0.05945000f,
+      .mass = 0.05945000,
       .inertia = {
-        0.00001930f, -0.00000309f, 0.00000359f,
-        -0.00000309f, 0.00002670f, -0.00000064f,
-        0.00000359f, -0.00000064f, 0.00002995f
+        0.00001930, -0.00000309, 0.00000359,
+        -0.00000309, 0.00002670, -0.00000064,
+        0.00000359, -0.00000064, 0.00002995
       },
-      .origin_xyz = {0.00169015f, 0.00592793f, 0.00201818f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.00169015, 0.00592793, 0.00201818},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
-    .offset_finger_left = 0.0227f,
-    .offset_finger_right = -0.0227f,
-    .t_max_factor = 0.5f
+    .offset_finger_left = 0.0227,
+    .offset_finger_right = -0.0227,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.154, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
   /// @brief WXAI V0 leader variant
-  static constexpr EndEffectorProperties wxai_v0_leader{
+  static constexpr EndEffector wxai_v0_leader{
     .palm = {
-      .mass = 0.59570000f,
+      .mass = 0.59570000,
       .inertia = {
-        0.00117653f, -0.00000040f, -0.00005492f,
-        -0.00000040f, 0.00085696f, 0.00000074f,
-        -0.00005492f, 0.00000074f, 0.00107685f
+        0.00117653, -0.00000040, -0.00005492,
+        -0.00000040, 0.00085696, 0.00000074,
+        -0.00005492, 0.00000074, 0.00107685
       },
-      .origin_xyz = {0.04454388f, 0.00000506f, -0.00694150f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.04454388, 0.00000506, -0.00694150},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
     .finger_left = {
-      .mass = 0.06380000f,
+      .mass = 0.06380000,
       .inertia = {
-        0.00003556f, -0.00000249f, 0.00000167f,
-        -0.00000249f, 0.00002700f, 0.00000217f,
-        0.00000167f, 0.00000217f, 0.00001726f
+        0.00003556, -0.00000249, 0.00000167,
+        -0.00000249, 0.00002700, 0.00000217,
+        0.00000167, 0.00000217, 0.00001726
       },
-      .origin_xyz = {-0.00423580f, -0.00167541f, -0.01050810f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {-0.00423580, -0.00167541, -0.01050810},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
     .finger_right = {
-      .mass = 0.06380000f,
+      .mass = 0.06380000,
       .inertia = {
-        0.00004133f, 0.00000250f, 0.00000517f,
-        0.00000250f, 0.00003277f, -0.00000592f,
-        0.00000517f, -0.00000592f, 0.00001727f
+        0.00004133, 0.00000250, 0.00000517,
+        0.00000250, 0.00003277, -0.00000592,
+        0.00000517, -0.00000592, 0.00001727
       },
-      .origin_xyz = {-0.00423309f, 0.00167373f, -0.00451087f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {-0.00423309, 0.00167373, -0.00451087},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
-    .offset_finger_left = 0.0179f,
-    .offset_finger_right = -0.0179f,
-    .t_max_factor = 0.5f
+    .offset_finger_left = 0.0179,
+    .offset_finger_right = -0.0179,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.154, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
   /// @brief WXAI V0 follower variant
-  static constexpr EndEffectorProperties wxai_v0_follower{
+  static constexpr EndEffector wxai_v0_follower{
     .palm = {
-      .mass = 0.64230000f,
+      .mass = 0.64230000,
       .inertia = {
-        0.00108484f, 0.00000063f, -0.00004180f,
-        0.00000063f, 0.00075170f, -0.00001558f,
-        -0.00004180f, -0.00001558f, 0.00110994f
+        0.00108484, 0.00000063, -0.00004180,
+        0.00000063, 0.00075170, -0.00001558,
+        -0.00004180, -0.00001558, 0.00110994
       },
-      .origin_xyz = {0.04699592f, 0.00045936f, 0.00827772f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.04699592, 0.00045936, 0.00827772},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
     .finger_left = {
-      .mass = 0.05945000f,
+      .mass = 0.05945000,
       .inertia = {
-        0.00001875f, 0.00000309f, -0.00000149f,
-        0.00000309f, 0.00002614f, -0.00000124f,
-        -0.00000149f, -0.00000124f, 0.00002995f
+        0.00001875, 0.00000309, -0.00000149,
+        0.00000309, 0.00002614, -0.00000124,
+        -0.00000149, -0.00000124, 0.00002995
       },
-      .origin_xyz = {0.00169016f, -0.00592796f, -0.00365701f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.00169016, -0.00592796, -0.00365701},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
     .finger_right = {
-      .mass = 0.05945000f,
+      .mass = 0.05945000,
       .inertia = {
-        0.00001930f, -0.00000309f, 0.00000359f,
-        -0.00000309f, 0.00002670f, -0.00000064f,
-        0.00000359f, -0.00000064f, 0.00002995f
+        0.00001930, -0.00000309, 0.00000359,
+        -0.00000309, 0.00002670, -0.00000064,
+        0.00000359, -0.00000064, 0.00002995
       },
-      .origin_xyz = {0.00169015f, 0.00592793f, 0.00201818f},
-      .origin_rpy = {0.0f, 0.0f, 0.0f}
+      .origin_xyz = {0.00169015, 0.00592793, 0.00201818},
+      .origin_rpy = {0.0, 0.0, 0.0}
     },
-    .offset_finger_left = 0.0227f,
-    .offset_finger_right = -0.0227f,
-    .t_max_factor = 0.5f
+    .offset_finger_left = 0.0227,
+    .offset_finger_right = -0.0227,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.154, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 };
 
@@ -248,6 +177,9 @@ struct StandardEndEffector {
 class TrossenArmDriver
 {
 public:
+  /// @brief Construct the Trossen Arm Driver object
+  TrossenArmDriver();
+
   /// @brief Destroy the Trossen Arm Driver object
   ~TrossenArmDriver();
 
@@ -258,18 +190,33 @@ public:
    * @param end_effector End effector properties
    * @param serv_ip IP address of the robot
    * @param clear_error Whether to clear the error state of the robot
+   * @param timeout Timeout for connection to the arm controller's TCP server in seconds, default is
+   * 20.0s
    */
   void configure(
     Model model,
-    EndEffectorProperties end_effector,
+    EndEffector end_effector,
     const std::string serv_ip,
-    bool clear_error
+    bool clear_error,
+    double timeout = 20.0
   );
 
   /**
    * @brief Cleanup the driver
+   *
+   * @param reboot_controller Whether to reboot the controller
    */
-  void cleanup();
+  void cleanup(bool reboot_controller = false);
+
+  /**
+   * @brief Reboot the controller and cleanup the driver
+   *
+   * @note This function is a wrapper for cleanup(true)
+   */
+  inline void reboot_controller()
+  {
+    cleanup(true);
+  }
 
   /**
    * @brief Set the positions of all joints
@@ -286,11 +233,11 @@ public:
    * @note The size of the vectors should be equal to the number of joints
    */
   void set_all_positions(
-    const std::vector<float> & goal_positions,
-    float goal_time = 2.0f,
+    const std::vector<double> & goal_positions,
+    double goal_time = 2.0,
     bool blocking = true,
-    const std::optional<std::vector<float>> & goal_feedforward_velocities = std::nullopt,
-    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_velocities = std::nullopt,
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the positions of the arm joints
@@ -306,11 +253,11 @@ public:
    * @note The size of the vectors should be equal to the number of arm joints
    */
   void set_arm_positions(
-    const std::vector<float> & goal_positions,
-    float goal_time = 2.0f,
+    const std::vector<double> & goal_positions,
+    double goal_time = 2.0,
     bool blocking = true,
-    const std::optional<std::vector<float>> & goal_feedforward_velocities = std::nullopt,
-    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_velocities = std::nullopt,
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the position of the gripper
@@ -323,11 +270,11 @@ public:
    * @param goal_feedforward_acceleration Optional: feedforward acceleration in m/s^2, default zero
    */
   void set_gripper_position(
-    float goal_position,
-    float goal_time = 2.0f,
+    double goal_position,
+    double goal_time = 2.0,
     bool blocking = true,
-    float goal_feedforward_velocity = 0.0f,
-    float goal_feedforward_acceleration = 0.0f);
+    double goal_feedforward_velocity = 0.0,
+    double goal_feedforward_acceleration = 0.0);
 
   /**
    * @brief Set the position of a joint
@@ -344,11 +291,43 @@ public:
    */
   void set_joint_position(
     uint8_t joint_index,
-    float goal_position,
-    float goal_time = 2.0f,
+    double goal_position,
+    double goal_time = 2.0,
     bool blocking = true,
-    float goal_feedforward_velocity = 0.0f,
-    float goal_feedforward_acceleration = 0.0f
+    double goal_feedforward_velocity = 0.0,
+    double goal_feedforward_acceleration = 0.0
+  );
+
+  /**
+   * @brief Set the position of the end effector in Cartesian space
+   *
+   * @param goal_positions Spatial position of the end effector frame measured in the base frame
+   * in m and rad
+   * @param interpolation_space Interpolation space, one of InterpolationSpace::joint or
+   * InterpolationSpace::cartesian
+   * @param goal_time Optional: goal time in s when the goal positions should be reached, default
+   * 2.0s
+   * @param blocking Optional: whether to block until the goal positions are reached, default true
+   * @param goal_feedforward_velocities Optional: spatial velocity of the end effector frame with
+   * respect to the base frame measured in the base frame in m/s and rad/s, default zeros
+   * @param goal_feedforward_accelerations Optional: spatial acceleration of the end effector frame
+   * with respect to the base frame measured in the base frame in m/s^2 and rad/s^2, default
+   * zeros
+   *
+   * @note The first 3 elements of goal_positions are the translation and the last 3 elements are
+   * the angle-axis representation of the rotation
+   * @note The first 3 elements of goal_feedforward_velocities are the linear velocity and the last
+   * 3 elements are the angular velocity
+   * @note The first 3 elements of goal_feedforward_accelerations are the linear acceleration and
+   * the last 3 elements are the angular acceleration
+   */
+  void set_cartesian_positions(
+    const std::array<double, 6> & goal_positions,
+    InterpolationSpace interpolation_space,
+    double goal_time = 2.0,
+    bool blocking = true,
+    const std::optional<std::array<double, 6>> & goal_feedforward_velocities = std::nullopt,
+    const std::optional<std::array<double, 6>> & goal_feedforward_accelerations = std::nullopt
   );
 
   /**
@@ -364,10 +343,10 @@ public:
    * @note The size of the vectors should be equal to the number of joints
    */
   void set_all_velocities(
-    const std::vector<float> & goal_velocities,
-    float goal_time = 2.0f,
+    const std::vector<double> & goal_velocities,
+    double goal_time = 2.0,
     bool blocking = true,
-    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the velocities of the arm joints
@@ -382,10 +361,10 @@ public:
    * @note The size of the vectors should be equal to the number of arm joints
    */
   void set_arm_velocities(
-    const std::vector<float> & goal_velocities,
-    float goal_time = 2.0f,
+    const std::vector<double> & goal_velocities,
+    double goal_time = 2.0,
     bool blocking = true,
-    const std::optional<std::vector<float>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
 
   /**
    * @brief Set the velocity of the gripper
@@ -397,10 +376,10 @@ public:
    * @param goal_feedforward_acceleration Optional: feedforward acceleration in m/s^2, default zero
    */
   void set_gripper_velocity(
-    float goal_velocity,
-    float goal_time = 2.0f,
+    double goal_velocity,
+    double goal_time = 2.0,
     bool blocking = true,
-    float goal_feedforward_acceleration = 0.0f
+    double goal_feedforward_acceleration = 0.0
   );
 
   /**
@@ -416,10 +395,37 @@ public:
    */
   void set_joint_velocity(
     uint8_t joint_index,
-    float goal_velocity,
-    float goal_time = 2.0f,
+    double goal_velocity,
+    double goal_time = 2.0,
     bool blocking = true,
-    float goal_feedforward_acceleration = 0.0f
+    double goal_feedforward_acceleration = 0.0
+  );
+
+  /**
+   * @brief Set the velocity of the end effector in Cartesian space
+   *
+   * @param goal_velocities Spatial velocity of the end effector frame with respect to the base
+   * frame measured in the base frame in m/s and rad/s
+   * @param interpolation_space Interpolation space, one of InterpolationSpace::joint or
+   * InterpolationSpace::cartesian
+   * @param goal_time Optional: goal time in s when the goal velocities should be reached, default
+   * 2.0s
+   * @param blocking Optional: whether to block until the goal velocities are reached, default true
+   * @param goal_feedforward_accelerations Optional: spatial acceleration of the end effector frame
+   * with respect to the base frame measured in the base frame in m/s^2 and rad/s^2, default
+   * zeros
+   *
+   * @note The first 3 elements of goal_velocities are the linear velocity and the last 3 elements
+   * are the angular velocity
+   * @note The first 3 elements of goal_feedforward_accelerations are the linear acceleration and
+   * the last 3 elements are the angular acceleration
+   */
+  void set_cartesian_velocities(
+    const std::array<double, 6> & goal_velocities,
+    InterpolationSpace interpolation_space,
+    double goal_time = 2.0,
+    bool blocking = true,
+    const std::optional<std::array<double, 6>> & goal_feedforward_accelerations = std::nullopt
   );
 
   /**
@@ -434,8 +440,8 @@ public:
    * @note The size of the vectors should be equal to the number of joints
    */
   void set_all_external_efforts(
-    const std::vector<float> & goal_external_efforts,
-    float goal_time = 2.0f,
+    const std::vector<double> & goal_external_efforts,
+    double goal_time = 2.0,
     bool blocking = true
   );
 
@@ -451,8 +457,8 @@ public:
    * @note The size of the vectors should be equal to the number of arm joints
    */
   void set_arm_external_efforts(
-    const std::vector<float> & goal_external_efforts,
-    float goal_time = 2.0f,
+    const std::vector<double> & goal_external_efforts,
+    double goal_time = 2.0,
     bool blocking = true
   );
 
@@ -466,8 +472,8 @@ public:
    * true
    */
   void set_gripper_external_effort(
-    float goal_external_effort,
-    float goal_time = 2.0f,
+    double goal_external_effort,
+    double goal_time = 2.0,
     bool blocking = true
   );
 
@@ -483,8 +489,88 @@ public:
    */
   void set_joint_external_effort(
     uint8_t joint_index,
-    float goal_external_effort,
-    float goal_time = 2.0f,
+    double goal_external_effort,
+    double goal_time = 2.0,
+    bool blocking = true
+  );
+
+  /**
+   * @brief Set the external efforts of the end effector in Cartesian space
+   *
+   * @param goal_external_efforts Spatial external efforts applied to the end effector frame
+   * measured in the base frame in N and Nm
+   * @param interpolation_space Interpolation space, one of InterpolationSpace::joint or
+   * InterpolationSpace::cartesian
+   * @param goal_time Optional: goal time in s when the goal external efforts should be
+   * reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal external efforts are reached, default
+   * true
+   *
+   * @note The first 3 elements of goal_external_efforts are the force and the last 3 elements
+   * are the torque
+   */
+  void set_cartesian_external_efforts(
+    const std::array<double, 6> & goal_external_efforts,
+    InterpolationSpace interpolation_space,
+    double goal_time = 2.0,
+    bool blocking = true
+  );
+
+  /**
+   * @brief Set the efforts of all joints
+   *
+   * @param goal_efforts Efforts in Nm for arm joints and N for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal efforts should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal efforts are reached, default true
+   *
+   * @note The size of the vectors should be equal to the number of joints
+   */
+  void set_all_efforts(
+    const std::vector<double> & goal_efforts,
+    double goal_time = 2.0,
+    bool blocking = true
+  );
+
+  /**
+   * @brief Set the efforts of the arm joints
+   *
+   * @param goal_efforts Efforts in Nm
+   * @param goal_time Optional: goal time in s when the goal efforts should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal efforts are reached, default true
+   *
+   * @note The size of the vectors should be equal to the number of arm joints
+   */
+  void set_arm_efforts(
+    const std::vector<double> & goal_efforts,
+    double goal_time = 2.0,
+    bool blocking = true
+  );
+
+  /**
+   * @brief Set the effort of the gripper
+   *
+   * @param goal_effort Effort in N
+   * @param goal_time Optional: goal time in s when the goal effort should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal effort is reached, default true
+   */
+  void set_gripper_effort(
+    double goal_effort,
+    double goal_time = 2.0,
+    bool blocking = true
+  );
+
+  /**
+   * @brief Set the effort of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @param goal_effort Effort in Nm for arm joints and N for the gripper joint
+   * @param goal_time Optional: goal time in s when the goal effort should be reached, default 2.0s
+   * @param blocking Optional: whether to block until the goal effort is reached, default true
+   */
+  void set_joint_effort(
+    uint8_t joint_index,
+    double goal_effort,
+    double goal_time = 2.0,
     bool blocking = true
   );
 
@@ -548,11 +634,6 @@ public:
    * - effort_correction: [0.2, 5.0]
    *
    * - friction_transition_velocity: positive
-   *
-   * - continuity_factor: [1.0, 10.0]. Setting this negative will disable the continuity constraint
-   *
-   * @warning Disabling the continuity constraint removes protection against drastic movements
-   * caused by erroneous application logic
    */
   void set_joint_characteristics(const std::vector<JointCharacteristic> & joint_characteristics);
 
@@ -568,7 +649,7 @@ public:
    *
    * @note Each element in the vector should be within the range [0.2, 5.0]
    */
-  void set_effort_corrections(const std::vector<float> & effort_corrections);
+  void set_effort_corrections(const std::vector<double> & effort_corrections);
 
   /**
    * @brief Set the friction transition velocities
@@ -581,7 +662,7 @@ public:
    * @note Each element in the vector should be positive
    */
   void set_friction_transition_velocities(
-    const std::vector<float> & friction_transition_velocities
+    const std::vector<double> & friction_transition_velocities
   );
 
   /**
@@ -592,7 +673,7 @@ public:
    *
    * @note The size of the vector should be equal to the number of joints
    */
-  void set_friction_constant_terms(const std::vector<float> & friction_constant_terms);
+  void set_friction_constant_terms(const std::vector<double> & friction_constant_terms);
 
   /**
    * @brief Set the friction coulomb coefs
@@ -602,7 +683,7 @@ public:
    *
    * @note The size of the vector should be equal to the number of joints
    */
-  void set_friction_coulomb_coefs(const std::vector<float> & friction_coulomb_coefs);
+  void set_friction_coulomb_coefs(const std::vector<double> & friction_coulomb_coefs);
 
   /**
    * @brief Set the friction viscous coefs
@@ -612,22 +693,7 @@ public:
    *
    * @note The size of the vector should be equal to the number of joints
    */
-  void set_friction_viscous_coefs(const std::vector<float> & friction_viscous_coefs);
-
-  /**
-   * @brief Set the continuity factors
-   *
-   * @param continuity_factors Continuity factors in 1 that scales the base continuity constraint
-   *
-   * @note The size of the vector should be equal to the number of joints
-   *
-   * @note Each element in the vector should be within the range [1.0, 10.0]. Setting this negative
-   * will disable the continuity constraint
-   *
-   * @warning Disabling the continuity constraint removes protection against drastic movements
-   * caused by erroneous application logic
-   */
-  void set_continuity_factors(const std::vector<float> & continuity_factors);
+  void set_friction_viscous_coefs(const std::vector<double> & friction_viscous_coefs);
 
   /**
    * @brief Set the modes of each joint
@@ -641,6 +707,8 @@ public:
    * - Mode::velocity
    *
    * - Mode::external_effort
+   *
+   * - Mode::effort
    *
    * @note The size of the vector should be equal to the number of joints
    */
@@ -658,6 +726,8 @@ public:
    * - Mode::velocity
    *
    * - Mode::external_effort
+   *
+   * - Mode::effort
    */
   void set_all_modes(Mode mode = Mode::idle);
 
@@ -673,6 +743,8 @@ public:
    * - Mode::velocity
    *
    * - Mode::external_effort
+   *
+   * - Mode::effort
    *
    * @warning This method does not change the gripper joint's mode
    */
@@ -691,6 +763,8 @@ public:
    *
    * - Mode::external_effort
    *
+   * - Mode::effort
+   *
    * @warning This method does not change the arm joints' mode
    */
   void set_gripper_mode(Mode mode = Mode::idle);
@@ -700,16 +774,28 @@ public:
    *
    * @param end_effector The end effector properties
    */
-  void set_end_effector(const EndEffectorProperties & end_effector);
+  void set_end_effector(const EndEffector & end_effector);
 
   /**
-   * @brief Set the gripper force limit scaling factor
+   * @brief Set the joint limits
    *
-   * @param scaling_factor Scaling factor for the max gripper force
-   *
-   * @note It must be within [0.0, 1.0], 0.0 for no force, 1.0 for max force in the specifications
+   * @param joint_limits Joint limits of all joints
    */
-  void set_gripper_force_limit_scaling_factor(float scaling_factor = 0.5f);
+  void set_joint_limits(const std::vector<JointLimit> & joint_limits);
+
+  /**
+   * @brief Set the motor parameters
+   *
+   * @param motor_parameters Motor parameters of all modes of all joints
+   */
+  void set_motor_parameters(const std::vector<std::map<Mode, MotorParameter>> & motor_parameters);
+
+  /**
+   * @brief Set the algorithm parameter
+   *
+   * @param algorithm_parameter Parameter used for robotic algorithms
+   */
+  void set_algorithm_parameter(const AlgorithmParameter & algorithm_parameter);
 
   /**
    * @brief Get the number of joints
@@ -723,49 +809,350 @@ public:
    *
    * @return Driver version
    */
-  std::string get_driver_version() const;
+  const std::string & get_driver_version() const;
 
   /**
    * @brief Get controller firmware version
    *
    * @return Controller firmware version
    */
-  std::string get_controller_version() const;
+  const std::string & get_controller_version() const;
+
+  /**
+   * @brief Get the robot output
+   *
+   * @return Robot output
+   */
+  const RobotOutput & get_robot_output();
 
   /**
    * @brief Get the positions
    *
    * @return Positions in rad for arm joints and m for the gripper joint
    */
-  std::vector<float> get_positions();
+  [[deprecated(
+    "get_positions will be deprecated in the next version, "
+    "please use get_all_positions instead"
+  )]]
+  const std::vector<double> & get_positions();
+
+  /**
+   * @brief Get the positions of all joints
+   *
+   * @return Positions in rad for arm joints and m for the gripper joint
+   */
+  const std::vector<double> & get_all_positions();
+
+  /**
+   * @brief Get the positions of the arm joints
+   *
+   * @return Positions in rad
+   */
+  const std::vector<double> & get_arm_positions();
+
+  /**
+   * @brief Get the position of the gripper
+   *
+   * @return Position in m
+   */
+  double get_gripper_position();
+
+  /**
+   * @brief Get the position of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Position in rad for arm joints and m for the gripper joint
+   */
+  double get_joint_position(uint8_t joint_index);
+
+  /**
+   * @brief Get the Cartesian positions
+   *
+   * @return Spatial position of the end effector frame measured in the base frame in m and rad
+   *
+   * @note The first 3 elements are the translation and the last 3 elements are the angle-axis
+   * representation of the rotation
+   */
+  const std::array<double, 6> & get_cartesian_positions();
 
   /**
    * @brief Get the velocities
    *
    * @return Velocities in rad/s for arm joints and m/s for the gripper joint
    */
-  std::vector<float> get_velocities();
+  [[deprecated(
+    "get_velocities will be deprecated in the next version, "
+    "please use get_all_velocities instead"
+  )]]
+  const std::vector<double> & get_velocities();
+
+  /**
+   * @brief Get the velocities of all joints
+   *
+   * @return Velocities in rad/s for arm joints and m/s for the gripper joint
+   */
+  const std::vector<double> & get_all_velocities();
+
+  /**
+   * @brief Get the velocities of the arm joints
+   *
+   * @return Velocities in rad/s
+   */
+  const std::vector<double> & get_arm_velocities();
+
+  /**
+   * @brief Get the velocity of the gripper
+   *
+   * @return Velocity in m/s
+   */
+  double get_gripper_velocity();
+
+  /**
+   * @brief Get the velocity of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Velocity in rad/s for arm joints and m/s for the gripper joint
+   */
+  double get_joint_velocity(uint8_t joint_index);
+
+  /**
+   * @brief Get the Cartesian velocities
+   *
+   * @return Spatial velocity of the end effector frame with respect to the base frame measured
+   * in the base frame in m/s and rad/s
+   *
+   * @note The first 3 elements are the linear velocity and the last 3 elements are the angular
+   * velocity
+   */
+  const std::array<double, 6> & get_cartesian_velocities();
+
+  /**
+   * @brief Get the accelerations
+   *
+   * @return Accelerations in rad/s^2 for arm joints and m/s^2 for the gripper joint
+   */
+  const std::vector<double> & get_all_accelerations();
+
+  /**
+   * @brief Get the accelerations of all joints
+   *
+   * @return Accelerations in rad/s^2 for arm joints and m/s^2 for the gripper joint
+   */
+  const std::vector<double> & get_arm_accelerations();
+
+  /**
+   * @brief Get the acceleration of the gripper
+   *
+   * @return Acceleration in m/s^2
+   */
+  double get_gripper_acceleration();
+
+  /**
+   * @brief Get the acceleration of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Acceleration in rad/s^2 for arm joints and m/s^2 for the gripper joint
+   */
+  double get_joint_acceleration(uint8_t joint_index);
+
+  /**
+   * @brief Get the Cartesian accelerations
+   *
+   * @return Spatial acceleration of the end effector frame with respect to the base frame
+   * measured in the base frame in m/s^2 and rad/s^2
+   *
+   * @note The first 3 elements are the linear acceleration and the last 3 elements are the
+   * angular acceleration
+   */
+  const std::array<double, 6> & get_cartesian_accelerations();
 
   /**
    * @brief Get the efforts
    *
    * @return Efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_efforts();
+  [[deprecated(
+    "get_efforts will be deprecated in the next version, "
+    "please use get_all_efforts instead"
+  )]]
+  const std::vector<double> & get_efforts();
+
+  /**
+   * @brief Get the efforts of all joints
+   *
+   * @return Efforts in Nm for arm joints and N for the gripper joint
+   */
+  const std::vector<double> & get_all_efforts();
+
+  /**
+   * @brief Get the efforts of the arm joints
+   *
+   * @return Efforts in Nm
+   */
+  const std::vector<double> & get_arm_efforts();
+
+  /**
+   * @brief Get the effort of the gripper
+   *
+   * @return Effort in N
+   */
+  double get_gripper_effort();
+
+  /**
+   * @brief Get the effort of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Effort in Nm for arm joints and N for the gripper joint
+   */
+  double get_joint_effort(uint8_t joint_index);
 
   /**
    * @brief Get the external efforts
    *
    * @return External efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_external_efforts();
+  [[deprecated(
+    "get_external_efforts will be deprecated in the next version, "
+    "please use get_all_external_efforts instead"
+  )]]
+  const std::vector<double> & get_external_efforts();
+
+  /**
+   * @brief Get the external efforts of all joints
+   *
+   * @return External efforts in Nm for arm joints and N for the gripper joint
+   */
+  const std::vector<double> & get_all_external_efforts();
+
+  /**
+   * @brief Get the external efforts of the arm joints
+   *
+   * @return External efforts in Nm
+   */
+  const std::vector<double> & get_arm_external_efforts();
+
+  /**
+   * @brief Get the external effort of the gripper
+   *
+   * @return External effort in N
+   */
+  double get_gripper_external_effort();
+
+  /**
+   * @brief Get the external effort of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return External effort in Nm for arm joints and N for the gripper joint
+   */
+  double get_joint_external_effort(uint8_t joint_index);
+
+  /**
+   * @brief Get the compensation efforts
+   *
+   * @return Spatial external efforts applied to the end effector frame measured in the base
+   * frame in N and Nm
+   *
+   * @note The first 3 elements are the force and the last 3 elements are the torque
+   */
+  const std::array<double, 6> & get_cartesian_external_efforts();
 
   /**
    * @brief Get the compensation efforts
    *
    * @return Compensation efforts in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_compensation_efforts();
+  [[deprecated(
+    "get_compensation_efforts will be deprecated in the next version, "
+    "please use get_all_compensation_efforts instead"
+  )]]
+  const std::vector<double> & get_compensation_efforts();
+
+  /**
+   * @brief Get the compensation efforts of all joints
+   *
+   * @return Compensation efforts in Nm for arm joints and N for the gripper joint
+   */
+  const std::vector<double> & get_all_compensation_efforts();
+
+  /**
+   * @brief Get the compensation efforts of the arm joints
+   *
+   * @return Compensation efforts in Nm
+   */
+  const std::vector<double> & get_arm_compensation_efforts();
+
+  /**
+   * @brief Get the compensation effort of the gripper
+   *
+   * @return Compensation effort in N
+   */
+  double get_gripper_compensation_effort();
+
+  /**
+   * @brief Get the compensation effort of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Compensation effort in Nm for arm joints and N for the gripper joint
+   */
+  double get_joint_compensation_effort(uint8_t joint_index);
+
+  /**
+   * @brief Get the rotor temperatures of all joints
+   *
+   * @return Rotor temperatures in C
+   */
+  const std::vector<double> & get_all_rotor_temperatures();
+
+  /**
+   * @brief Get the rotor temperatures of the arm joints
+   *
+   * @return Rotor temperatures in C
+   */
+  const std::vector<double> & get_arm_rotor_temperatures();
+
+  /**
+   * @brief Get the rotor temperature of the gripper
+   *
+   * @return Rotor temperature in C
+   */
+  double get_gripper_rotor_temperature();
+
+  /**
+   * @brief Get the rotor temperature of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Rotor temperature in C
+   */
+  double get_joint_rotor_temperature(uint8_t joint_index);
+
+  /**
+   * @brief Get the driver temperatures of all joints
+   *
+   * @return Driver temperatures in C
+   */
+  const std::vector<double> & get_all_driver_temperatures();
+
+  /**
+   * @brief Get the driver temperatures of the arm joints
+   *
+   * @return Driver temperatures in C
+   */
+  const std::vector<double> & get_arm_driver_temperatures();
+
+  /**
+   * @brief Get the driver temperature of the gripper
+   *
+   * @return Driver temperature in C
+   */
+  double get_gripper_driver_temperature();
+
+  /**
+   * @brief Get the driver temperature of a joint
+   *
+   * @param joint_index The index of the joint in [0, num_joints - 1]
+   * @return Driver temperature in C
+   */
+  double get_joint_driver_temperature(uint8_t joint_index);
 
   /**
    * @brief Save configurations to a YAML file
@@ -828,42 +1215,35 @@ public:
    *
    * @return Effort corrections in motor effort unit / Nm or N
    */
-  std::vector<float> get_effort_corrections();
+  std::vector<double> get_effort_corrections();
 
   /**
    * @brief Get the friction transition velocities
    *
    * @return Friction transition velocities in rad/s for arm joints and m/s for the gripper joint
    */
-  std::vector<float> get_friction_transition_velocities();
+  std::vector<double> get_friction_transition_velocities();
 
   /**
    * @brief Get the friction constant terms
    *
    * @return Friction constant terms in Nm for arm joints and N for the gripper joint
    */
-  std::vector<float> get_friction_constant_terms();
+  std::vector<double> get_friction_constant_terms();
 
   /**
    * @brief Get the friction coulomb coefs
    *
    * @return Friction coulomb coefs in Nm/Nm for arm joints and N/N for the gripper joint
    */
-  std::vector<float> get_friction_coulomb_coefs();
+  std::vector<double> get_friction_coulomb_coefs();
 
   /**
    * @brief Get the friction viscous coefs
    *
    * @return Friction viscous coefs in Nm/(rad/s) for arm joints and N/(m/s) for the gripper joint
    */
-  std::vector<float> get_friction_viscous_coefs();
-
-  /**
-   * @brief Get the continuity factors
-   *
-   * @return Continuity factors in 1 that scales the base continuity constraint
-   */
-  std::vector<float> get_continuity_factors();
+  std::vector<double> get_friction_viscous_coefs();
 
   /**
    * @brief Get the error information of the robot
@@ -880,29 +1260,82 @@ public:
   std::vector<Mode> get_modes();
 
   /**
-   * @brief Get the end effector mass properties
+   * @brief Get the end effector properties
    *
-   * @return The end effector mass property structure
+   * @return The end effector properties
    */
-  EndEffectorProperties get_end_effector();
+  EndEffector get_end_effector();
 
   /**
-   * @brief Get the gripper force limit scaling factor
+   * @brief Get the joint limits
    *
-   * @return Scaling factor for the max gripper force, 0.0 for no force, 1.0 for max force in the
-   * specifications
+   * @return Joint limits of all joints
    */
-  float get_gripper_force_limit_scaling_factor();
+  std::vector<JointLimit> get_joint_limits();
+
+  /**
+   * @brief Get the motor parameters
+   *
+   * @return Motor parameters of all modes of all joints
+   */
+  std::vector<std::map<Mode, MotorParameter>> get_motor_parameters();
+
+  /**
+   * @brief Get the algorithm parameter
+   *
+   * @return Parameter used for robotic algorithms
+   */
+  AlgorithmParameter get_algorithm_parameter();
 
 private:
-  // Raw counterparts of LinkProperties and EndEffectorProperties
+  // Raw counterpart of JointCharacteristic
+  struct JointCharacteristicRaw
+  {
+    float effort_correction;
+    float friction_transition_velocity;
+    float friction_constant_term;
+    float friction_coulomb_coef;
+    float friction_viscous_coef;
+
+    /**
+     * @brief Convert JointCharacteristic to JointCharacteristicRaw
+     *
+     * @param joint_characteristic The JointCharacteristic to convert
+     */
+    void to_raw(const JointCharacteristic & joint_characteristic);
+
+    /**
+     * @brief Convert JointCharacteristicRaw to JointCharacteristic
+     *
+     * @return The converted JointCharacteristic
+     */
+    JointCharacteristic from_raw() const;
+  };
+
+  // Raw counterpart of Link
   struct LinkRaw
   {
     float mass;
     float inertia[9];
     float origin_xyz[3];
     float origin_rpy[3];
+
+    /**
+     * @brief Convert Link to LinkRaw
+     *
+     * @param link The Link to convert
+     */
+    void to_raw(const Link & link);
+
+    /**
+     * @brief Convert LinkRaw to Link
+     *
+     * @return The converted Link
+     */
+    Link from_raw() const;
   };
+
+  // Raw counterpart of EndEffector
   struct EndEffectorRaw
   {
     LinkRaw palm;
@@ -910,7 +1343,104 @@ private:
     LinkRaw finger_right;
     float offset_finger_left;
     float offset_finger_right;
-    float t_max_factor;
+    float pitch_circle_radius;
+
+    /**
+     * @brief Convert EndEffector to EndEffectorRaw
+     *
+     * @param end_effector The EndEffector to convert
+     */
+    void to_raw(const EndEffector & end_effector);
+
+    /**
+     * @brief Convert EndEffectorRaw to EndEffector
+     *
+     * @return The converted EndEffector
+     */
+    EndEffector from_raw() const;
+  };
+
+  // Raw counterpart of JointLimit
+  struct JointLimitRaw
+  {
+    /** @brief Minimum position in rad for arm joints and m for gripper */
+    float position_min;
+    /** @brief Maximum position in rad for arm joints and m for gripper */
+    float position_max;
+    /** @brief Tolerance on output position in rad for arm joints and m for gripper */
+    float position_tolerance;
+    /** @brief Maximum velocity in rad/s for arm joints and m/s for gripper */
+    float velocity_max;
+    /** @brief Tolerance on output velocity in rad/s for arm joints and m/s for gripper */
+    float velocity_tolerance;
+    /** @brief Maximum effort in Nm for arm joints and N for gripper */
+    float effort_max;
+    /** @brief Tolerance on output effort in Nm for arm joints and N for gripper */
+    float effort_tolerance;
+
+    /**
+     * @brief Convert JointLimit to JointLimitRaw
+     *
+     * @param joint_limit The JointLimit to convert
+     */
+    void to_raw(const JointLimit & joint_limit);
+
+    /**
+     * @brief Convert JointLimitRaw to JointLimit
+     *
+     * @return The converted JointLimit
+     */
+    JointLimit from_raw() const;
+  };
+
+  // Raw counterpart of PIDParameter
+  struct PIDParameterRaw
+  {
+    /** @brief Proportional gain */
+    float kp;
+    /** @brief Integral gain */
+    float ki;
+    /** @brief Derivative gain */
+    float kd;
+    /** @brief Maximum integral value */
+    float imax;
+
+    /**
+     * @brief Convert PIDParameter to PIDParameterRaw
+     *
+     * @param pid_parameter The PIDParameter to convert
+     */
+    void to_raw(const PIDParameter & pid_parameter);
+
+    /**
+     * @brief Convert PIDParameterRaw to PIDParameter
+     *
+     * @return The converted PIDParameter
+     */
+    PIDParameter from_raw() const;
+  };
+
+  // Raw counterpart of MotorParameter
+  struct MotorParameterRaw
+  {
+    /** @brief Position loop PID parameter */
+    PIDParameterRaw position;
+    /** @brief Velocity loop PID parameter */
+    PIDParameterRaw velocity;
+
+    /**
+     * @brief Convert MotorParameter to MotorParameterRaw
+     *
+     * @param motor_parameter The MotorParameter to convert
+     */
+    void to_raw(const MotorParameter & motor_parameter);
+
+    /**
+     * @brief Convert MotorParameterRaw to MotorParameter
+     *
+     * @return The converted MotorParameter
+     */
+    MotorParameter from_raw() const;
   };
 
   /**
@@ -921,14 +1451,14 @@ private:
    * respective modes. Leaving the feedforward terms as zero is fine but filling them with the
    * values corresponding to the trajectory is recommended for smoother motion.
    */
-  struct JointInput
+  struct JointInputRaw
   {
     /// @brief The mode of the joint input
     /// @note If this mode is different from the configured mode, the robot will enter error state
     Mode mode{Mode::idle};
-    union JointInputCommand {
+    union Command {
       /// @brief Joint input corresponding to the position mode
-      struct ComandPositionMode {
+      struct Position {
         /// @brief Position in rad for arm joints or m for the gripper joint
         float position;
         /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
@@ -937,22 +1467,27 @@ private:
         float feedforward_acceleration;
       } position{0.0f, 0.0f, 0.0f};
       /// @brief Joint input corresponding to the velocity mode
-      struct ComandVelocityMode {
+      struct Velocity {
         /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
         float velocity;
         /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
         float feedforward_acceleration;
       } velocity;
       /// @brief Joint input corresponding to the external_effort mode
-      struct ComandExternalEffortMode {
+      struct ExternalEffort {
         /// @brief external effort in Nm for arm joints or N for the gripper joint
         float external_effort;
       } external_effort;
+      /// @brief Joint input corresponding to the effort mode
+      struct Effort {
+        /// @brief Effort in Nm for arm joints or N for the gripper joint
+        float effort;
+      } effort;
     } command;
   };
 
   /// @brief Joint output
-  struct JointOutput
+  struct JointOutputRaw
   {
     /// @brief Joint position in rad for arm joints or m for the gripper joint
     float position;
@@ -962,26 +1497,116 @@ private:
     float effort;
     /// @brief External effort in Nm for arm joints or N for the gripper joint
     float external_effort;
+    /// @brief Motor/rotor temperature in °C
+    float rotor_temperature;
+    /// @brief Driver/MOSFET temperature in °C
+    float driver_temperature;
   };
 
-  // Robot command indicators
-  enum class RobotCommandIndicator : uint8_t
+  /// @brief Robot input
+  struct RobotInput
   {
-    handshake,
-    set_joint_inputs,
-    get_joint_outputs,
-    set_home,
-    set_configuration,
-    get_configuration,
-    get_log,
+    /// @brief Inputs in joint space
+    struct Joint
+    {
+      /// @brief Inputs of all joints
+      struct All
+      {
+        /// @brief Positions in rad for arm joints and m for the gripper joint
+        std::vector<double> positions;
+        /// @brief Velocities in rad/s for arm joints and m/s for the gripper joint
+        std::vector<double> velocities;
+        /// @brief Accelerations in rad/s^2 for arm joints and m/s^2 for the gripper joint
+        std::vector<double> accelerations;
+        /// @brief Efforts in Nm for arm joints and N for the gripper joint
+        std::vector<double> efforts;
+        /// @brief External efforts in Nm for arm joints and N for the gripper joint
+        std::vector<double> external_efforts;
+      } all;
+
+      /// @brief Inputs of the arm joints
+      struct Arm
+      {
+        /// @brief Positions in rad
+        std::vector<double> positions;
+        /// @brief Velocities in rad/s
+        std::vector<double> velocities;
+        /// @brief Accelerations in rad/s^2
+        std::vector<double> accelerations;
+        /// @brief Efforts in Nm
+        std::vector<double> efforts;
+        /// @brief External efforts in Nm
+        std::vector<double> external_efforts;
+      } arm;
+
+      /// @brief Inputs of the gripper joint
+      struct Gripper
+      {
+        /// @brief Position in m
+        double position;
+        /// @brief Velocity in m/s
+        double velocity;
+        /// @brief Acceleration in m/s^2
+        double acceleration;
+        /// @brief Effort in N
+        double effort;
+        /// @brief External effort in N
+        double external_effort;
+      } gripper;
+    } joint;
+
+    /// @brief Inputs in Cartesian space
+    struct Cartesian
+    {
+      /// @brief Position twist in axis coordinates in m and rad
+      std::array<double, 6> positions;
+      /// @brief Velocity twist in axis coordinates in m/s and rad/s
+      std::array<double, 6> velocities;
+      /// @brief Acceleration twist in axis coordinates in m/s^2 and rad/s^2
+      std::array<double, 6> accelerations;
+      /// @brief Effort wrench in ray coordinates in Nm and N
+      std::array<double, 6> external_efforts;
+    } cartesian;
+  };
+
+  /** @brief Robot command indicators */
+  struct RobotCommandIndicator
+  {
+    /** @brief Commands transmitted over UDP */
+    enum class UDP : uint8_t
+    {
+      /** @brief Set robot input command */
+      set_robot_input,
+      /** @brief Get robot output command */
+      get_robot_output
+    };
+
+    /** @brief Commands transmitted over TCP */
+    enum class TCP : uint8_t
+    {
+      /** @brief Handshake command */
+      handshake,
+      /** @brief Set home command */
+      set_home,
+      /** @brief Set configuration command */
+      set_configuration,
+      /** @brief Get configuration command */
+      get_configuration,
+      /** @brief Get log command */
+      get_log,
+      /** @brief Update default EEPROM command */
+      update_default_eeprom,
+      /** @brief Reboot command */
+      reboot
+    };
   };
 
   // ErrorState
   enum class ErrorState : uint8_t {
     // No error
     none,
-    // Controller's UDP interface failed to initialize
-    udp_init_failed,
+    // Controller's Ethernet manager failed to initialize
+    ethernet_init_failed,
     // Controller's CAN interface failed to initialize
     can_init_failed,
     // Controller's CAN interface failed to send a message
@@ -1004,20 +1629,19 @@ private:
     invalid_mode,
     // Invalid robot command indicator received
     invalid_robot_command,
-    // Robot command with unexpected size received
-    invalid_robot_command_size,
     // Invalid configuration address
     invalid_configuration_address,
-    // Invalid pending command
-    invalid_pending_command,
     // Robot input with modes different than configured modes received
     robot_input_mode_mismatch,
-    // Discontinuous robot input received
-    robot_input_discontinous,
+    // Joint limit exceeded
+    joint_limit_exceeded,
+    // Robot input infinite
+    robot_input_infinite
   };
 
   // Configuration addresses
   enum class ConfigurationAddress : uint8_t {
+    // Controller configurations
     factory_reset_flag,
     ip_method,
     manual_ip,
@@ -1027,17 +1651,18 @@ private:
     joint_characteristics,
     error_state,
     modes,
-    end_effector
+    end_effector,
+    joint_limits,
+    motor_parameters,
+    // Local configurations
+    algorithm_parameter,
   };
-
-  // UDP port
-  static constexpr uint16_t PORT{50000};
-
-  // Timeout in microseconds for receiving UDP packets
-  static constexpr uint32_t TIMEOUT_US{1000};
 
   // Maximum retransmission attempts
   static constexpr uint8_t MAX_RETRANSMISSION_ATTEMPTS{100};
+
+  // Number of modes
+  static constexpr uint8_t NUM_MODES{5};
 
   // Model to number of joints mapping
   static const std::map<Model, uint8_t> MODEL_NUM_JOINTS;
@@ -1054,28 +1679,20 @@ private:
   // Configuration name
   static const std::map<ConfigurationAddress, std::string> CONFIGURATION_NAME;
 
-  // Joint characteristic name
-  static const struct JointCharacteristicName
-  {
-    std::string effort_correction;
-    std::string friction_transition_velocity;
-    std::string friction_constant_term;
-    std::string friction_coulomb_coef;
-    std::string friction_viscous_coef;
-    std::string continuity_factor;
-  } JOINT_CHARACTERISTIC_NAME;
-
   // Interpolators for joint trajectories
-  std::vector<QuinticHermiteInterpolator> trajectories_;
+  std::vector<std::unique_ptr<QuinticHermiteInterpolator>> trajectory_ptrs_;
 
   // Trajectory start time
   std::vector<std::chrono::time_point<std::chrono::steady_clock>> trajectory_start_times_;
 
-  // Robot input
-  std::vector<JointInput> joint_inputs_;
+  // Interpolation space
+  InterpolationSpace interpolation_space_{InterpolationSpace::joint};
+
+  // Joint inputs
+  std::vector<JointInputRaw> joint_input_raws_;
 
   // Joint outputs
-  std::vector<JointOutput> joint_outputs_;
+  std::vector<JointOutputRaw> joint_output_raws_;
 
   // Number of joints
   uint8_t num_joints_{0};
@@ -1090,8 +1707,8 @@ private:
   // true if configured, false if not configured
   bool configured_{false};
 
-  // UDP client
-  UDP_Client udp_client_;
+  // Ethernet manager
+  std::unique_ptr<EthernetManager> ethernet_manager_ptr_;
 
   // Atomic flag for maintaining and stopping the daemon thread
   std::atomic<bool> activated_{false};
@@ -1141,6 +1758,47 @@ private:
   // Shared exception pointer
   std::exception_ptr exception_ptr_;
 
+  // Algorithm interface
+  std::unique_ptr<AlgorithmInterface> algorithm_interface_ptr_;
+
+  // Robot input
+  RobotInput robot_input_;
+
+  // Robot output
+  RobotOutput robot_output_;
+
+  // Arm mode
+  Mode arm_mode_{Mode::idle};
+
+  /**
+   * @brief Update the robot output
+   *
+   * @details This function does the following:
+   *
+   * 1. Extract the joint outputs from the joint outputs raw data
+   * 2. Do forward kinematics
+   * 3. Update the cartesian outputs
+   */
+  void update_robot_output();
+
+  /**
+   * @brief Update the robot input
+   *
+   * @details This function does the following:
+   *
+   * 1. If the interpolation space is joint
+   *   1. Evaluate the joint inputs
+   *   2. Do forward kinematics if all arm joints have the same mode
+   *   3. Update the cartesian inputs
+   * 2. If the interpolation space is cartesian
+   *   1. Evaluate the cartesian inputs
+   *   2. Do inverse kinematics
+   *   3. Update the arm joint inputs
+   *   4. Evaluate the gripper joint inputs
+   * 3. Update the raw joint inputs
+   */
+  void update_robot_input();
+
   /**
    * @brief Set the joint inputs
    *
@@ -1157,18 +1815,15 @@ private:
   bool receive_joint_outputs();
 
   /**
-   * @brief Common steps for setting configurations
-   *
-   * @param configuration_address Configuration address
-   */
-  void get_configuration(ConfigurationAddress configuration_address);
-
-  /**
    * @brief Check the error state
    *
+   * @param buffer The buffer containing the error state
    * @param clear_error Whether to clear the error state without throwing an exception
    */
-  void check_error_state(bool clear_error);
+  void check_error_state(
+    const std::vector<uint8_t> & buffer,
+    bool clear_error
+  );
 
   /**
    * @brief Reset the error state of the robot
@@ -1182,6 +1837,39 @@ private:
    */
   std::string get_detailed_log();
 
+  /// @brief Configuration variant
+  using ConfigurationVariant = std::variant<
+    std::monostate,
+    bool,
+    IPMethod,
+    std::string,
+    std::vector<JointCharacteristic>,
+    std::vector<Mode>,
+    EndEffector,
+    std::vector<JointLimit>,
+    std::vector<std::map<Mode, MotorParameter>>,
+    AlgorithmParameter
+  >;
+
+  /**
+   * @brief Set a configuration
+   *
+   * @param configuration_address The address of the configuration to set
+   * @param configuration_variant The value of the configuration to set
+   */
+  void set_configuration(
+    ConfigurationAddress configuration_address,
+    const ConfigurationVariant & configuration_variant
+  );
+
+  /**
+   * @brief Get a configuration
+   *
+   * @param configuration_address The address of the configuration to get
+   * @return The value of the configuration
+   */
+  ConfigurationVariant get_configuration(ConfigurationAddress configuration_address);
+
   /**
    * @brief Function to be executed by the daemon thread
    *
@@ -1191,9 +1879,13 @@ private:
    *
    * 2. Set the joint inputs
    *
-   * 3. Receive the joint outputs
+   * 3. Update the robot output
    *
-   * 4. Block and wait for a main thread operation if there is any
+   * 3. Update the robot input
+   *
+   * 4. Receive the joint outputs
+   *
+   * 5. Block and wait for a main thread operation if there is any
    */
   void daemon();
 };

@@ -26,20 +26,18 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to set the manual IP address in the EEPROM.
+# Purpose:
+# This script demonstrates how to set the manual IP address in the EEPROM.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver with the follower configuration
-3. Sets the IP address of the robot
-4. The driver cleans up automatically at the destructor
-5. Power cycle to apply the new IP address
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver
+# 3. Gets and sets the manual IP address
+# 4. Reboots the controller to apply the new IP address
+# 5. Reconfigures the driver and checks the result
 
 import trossen_arm
 
@@ -64,5 +62,16 @@ if __name__=='__main__':
     # Print the new IP address
     print("New IP address: ", driver.get_manual_ip())
 
-    # Power cycle to apply the new IP address
-    print("Power cycle the robot to apply the new IP address.")
+    # Reboot the controller to apply the new IP address
+    driver.cleanup(True)  # or driver.reboot_controller()
+
+    # Reconfigure the driver
+    driver.configure(
+        trossen_arm.Model.wxai_v0,
+        trossen_arm.StandardEndEffector.wxai_v0_leader,
+        "192.168.1.3",
+        False
+    )
+
+    # Print the IP address after reboot
+    print("IP address after reboot: ", driver.get_manual_ip())

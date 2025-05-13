@@ -26,28 +26,26 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to teleoperate the robots with force feedback.
+# Purpose:
+# This script demonstrates how to teleoperate the robots with force feedback.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
-2. A WXAI V0 arm with follower end effector and ip at 192.168.1.3
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# 2. A WXAI V0 arm with follower end effector and ip at 192.168.1.3
 
-The script does the following:
-1. Initializes the drivers
-2. Configures the drivers with the leader and follower configurations
-3. Records the sleep positions
-4. Moves the robots to home positions
-5. For a specified amount of time, feeds the external efforts from the follower robot to the leader
-   robot and feeds the positions from the leader robot to the follower robot
-6. Moves the robots to home positions
-7. Moves the robots to sleep positions
-8. Sets the robots to idle mode
-9. The driver automatically sets the mode to idle at the destructor
-NOTE: When the time for teleoperation has expired, it will get locked in position and start
-moving to home positions. Please let go of the leader when this happens.
-'''
+# The script does the following:
+# 1. Initializes the drivers
+# 2. Configures the drivers with the leader and follower configurations
+# 3. Records the sleep positions
+# 4. Moves the robots to home positions
+# 5. For a specified amount of time, feeds the external efforts from the follower robot to the leader
+#    robot and feeds the positions from the leader robot to the follower robot
+# 6. Moves the robots to home positions
+# 7. Moves the robots to sleep positions
+# 8. Sets the robots to idle mode
+# 9. The driver automatically sets the mode to idle at the destructor
+# NOTE: When the time for teleoperation has expired, it will get locked in position and start
+# moving to home positions. Please let go of the leader when this happens.
 
 import time
 
@@ -104,16 +102,16 @@ if __name__=='__main__':
     while time.time() < end_time:
         # Feed the external efforts from the follower robot to the leader robot
         driver_leader.set_all_external_efforts(
-            -force_feedback_gain * np.array(driver_follower.get_external_efforts()),
+            -force_feedback_gain * np.array(driver_follower.get_all_external_efforts()),
             0.0,
             False,
         )
         # Feed the positions from the leader robot to the follower robot
         driver_follower.set_all_positions(
-            driver_leader.get_positions(),
+            driver_leader.get_all_positions(),
             0.0,
             False,
-            driver_leader.get_velocities()
+            driver_leader.get_all_velocities()
         )
 
     print("Moving to home positions...")

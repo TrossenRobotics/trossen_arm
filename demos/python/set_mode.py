@@ -26,21 +26,19 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to set the mode of the robot.
+# Purpose:
+# This script demonstrates how to set the mode of the robot.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver with the leader configuration
-3. Sets the gripper mode to "position"
-4. Sets the arm mode to "position"
-5. Sets the all mode to "idle"
-6. The driver cleans up automatically at the destructor
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver with the leader configuration
+# 3. Sets the gripper mode to "position"
+# 4. Sets the arm mode to "position"
+# 5. Sets the all mode to "idle"
+# 6. The driver cleans up automatically at the destructor
 
 import trossen_arm
 

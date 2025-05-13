@@ -26,24 +26,22 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to move two robots to different positions using interpolation.
+# Purpose:
+# This script demonstrates how to move two robots to different positions using interpolation.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
-2. A WXAI V0 arm with follower end effector and ip at 192.168.1.3
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# 2. A WXAI V0 arm with follower end effector and ip at 192.168.1.3
 
-The script does the following:
-1. Initializes the drivers
-2. Configures the drivers with the leader and follower configurations
-3. Sets the robots to position mode
-4. Records the sleep positions
-5. Generates trajectories: sleep -> sleep -> home -> home -> sleep -> sleep
-6. Moves the robots along the trajectories
-7. Sets the robots to the idle mode
-8. The driver automatically sets the mode to idle at the destructor
-'''
+# The script does the following:
+# 1. Initializes the drivers
+# 2. Configures the drivers with the leader and follower configurations
+# 3. Sets the robots to position mode
+# 4. Records the sleep positions
+# 5. Generates trajectories: sleep -> sleep -> home -> home -> sleep -> sleep
+# 6. Moves the robots along the trajectories
+# 7. Sets the robots to the idle mode
+# 8. The driver automatically sets the mode to idle at the destructor
 
 import time
 
@@ -78,8 +76,8 @@ if __name__=='__main__':
     leader_driver.set_all_modes(trossen_arm.Mode.position)
     follower_driver.set_all_modes(trossen_arm.Mode.position)
 
-    leader_sleep_positions = np.array(leader_driver.get_positions())
-    follower_sleep_positions = np.array(follower_driver.get_positions())
+    leader_sleep_positions = np.array(leader_driver.get_all_positions())
+    follower_sleep_positions = np.array(follower_driver.get_all_positions())
     home_positions = np.zeros(leader_driver.get_num_joints())
     home_positions[1] = np.pi/2
     home_positions[2] = np.pi/2

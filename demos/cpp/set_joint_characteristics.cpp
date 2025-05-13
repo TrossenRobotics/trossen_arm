@@ -35,10 +35,11 @@
 //
 // The script does the following:
 // 1. Initializes the driver
-// 2. Configures the driver with the leader configuration
-// 3. Sets the effort corrections via joint characteristics
-// 4. Sets the effort corrections via dedicated helper function
-// 5. The driver cleans up automatically at the destructor
+// 2. Configures the driver
+// 3. Gets and sets the effort corrections via joint characteristics
+// 4. Gets and sets the effort corrections via dedicated helper function
+// 5. Reboots the controller to apply the new effort corrections
+// 6. Reconfigures the driver and checks the result
 
 #include <iostream>
 
@@ -89,13 +90,31 @@ int main() {
   std::cout << std::endl;
 
   // Set the effort corrections via dedicated helper function
-  std::vector<float> effort_corrections = {1.1, 1.1, 1.1, 1.25, 1.15, 1.15, 1.15};
+  std::vector<double> effort_corrections = {1.1, 1.1, 1.1, 1.25, 1.15, 1.15, 1.15};
   driver.set_effort_corrections(effort_corrections);
 
   // Print the new effort corrections via dedicated helper function
   std::cout << "New effort corrections: ";
   for (const auto& correction : driver.get_effort_corrections()) {
     std::cout << correction << " ";
+  }
+  std::cout << std::endl;
+
+  // Reboot the controller to apply the new effort corrections
+  driver.cleanup(true);  // or driver.reboot_controller();
+
+  // Reconfigure the driver
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    "192.168.1.2",
+    false
+  );
+
+  // Print the effort corrections after reboot
+  std::cout << "Effort corrections after reboot: ";
+  for (const auto& joint_characteristic : driver.get_joint_characteristics()) {
+    std::cout << joint_characteristic.effort_correction << " ";
   }
   std::cout << std::endl;
 

@@ -26,21 +26,20 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-'''
-Purpose:
-This script demonstrates how to set the joint characteristics in the EEPROM, using the effort
-corrections as an example.
+# Purpose:
+# This script demonstrates how to set the joint characteristics in the EEPROM, using the effort
+# corrections as an example.
 
-Hardware setup:
-1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
+# Hardware setup:
+# 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
 
-The script does the following:
-1. Initializes the driver
-2. Configures the driver with the leader configuration
-3. Sets the effort corrections via joint characteristics
-4. Sets the effort corrections via dedicated helper function
-5. The driver cleans up automatically at the destructor
-'''
+# The script does the following:
+# 1. Initializes the driver
+# 2. Configures the driver
+# 3. Gets and sets the effort corrections via joint characteristics
+# 4. Gets and sets the effort corrections via dedicated helper function
+# 5. Reboots the controller to apply the new effort corrections
+# 6. Reconfigures the driver and checks the result
 
 import trossen_arm
 
@@ -89,3 +88,17 @@ if __name__=='__main__':
 
     # Print the new effort corrections via dedicated helper function
     print("New effort corrections: ", driver.get_effort_corrections())
+
+    # Reboot the controller to apply the new effort corrections
+    driver.cleanup(True)  # or driver.reboot_controller()
+
+    # Reconfigure the driver
+    driver.configure(
+        trossen_arm.Model.wxai_v0,
+        trossen_arm.StandardEndEffector.wxai_v0_leader,
+        "192.168.1.2",
+        False
+    )
+
+    # Print the effort corrections after reboot
+    print("Effort corrections after reboot: ", driver.get_effort_corrections())

@@ -32,25 +32,25 @@ On your computer:
 
    .. note::
 
-    If you encounter build errors, you may need to install additional dependencies ``cmake``, ``build-essential``, and ``ffmpeg libs``.
-    On Linux, run:
+      If you encounter build errors, you may need to install additional dependencies ``cmake``, ``build-essential``, and ``ffmpeg libs``.
+      On Linux, run:
 
-    .. code-block::
+      .. code-block::
 
-      sudo apt-get install -y \
-         build-essential \
-         cmake \
-         libavcodec-dev \
-         libavdevice-dev \
-         libavfilter-dev \
-         libavformat-dev \
-         libavutil-dev \
-         libswresample-dev \
-         libswscale-dev \
-         pkg-config \
-         python3-dev
+         sudo apt-get install -y \
+            build-essential \
+            cmake \
+            libavcodec-dev \
+            libavdevice-dev \
+            libavfilter-dev \
+            libavformat-dev \
+            libavutil-dev \
+            libswresample-dev \
+            libswscale-dev \
+            pkg-config \
+            python3-dev
 
-    For other systems, see: `Compiling PyAV <https://pyav.org/docs/develop/overview/installation.html#bring-your-own-ffmpeg>`_
+      For other systems, see: `Compiling PyAV <https://pyav.org/docs/develop/overview/installation.html#bring-your-own-ffmpeg>`_.
 
 #. For Linux only (not Mac), install extra dependencies for recording datasets:
 

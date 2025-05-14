@@ -27,18 +27,18 @@ Before installing the application, complete the following setup steps:
 #. Create a Virtual Environment:
 
    Use Miniconda to create and activate a virtual environment to ensure a clean setup for the application:
-   
+
    .. code-block:: bash
-      
+
       conda create -n trossen_ai_data_collection_ui_env python=3.10 -y
       conda activate trossen_ai_data_collection_ui_env
 
 #. Verify Python Version:
 
    Ensure that Python 3.10 is activated in the environment by running:
-   
+
    .. code-block:: bash
-      
+
       python --version
 
    You should see ``Python 3.10.x`` as the output.
@@ -48,9 +48,28 @@ Installation
 
 Once the pre-installation setup is complete, install the **Trossen AI Data Collection UI Application**.
 
-.. code-block:: bash
+#. Install build dependencies on Linux:
 
-    pip install trossen_ai_data_collection_ui
+    .. code-block:: bash
+
+        sudo apt-get install -y \
+            build-essential \
+            cmake \
+            libavcodec-dev \
+            libavdevice-dev \
+            libavfilter-dev \
+            libavformat-dev \
+            libavutil-dev \
+            libswresample-dev \
+            libswscale-dev \
+            pkg-config \
+            python3-dev
+
+#.  Run the post-installation script to install the application
+
+    .. code-block:: bash
+
+        pip install trossen_ai_data_collection_ui
 
 Post-Installation
 =================
@@ -66,7 +85,7 @@ The post-installation script sets up additional configurations, including:
 Run the following command to complete the post-installation setup:
 
 .. code-block:: bash
-    
+
     trossen_ai_data_collection_ui_post_install
 
 Once the desktop icon is created, right-click on it and select **Allow Launching** to ensure the application has the necessary permissions to run.
@@ -126,7 +145,7 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 
 #. Camera Views
 
-    - Live Camera Feeds: You can view multiple camera angles at once while recording, making it easy to monitor the robotic arms and their surroundings as things happen. 
+    - Live Camera Feeds: You can view multiple camera angles at once while recording, making it easy to monitor the robotic arms and their surroundings as things happen.
 
 #. Configuration Management
 

@@ -73,6 +73,10 @@ Once the pre-installation setup is complete, install the **Trossen AI Data Colle
 
         pip install trossen_ai_data_collection_ui
 
+    .. note::
+
+        The command above requires sudo privileges and may prompt you for your password.
+
 Post-Installation
 =================
 

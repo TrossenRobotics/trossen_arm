@@ -67,7 +67,7 @@ Once the pre-installation setup is complete, install the **Trossen AI Data Colle
 
     For other systems, see: `Compiling PyAV <https://pyav.org/docs/develop/overview/installation.html#bring-your-own-ffmpeg>`_.
 
-#.  Run the post-installation script to install the application
+#.  Run the post-installation script to install the application:
 
     .. code-block:: bash
 

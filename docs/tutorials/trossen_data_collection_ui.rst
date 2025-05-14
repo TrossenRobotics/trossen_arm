@@ -48,7 +48,7 @@ Installation
 
 Once the pre-installation setup is complete, install the **Trossen AI Data Collection UI Application**.
 
-#. Install build dependencies on Linux:
+#.  Install build dependencies on Linux:
 
     .. code-block:: bash
 

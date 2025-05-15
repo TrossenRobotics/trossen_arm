@@ -233,6 +233,11 @@ This script demonstrates how to set the mode of the robot.
 
 This script demonstrates how to move a robot to different positions.
 
+`mixed_interpolation_space`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This script tests transitions of the interpolation space.
+
 Intermediate
 ------------
 
@@ -313,6 +318,8 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 .. _`gravity_compensation`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/gravity_compensation.py
 
 .. _`gripper_torque`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/gripper_torque.py
+
+.. _`mixed_interpolation_space`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/mixed_interpolation_space.py
 
 .. _`move_two`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/move_two.py
 

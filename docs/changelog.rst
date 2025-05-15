@@ -5,6 +5,23 @@ Changelog
 Upcoming
 ========
 
+1.8.1
+=====
+
+Trossen Arm Driver
+------------------
+
+- Updated mode switching logic to no longer skip joints whose mode did not change.
+
+  This resolves `trossen_arm#71`_, which caused unexpected arm movement during mode transitions.
+
+  The root cause was that the interpolation space resets to joint mode, requiring the interpolator to also reset.
+  Without this, Cartesian values could be incorrectly interpreted as joint values.
+
+.. warning:: Trossen Arm Driver :ref:`changelog:1.8.0` has been yanked due to potentially unsafe behavior on mode switching.
+
+.. _`trossen_arm#71`: https://github.com/TrossenRobotics/trossen_arm/issues/71
+
 1.8.0
 =====
 

@@ -154,14 +154,19 @@ This set of parameters follows the `classic Denavit-Hartenberg convention`_.
     - 0.0
     - :math:`\pi/2`
   * - :math:`^4T_5`
-    - 0.17095
+    - 0.02895
     - :math:`\theta_5`
     - 0.0
     - :math:`\pi/2`
-  * - :math:`^5T_\text{gripper}`
+  * - :math:`^5T_\text{Flange}`
     - 0.0
     - :math:`\pi/2`
     - 0.0
+    - 0.0
+  * - :math:`^\text{Flange}T_\text{Tool, default}`
+    - 0.0
+    - 0.0
+    - 0.154
     - 0.0
 
 Modified
@@ -210,9 +215,14 @@ This set of parameters follows the `modified Denavit-Hartenberg convention`_.
     - :math:`\pi/2`
     - 0.0
     - :math:`\theta_5`
-    - 0.17095
-  * - :math:`^5T_\text{gripper}`
+    - 0.02895
+  * - :math:`^5T_\text{Flange}`
     - :math:`\pi/2`
     - 0.0
     - :math:`\pi/2`
+    - 0.0
+  * - :math:`^\text{Flange}T_\text{Tool, default}`
+    - 0.0
+    - 0.154
+    - 0.0
     - 0.0

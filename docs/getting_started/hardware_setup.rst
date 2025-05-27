@@ -60,7 +60,7 @@ Download :download:`this guide</_downloads/Mobile AI Assembly Guide.pdf>` or wat
 Stationary AI Kit
 -----------------
 
-Watch the YouTube video below for assembly instructions for the Stationary AI kit:
+Download :download:`this guide</_downloads/Stationary AI Assembly Guide.pdf>` or watch the YouTube video below for assembly instructions for the Stationary AI kit:
 
 .. youtube:: LUU2ktpvOAo
     :align: center

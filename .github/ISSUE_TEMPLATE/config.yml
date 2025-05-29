@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Trossen AI Arm Troubleshooting Guide
+    url: https://docs.trossenrobotics.com/trossen_arm/main/troubleshooting.html
+    about: Solutions for common problems with the Trossen AI Arms.
+  - name: Contact Trossen Robotics Support
+    url: https://www.trossenrobotics.com/contact.aspx
+    about: If you have any questions about missing or damaged parts.

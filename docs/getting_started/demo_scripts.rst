@@ -283,6 +283,11 @@ This script demonstrates how to reset all configuration options to their default
 
 This script demonstrates how to set the IP method to DHCP or MANUAL.
 
+`set_joint_limits`_
+^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to set the joint limits of the arm.
+
 `set_manual_ip`_
 ^^^^^^^^^^^^^^^^
 
@@ -328,6 +333,8 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 .. _`set_factory_reset_flag`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_factory_reset_flag.py
 
 .. _`set_ip_method`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_ip_method.py
+
+.. _`set_joint_limits`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_joint_limits.py
 
 .. _`set_manual_ip`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_manual_ip.py
 

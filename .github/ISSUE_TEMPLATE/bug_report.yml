@@ -1,0 +1,75 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug"]
+body:
+
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+
+  - type: textarea
+    id: robot_model
+    attributes:
+      label: Robot Model
+      description: Which robot are you using?
+      placeholder: wxai, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: driver_version
+    attributes:
+      label: Driver Version
+      description: Which version of the Trossen Arm Driver are you using?
+      placeholder: v1.8.0, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: firmware_version
+    attributes:
+      label: Firmware Version
+      description: Which version of the Trossen Arm Controller firmware are you using?
+      placeholder: v1.8.0, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: system_info
+    attributes:
+      label: System Info
+      description: Please provide information about your system.
+      placeholder: e.g. Ubuntu 22.04, Intel Core i7 14700, 16GB RAM, etc.
+    render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps To Reproduce
+      description: What were the steps you took immediately preceding your issue?
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Console Output
+      description: Please copy and paste any relevant console output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+
+  - type: textarea
+    id: other
+    attributes:
+      label: Additional Info
+      description: Please enter anything else you'd like to share here.

@@ -51,7 +51,7 @@ body:
       label: System Info
       description: Please provide information about your system.
       placeholder: e.g. Ubuntu 22.04, Intel Core i7 14700, 16GB RAM, etc.
-    render: shell
+      render: shell
     validations:
       required: true
 

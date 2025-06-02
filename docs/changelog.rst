@@ -5,6 +5,37 @@ Changelog
 Upcoming
 ========
 
+1.8.2
+=====
+
+Trossen Arm Driver
+------------------
+
+- Put the default tool frame at the tips of the fingers.
+  It was at some point on the contacting surface previously.
+- Added pre-run trajectory check.
+  Now the driver by default samples 1000 points on the trajectory and checks if they have the
+  corresponding inverse kinematics solution.
+  Check out :func:`trossen_arm::TrossenArmDriver::set_cartesian_positions` for more details.
+- Added a demo for joint limits.
+  It is available in :ref:`getting_started/demo_scripts:`set_joint_limits`_`.
+- Fixed two issues related to mixed interpolation spaces and added to the demo :ref:`getting_started/demo_scripts:`mixed_interpolation_space`_`.
+
+  - Using joint space commands immediately after Cartesian space commands no longer causes unexpected behavior. (`trossen_arm#78`_)
+  - Using Cartesian space commands immediately after setting to the corresponding mode no longer causes unexpected behavior.
+
+.. _`trossen_arm#78`: https://github.com/TrossenRobotics/trossen_arm/issues/78
+
+.. warning:: Trossen Arm Driver :ref:`changelog:1.8.1` has been yanked due to potentially unsafe behavior on mode switching.
+
+Trossen Arm Controller Firmware
+-------------------------------
+
+- Update default configurations to more reasonable values.
+
+  - Increased :member:`trossen_arm::JointLimit::velocity_max` for the wrist joints from 2 :math:`\pi` rad/s to 3 :math:`\pi` rad/s.
+  - Increased :member:`trossen_arm::PIDParameter::imax` in :enumerator:`trossen_arm::Mode::idle` mode for joint 1 from 9 Nm to 27 Nm so the arm can hold itself when extended horizontally.
+
 1.8.1
 =====
 
@@ -21,6 +52,11 @@ Trossen Arm Driver
 .. warning:: Trossen Arm Driver :ref:`changelog:1.8.0` has been yanked due to potentially unsafe behavior on mode switching.
 
 .. _`trossen_arm#71`: https://github.com/TrossenRobotics/trossen_arm/issues/71
+
+Trossen Arm Controller Firmware
+-------------------------------
+
+- Skip limit checks in idle mode.
 
 1.8.0
 =====

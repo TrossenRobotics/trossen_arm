@@ -11,12 +11,10 @@ Upcoming
 Trossen Arm Driver
 ------------------
 
-- Put the default tool frame at the tips of the fingers.
-  It was at some point on the contacting surface previously.
-- Added pre-run trajectory check.
-  Now the driver by default samples 1000 points on the trajectory and checks if they have the corresponding inverse kinematics solutions.
-  Check out :func:`trossen_arm::TrossenArmDriver::set_cartesian_positions` for more details.
-- Added a demo for joint limits.
+- Moved the default tool frame from a point on the contacting surfaces to the tips of the fingers.
+- Added pre-run trajectory check to :func:`trossen_arm::TrossenArmDriver::set_cartesian_positions`.
+  Now the driver by default samples 1000 points on the trajectory and checks if they have the corresponding inverse kinematics solutions before moving.
+- Added a demo for configuring joint limits.
   It is available in :ref:`getting_started/demo_scripts:`set_joint_limits`_`.
 - Fixed two issues related to mixed interpolation spaces and updated the demo :ref:`getting_started/demo_scripts:`mixed_interpolation_space`_`.
 

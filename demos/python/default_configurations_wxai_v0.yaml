@@ -113,7 +113,7 @@ end_effector:
   offset_finger_right: -0.017899999395012856
   pitch_circle_radius: 0.008750000037252903
   t_flange_tool:
-    - 0.15399999916553497
+    - 0.156062
     - 0
     - 0
     - 0
@@ -144,21 +144,21 @@ joint_limits:
   - position_min: -1.5707963705062866
     position_max: 1.5707963705062866
     position_tolerance: 0.4000000059604645
-    velocity_max: 6.2831854820251465
+    velocity_max: 9.42477798461914
     velocity_tolerance: 0
     effort_max: 7
     effort_tolerance: 1.399999976158142
   - position_min: -1.5707963705062866
     position_max: 1.5707963705062866
     position_tolerance: 0.4000000059604645
-    velocity_max: 6.2831854820251465
+    velocity_max: 9.42477798461914
     velocity_tolerance: 0
     effort_max: 7
     effort_tolerance: 1.399999976158142
   - position_min: -3.1415927410125732
     position_max: 3.1415927410125732
     position_tolerance: 0.4000000059604645
-    velocity_max: 6.2831854820251465
+    velocity_max: 9.42477798461914
     velocity_tolerance: 0
     effort_max: 7
     effort_tolerance: 1.399999976158142
@@ -235,7 +235,7 @@ motor_parameters:
         kp: 8
         ki: 0.03999999910593033
         kd: 0
-        imax: 9
+        imax: 27
     position:
       position:
         kp: 120

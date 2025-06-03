@@ -261,7 +261,7 @@ int main(int argc, char** argv)
     trossen_arm::Model::wxai_v0,
     trossen_arm::StandardEndEffector::wxai_v0_leader,
     "192.168.1.2",
-    true
+    false
   );
 
   // Print the current states of the driver

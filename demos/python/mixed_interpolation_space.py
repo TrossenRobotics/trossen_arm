@@ -28,7 +28,9 @@
 
 # Purpose:
 # This script tests transitions of the interpolation space.
-# Reference: https://github.com/TrossenRobotics/trossen_arm/issues/71
+# Reference:
+# - https://github.com/TrossenRobotics/trossen_arm/issues/71
+# - https://github.com/TrossenRobotics/trossen_arm/issues/78
 
 # Hardware setup:
 # 1. A WXAI V0 arm with leader end effector and ip at 192.168.1.2
@@ -36,10 +38,8 @@
 # The script does the following:
 # 1. Initializes the drivers
 # 2. Configures the drivers
-# 3. Moves the arm to a position by interpolating in cartesian space
-# 4. Opens the gripper with constant external effort
-# 5. Moves the arm to a position by interpolating in joint space
-# 6. Closes the gripper with constant external effort
+# 3. Tests transitions of the interpolation space
+# 4. Tests transitions of the modes
 
 import trossen_arm
 
@@ -55,6 +55,15 @@ if __name__=='__main__':
         False
     )
 
+    # Interpolation space transitions
+    p = driver.get_cartesian_positions()
+    p[2] += 0.1
+    driver.set_all_modes(trossen_arm.Mode.position)
+    driver.set_cartesian_positions(p, trossen_arm.InterpolationSpace.cartesian)
+
+    driver.set_all_positions([0.0] * driver.get_num_joints())
+
+    # Mode transitions
     p = driver.get_cartesian_positions()
     p[0] += 0.1
     p[2] += 0.2
@@ -62,10 +71,10 @@ if __name__=='__main__':
     driver.set_cartesian_positions(p, trossen_arm.InterpolationSpace.cartesian)
 
     driver.set_gripper_mode(trossen_arm.Mode.external_effort)
-    driver.set_gripper_external_effort(10)
+    driver.set_gripper_external_effort(20)
 
     p[0] -= 0.1
     p[2] -= 0.2
     driver.set_cartesian_positions(p, trossen_arm.InterpolationSpace.joint)
 
-    driver.set_gripper_external_effort(-10)
+    driver.set_gripper_external_effort(-20)

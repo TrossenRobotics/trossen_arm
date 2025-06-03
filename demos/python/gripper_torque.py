@@ -54,9 +54,9 @@ if __name__=='__main__':
     )
 
     input("Press Enter to open the gripper...")
-    print("Open gripper with 10N ...")
+    print("Open gripper with 20N ...")
     driver.set_gripper_mode(trossen_arm.Mode.external_effort)
-    driver.set_gripper_external_effort(10.0, 0.0, False)
+    driver.set_gripper_external_effort(20.0, 0.0, False)
 
     input("Press Enter to increase the external effort...")
     print("Increase external effort to 100N...")
@@ -64,9 +64,9 @@ if __name__=='__main__':
     driver.set_gripper_external_effort(100.0, 5.0, True)
 
     input("Press Enter to close the gripper...")
-    print("Close gripper with 10N...")
+    print("Close gripper with 20N...")
     driver.set_gripper_mode(trossen_arm.Mode.external_effort)
-    driver.set_gripper_external_effort(-10.0, 0.0, False)
+    driver.set_gripper_external_effort(-20.0, 0.0, False)
 
     input("Press Enter to increase the external effort...")
     print("Increase external effort to 100N...")

@@ -183,30 +183,30 @@ void print_configurations(trossen_arm::TrossenArmDriver& driver) {
 }
 
 int main() {
-    // Initialize the driver
-    trossen_arm::TrossenArmDriver driver;
+  // Initialize the driver
+  trossen_arm::TrossenArmDriver driver;
 
-    // Configure the driver
-    driver.configure(
-        trossen_arm::Model::wxai_v0,
-        trossen_arm::StandardEndEffector::wxai_v0_leader,
-        "192.168.1.2",
-        false
-    );
+  // Configure the driver
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    "192.168.1.2",
+    false
+  );
 
-    // Print the configurations
-    std::cout << "Initial configurations:" << std::endl;
-    print_configurations(driver);
+  // Print the configurations
+  std::cout << "Initial configurations:" << std::endl;
+  print_configurations(driver);
 
-    // Store the configurations in a YAML file
-    driver.save_configs_to_file("configurations.yaml");
+  // Store the configurations in a YAML file
+  driver.save_configs_to_file("configurations.yaml");
 
-    // Load the configurations from the YAML file
-    driver.load_configs_from_file("configurations.yaml");
+  // Load the configurations from the YAML file
+  driver.load_configs_from_file("configurations.yaml");
 
-    // Print the configurations
-    std::cout << "Configurations after loading from the YAML file:" << std::endl;
-    print_configurations(driver);
+  // Print the configurations
+  std::cout << "Configurations after loading from the YAML file:" << std::endl;
+  print_configurations(driver);
 
-    return 0;
+  return 0;
 }

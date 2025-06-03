@@ -93,7 +93,7 @@ struct StandardEndEffector {
     .offset_finger_left = 0.0227,
     .offset_finger_right = -0.0227,
     .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.154, 0.0, 0.0, 0.0, 0.0, 0.0}
+    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
   /// @brief WXAI V0 leader variant
@@ -131,7 +131,7 @@ struct StandardEndEffector {
     .offset_finger_left = 0.0179,
     .offset_finger_right = -0.0179,
     .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.154, 0.0, 0.0, 0.0, 0.0, 0.0}
+    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
   /// @brief WXAI V0 follower variant
@@ -169,7 +169,7 @@ struct StandardEndEffector {
     .offset_finger_left = 0.0227,
     .offset_finger_right = -0.0227,
     .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.154, 0.0, 0.0, 0.0, 0.0, 0.0}
+    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 };
 
@@ -313,6 +313,8 @@ public:
    * @param goal_feedforward_accelerations Optional: spatial acceleration of the end effector frame
    * with respect to the base frame measured in the base frame in m/s^2 and rad/s^2, default
    * zeros
+   * @param num_trajectory_check_samples Optional: number of evenly spaced sampled time steps to
+   * check trajectory feasibility, default 1000
    *
    * @note The first 3 elements of goal_positions are the translation and the last 3 elements are
    * the angle-axis representation of the rotation
@@ -327,7 +329,8 @@ public:
     double goal_time = 2.0,
     bool blocking = true,
     const std::optional<std::array<double, 6>> & goal_feedforward_velocities = std::nullopt,
-    const std::optional<std::array<double, 6>> & goal_feedforward_accelerations = std::nullopt
+    const std::optional<std::array<double, 6>> & goal_feedforward_accelerations = std::nullopt,
+    int num_trajectory_check_samples = 1000
   );
 
   /**

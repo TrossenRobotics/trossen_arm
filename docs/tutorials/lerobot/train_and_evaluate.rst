@@ -89,6 +89,7 @@ The training pipeline can be configured using the following parameters:
 - ``--device``: Device to use for training (e.g., ``cuda``, ``cpu``, ``mps``).
 - ``--use_amp``: Determines whether to use Automatic Mixed Precision (AMP) for training and evaluation.
 - ``--seed``: Seed for training and evaluation environments.
+- ``--steps``: Number of training steps to run.
 - ``--num_workers``: Number of workers for the dataloader.
 - ``--batch_size``: Batch size for training.
 - ``--eval_freq``: Frequency of evaluation during training.

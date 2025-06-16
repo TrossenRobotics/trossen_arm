@@ -38,11 +38,12 @@ To resolve this, check that the controller's IP address is set correctly in the 
 
 .. tip::
 
-    You can use the command below to search for IP addresses of devices on a specific network segment.
+    You can use nmap to search for the controller's IP address on the network.
+    For example, if the controller's IP address is in the ``192.168.1.X`` subnet, you can run the following command to scan that subnet for devices:
 
     .. code-block:: bash
 
-        nmap -sn
+        nmap -sn 192.168.1.0/24
 
 Incompatible Driver Version
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

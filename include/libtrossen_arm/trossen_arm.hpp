@@ -171,6 +171,82 @@ struct StandardEndEffector {
     .pitch_circle_radius = 0.00875,
     .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
+
+  /// @brief VXAI V0 base variant
+  static constexpr EndEffector vxai_v0_base{
+    .palm = {
+      .mass = 0.57903811,
+      .inertia = {
+        0.00135277, -0.00000006, -0.00009912,
+        -0.00000006, 0.00077371, 0.00000049,
+        -0.00009912, 0.00000049, 0.00085992
+      },
+      .origin_xyz = {-0.01847211, -0.00000697, -0.08476049},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_left = {
+      .mass = 0.08127100,
+      .inertia = {
+        0.00004094, -0.00000169, 0.00000204,
+        -0.00000169, 0.00003574, -0.00000422,
+        0.00000204, -0.00000422, 0.00002563
+      },
+      .origin_xyz = {-0.00365705, -0.00592794, -0.00169016},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_right = {
+      .mass = 0.08127100,
+      .inertia = {
+        0.00004094, -0.00000087, -0.00000491,
+        -0.00000087, 0.00003650, 0.00000422,
+        -0.00000491, 0.00000422, 0.00002639
+      },
+      .origin_xyz = {0.00201821, 0.00592796, -0.00169015},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .offset_finger_left = 0.0227,
+    .offset_finger_right = -0.0227,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {-0.021, 0, -0.200062, 0.0, 0.0, 0.0}
+  };
+
+  /// @brief no gripper variant
+  static constexpr EndEffector no_gripper{
+    .palm = {
+      .mass = 0.0,
+      .inertia = {
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0
+      },
+      .origin_xyz = {0.0, 0.0, 0.0},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_left = {
+      .mass = 0.0,
+      .inertia = {
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0
+      },
+      .origin_xyz = {0.0, 0.0, 0.0},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_right = {
+      .mass = 0.0,
+      .inertia = {
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0
+      },
+      .origin_xyz = {0.0, 0.0, 0.0},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .offset_finger_left = 0.0179,
+    .offset_finger_right = -0.0179,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+  };
 };
 
 /// @brief Trossen Arm Driver
@@ -1699,6 +1775,9 @@ private:
 
   // Number of joints
   uint8_t num_joints_{0};
+
+  // Robot model
+  Model model_{Model::wxai_v0};
 
   // Driver version
   std::string driver_version_;

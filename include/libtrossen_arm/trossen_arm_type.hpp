@@ -63,6 +63,10 @@ enum class IPMethod : uint8_t {
 enum class Model : uint8_t {
   /// @brief WXAI V0
   wxai_v0,
+  /// @brief VXAI V0 RIGHT
+  vxai_v0_right,
+  /// @brief VXAI V0 LEFT
+  vxai_v0_left,
 };
 
 /// @brief Interpolation spaces

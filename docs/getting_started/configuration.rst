@@ -281,9 +281,10 @@ Otherwise, the controller won't be able to properly compensate for the end effec
 
 .. tip::
 
-    New in version 1.8.3: the original rack-and-pinion end effector can be replaced with a custom end effector, e.g. :member:`trossen_arm::StandardEndEffector::no_gripper`.
+    New in version :ref:`changelog:1.8.3`: the original rack-and-pinion end effector can be removed or replaced with a custom end effector.
 
-    If the original end effector is not detected at controller startup, a custom end effector is assumed until the next boot.
+    On startup, the controller checks if the gripper motor exists. If the motor is not detected, it assumes that the gripper assembly has been removed.
+    An example with nothing mounted at the flange is given by :member:`trossen_arm::StandardEndEffector::no_gripper`.
 
     What works:
 

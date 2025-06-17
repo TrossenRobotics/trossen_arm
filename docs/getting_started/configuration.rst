@@ -279,7 +279,22 @@ Otherwise, the controller won't be able to properly compensate for the end effec
 
     End effector variants supported by Trossen Robotics are provided in :class:`trossen_arm::StandardEndEffector`.
 
-.. note:: Currently, only rack-and-pinion end effectors are supported.
+.. tip::
+
+    New in version :ref:`changelog:1.8.3`: the original rack-and-pinion end effector can be removed or replaced with a custom end effector.
+
+    On startup, the controller checks if the gripper motor exists.
+    If the motor is not detected, it assumes that the gripper assembly has been removed.
+    An example with nothing mounted at the flange is given by :member:`trossen_arm::StandardEndEffector::no_gripper`.
+
+    What works:
+
+    -   Inverse dynamics for the arm joints, e.g., gravity and friction compensations
+    -   Input and output of the arm joints, e.g., Cartesian and joint positions, velocities, and efforts
+
+    What won't work:
+
+    -   Input and output of the end effector
 
 Link Properties
 ^^^^^^^^^^^^^^^
@@ -292,6 +307,9 @@ The :class:`trossen_arm::Link` members of the end effector define the three link
 
 The definition of :class:`trossen_arm::Link` follows the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
 And the left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector when the joints are in home positions.
+
+A custom end effector should be treated as a single link defined by :member:`trossen_arm::EndEffector::palm`.
+The finger links are ignored in this case.
 
 Ranges:
 
@@ -308,12 +326,18 @@ The offsets of the left and right fingers define the home position specific to t
 - :member:`trossen_arm::EndEffector::offset_finger_left`: the offset from the palm center to the left carriage center in m with the fingers closed
 - :member:`trossen_arm::EndEffector::offset_finger_right`: the offset from the palm center to the right carriage center in m with the fingers closed
 
+For a custom end effector, these offsets are ignored.
+
 Ranges: :math:`\mathbb{R}`
 
 pitch_circle_radius
 ^^^^^^^^^^^^^^^^^^^
 
+The pitch circle radius defines the transmission ratio of the rack and pinion mechanism of the original end effector.
+
 :member:`trossen_arm::EndEffector::pitch_circle_radius` specifies pitch circle radius of the pinion of the end effector.
+
+For a custom end effector, this value is ignored.
 
 Range: :math:`\mathbb{R}`
 

@@ -175,7 +175,7 @@ Software Upgrade
 ================
 
 A controller firmware is compatible with a driver if their major and minor versions match exactly.
-For example, the driver v1.3.x is compatible with the controller firmware v1.3.x.
+For example, the driver ``v1.3.x`` is compatible with the controller firmware ``v1.3.x``.
 
 Typically a controller comes with the firmware compatible with the latest driver as of the manufacturing date.
 As a result, when a new driver is released, the controller firmware may need to be updated.

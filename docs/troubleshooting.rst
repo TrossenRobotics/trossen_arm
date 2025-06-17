@@ -4,6 +4,57 @@ Troubleshooting
 
 This section explains the common issues while using the Trossen Arm and the corresponding solutions.
 
+.. contents::
+    :local:
+    :backlinks: none
+    :depth: 3
+
+Connection Issues
+=================
+
+Failed to connect to the arm controller's TCP server: Connection refused
+------------------------------------------------------------------------
+
+This warning messages indicates that the drivers is unable to connect to the Trossen Arm controller's TCP server.
+This can happen for a few reasons:
+
+Controller Not Powered On
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the controller is not powered on, the driver will not be able to connect to it.
+To resolve this, check that the controller is powered on and the status LED is solid green.
+
+Controller Not Connected to the Network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the controller is not connected to the network, the driver will not be able to connect to it.
+To resolve this, check that the controller is connected to the network and the network cable is plugged in on both ends.
+
+Misconfigured Controller IP Address
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the controller's IP address is not set correctly when configuring the driver, the driver will not be able to connect to it.
+To resolve this, check that the controller's IP address is set correctly in the driver's configuration.
+
+.. tip::
+
+    You can use nmap to search for the controller's IP address on the network.
+    For example, if the controller's IP address is in the ``192.168.1.X`` subnet, you can run the following command to scan that subnet for devices:
+
+    .. code-block:: bash
+
+        nmap -sn 192.168.1.0/24
+
+Incompatible Driver Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If the driver version is not compatible with the controller firmware version, the driver will not be able to connect to it.
+Driver and firmware versions are compatible if they have the same minor version number.
+See the guide on updating the controller firmware in :ref:`getting_started/software_setup:Software Upgrade` for more information.
+
+Error Codes
+===========
+
 Expected Error Handling Behavior
 --------------------------------
 

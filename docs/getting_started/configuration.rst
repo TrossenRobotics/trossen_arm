@@ -306,7 +306,7 @@ The :class:`trossen_arm::Link` members of the end effector define the three link
 The definition of :class:`trossen_arm::Link` follows the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_.
 And the left and right sides are defined with respect to the arm's perspective, i.e., observing from the base to the end effector when the joints are in home positions.
 
-A custom end effector will be treated as a single link defined by :member:`trossen_arm::EndEffector::palm`.
+A custom end effector should be treated as a single link defined by :member:`trossen_arm::EndEffector::palm`.
 The finger links are ignored in this case.
 
 Ranges:

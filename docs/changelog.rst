@@ -5,6 +5,28 @@ Changelog
 Upcoming
 ========
 
+1.8.3
+=====
+
+Trossen Arm Driver
+------------------
+
+- Added new models :enumerator:`trossen_arm::Model::vxai_v0_left` and :enumerator:`trossen_arm::Model::vxai_v0_right`.
+  These models are 7-DOF arms to be released in the future.
+  All features except for the Cartesian space inputs are supported.
+- Adjusted UDP message lost logging behavior to avoid flooding the terminal.
+  The driver now only warns when there are more than 1000 messages lost among each 5000 messages.
+- Added initial implementation for custom end effectors.
+  The original rack-and-pinion gripper can be removed or replaced with a custom end effector.
+  For more details, see :ref:`getting_started/configuration:end effector`.
+
+Trossen Arm Controller Firmware
+-------------------------------
+
+- Refactored the model definition to reduce repeated logic for different motors.
+- Added the new models.
+- Allowed removing the original rack-and-pinion end effector or replacing it with a custom one.
+
 1.8.2
 =====
 

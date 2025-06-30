@@ -176,6 +176,25 @@ Run the following command to record **10 evaluation episodes**:
    ``--robot.camera_interface='opencv'``.
    This is useful if you have configured multiple camera interfaces as explained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
 
+.. note::
+
+    The leader arms will be disabled in evaluation mode.
+
+    This change was introduced in the latest update to allow users to replay episodes or run inference
+    without requiring the leader arms to be connected or initialized. Only the follower arms are
+    needed for executing recorded trajectories or evaluating policies.
+
+.. note::
+
+   If the arms move violently during evaluation because of the policy, you can smooth out the motion by increasing the motion duration.
+   You can do this by setting a higher multiplier using the following command-line argument:
+   ``--robot.min_time_to_move_multiplier=6.0``
+
+   This value controls the time to reach each goal as ``min_time_to_move = multiplier / fps``.
+   Lower values result in quicker but potentially jerky movement; higher values improve smoothness but increase lag.
+   A good starting value is ``3.0``.
+
+
 Key Differences from Training Data Recording
 --------------------------------------------
 

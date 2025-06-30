@@ -23,7 +23,7 @@ Configurable Motion Timing
 
 Introduced min_time_to_move_multiplier as a configurable parameter.
 This allows users to control the time taken for the robot arm to reach a goal position via:
-`min_time_to_move = multiplier / fps`.
+``min_time_to_move = multiplier / fps``.
 
 A CLI argument can now be passed to adjust motion smoothness:
 

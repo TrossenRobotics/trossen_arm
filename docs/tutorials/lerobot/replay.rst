@@ -61,9 +61,8 @@ Now try to replay the first recorded episode on your robot:
 
     The leader arms will be disabled in replay mode.
 
-    This change was introduced in the latest update to allow users to replay episodes or run inference
-    without requiring the leader arms to be connected or initialized. Only the follower arms are
-    needed for executing recorded trajectories or evaluating policies.
+    This change was introduced in the :ref:`tutorials/lerobot/changelog:Leader Arm Deactivation During Inference` update to allow users to replay episodes or run inference without requiring the leader arms to be connected or initialized.
+    Only the follower arms are needed for executing recorded trajectories or evaluating policies.
 
 Replay Configuration
 ====================

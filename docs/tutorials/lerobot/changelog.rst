@@ -7,11 +7,11 @@ This page documents major updates to the project, such as changes to dataset for
 Leader Arm Deactivation During Inference
 ========================================
 
-:date: 05-01-2025
+:date: 06-27-2025
 :commit: `Interbotix/lerobot@3413f52 <https://github.com/Interbotix/lerobot/commit/3413f525536aa995b1a0a6e32046f27c603b6f87>`_
 
 
-Leader arms are now automatically disabled during evaluation when a policy is present and replay.
+Leader arms are now automatically disabled during evaluation and replay when a policy is present.
 This ensures that only the follower arms are active during inference, improving safety and reducing unnecessary resource usage.
 
 Configurable Motion Timing
@@ -28,28 +28,29 @@ This allows users to control the time taken for the robot arm to reach a goal po
 A CLI argument can now be passed to adjust motion smoothness:
 
 .. code-block:: bash
+    :emphasize-lines: 16
 
-    python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_mobile \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Mobile." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_mobile_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_mobile_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1 \
-           --robot.enable_motor_torque=true \
-           --robot.min_time_to_move_multiplier=6.0
+     python lerobot/scripts/control_robot.py \
+        --robot.type=trossen_ai_mobile \
+        --control.type=record \
+        --control.fps=30 \
+        --control.single_task="Recording evaluation episode using Trossen AI Mobile." \
+        --control.repo_id=${HF_USER}/eval_act_trossen_ai_mobile_test \
+        --control.tags='["tutorial"]' \
+        --control.warmup_time_s=5 \
+        --control.episode_time_s=30 \
+        --control.reset_time_s=30 \
+        --control.num_episodes=10 \
+        --control.push_to_hub=true \
+        --control.policy.path=outputs/train/act_trossen_ai_mobile_test/checkpoints/last/pretrained_model \
+        --control.num_image_writer_processes=1 \
+        --robot.enable_motor_torque=true \
+        --robot.min_time_to_move_multiplier=6.0
 
 Trossen v1.0 Dataset Format
 ===========================
 
-:date: 06-27-2025
+:date: 05-01-2025
 :commit: `Interbotix/lerobot@8f72211 <https://github.com/Interbotix/lerobot/commit/8f7221114505e770f1f987b6cd909e0f4a323993>`_
 
 

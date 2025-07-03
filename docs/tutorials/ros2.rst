@@ -4,14 +4,16 @@ ROS 2
 
 This page contains tutorials for using the Trossen Arms with ROS 2.
 
-.. note::
+Trossen Robotics supports the following ROS 2 distributions:
 
-    Only ROS 2 Humble running on Ubuntu 22.04 is supported at this time.
-    Other ROS 2 distros and operating systems may work, but are not tested.
+-   Humble (Ubuntu 22.04)
+-   Jazzy (Ubuntu 24.04)
 
 .. toctree::
     :maxdepth: 1
     :caption: Contents:
 
     ros2/setup.rst
+    ros2/description.rst
+    ros2/bringup.rst
     ros2/moveit.rst

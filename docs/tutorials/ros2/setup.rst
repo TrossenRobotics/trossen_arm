@@ -90,36 +90,3 @@ What's Next?
 ============
 
 With ROS 2 installed and your Trossen Arm workspace set up properly, continue on to the next tutorial to learn how to visualize the Trossen Arm in :doc:`the Trossen Arm Description package<./description>`.
-
-.. Usage
-.. =====
-
-.. Launching the Trossen Arm Hardware Interface
-.. --------------------------------------------
-
-.. To launch the Trossen Arm hardware interface with controllers for the arm and gripper, use the following command:
-
-.. .. code-block:: bash
-
-..     source ~/ros2_ws/install/setup.bash
-..     ros2 launch trossen_arm_bringup trossen_arm.launch.py
-
-.. Launching MoveIt with Mock Hardware
-.. -----------------------------------
-
-.. To launch simulated hardware with MoveIt, use the following command:
-
-.. .. code-block:: bash
-
-..     source ~/ros2_ws/install/setup.bash
-..     ros2 launch trossen_arm_moveit moveit.launch.py ros2_control_hardware_type:=mock_components
-
-.. Launching MoveIt with Real Hardware
-.. -----------------------------------
-
-.. To launch real hardware with MoveIt, use the following command:
-
-.. .. code-block:: bash
-
-..     source ~/ros2_ws/install/setup.bash
-..     ros2 launch trossen_arm_moveit moveit.launch.py ros2_control_hardware_type:=real

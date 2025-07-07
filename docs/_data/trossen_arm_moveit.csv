@@ -1,0 +1,7 @@
+"Argument","Description","Default","Choices"
+"robot_model","model type of the Trossen Arm.","``wxai``","``wxai``,"
+"arm_variant","End effector variant of the Trossen Arm.","``base``","``base``, ``leader``"
+"ip_address","IP address of the robot to connect to.","'192.168.1.2'",""
+"ros2_control_hardware_type","Use real or mocked hardware interface.","``real``","``real``, ``mock_components``"
+"use_moveit_rviz","Launches RViz with MoveIt's RViz configuration.","``true``","``true``, ``false``"
+"rviz_config_file","Full path to the RVIZ config file to use.","LocalVar('FindPackageShare\(pkg= ``trossen_arm_moveit``\) + 'config' + 'moveit.rviz'')",""

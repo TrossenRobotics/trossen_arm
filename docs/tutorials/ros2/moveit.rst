@@ -114,3 +114,14 @@ Run the command below to launch MoveIt and repeat the steps above to plan and ex
 
     source ~/ros2_ws/install/setup.bash
     ros2 launch trossen_arm_moveit moveit.launch.py robot_model:=wxai ros2_control_hardware_type:=real
+
+To further customize the moveit launch file at runtime, refer to the table below, or run the command below
+
+.. code-block:: console
+
+    ros2 launch trossen_arm_moveit moveit.launch.py --show-args
+
+.. csv-table::
+    :file: /_data/trossen_arm_moveit.csv
+    :header-rows: 1
+    :widths: 20, 60, 20, 20

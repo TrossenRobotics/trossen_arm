@@ -75,6 +75,17 @@ Usage
         -   The ``gripper_controller`` is a `parallel_gripper_action_controller/GripperActionController <https://control.ros.org/jazzy/doc/ros2_controllers/parallel_gripper_controller/doc/userdoc.html>`_ that allows you to open and close the gripper.
         -   The ``joint_state_broadcaster`` is a `joint_state_broadcaster/JointStateBroadcaster <https://control.ros.org/jazzy/doc/ros2_controllers/joint_state_broadcaster/doc/userdoc.html>`_ node that publishes the joint states of the arm and gripper.
 
+To further customize the trossen_arm launch file at runtime, refer to the table below, or run the command below
+
+.. code-block:: console
+
+    ros2 launch trossen_arm_bringup trossen_arm.launch.py --show-args
+
+.. csv-table::
+    :file: /_data/trossen_arm_bringup.csv
+    :header-rows: 1
+    :widths: 20, 60, 20, 20
+
 Next Steps
 ==========
 

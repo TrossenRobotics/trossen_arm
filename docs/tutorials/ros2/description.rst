@@ -21,6 +21,17 @@ Setting the ``use_joint_pub_gui`` launch argument to ``true`` launches a GUI tha
     :align: center
     :alt: The WidowX AI visualized using RViz
 
+To further customize the display launch file at runtime, refer to the table below, or run the command below
+
+.. code-block:: console
+
+    ros2 launch trossen_arm_description display.launch.py --show-args
+
+.. csv-table::
+    :file: /_data/trossen_arm_description.csv
+    :header-rows: 1
+    :widths: 20, 60, 20, 20
+
 Next Steps
 ==========
 

@@ -57,7 +57,7 @@ Trossen Arm Workspace Setup
                 cd ~/ros2_ws/src
                 git clone -b jazzy https://github.com/TrossenRobotics/trossen_arm_ros.git
 
-        #.  Install the dependencies using `rosdep` and `vcs`:
+        #.  Install the dependencies using ``rosdep`` and ``vcs``:
 
             .. code-block:: bash
 

@@ -59,7 +59,7 @@ Usage
 
         .. code-block:: bash
 
-            $ ros2 node list
+            ros2 node list
             /arm_controller
             /controller_manager
             /gripper_controller

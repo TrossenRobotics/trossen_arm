@@ -41,7 +41,7 @@ Usage
 
         The relevant nodes are:
 
-        -   The ``controller_manager`` node is `a ros2_control Controller Manager <https://control.ros.org/jazzy/doc/ros2_control/controller_manager/doc/userdoc.html>`_ responsible for managing the controllers for all ros2_control hardware interfaces.
+        -   The ``controller_manager`` node is `a ros2_control Controller Manager <https://control.ros.org/humble/doc/ros2_control/controller_manager/doc/userdoc.html>`_ responsible for managing the controllers for all ros2_control hardware interfaces.
         -   The ``arm_controller`` is a `joint_trajectory_controller/JointTrajectoryController <https://control.ros.org/humble/doc/ros2_controllers/joint_trajectory_controller/doc/userdoc.html>`_ that allows you to send joint trajectory commands to the arm.
         -   The ``gripper_controller`` is a `position_controllers/GripperActionController <https://control.ros.org/humble/doc/ros2_controllers/gripper_controllers/doc/userdoc.html>`_ that allows you to open and close the gripper.
         -   The ``joint_state_broadcaster`` is a `joint_state_broadcaster/JointStateBroadcaster <https://control.ros.org/humble/doc/ros2_controllers/joint_state_broadcaster/doc/userdoc.html>`_ node that publishes the joint states of the arm and gripper.

@@ -77,11 +77,11 @@ To further customize the trossen_arm launch file at runtime, refer to the table 
 Controller Demo Script
 ----------------------
 
-A simple script is used demonstrate how to control and monitor the arm_controller and gripper_controller using their action interfaces.
+A simple script is used to demonstrate how to control and monitor the ``arm_controller`` and ``gripper_controller`` using their action interfaces.
 This script sends a series of commands to the arm and gripper, allowing you to test their functionality while printing off the action feedback and result.
 It also demonstrates handling of goal response, feedback, and results.
 
-To use this demos script, first make sure the arm and gripper controllers are running using this package's trossen_arm.launch.py launch file.
+To use this demo script, first make sure the arm and gripper controllers are running using this package's ``trossen_arm.launch.py`` launch file.
 Then run the following commands in a new terminal:
 
 .. code-block:: bash

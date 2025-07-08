@@ -28,6 +28,11 @@ You can see the topics, services, and actions that are available by running:
 .. code-block:: bash
 
     ros2 node info /move_group
+
+You will see output similar to the following:
+
+.. code-block:: console
+
     /move_group
     Subscribers:
         /parameter_events: rcl_interfaces/msg/ParameterEvent

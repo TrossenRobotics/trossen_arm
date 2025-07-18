@@ -166,7 +166,7 @@ This set of parameters follows the `classic Denavit-Hartenberg convention`_.
   * - :math:`^\text{Flange}T_\text{Tool, default}`
     - 0.0
     - 0.0
-    - 0.154
+    - 0.15606
     - 0.0
 
 Modified
@@ -223,6 +223,6 @@ This set of parameters follows the `modified Denavit-Hartenberg convention`_.
     - 0.0
   * - :math:`^\text{Flange}T_\text{Tool, default}`
     - 0.0
-    - 0.154
+    - 0.15606
     - 0.0
     - 0.0

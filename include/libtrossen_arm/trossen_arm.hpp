@@ -47,208 +47,6 @@
 namespace trossen_arm
 {
 
-/// @brief Forward declaration of the QuinticHermiteInterpolator class
-class QuinticHermiteInterpolator;
-
-/// @brief Forward declaration of the EthernetManager class
-class EthernetManager;
-
-/// @brief Forward declaration of the AlgorithmInterface class
-class AlgorithmInterface;
-
-/// @brief End effector properties for the standard variants
-struct StandardEndEffector {
-  /// @brief WXAI V0 base variant
-  static constexpr EndEffector wxai_v0_base{
-    .palm = {
-      .mass = 0.53780000,
-      .inertia = {
-        0.00079919, -0.00000049, 0.00000010,
-        -0.00000049, 0.00047274, 0.00000004,
-        0.00000010, 0.00000004, 0.00105293
-      },
-      .origin_xyz = {0.04572768, -0.00000726, 0.00001402},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_left = {
-      .mass = 0.05945000,
-      .inertia = {
-        0.00001875, 0.00000309, -0.00000149,
-        0.00000309, 0.00002614, -0.00000124,
-        -0.00000149, -0.00000124, 0.00002995
-      },
-      .origin_xyz = {0.00169016, -0.00592796, -0.00365701},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_right = {
-      .mass = 0.05945000,
-      .inertia = {
-        0.00001930, -0.00000309, 0.00000359,
-        -0.00000309, 0.00002670, -0.00000064,
-        0.00000359, -0.00000064, 0.00002995
-      },
-      .origin_xyz = {0.00169015, 0.00592793, 0.00201818},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .offset_finger_left = 0.0227,
-    .offset_finger_right = -0.0227,
-    .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
-  };
-
-  /// @brief WXAI V0 leader variant
-  static constexpr EndEffector wxai_v0_leader{
-    .palm = {
-      .mass = 0.59570000,
-      .inertia = {
-        0.00117653, -0.00000040, -0.00005492,
-        -0.00000040, 0.00085696, 0.00000074,
-        -0.00005492, 0.00000074, 0.00107685
-      },
-      .origin_xyz = {0.04454388, 0.00000506, -0.00694150},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_left = {
-      .mass = 0.06380000,
-      .inertia = {
-        0.00003556, -0.00000249, 0.00000167,
-        -0.00000249, 0.00002700, 0.00000217,
-        0.00000167, 0.00000217, 0.00001726
-      },
-      .origin_xyz = {-0.00423580, -0.00167541, -0.01050810},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_right = {
-      .mass = 0.06380000,
-      .inertia = {
-        0.00004133, 0.00000250, 0.00000517,
-        0.00000250, 0.00003277, -0.00000592,
-        0.00000517, -0.00000592, 0.00001727
-      },
-      .origin_xyz = {-0.00423309, 0.00167373, -0.00451087},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .offset_finger_left = 0.0179,
-    .offset_finger_right = -0.0179,
-    .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
-  };
-
-  /// @brief WXAI V0 follower variant
-  static constexpr EndEffector wxai_v0_follower{
-    .palm = {
-      .mass = 0.64230000,
-      .inertia = {
-        0.00108484, 0.00000063, -0.00004180,
-        0.00000063, 0.00075170, -0.00001558,
-        -0.00004180, -0.00001558, 0.00110994
-      },
-      .origin_xyz = {0.04699592, 0.00045936, 0.00827772},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_left = {
-      .mass = 0.05945000,
-      .inertia = {
-        0.00001875, 0.00000309, -0.00000149,
-        0.00000309, 0.00002614, -0.00000124,
-        -0.00000149, -0.00000124, 0.00002995
-      },
-      .origin_xyz = {0.00169016, -0.00592796, -0.00365701},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_right = {
-      .mass = 0.05945000,
-      .inertia = {
-        0.00001930, -0.00000309, 0.00000359,
-        -0.00000309, 0.00002670, -0.00000064,
-        0.00000359, -0.00000064, 0.00002995
-      },
-      .origin_xyz = {0.00169015, 0.00592793, 0.00201818},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .offset_finger_left = 0.0227,
-    .offset_finger_right = -0.0227,
-    .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
-  };
-
-  /// @brief VXAI V0 base variant
-  static constexpr EndEffector vxai_v0_base{
-    .palm = {
-      .mass = 0.57903811,
-      .inertia = {
-        0.00135277, -0.00000006, -0.00009912,
-        -0.00000006, 0.00077371, 0.00000049,
-        -0.00009912, 0.00000049, 0.00085992
-      },
-      .origin_xyz = {-0.01847211, -0.00000697, -0.08476049},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_left = {
-      .mass = 0.08127100,
-      .inertia = {
-        0.00004094, -0.00000169, 0.00000204,
-        -0.00000169, 0.00003574, -0.00000422,
-        0.00000204, -0.00000422, 0.00002563
-      },
-      .origin_xyz = {-0.00365705, -0.00592794, -0.00169016},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_right = {
-      .mass = 0.08127100,
-      .inertia = {
-        0.00004094, -0.00000087, -0.00000491,
-        -0.00000087, 0.00003650, 0.00000422,
-        -0.00000491, 0.00000422, 0.00002639
-      },
-      .origin_xyz = {0.00201821, 0.00592796, -0.00169015},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .offset_finger_left = 0.0227,
-    .offset_finger_right = -0.0227,
-    .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {-0.021, 0, -0.200062, 0.0, 0.0, 0.0}
-  };
-
-  /// @brief no gripper variant
-  static constexpr EndEffector no_gripper{
-    .palm = {
-      .mass = 0.0,
-      .inertia = {
-        0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0
-      },
-      .origin_xyz = {0.0, 0.0, 0.0},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_left = {
-      .mass = 0.0,
-      .inertia = {
-        0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0
-      },
-      .origin_xyz = {0.0, 0.0, 0.0},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .finger_right = {
-      .mass = 0.0,
-      .inertia = {
-        0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0
-      },
-      .origin_xyz = {0.0, 0.0, 0.0},
-      .origin_rpy = {0.0, 0.0, 0.0}
-    },
-    .offset_finger_left = 0.0179,
-    .offset_finger_right = -0.0179,
-    .pitch_circle_radius = 0.00875,
-    .t_flange_tool = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
-  };
-};
-
 /// @brief Trossen Arm Driver
 class TrossenArmDriver
 {
@@ -1366,15 +1164,38 @@ public:
    */
   AlgorithmParameter get_algorithm_parameter();
 
+  /**
+   * @brief Get the configured status of the robot
+   *
+   * @return true The robot is configured
+   * @return false The robot is not configured
+   */
+  bool get_is_configured();
+
+  /**
+   * @brief Get the logger name
+   * @param model Model of the robot
+   * @param serv_ip IP address of the robot
+   * @return Logger name
+   */
+  static std::string get_logger_name(Model model, const std::string & serv_ip);
+
+  /**
+   * @brief Get the default logger name
+   *
+   * @return Default logger name
+   */
+  static std::string get_default_logger_name();
+
 private:
   // Raw counterpart of JointCharacteristic
   struct JointCharacteristicRaw
   {
-    float effort_correction;
-    float friction_transition_velocity;
-    float friction_constant_term;
-    float friction_coulomb_coef;
-    float friction_viscous_coef;
+    float effort_correction{0.0f};
+    float friction_transition_velocity{0.0f};
+    float friction_constant_term{0.0f};
+    float friction_coulomb_coef{0.0f};
+    float friction_viscous_coef{0.0f};
 
     /**
      * @brief Convert JointCharacteristic to JointCharacteristicRaw
@@ -1394,10 +1215,15 @@ private:
   // Raw counterpart of Link
   struct LinkRaw
   {
-    float mass;
+    float mass{0.0f};
     float inertia[9];
     float origin_xyz[3];
     float origin_rpy[3];
+
+    /**
+     * @brief Default constructor
+     */
+    LinkRaw() : inertia{}, origin_xyz{}, origin_rpy{} {}
 
     /**
      * @brief Convert Link to LinkRaw
@@ -1417,12 +1243,12 @@ private:
   // Raw counterpart of EndEffector
   struct EndEffectorRaw
   {
-    LinkRaw palm;
-    LinkRaw finger_left;
-    LinkRaw finger_right;
-    float offset_finger_left;
-    float offset_finger_right;
-    float pitch_circle_radius;
+    LinkRaw palm{};
+    LinkRaw finger_left{};
+    LinkRaw finger_right{};
+    float offset_finger_left{0.0f};
+    float offset_finger_right{0.0f};
+    float pitch_circle_radius{0.0f};
 
     /**
      * @brief Convert EndEffector to EndEffectorRaw
@@ -1443,19 +1269,19 @@ private:
   struct JointLimitRaw
   {
     /** @brief Minimum position in rad for arm joints and m for gripper */
-    float position_min;
+    float position_min{0.0f};
     /** @brief Maximum position in rad for arm joints and m for gripper */
-    float position_max;
+    float position_max{0.0f};
     /** @brief Tolerance on output position in rad for arm joints and m for gripper */
-    float position_tolerance;
+    float position_tolerance{0.0f};
     /** @brief Maximum velocity in rad/s for arm joints and m/s for gripper */
-    float velocity_max;
+    float velocity_max{0.0f};
     /** @brief Tolerance on output velocity in rad/s for arm joints and m/s for gripper */
-    float velocity_tolerance;
+    float velocity_tolerance{0.0f};
     /** @brief Maximum effort in Nm for arm joints and N for gripper */
-    float effort_max;
+    float effort_max{0.0f};
     /** @brief Tolerance on output effort in Nm for arm joints and N for gripper */
-    float effort_tolerance;
+    float effort_tolerance{0.0f};
 
     /**
      * @brief Convert JointLimit to JointLimitRaw
@@ -1476,13 +1302,13 @@ private:
   struct PIDParameterRaw
   {
     /** @brief Proportional gain */
-    float kp;
+    float kp{0.0f};
     /** @brief Integral gain */
-    float ki;
+    float ki{0.0f};
     /** @brief Derivative gain */
-    float kd;
+    float kd{0.0f};
     /** @brief Maximum integral value */
-    float imax;
+    float imax{0.0f};
 
     /**
      * @brief Convert PIDParameter to PIDParameterRaw
@@ -1539,47 +1365,47 @@ private:
       /// @brief Joint input corresponding to the position mode
       struct Position {
         /// @brief Position in rad for arm joints or m for the gripper joint
-        float position;
+        float position{0.0f};
         /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
-        float feedforward_velocity;
+        float feedforward_velocity{0.0f};
         /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
-        float feedforward_acceleration;
-      } position{0.0f, 0.0f, 0.0f};
+        float feedforward_acceleration{0.0f};
+      } position{};
       /// @brief Joint input corresponding to the velocity mode
       struct Velocity {
         /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
-        float velocity;
+        float velocity{0.0f};
         /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
-        float feedforward_acceleration;
+        float feedforward_acceleration{0.0f};
       } velocity;
       /// @brief Joint input corresponding to the external_effort mode
       struct ExternalEffort {
         /// @brief external effort in Nm for arm joints or N for the gripper joint
-        float external_effort;
+        float external_effort{0.0f};
       } external_effort;
       /// @brief Joint input corresponding to the effort mode
       struct Effort {
         /// @brief Effort in Nm for arm joints or N for the gripper joint
-        float effort;
+        float effort{0.0f};
       } effort;
-    } command;
+    } command{};
   };
 
   /// @brief Joint output
   struct JointOutputRaw
   {
     /// @brief Joint position in rad for arm joints or m for the gripper joint
-    float position;
+    float position{0.0f};
     /// @brief Joint velocity in rad/s for arm joints or m/s for the gripper joint
-    float velocity;
+    float velocity{0.0f};
     /// @brief Joint effort in Nm for arm joints or N for the gripper joint
-    float effort;
+    float effort{0.0f};
     /// @brief External effort in Nm for arm joints or N for the gripper joint
-    float external_effort;
+    float external_effort{0.0f};
     /// @brief Motor/rotor temperature in °C
-    float rotor_temperature;
+    float rotor_temperature{0.0f};
     /// @brief Driver/MOSFET temperature in °C
-    float driver_temperature;
+    float driver_temperature{0.0f};
   };
 
   /// @brief Robot input
@@ -1592,60 +1418,60 @@ private:
       struct All
       {
         /// @brief Positions in rad for arm joints and m for the gripper joint
-        std::vector<double> positions;
+        std::vector<double> positions{};
         /// @brief Velocities in rad/s for arm joints and m/s for the gripper joint
-        std::vector<double> velocities;
+        std::vector<double> velocities{};
         /// @brief Accelerations in rad/s^2 for arm joints and m/s^2 for the gripper joint
-        std::vector<double> accelerations;
+        std::vector<double> accelerations{};
         /// @brief Efforts in Nm for arm joints and N for the gripper joint
-        std::vector<double> efforts;
+        std::vector<double> efforts{};
         /// @brief External efforts in Nm for arm joints and N for the gripper joint
-        std::vector<double> external_efforts;
-      } all;
+        std::vector<double> external_efforts{};
+      } all{};
 
       /// @brief Inputs of the arm joints
       struct Arm
       {
         /// @brief Positions in rad
-        std::vector<double> positions;
+        std::vector<double> positions{};
         /// @brief Velocities in rad/s
-        std::vector<double> velocities;
+        std::vector<double> velocities{};
         /// @brief Accelerations in rad/s^2
-        std::vector<double> accelerations;
+        std::vector<double> accelerations{};
         /// @brief Efforts in Nm
-        std::vector<double> efforts;
+        std::vector<double> efforts{};
         /// @brief External efforts in Nm
-        std::vector<double> external_efforts;
-      } arm;
+        std::vector<double> external_efforts{};
+      } arm{};
 
       /// @brief Inputs of the gripper joint
       struct Gripper
       {
         /// @brief Position in m
-        double position;
+        double position{0.0};
         /// @brief Velocity in m/s
-        double velocity;
+        double velocity{0.0};
         /// @brief Acceleration in m/s^2
-        double acceleration;
+        double acceleration{0.0};
         /// @brief Effort in N
-        double effort;
+        double effort{0.0};
         /// @brief External effort in N
-        double external_effort;
-      } gripper;
-    } joint;
+        double external_effort{0.0};
+      } gripper{};
+    } joint{};
 
     /// @brief Inputs in Cartesian space
     struct Cartesian
     {
       /// @brief Position twist in axis coordinates in m and rad
-      std::array<double, 6> positions;
+      std::array<double, 6> positions{};
       /// @brief Velocity twist in axis coordinates in m/s and rad/s
-      std::array<double, 6> velocities;
+      std::array<double, 6> velocities{};
       /// @brief Acceleration twist in axis coordinates in m/s^2 and rad/s^2
-      std::array<double, 6> accelerations;
+      std::array<double, 6> accelerations{};
       /// @brief Effort wrench in ray coordinates in Nm and N
-      std::array<double, 6> external_efforts;
-    } cartesian;
+      std::array<double, 6> external_efforts{};
+    } cartesian{};
   };
 
   /** @brief Robot command indicators */
@@ -1759,19 +1585,19 @@ private:
   static const std::map<ConfigurationAddress, std::string> CONFIGURATION_NAME;
 
   // Interpolators for joint trajectories
-  std::vector<std::unique_ptr<QuinticHermiteInterpolator>> trajectory_ptrs_;
+  std::vector<std::unique_ptr<QuinticHermiteInterpolator>> trajectory_ptrs_{};
 
   // Trajectory start time
-  std::vector<std::chrono::time_point<std::chrono::steady_clock>> trajectory_start_times_;
+  std::vector<std::chrono::time_point<std::chrono::steady_clock>> trajectory_start_times_{};
 
   // Interpolation space
   InterpolationSpace interpolation_space_{InterpolationSpace::joint};
 
   // Joint inputs
-  std::vector<JointInputRaw> joint_input_raws_;
+  std::vector<JointInputRaw> joint_input_raws_{};
 
   // Joint outputs
-  std::vector<JointOutputRaw> joint_output_raws_;
+  std::vector<JointOutputRaw> joint_output_raws_{};
 
   // Number of joints
   uint8_t num_joints_{0};
@@ -1780,17 +1606,17 @@ private:
   Model model_{Model::wxai_v0};
 
   // Driver version
-  std::string driver_version_;
+  std::string driver_version_{};
 
   // Controller firmware version
-  std::string controller_version_;
+  std::string controller_version_{};
 
   // Whether the driver is properly configured for the robot to be controlled
   // true if configured, false if not configured
   bool configured_{false};
 
   // Ethernet manager
-  std::unique_ptr<EthernetManager> ethernet_manager_ptr_;
+  std::unique_ptr<EthernetManager> ethernet_manager_ptr_{nullptr};
 
   // Atomic flag for maintaining and stopping the daemon thread
   std::atomic<bool> activated_{false};
@@ -1829,28 +1655,31 @@ private:
   //   immediately or right after cleaning up the resources not related to the driver
 
   // Daemon thread
-  std::thread daemon_thread_;
+  std::thread daemon_thread_{};
 
   // Mutex for data access
-  std::mutex mutex_data_;
+  std::mutex mutex_data_{};
 
   // Mutex for preempting the next slot to run
-  std::mutex mutex_preempt_;
+  std::mutex mutex_preempt_{};
 
   // Shared exception pointer
-  std::exception_ptr exception_ptr_;
+  std::exception_ptr exception_ptr_{nullptr};
 
   // Algorithm interface
-  std::unique_ptr<AlgorithmInterface> algorithm_interface_ptr_;
+  std::unique_ptr<AlgorithmInterface> algorithm_interface_ptr_{nullptr};
 
   // Robot input
-  RobotInput robot_input_;
+  RobotInput robot_input_{};
 
   // Robot output
-  RobotOutput robot_output_;
+  RobotOutput robot_output_{};
 
   // Arm mode
   Mode arm_mode_{Mode::idle};
+
+  // Logger
+  std::shared_ptr<Logger> logger_ptr_{nullptr};
 
   /**
    * @brief Update the robot output

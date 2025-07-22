@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.0)
 project(
   libtrossen_arm
-  VERSION 1.8.3
+  VERSION 1.8.4
 )
 
 set(LIBRARY_NAME ${PROJECT_NAME})
@@ -41,6 +41,8 @@ endif()
 message(STATUS "Building for OS: '${OS}', architecture: '${ARCH}'.")
 
 add_library(${LIBRARY_NAME} STATIC IMPORTED)
+
+target_link_libraries(${LIBRARY_NAME} INTERFACE pthread)
 
 if(BUILD_DEMOS)
   message(STATUS "Building C++ Demos")

@@ -1,6 +1,8 @@
+CMAKE_COMMAND := $(shell which cmake)
+
 build:
 	mkdir -p build
-	cd build && cmake .. && make
+	cd build && $(CMAKE_COMMAND) .. && $(MAKE)
 
 clean:
 	rm -rf build
@@ -12,15 +14,15 @@ clean:
 
 build-demos:
 	mkdir -p build
-	cd build && cmake -DBUILD_DEMOS=ON .. && make
+	cd build && $(CMAKE_COMMAND) -DBUILD_DEMOS=ON .. && $(MAKE)
 
 install: build
-	cd build && make install
+	cd build && $(MAKE) install
 
 deb:
 	mkdir -p build
-	cd build && cmake ..
-	cd build && make package
+	cd build && $(CMAKE_COMMAND) ..
+	cd build && $(MAKE) package
 
 # Build the current version of the documentation
 docs: clean

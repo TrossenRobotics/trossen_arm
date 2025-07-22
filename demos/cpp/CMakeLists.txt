@@ -14,7 +14,7 @@ foreach(DEMO_SOURCE ${DEMO_SOURCES})
       continue()
     else()
       add_executable(${DEMO_NAME} ${DEMO_SOURCE})
-      target_link_libraries(${DEMO_NAME} PRIVATE spdlog::spdlog)
+      target_link_libraries(${DEMO_NAME} PRIVATE libtrossen_arm spdlog::spdlog)
     endif()
   else()
     # Other demos do not require spdlog

@@ -258,10 +258,10 @@ This script demonstrates how to use velocity control in Cartesian space to do ad
 
 This script demonstrates how to exchange persistent configurations via a YAML file.
 
-`error_recovery`_
-^^^^^^^^^^^^^^^^^
+`error_recovery_and_logging`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This script demonstrates how to recover from an error in the driver.
+This script demonstrates how to recover from an error in the driver and how to use and modify the logging capabilities of the driver.
 
 `move`_
 ^^^^^^^
@@ -318,7 +318,7 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 
 .. _`configure_cleanup`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configure_cleanup.py
 
-.. _`error_recovery`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/error_recovery.py
+.. _`error_recovery_and_logging`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/error_recovery_and_logging.py
 
 .. _`gravity_compensation`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/gravity_compensation.py
 

@@ -14,5 +14,7 @@
 
   <depend>boost</depend>
 
-  <export/>
+  <export>
+    <build_type>cmake</build_type>
+  </export>
 </package>

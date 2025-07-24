@@ -5,6 +5,34 @@ Changelog
 Upcoming
 ========
 
+1.8.5
+=====
+
+Trossen Arm Driver
+------------------
+
+- Fixed an issue in the C++ driver where some of the configuration getters would fail due to internal logic errors.
+
+1.8.4
+=====
+
+Trossen Arm Driver
+------------------
+
+- Added the :func:`trossen_arm::TrossenArmDriver::get_is_configured` method that returns whether the driver is configured or not.
+- C++ libraries are now built on Ubuntu 20.04 to maintain compatibility with older Linux distributions.
+- `spdlog <https://github.com/gabime/spdlog>`_ is now used for logging for the C++ library and its capabilities are exposed to Python for use with `the Python logging module <https://docs.python.org/3/library/logging.html>`_.
+  This allows users to configure the driver's logging level, format, and preferred sinks.
+  See the :ref:`getting_started/demo_scripts:`error_recovery_and_logging`_` demo for usage.
+- Added a demo for finetuning joint characteristics.
+  It is available in :ref:`getting_started/demo_scripts:`joint_characteristics_finetune`_`.
+
+Trossen Arm Controller Firmware
+-------------------------------
+
+- Fixed an issue where, when the gripper was not used, NaN external effort output was reported for the joint.
+  External effort output is now fixed at 0 for the gripper joint when the gripper is not used.
+
 1.8.3
 =====
 

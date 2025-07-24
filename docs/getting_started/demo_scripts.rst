@@ -258,10 +258,10 @@ This script demonstrates how to use velocity control in Cartesian space to do ad
 
 This script demonstrates how to exchange persistent configurations via a YAML file.
 
-`error_recovery`_
-^^^^^^^^^^^^^^^^^
+`error_recovery_and_logging`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This script demonstrates how to recover from an error in the driver.
+This script demonstrates how to recover from an error in the driver and how to use and modify the logging capabilities of the driver.
 
 `move`_
 ^^^^^^^
@@ -308,43 +308,50 @@ The advanced demos show configurations that should be used with full understandi
 
 This script demonstrates how to set the joint characteristics in the EEPROM, using the effort corrections as an example.
 
-.. _`cartesian_external_effort`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_external_effort.py
+`joint_characteristics_finetune`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. _`cartesian_position`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_position.py
+This script demonstrates how to finetune the joint characteristic of one joint.
 
-.. _`cartesian_velocity`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/cartesian_velocity.py
+.. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_external_effort.py
 
-.. _`configuration_in_yaml`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configuration_in_yaml.py
+.. _`cartesian_position`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_position.py
 
-.. _`configure_cleanup`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/configure_cleanup.py
+.. _`cartesian_velocity`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_velocity.py
 
-.. _`error_recovery`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/error_recovery.py
+.. _`configuration_in_yaml`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/configuration_in_yaml.py
 
-.. _`gravity_compensation`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/gravity_compensation.py
+.. _`configure_cleanup`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/configure_cleanup.py
 
-.. _`gripper_torque`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/gripper_torque.py
+.. _`error_recovery_and_logging`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/error_recovery_and_logging.py
 
-.. _`mixed_interpolation_space`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/mixed_interpolation_space.py
+.. _`joint_characteristics_finetune`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/joint_characteristics_finetune.py
 
-.. _`move_two`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/move_two.py
+.. _`gravity_compensation`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gravity_compensation.py
 
-.. _`move`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/move.py
+.. _`gripper_torque`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gripper_torque.py
 
-.. _`set_factory_reset_flag`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_factory_reset_flag.py
+.. _`mixed_interpolation_space`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/mixed_interpolation_space.py
 
-.. _`set_ip_method`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_ip_method.py
+.. _`move_two`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/move_two.py
 
-.. _`set_joint_limits`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_joint_limits.py
+.. _`move`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/move.py
 
-.. _`set_manual_ip`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_manual_ip.py
+.. _`set_factory_reset_flag`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_factory_reset_flag.py
 
-.. _`set_mode`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_mode.py
+.. _`set_ip_method`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_ip_method.py
 
-.. _`set_joint_characteristics`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/set_joint_characteristics.py
+.. _`set_joint_limits`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_joint_limits.py
 
-.. _`simple_move`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/simple_move.py
+.. _`set_manual_ip`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_manual_ip.py
 
-.. _`teleoperation`: https://github.com/TrossenRobotics/libtrossen_arm/tree/main/demos/python/teleoperation.py
+.. _`set_mode`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_mode.py
+
+.. _`set_joint_characteristics`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_joint_characteristics.py
+
+.. _`simple_move`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/simple_move.py
+
+.. _`teleoperation`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/teleoperation.py
 
 What's Next
 ===========

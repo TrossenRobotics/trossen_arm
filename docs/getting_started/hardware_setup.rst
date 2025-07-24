@@ -22,13 +22,13 @@ Download the assembly guide or watch the YouTube video for your arm model and va
     * - :download:`WidowX AI Base Assembly Guide </_downloads/WidowX AI Base Assembly Guide.pdf>`
       - :download:`WidowX AI Leader Assembly Guide </_downloads/WidowX AI Leader Assembly Guide.pdf>`
       - :download:`WidowX AI Follower Assembly Guide </_downloads/WidowX AI Follower Assembly Guide.pdf>`
-    * - .. youtube:: BDlKgnniVJ8
+    * - .. youtube:: yI2kWBubb0c
           :align: center
           :width: 300px
-      - .. youtube:: hdPAw-pwMm4
+      - .. youtube:: 00TyWB8g6gA
           :align: center
           :width: 300px
-      - .. youtube:: w5s9EzMBmsU
+      - .. youtube:: VjNTw_bbo4g
           :align: center
           :width: 300px
 

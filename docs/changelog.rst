@@ -5,6 +5,14 @@ Changelog
 Upcoming
 ========
 
+1.8.5
+=====
+
+Trossen Arm Driver
+------------------
+
+- Fixed an issue in the C++ driver where some of the configuration getters would fail due to internal logic errors.
+
 1.8.4
 =====
 

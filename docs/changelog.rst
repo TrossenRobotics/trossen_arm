@@ -24,6 +24,8 @@ Trossen Arm Driver
 - `spdlog <https://github.com/gabime/spdlog>`_ is now used for logging for the C++ library and its capabilities are exposed to Python for use with `the Python logging module <https://docs.python.org/3/library/logging.html>`_.
   This allows users to configure the driver's logging level, format, and preferred sinks.
   See the :ref:`getting_started/demo_scripts:`error_recovery_and_logging`_` demo for usage.
+- Added a demo for finetuning joint characteristics.
+  It is available in :ref:`getting_started/demo_scripts:`joint_characteristics_finetune`_`.
 
 Trossen Arm Controller Firmware
 -------------------------------

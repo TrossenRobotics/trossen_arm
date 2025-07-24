@@ -25,7 +25,7 @@ Download the assembly guide or watch the YouTube video for your arm model and va
     * - .. youtube:: yI2kWBubb0c
           :align: center
           :width: 300px
-      - .. youtube:: hdPAw-pwMm4
+      - .. youtube:: 00TyWB8g6gA
           :align: center
           :width: 300px
       - .. youtube:: VjNTw_bbo4g

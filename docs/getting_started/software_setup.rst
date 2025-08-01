@@ -46,17 +46,55 @@ Below is a list of compatible platforms for both the C++ and Python driver:
     :class: centered-table
 
     * -
+      - Ubuntu 20.04
       - Ubuntu 22.04
+      - Ubuntu 24.04
       - MacOS 14
       - MacOS 15
-    * - x86_64
+    * - **x86_64**
+      - ✅
+      - ✅
       - ✅
       -
       -
-    * - arm64/aarch64
+    * - **arm64/aarch64**
       - ✅
       - ✅
       - ✅
+      - ✅
+      - ✅
+
+Build System and Dependencies
+-----------------------------
+
+The Trossen Arm Linux C++ driver is distributed from a build on Ubuntu 20.04 that links to glibc 2.31.
+It is provided as a static library and is statically linked to the following libraries:
+
+.. list-table::
+    :align: center
+    :header-rows: 1
+    :class: centered-table
+
+    * - Dependency
+      - Version
+    * - Eigen3
+      - 3.4.0
+    * - spdlog
+      - 1.15.3
+    * - yaml-cpp
+      - 0.8.0
+    * - tinyxml2
+      - 9.0.0
+    * - console_bridge
+      - 1.0.1
+    * - urdfdom_headers
+      - 1.0.5
+    * - urdfdom
+      - 4.0.0
+    * - pinocchio
+      - 3.4.0
+    * - Boost
+      - 1.71.0
 
 Python
 ------

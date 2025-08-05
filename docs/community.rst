@@ -1,8 +1,8 @@
-======================================
-Community Contributions and Highlights
-======================================
+=========
+Community
+=========
 
 Overview
 ========
 
-This section is dedicated to highlighting contributions and integrations from the community.
+This section is dedicated to showcasing integrations and highlights from users of Trossen robots.

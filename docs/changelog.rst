@@ -8,6 +8,14 @@ Upcoming
 Trossen Arm Driver
 ==================
 
+1.8.6
+-----
+
+- Fixed a deadlock introduced in 1.8.4 with the new logging system.
+  Please update to this version if the driver hangs when throwing an exception in Python.
+- Added a new demo :ref:`getting_started/demo_scripts:`gravity_compensation_partial`_` demonstrating how to compensate for a portion of the gravity.
+- Relaxed NumPy requirement from ``>= 2.0.0`` to ``>= 1.22.4``.
+
 1.8.5
 -----
 

@@ -263,6 +263,11 @@ This script demonstrates how to exchange persistent configurations via a YAML fi
 
 This script demonstrates how to recover from an error in the driver and how to use and modify the logging capabilities of the driver.
 
+`gravity_compensation_partial`_
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to compensate for a portion of the gravity.
+
 `move`_
 ^^^^^^^
 
@@ -328,6 +333,8 @@ This script demonstrates how to finetune the joint characteristic of one joint.
 .. _`joint_characteristics_finetune`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/joint_characteristics_finetune.py
 
 .. _`gravity_compensation`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gravity_compensation.py
+
+.. _`gravity_compensation_partial`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gravity_compensation_partial.py
 
 .. _`gripper_torque`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gripper_torque.py
 

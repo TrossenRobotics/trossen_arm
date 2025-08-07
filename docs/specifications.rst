@@ -4,6 +4,10 @@ Specifications
 
 This page contains specifications for the Trossen Arms.
 
+.. contents::
+  :local:
+  :depth: 2
+
 WidowX AI
 =========
 
@@ -226,3 +230,158 @@ This set of parameters follows the `modified Denavit-Hartenberg convention`_.
     - 0.15606
     - 0.0
     - 0.0
+
+WidowX AI Parts Lists
+---------------------
+
+.. list-table:: WidowX AI Follower Parts List
+  :header-rows: 1
+  :align: center
+
+  * - Item
+    - Qty
+  * - WidowX AI Follower Robot Arm
+    - 1
+  * - WidowX AI Controller Box
+    - 1
+  * - Aviator to XT30(2+2) Cable
+    - 1
+  * - 24V Power Supply
+    - 1
+  * - M12 X-Code 8-Pin Male to RJ45 Male Cable 1m
+    - 1
+  * - Micro-B Male to USB-A 3.0 Male 3m Up-Angle Cable
+    - 1
+  * - Realsense D405 Camera
+    - 1
+  * - Cable Clip
+    - 8
+  * - Base Cable Lock
+    - 1
+  * - Base Alignment Jig
+    - 1
+  * - Wrist Alignment Jig
+    - 1
+  * - Camera Bracket + Cable Protector
+    - 1
+  * - WX AI Finger Pair with 40 Durometer Silicone Fingertips
+    - 1
+  * - M2 Hex Key
+    - 1
+  * - M2.5 Hex Key
+    - 1
+  * - M3 Hex Key
+    - 1
+  * - 2mL Loctite Tube
+    - 1
+  * - Base Clamp Plate
+    - 1
+  * - M3x6mm Thumb Screw (For Cable Clips)
+    - 15
+  * - M3x8mm Socket Head Bolt (For Fingers)
+    - 10
+  * - M3x6mm Button Head Bolt (For Camera Bracket, Base Cable Lock)
+    - 5
+  * - M3x8mm Button Head Bolt (To Mount Camera in Bracket, Cable Protector)
+    - 5
+  * - M3x10mm Button Head Bolt (For Camera Bracket)
+    - 3
+  * - M5x8mm Button Head Bolt (For Base Clamp Plate)
+    - 5
+  * - Zip Tie - 80mm
+    - 2
+
+.. list-table:: WidowX AI Leader Parts List
+  :header-rows: 1
+  :align: center
+
+  * - Item
+    - Qty
+  * - WidowX AI Leader Robot Arm
+    - 1
+  * - WidowX AI Controller Box
+    - 1
+  * - Aviator to XT30(2+2) Cable
+    - 1
+  * - 24V Power Supply
+    - 1
+  * - M12 X-Code 8-Pin Male to RJ45 Male Cable 1m
+    - 1
+  * - Base to Controller Cable Shroud
+    - 1
+  * - Base Alignment Jig
+    - 1
+  * - Wrist Alignment Jig
+    - 1
+  * - Left Leader Handle
+    - 1
+  * - Right Leader Handle
+    - 1
+  * - Leader Right Index Finger Paddle
+    - 1
+  * - Leader Right Thumb Finger Paddle
+    - 1
+  * - Leader Left Index Finger Paddle
+    - 1
+  * - Leader Left Thumb Finger Paddle
+    - 1
+  * - M2 Hex Key
+    - 1
+  * - M2.5 Hex Key
+    - 1
+  * - M3 Hex Key
+    - 1
+  * - 2mL Loctite Tube
+    - 1
+  * - Base Clamp Plate
+    - 1
+  * - M3x6mm Socket Head Bolt (For Finger Paddles)
+    - 15
+  * - M3x6mm Button Head Bolt (For Base Cable Lock)
+    - 3
+  * - M3x8mm Button Head Bolt (For Handle)
+    - 5
+  * - M5x8mm Button Head Bolt (For Base Clamp Plate)
+    - 5
+  * - Zip Tie - 80mm
+    - 2
+
+Kits
+====
+
+Solo AI Kit
+-----------
+
+Parts List
+^^^^^^^^^^
+
+.. list-table:: Solo AI Customer Parts List
+  :header-rows: 1
+  :align: center
+
+  * - Item
+    - Qty
+  * - Flexible Phone Tripod with 14.95" Gooseneck
+    - 1
+  * - C Clamp
+    - 4
+  * - Micro-B Male to USB-A 3.0 Male 3m Right-Angle Cable
+    - 1
+  * - Realsense D405 Camera
+    - 1
+  * - Touch Screen
+    - 1
+  * - WidowX AI Leader
+    - 1
+  * - WidowX AI Follower
+    - 1
+  * - Computer / Laptop (IF PURCHASED WITH SOLO AI)
+    - 1
+  * - RJ45 Female to USB-C Male Adapter (IF LAPTOP PURCHASED)
+    - 1
+
+.. Mobile AI Kit
+.. -------------
+
+.. Stationary AI Kit
+.. -----------------

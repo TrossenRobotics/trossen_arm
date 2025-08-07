@@ -5,19 +5,16 @@ Changelog
 Upcoming
 ========
 
-1.8.5
-=====
-
 Trossen Arm Driver
-------------------
+==================
+
+1.8.5
+-----
 
 - Fixed an issue in the C++ driver where some of the configuration getters would fail due to internal logic errors.
 
 1.8.4
-=====
-
-Trossen Arm Driver
-------------------
+-----
 
 - Added the :func:`trossen_arm::TrossenArmDriver::get_is_configured` method that returns whether the driver is configured or not.
 - C++ libraries are now built on Ubuntu 20.04 to maintain compatibility with older Linux distributions.
@@ -27,17 +24,8 @@ Trossen Arm Driver
 - Added a demo for finetuning joint characteristics.
   It is available in :ref:`getting_started/demo_scripts:`joint_characteristics_finetune`_`.
 
-Trossen Arm Controller Firmware
--------------------------------
-
-- Fixed an issue where, when the gripper was not used, NaN external effort output was reported for the joint.
-  External effort output is now fixed at 0 for the gripper joint when the gripper is not used.
-
 1.8.3
-=====
-
-Trossen Arm Driver
-------------------
+-----
 
 - Added new models :enumerator:`trossen_arm::Model::vxai_v0_left` and :enumerator:`trossen_arm::Model::vxai_v0_right`.
   These models are 7-DOF arms to be released in the future.
@@ -48,18 +36,8 @@ Trossen Arm Driver
   The original rack-and-pinion gripper can be removed or replaced with a custom end effector.
   For more details, see :ref:`getting_started/configuration:end effector`.
 
-Trossen Arm Controller Firmware
--------------------------------
-
-- Refactored the model definition to reduce repeated logic for different motors.
-- Added the new models.
-- Allowed removing the original rack-and-pinion end effector or replacing it with a custom one.
-
 1.8.2
-=====
-
-Trossen Arm Driver
-------------------
+-----
 
 - Moved the default tool frame from a point on the contacting surfaces to the tips of the fingers.
 - Added pre-run trajectory check to :func:`trossen_arm::TrossenArmDriver::set_cartesian_positions`.
@@ -75,19 +53,8 @@ Trossen Arm Driver
 
 .. warning:: Trossen Arm Driver :ref:`changelog:1.8.1` has been yanked due to potentially unsafe behavior on mode switching.
 
-Trossen Arm Controller Firmware
--------------------------------
-
-- Update default configurations to more reasonable values.
-
-  - Increased :member:`trossen_arm::JointLimit::velocity_max` for the wrist joints from 2 :math:`\pi` rad/s to 3 :math:`\pi` rad/s.
-  - Increased :member:`trossen_arm::PIDParameter::imax` in :enumerator:`trossen_arm::Mode::idle` mode for joint 1 from 9 Nm to 27 Nm so the arm can hold itself when extended horizontally.
-
 1.8.1
-=====
-
-Trossen Arm Driver
-------------------
+-----
 
 - Updated mode switching logic to no longer skip joints whose mode did not change.
 
@@ -100,16 +67,8 @@ Trossen Arm Driver
 
 .. _`trossen_arm#71`: https://github.com/TrossenRobotics/trossen_arm/issues/71
 
-Trossen Arm Controller Firmware
--------------------------------
-
-- Skip limit checks in idle mode.
-
 1.8.0
-=====
-
-Trossen Arm Driver
-------------------
+-----
 
 - Added a new :enumerator:`trossen_arm::Mode::effort` mode.
   It allows commanding the effort of the joints without any built-in compensation like in the :enumerator:`trossen_arm::Mode::external_effort` mode.
@@ -196,7 +155,36 @@ Trossen Arm Driver
   This improves compatibility with other modern libraries.
 
 Trossen Arm Controller Firmware
--------------------------------
+===============================
+
+1.8.4
+-----
+
+- Fixed an issue where, when the gripper was not used, NaN external effort output was reported for the joint.
+  External effort output is now fixed at 0 for the gripper joint when the gripper is not used.
+
+1.8.3
+-----
+
+- Refactored the model definition to reduce repeated logic for different motors.
+- Added the new models.
+- Allowed removing the original rack-and-pinion end effector or replacing it with a custom one.
+
+1.8.2
+-----
+
+- Update default configurations to more reasonable values.
+
+  - Increased :member:`trossen_arm::JointLimit::velocity_max` for the wrist joints from 2 :math:`\pi` rad/s to 3 :math:`\pi` rad/s.
+  - Increased :member:`trossen_arm::PIDParameter::imax` in :enumerator:`trossen_arm::Mode::idle` mode for joint 1 from 9 Nm to 27 Nm so the arm can hold itself when extended horizontally.
+
+1.8.1
+-----
+
+- Skip limit checks in idle mode.
+
+1.8.0
+-----
 
 - Added the associated interface for the new effort mode.
 - Added rotor and driver temperatures to the output.

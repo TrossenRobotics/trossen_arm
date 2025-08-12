@@ -124,10 +124,120 @@ To configure the robot, follow these steps:
 #. In the ``Robot Configuration`` window, you will be able to modify the YAML file that contains all robot-specific settings.
 #. Update the relevant fields such as camera serial numbers and arm IP addresses as needed.
 
-To update specific parameters in the YAML file, refer to the following sections:
+We support three robot configurations trossen_ai_stationary, trossen_ai_mobile, and trossen_ai_solo.
 
-* :ref:`tutorials/lerobot/configuration:Setup IP Address`
-* :ref:`tutorials/lerobot/configuration:Camera Serial Number`
+An example configuration for the stationary robot is shown below:
+
+.. code-block:: yaml
+
+    trossen_ai_stationary:
+
+        max_relative_target: null
+
+        min_time_to_move_multiplier: 3.0
+
+        camera_interface: 'intel_realsense'
+
+        leader_arms:
+            right:
+            ip: '192.168.1.3'
+            model: 'V0_LEADER'
+            left:
+            ip: '192.168.1.2'
+            model: 'V0_LEADER'
+
+        follower_arms:
+            right:
+            ip: '192.168.1.5'
+            model: 'V0_FOLLOWER'
+            left:
+            ip: '192.168.1.4'
+            model: 'V0_FOLLOWER'
+
+        cameras:
+            cam_high:
+            serial_number: 000123456789
+            cam_low:
+            serial_number: 000123456789
+            cam_right_wrist:
+            serial_number: 000123456789
+            cam_left_wrist:
+            serial_number: 000123456789
+
+
+- ``max_relative_target`` : Limits the magnitude of the relative positional target vector for safety purposes.
+   Set this to a positive scalar to have the same value for all motors, or a list that is the same length as the number of motors in your follower arms.
+   For Trossen AI Arms, for every goal position request, motor rotations are capped at 5 degrees by default.
+   When you feel more confident with teleoperation or running the policy, you can extend this safety limit and even remove it by setting it to ``null``.
+   Also, everything is expected to work safely out-of-the-box, but we highly advise to first try to teleoperate the grippers only (by commenting out the rest of the motors in this yaml), then to gradually add more motors (by uncommenting), until you can teleoperate both arms fully.
+
+- ``min_time_to_move_multiplier`` :  Multiplier for computing minimum time (in seconds) for the arm to reach a target position.
+    The final goal time is computed as: min_time_to_move = multiplier / fps.
+    A smaller multiplier results in faster (but potentially jerky) motion.
+    A larger multiplier results in smoother motion but with increased lag.
+    A recommended starting value is 3.0.
+
+- ``camera_interface`` : Set this according to the camera interface you want to use.
+    "opencv" is the default and recommended option.
+    "intel_realsense" can be used if you have Intel RealSense cameras connected to the system.
+
+- ``leader_arms`` : Contains the IP addresses and models of the leader arms.
+    Update the IP addresses to match those assigned to your leader arms.
+    Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+
+- ``follower_arms`` : Contains the IP addresses and models of the follower arms.
+    Update the IP addresses to match those assigned to your follower arms.
+    Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+
+- ``cameras`` : Contains the serial numbers of the connected cameras.
+    Update the serial numbers to match those of your cameras.
+    If using `intel_realsense`, ensure that the serial numbers correspond to the connected devices.
+    If using `opencv`, the camera indices (e.g., 0, 1, 2) should be specified instead.
+    Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for more details on obtaining serial numbers or indices.
+    Do not change the camera names (e.g., cam_high, cam_low, cam_right_wrist, cam_left_wrist) as they are used in the code.
+
+Configuring the Tasks
+=====================
+
+The Trossen AI Data Collection UI allows users to configure various tasks for data collection.
+To configure tasks, follow these steps:
+
+#. Launch the application and click on ``Edit`` in the top-left menu. Then select ``Task Configuration``.
+#. In the ``Task Configuration`` window, you will be able to modify the YAML file that contains all task-specific settings.
+#. Update the relevant fields such as task names, parameters, and other configurations as needed.
+
+An example configuration for tasks is shown below:
+
+.. code-block:: yaml
+
+    - task_name: "trossen_ai_stationary_dummy"
+    robot_model: "trossen_ai_stationary"
+    task_description: "A dummy task for the Trossen AI Stationary robot."
+    episode_length_s: 10
+    warmup_time_s: 5
+    reset_time_s: 5
+    hf_user: "YourUser"
+    fps: 30
+    push_to_hub: false
+    play_sounds: true
+    disable_active_ui_updates: false
+
+- ``task_name`` : Name of the task. This should be unique for each task.
+- ``robot_model`` : The robot model associated with the task. This should match one of the robot configurations defined in the robot configuration YAML.
+- ``task_description`` : A brief description of the task.
+- ``episode_length_s`` : Duration of each episode in seconds.
+- ``warmup_time_s`` : Time in seconds to wait before starting the episode.
+- ``reset_time_s`` : Time in seconds to wait after the episode ends before resetting.
+- ``hf_user`` : Your Hugging Face username. This is used if you plan to push data to the Hugging Face Hub.
+- ``fps`` : Frames per second for data collection.
+- ``push_to_hub`` : Boolean flag indicating whether to push the collected data to the Hugging Face Hub.
+- ``play_sounds`` : Boolean flag indicating whether to play sounds during the task.
+- ``disable_active_ui_updates`` : Boolean flag to disable active UI updates during the task.
+
+.. note::
+
+    If you choose to push data to the Hugging Face Hub, ensure that you have an account and have set up the necessary authentication.
+    Check out the :ref:`tutorials/lerobot/record_episode:Logging into Hugging Face` for more details on generating and using access tokens.
 
 Application Features
 ====================
@@ -161,3 +271,34 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 #. Quit Button
 
     - The application features a Quit button in the menu that lets you exit safely, making sure all your data is saved and everything shuts down properly.
+
+Troubleshooting
+===============
+
+If you encounter any issues while using the Trossen AI Data Collection UI that result in jitter or lag in the arms, consider the following troubleshooting steps:
+
+
+#. Check System Resources:
+
+    Ensure that your system has sufficient CPU and memory resources available.
+    Close any unnecessary applications that may be consuming resources.
+
+#. Explicitly Set Camera interface to "opencv":
+
+    If you are using Intel RealSense cameras and experience lag, try changing the camera interface to "opencv" in the robot configuration YAML file.
+    This can help reduce latency associated with the RealSense SDK.
+
+#. Adjust `min_time_to_move_multiplier`:
+
+    If the arms are moving too fast or jerkily, consider adjusting the `min_time_to_move_multiplier` in the robot configuration YAML file.
+    A smaller value can lead to faster movements, while a larger value can result in smoother but slower motions.
+
+#. Disable Active UI Updates:
+
+    If you notice significant lag during data collection, try enabling the `disable_active_ui_updates` option in the task configuration YAML file.
+    This can help improve performance by reducing the load on the GUI during recording.
+
+#. Disable Camera Views:
+
+    If the camera views are causing lag, consider disabling them temporarily to see if performance improves.
+    This just disables the camera feeds in the GUI but does not affect data collection.

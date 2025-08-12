@@ -124,7 +124,7 @@ To configure the robot, follow these steps:
 #. In the ``Robot Configuration`` window, you will be able to modify the YAML file that contains all robot-specific settings.
 #. Update the relevant fields such as camera serial numbers and arm IP addresses as needed.
 
-We support three robot configurations trossen_ai_stationary, trossen_ai_mobile, and trossen_ai_solo.
+We support three robot configurations ``trossen_ai_stationary``, ``trossen_ai_mobile``, and ``trossen_ai_solo``.
 
 An example configuration for the stationary robot is shown below:
 
@@ -166,8 +166,8 @@ An example configuration for the stationary robot is shown below:
 
 
 - ``max_relative_target`` : Limits the magnitude of the relative positional target vector for safety purposes.
-   Set this to a positive scalar to have the same value for all motors, or a list that is the same length as the number of motors in your follower arms.
-   For Trossen AI Arms, for every goal position request, motor rotations are capped at 5 degrees by default.
+   Set this to a positive scalar to have the same value for all motors.
+   The magnitude defines the maximum distance (in radians for rotational joints and meters for linear joints) that the end-effector can be commanded to move in a single command.
    When you feel more confident with teleoperation or running the policy, you can extend this safety limit and even remove it by setting it to ``null``.
    Also, everything is expected to work safely out-of-the-box, but we highly advise to first try to teleoperate the grippers only (by commenting out the rest of the motors in this yaml), then to gradually add more motors (by uncommenting), until you can teleoperate both arms fully.
 
@@ -178,8 +178,8 @@ An example configuration for the stationary robot is shown below:
     A recommended starting value is 3.0.
 
 - ``camera_interface`` : Set this according to the camera interface you want to use.
-    "opencv" is the default and recommended option.
-    "intel_realsense" can be used if you have Intel RealSense cameras connected to the system.
+    ``opencv`` is the default and recommended option.
+    ``intel_realsense`` can be used if you have Intel RealSense cameras connected to the system.
 
 - ``leader_arms`` : Contains the IP addresses and models of the leader arms.
     Update the IP addresses to match those assigned to your leader arms.
@@ -194,7 +194,7 @@ An example configuration for the stationary robot is shown below:
     If using `intel_realsense`, ensure that the serial numbers correspond to the connected devices.
     If using `opencv`, the camera indices (e.g., 0, 1, 2) should be specified instead.
     Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for more details on obtaining serial numbers or indices.
-    Do not change the camera names (e.g., cam_high, cam_low, cam_right_wrist, cam_left_wrist) as they are used in the code.
+    Do not change the camera names (e.g., **cam_high**, **cam_low**, **cam_right_wrist**, **cam_left_wrist**) as they are used in the code.
 
 Configuring the Tasks
 =====================
@@ -278,27 +278,33 @@ Troubleshooting
 If you encounter any issues while using the Trossen AI Data Collection UI that result in jitter or lag in the arms, consider the following troubleshooting steps:
 
 
-#. Check System Resources:
+Check System Resources
+----------------------
 
     Ensure that your system has sufficient CPU and memory resources available.
     Close any unnecessary applications that may be consuming resources.
 
-#. Explicitly Set Camera interface to "opencv":
+Explicitly Set Camera interface to ``opencv``
+---------------------------------------------
 
-    If you are using Intel RealSense cameras and experience lag, try changing the camera interface to "opencv" in the robot configuration YAML file.
+    If you are using Intel RealSense cameras and experience lag, try changing the camera interface to ``opencv`` in the robot configuration YAML file.
     This can help reduce latency associated with the RealSense SDK.
 
-#. Adjust `min_time_to_move_multiplier`:
+Adjust ``min_time_to_move_multiplier``
+--------------------------------------
 
-    If the arms are moving too fast or jerkily, consider adjusting the `min_time_to_move_multiplier` in the robot configuration YAML file.
+    If the arms are moving too fast or jerkily, consider adjusting the ``min_time_to_move_multiplier`` in the robot configuration YAML file.
     A smaller value can lead to faster movements, while a larger value can result in smoother but slower motions.
 
-#. Disable Active UI Updates:
+Disable Active UI Updates
+-------------------------
 
-    If you notice significant lag during data collection, try enabling the `disable_active_ui_updates` option in the task configuration YAML file.
+    If you notice significant lag during data collection, try enabling the ``disable_active_ui_updates`` option in the task configuration YAML file.
     This can help improve performance by reducing the load on the GUI during recording.
 
-#. Disable Camera Views:
+Disable Camera Views
+--------------------
 
     If the camera views are causing lag, consider disabling them temporarily to see if performance improves.
     This just disables the camera feeds in the GUI but does not affect data collection.
+    Click the checkbox labeled ``Disable Camera Views`` in the top-right corner of the GUI.

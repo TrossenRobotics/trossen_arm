@@ -157,12 +157,24 @@ An example configuration for the stationary robot is shown below:
         cameras:
             cam_high:
                 serial_number: 000123456789
+                width: 640
+                height: 480
+                fps: 30
             cam_low:
                 serial_number: 000123456789
+                width: 640
+                height: 480
+                fps: 30
             cam_right_wrist:
                 serial_number: 000123456789
+                width: 640
+                height: 480
+                fps: 30
             cam_left_wrist:
                 serial_number: 000123456789
+                width: 640
+                height: 480
+                fps: 30
 
 
 - ``max_relative_target`` : Limits the magnitude of the relative positional target vector for safety purposes.
@@ -194,6 +206,8 @@ An example configuration for the stationary robot is shown below:
   If using `opencv`, the camera indices (e.g., 0, 1, 2) should be specified instead.
   Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for more details on obtaining serial numbers or indices.
   Do not change the camera names (e.g., **cam_high**, **cam_low**, **cam_right_wrist**, **cam_left_wrist**) as they are used in the code.
+  You can change the resolution and fps settings as needed by changing the corresponding values in the YAML file.
+
 
 Configuring the Tasks
 =====================

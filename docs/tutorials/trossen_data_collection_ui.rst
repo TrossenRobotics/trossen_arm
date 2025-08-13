@@ -140,61 +140,60 @@ An example configuration for the stationary robot is shown below:
 
         leader_arms:
             right:
-            ip: '192.168.1.3'
-            model: 'V0_LEADER'
+                ip: '192.168.1.3'
+                model: 'V0_LEADER'
             left:
-            ip: '192.168.1.2'
-            model: 'V0_LEADER'
+                ip: '192.168.1.2'
+                model: 'V0_LEADER'
 
         follower_arms:
             right:
-            ip: '192.168.1.5'
-            model: 'V0_FOLLOWER'
+                ip: '192.168.1.5'
+                model: 'V0_FOLLOWER'
             left:
-            ip: '192.168.1.4'
-            model: 'V0_FOLLOWER'
+                ip: '192.168.1.4'
+                model: 'V0_FOLLOWER'
 
         cameras:
             cam_high:
-            serial_number: 000123456789
+                serial_number: 000123456789
             cam_low:
-            serial_number: 000123456789
+                serial_number: 000123456789
             cam_right_wrist:
-            serial_number: 000123456789
+                serial_number: 000123456789
             cam_left_wrist:
-            serial_number: 000123456789
+                serial_number: 000123456789
 
 
 - ``max_relative_target`` : Limits the magnitude of the relative positional target vector for safety purposes.
-   Set this to a positive scalar to have the same value for all motors.
-   The magnitude defines the maximum distance (in radians for rotational joints and meters for linear joints) that the end-effector can be commanded to move in a single command.
-   When you feel more confident with teleoperation or running the policy, you can extend this safety limit and even remove it by setting it to ``null``.
-   Also, everything is expected to work safely out-of-the-box, but we highly advise to first try to teleoperate the grippers only (by commenting out the rest of the motors in this yaml), then to gradually add more motors (by uncommenting), until you can teleoperate both arms fully.
+  Set this to a positive scalar to have the same value for all motors.
+  The magnitude defines the maximum distance (in radians for rotational joints and meters for linear joints) that the end-effector can be commanded to move in a single command.
+  When you feel more confident with teleoperation or running the policy, you can extend this safety limit and even remove it by setting it to ``null``.
 
 - ``min_time_to_move_multiplier`` :  Multiplier for computing minimum time (in seconds) for the arm to reach a target position.
-    The final goal time is computed as: min_time_to_move = multiplier / fps.
-    A smaller multiplier results in faster (but potentially jerky) motion.
-    A larger multiplier results in smoother motion but with increased lag.
-    A recommended starting value is 3.0.
+  The final goal time is computed as: min_time_to_move = multiplier / fps.
+  A smaller multiplier results in faster (but potentially jerky) motion.
+  A larger multiplier results in smoother motion but with increased lag.
+  A recommended starting value is 3.0.
 
 - ``camera_interface`` : Set this according to the camera interface you want to use.
-    ``opencv`` is the default and recommended option.
-    ``intel_realsense`` can be used if you have Intel RealSense cameras connected to the system.
+  ``opencv`` is the default and recommended option.
+  ``intel_realsense`` can be used if you have Intel RealSense cameras connected to the system.
 
 - ``leader_arms`` : Contains the IP addresses and models of the leader arms.
-    Update the IP addresses to match those assigned to your leader arms.
-    Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+  Update the IP addresses to match those assigned to your leader arms.
+  Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
 
 - ``follower_arms`` : Contains the IP addresses and models of the follower arms.
-    Update the IP addresses to match those assigned to your follower arms.
-    Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+  Update the IP addresses to match those assigned to your follower arms.
+  Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
 
 - ``cameras`` : Contains the serial numbers of the connected cameras.
-    Update the serial numbers to match those of your cameras.
-    If using `intel_realsense`, ensure that the serial numbers correspond to the connected devices.
-    If using `opencv`, the camera indices (e.g., 0, 1, 2) should be specified instead.
-    Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for more details on obtaining serial numbers or indices.
-    Do not change the camera names (e.g., **cam_high**, **cam_low**, **cam_right_wrist**, **cam_left_wrist**) as they are used in the code.
+  Update the serial numbers to match those of your cameras.
+  If using `intel_realsense`, ensure that the serial numbers correspond to the connected devices.
+  If using `opencv`, the camera indices (e.g., 0, 1, 2) should be specified instead.
+  Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for more details on obtaining serial numbers or indices.
+  Do not change the camera names (e.g., **cam_high**, **cam_low**, **cam_right_wrist**, **cam_left_wrist**) as they are used in the code.
 
 Configuring the Tasks
 =====================
@@ -211,18 +210,18 @@ An example configuration for tasks is shown below:
 .. code-block:: yaml
 
     - task_name: "trossen_ai_stationary_dummy"
-    robot_model: "trossen_ai_stationary"
-    task_description: "A dummy task for the Trossen AI Stationary robot."
-    episode_length_s: 10
-    warmup_time_s: 5
-    reset_time_s: 5
-    hf_user: "YourUser"
-    fps: 30
-    push_to_hub: false
-    play_sounds: true
-    disable_active_ui_updates: false
+      robot_model: "trossen_ai_stationary"
+      task_description: "A dummy task for the Trossen AI Stationary robot."
+      episode_length_s: 10
+      warmup_time_s: 5
+      reset_time_s: 5
+      hf_user: "YourUser"
+      fps: 30
+      push_to_hub: false
+      play_sounds: true
+      disable_active_ui_updates: false
 
-- ``task_name`` : Name of the task. This should be unique for each task.
+- ``task_name`` : Name of the task. This should be unique for each task. This will also set the name of the dataset.
 - ``robot_model`` : The robot model associated with the task. This should match one of the robot configurations defined in the robot configuration YAML.
 - ``task_description`` : A brief description of the task.
 - ``episode_length_s`` : Duration of each episode in seconds.
@@ -275,36 +274,40 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 Troubleshooting
 ===============
 
+
+Arms Jittering
+--------------
+
 If you encounter any issues while using the Trossen AI Data Collection UI that result in jitter or lag in the arms, consider the following troubleshooting steps:
 
 
 Check System Resources
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
-    Ensure that your system has sufficient CPU and memory resources available.
-    Close any unnecessary applications that may be consuming resources.
+Ensure that your system has sufficient CPU and memory resources available.
+Close any unnecessary applications that may be consuming resources.
 
-Explicitly Set Camera interface to ``opencv``
----------------------------------------------
+Explicitly Set Camera Interface to ``opencv``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    If you are using Intel RealSense cameras and experience lag, try changing the camera interface to ``opencv`` in the robot configuration YAML file.
-    This can help reduce latency associated with the RealSense SDK.
+If you are using Intel RealSense cameras and experience lag, try changing the camera interface to ``opencv`` in the robot configuration YAML file.
+This can help reduce latency associated with the RealSense SDK.
 
 Adjust ``min_time_to_move_multiplier``
---------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    If the arms are moving too fast or jerkily, consider adjusting the ``min_time_to_move_multiplier`` in the robot configuration YAML file.
-    A smaller value can lead to faster movements, while a larger value can result in smoother but slower motions.
+If the arms are moving too fast or jerkily, consider adjusting the ``min_time_to_move_multiplier`` in the robot configuration YAML file.
+A smaller value can lead to faster movements, while a larger value can result in smoother but slower motions.
 
 Disable Active UI Updates
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    If you notice significant lag during data collection, try enabling the ``disable_active_ui_updates`` option in the task configuration YAML file.
-    This can help improve performance by reducing the load on the GUI during recording.
+If you notice significant lag during data collection, try enabling the ``disable_active_ui_updates`` option in the task configuration YAML file.
+This can help improve performance by reducing the load on the GUI during recording.
 
 Disable Camera Views
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
-    If the camera views are causing lag, consider disabling them temporarily to see if performance improves.
-    This just disables the camera feeds in the GUI but does not affect data collection.
-    Click the checkbox labeled ``Disable Camera Views`` in the top-right corner of the GUI.
+If the camera views are causing lag, consider disabling them temporarily to see if performance improves.
+This just disables the camera feeds in the GUI but does not affect data collection.
+Click the checkbox labeled ``Disable Camera Views`` in the top-right corner of the GUI.

@@ -192,21 +192,31 @@ An example configuration for the stationary robot is shown below:
   ``opencv`` is the default and recommended option.
   ``intel_realsense`` can be used if you have Intel RealSense cameras connected to the system.
 
-- ``leader_arms`` : Contains the IP addresses and models of the leader arms.
-  Update the IP addresses to match those assigned to your leader arms.
-  Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+- ``leader_arms`` : 
+  Contains the IP addresses and models of the leader arms.
+    - ``ip`` : Update the IP addresses to match those assigned to your leader arms.
+    - ``model``: The currently supported leader arm model is ``V0_LEADER``.
 
-- ``follower_arms`` : Contains the IP addresses and models of the follower arms.
-  Update the IP addresses to match those assigned to your follower arms.
-  Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+- ``follower_arms`` : 
+  Contains the IP addresses and models of the follower arms.
+    - ``ip`` : Update the IP addresses to match those assigned to your follower arms.
+    - ``model``: The currently supported follower arm model is ``V0_FOLLOWER``.
 
-- ``cameras`` : Contains the serial numbers of the connected cameras.
-  Update the serial numbers to match those of your cameras.
-  If using `intel_realsense`, ensure that the serial numbers correspond to the connected devices.
-  If using `opencv`, the camera indices (e.g., 0, 1, 2) should be specified instead.
-  Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for more details on obtaining serial numbers or indices.
-  Do not change the camera names (e.g., **cam_high**, **cam_low**, **cam_right_wrist**, **cam_left_wrist**) as they are used in the code.
-  You can change the resolution and fps settings as needed by changing the corresponding values in the YAML file.
+  .. note:: 
+    Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
+
+- ``cameras`` : The ``cameras`` section defines the configuration for each camera used in the system.
+  Each camera entry (such as ``cam_high``, ``cam_low``, ``cam_right_wrist``, and ``cam_left_wrist``) includes:
+    - ``serial_number``: The unique identifier for the camera device.
+      For ``intel_realsense`` cameras, use the actual device serial number (e.g., 123456789).
+      For ``opencv`` cameras, specify the camera index (e.g., 0, 1, 2).
+    - ``width``: The width of the camera image in pixels.
+    - ``height``: The height of the camera image in pixels.
+    - ``fps``: The desired frames per second for capturing images.
+  .. note::
+    - Do not change the camera names (e.g., ``cam_high``, ``cam_low``, etc.) as they are referenced in the application for creating predefined robot layouts.
+    - Ensure that the specified FPS is supported by the camera hardware.
+    - Larger resolutions may require more processing power and could impact the overall system performance.
 
 
 Configuring the Tasks

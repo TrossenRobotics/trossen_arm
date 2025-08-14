@@ -136,7 +136,7 @@ An example configuration for the stationary robot is shown below:
 
         min_time_to_move_multiplier: 3.0
 
-        camera_interface: 'intel_realsense'
+        camera_interface: 'opencv'
 
         leader_arms:
             right:

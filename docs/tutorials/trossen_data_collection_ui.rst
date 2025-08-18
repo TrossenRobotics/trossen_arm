@@ -225,7 +225,8 @@ Configuring the Tasks
 The Trossen AI Data Collection UI allows users to configure various tasks for data collection.
 To configure tasks, follow these steps:
 
-#. Launch the application and click on ``Edit`` in the top-left menu. Then select ``Task Configuration``.
+#. Launch the application and click on ``Edit`` in the top-left menu.
+   Then select ``Task Configuration``.
 #. In the ``Task Configuration`` window, you will be able to modify the YAML file that contains all task-specific settings.
 #. Update the relevant fields such as task names, parameters, and other configurations as needed.
 
@@ -244,18 +245,31 @@ An example configuration for tasks is shown below:
       push_to_hub: false
       play_sounds: true
       disable_active_ui_updates: false
+      operators :
+      - name: "YourOperator0"
+        email: "youroperatoremail0@example.com"
+      - name: "YourOperator1"
+        email: "youroperatoremail1@example.com"
 
-- ``task_name`` : Name of the task. This should be unique for each task. This will also set the name of the dataset.
-- ``robot_model`` : The robot model associated with the task. This should match one of the robot configurations defined in the robot configuration YAML.
+- ``task_name`` : Name of the task. This should be unique for each task.
+  This will also set the name of the dataset.
+- ``robot_model`` : The robot model associated with the task.
+  This should match one of the robot configurations defined in the robot configuration YAML.
 - ``task_description`` : A brief description of the task.
 - ``episode_length_s`` : Duration of each episode in seconds.
 - ``warmup_time_s`` : Time in seconds to wait before starting the episode.
 - ``reset_time_s`` : Time in seconds to wait after the episode ends before resetting.
-- ``hf_user`` : Your Hugging Face username. This is used if you plan to push data to the Hugging Face Hub.
+- ``hf_user`` : Your Hugging Face username.
+  This is used if you plan to push data to the Hugging Face Hub.
 - ``fps`` : Frames per second for data collection.
 - ``push_to_hub`` : Boolean flag indicating whether to push the collected data to the Hugging Face Hub.
 - ``play_sounds`` : Boolean flag indicating whether to play sounds during the task.
 - ``disable_active_ui_updates`` : Boolean flag to disable active UI updates during the task.
+- ``operators`` : List of operators involved in the task.
+  This is optional.
+  The operator information will be saved in ``info.json`` in the metadata folder.
+  You can add multiple operators by specifying their names and email addresses.
+  More operators can be added at any time, the most recent changes will be reflected in the metadata.
 
 .. note::
 

@@ -245,7 +245,7 @@ An example configuration for tasks is shown below:
       push_to_hub: false
       play_sounds: true
       disable_active_ui_updates: false
-      operators :
+      operators:
       - name: "YourOperator0"
         email: "youroperatoremail0@example.com"
       - name: "YourOperator1"
@@ -265,11 +265,12 @@ An example configuration for tasks is shown below:
 - ``push_to_hub`` : Boolean flag indicating whether to push the collected data to the Hugging Face Hub.
 - ``play_sounds`` : Boolean flag indicating whether to play sounds during the task.
 - ``disable_active_ui_updates`` : Boolean flag to disable active UI updates during the task.
-- ``operators`` : List of operators involved in the task.
-  This is optional.
+- ``operators`` : Optional list of operators involved in the task.
   The operator information will be saved in ``info.json`` in the metadata folder.
   You can add multiple operators by specifying their names and email addresses.
-  More operators can be added at any time, the most recent changes will be reflected in the metadata.
+  You can add, remove, or edit operators at any time; the most recent changes to the operator list will be reflected in the metadata.
+    - ``name`` : Name of the operator.
+    - ``email`` : Email address of the operator.
 
 .. note::
 

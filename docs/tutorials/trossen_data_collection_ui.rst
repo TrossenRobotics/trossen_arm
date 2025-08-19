@@ -270,7 +270,7 @@ An example configuration for tasks is shown below:
   You can add multiple operators by specifying their names and email addresses.
   You can add, remove, or edit operators at any time; the most recent changes to the operator list will be reflected in the metadata.
     - ``name`` : Name of the operator.
-    - ``email`` : Email address of the operator.
+    - ``email`` : Optional email address of the operator.
 
 .. note::
 

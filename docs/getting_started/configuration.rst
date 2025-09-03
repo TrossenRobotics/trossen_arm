@@ -264,6 +264,16 @@ Ranges:
 -    :member:`trossen_arm::JointCharacteristic::friction_transition_velocity`: :math:`\mathbb{R}_{\gt 0}`
 -    others: :math:`\mathbb{R}`
 
+position_offset
+^^^^^^^^^^^^^^^
+
+The :member:`trossen_arm::JointCharacteristic::position_offset` offsets the joint position to account for homing error.
+More specifically, the position used in the motor is computed as follows.
+
+:math:`\text{position}_\text{motor} = \text{position} + \text{position_offset}`
+
+Range: :math:`\mathbb{R}`
+
 .. warning::
 
     Since these configurations are arm specific, mixed usage of controller and arm with different serial numbers may cause deterioration in performance.

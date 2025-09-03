@@ -2,11 +2,15 @@
 Changelog
 =========
 
-Upcoming
-========
-
 Trossen Arm Driver
 ==================
+
+1.8.7
+-----
+
+- Added a temporary implementation for joint position offsets.
+  Different from its fellow joint characteristics, it currently initializes to zeros at driver configuration and resets at cleanup.
+  This peculiarity will be addressed in the next minor update.
 
 1.8.6
 -----

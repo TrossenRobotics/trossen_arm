@@ -264,6 +264,20 @@ Ranges:
 -    :member:`trossen_arm::JointCharacteristic::friction_transition_velocity`: :math:`\mathbb{R}_{\gt 0}`
 -    others: :math:`\mathbb{R}`
 
+position_offset
+^^^^^^^^^^^^^^^
+
+The :member:`trossen_arm::JointCharacteristic::position_offset` offsets the joint position to account for homing error.
+It is added to the command sent to the motor and subtracted from the feedback received from the motor.
+
+:math:`\text{position}_\text{motor} = \text{position} + \text{position_offset}`
+
+where :math:`\text{position}_\text{motor}` is used by the motor and :math:`\text{position}` is intended to match the kinematic model definition.
+
+All transactions of positions in the driver API refer to :math:`\text{position}`, e.g., :member:`trossen_arm::RobotOutput::Cartesian::positions`, :member:`trossen_arm::RobotOutput::Joint::All::positions`, :func:`trossen_arm::TrossenArmDriver::set_cartesian_positions`, and :func:`trossen_arm::TrossenArmDriver::set_all_positions`.
+
+Range: :math:`\mathbb{R}`
+
 .. warning::
 
     Since these configurations are arm specific, mixed usage of controller and arm with different serial numbers may cause deterioration in performance.

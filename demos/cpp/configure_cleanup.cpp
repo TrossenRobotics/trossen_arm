@@ -60,31 +60,37 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
   std::cout << "EEPROM DNS: " << driver.get_dns() << std::endl;
   std::cout << "EEPROM gateway: " << driver.get_gateway() << std::endl;
   std::cout << "EEPROM subnet: " << driver.get_subnet() << std::endl;
-  std::cout << "EEPROM effort corrections: ";
-  for (double effort_correction : driver.get_effort_corrections()) {
-    std::cout << effort_correction << " ";
+  const std::vector<trossen_arm::JointCharacteristic>& joint_characteristics =
+    driver.get_joint_characteristics();
+  std::cout << "Joint characteristics:" << std::endl;
+  for (size_t i = 0; i < joint_characteristics.size(); ++i) {
+    const trossen_arm::JointCharacteristic& joint_characteristic = joint_characteristics.at(i);
+    std::cout << "  Joint " << i << ":" << std::endl;
+    std::cout <<
+      "    EEPROM Effort correction: " <<
+      joint_characteristic.effort_correction <<
+      std::endl;
+    std::cout <<
+      "    EEPROM Friction constant term: " <<
+      joint_characteristic.friction_constant_term <<
+      std::endl;
+    std::cout <<
+      "    EEPROM Friction transition velocity: " <<
+      joint_characteristic.friction_transition_velocity <<
+      std::endl;
+    std::cout <<
+      "    EEPROM Friction coulomb coefficient: " <<
+      joint_characteristic.friction_coulomb_coef <<
+      std::endl;
+    std::cout <<
+      "    EEPROM Friction viscous coefficient: " <<
+      joint_characteristic.friction_viscous_coef <<
+      std::endl;
+    std::cout <<
+      "    Position offset: " <<
+      joint_characteristic.position_offset <<
+      std::endl;
   }
-  std::cout << std::endl;
-  std::cout << "EEPROM friction transition velocities: ";
-  for (double friction_transition_velocity : driver.get_friction_transition_velocities()) {
-    std::cout << friction_transition_velocity << " ";
-  }
-  std::cout << std::endl;
-  std::cout << "EEPROM friction constant terms: ";
-  for (double friction_constant_term : driver.get_friction_constant_terms()) {
-    std::cout << friction_constant_term << " ";
-  }
-  std::cout << std::endl;
-  std::cout << "EEPROM friction coulomb coefs: ";
-  for (double friction_coulomb_coef : driver.get_friction_coulomb_coefs()) {
-    std::cout << friction_coulomb_coef << " ";
-  }
-  std::cout << std::endl;
-  std::cout << "EEPROM friction viscous coefs: ";
-  for (double friction_viscous_coef : driver.get_friction_viscous_coefs()) {
-    std::cout << friction_viscous_coef << " ";
-  }
-  std::cout << std::endl;
   std::cout << "Error information: " << driver.get_error_information() << std::endl;
   std::cout << "Modes: ";
   for (trossen_arm::Mode mode : driver.get_modes()) {

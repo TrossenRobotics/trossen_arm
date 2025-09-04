@@ -93,6 +93,8 @@ struct JointCharacteristic
   double friction_coulomb_coef{0.0};
   /// @brief Friction viscous coef in Nm/(rad/s) for arm joints or N/(m/s) for the gripper joint
   double friction_viscous_coef{0.0};
+  /// @brief Position_offset in rad for arm joints or m for the gripper joint
+  double position_offset{0.0};
 };
 
 /// @brief Link properties

@@ -98,6 +98,9 @@ if __name__=='__main__':
             # print("Friction viscous coefficient:")
             # print(joint_characteristics[INDEX].friction_viscous_coef)
 
+            # print("Position offsets:")
+            # print(joint_characteristics[INDEX].position_offset)
+
             increment = input(
                 "Enter the increment "
                 "(default 0.0, positive to increase, negative to decrease): "
@@ -116,6 +119,8 @@ if __name__=='__main__':
             # joint_characteristics[INDEX].friction_coulomb_coef += increment
 
             # joint_characteristics[INDEX].friction_viscous_coef += increment
+
+            # joint_characteristics[INDEX].position_offset += increment
 
             driver.set_joint_characteristics(joint_characteristics)
         except KeyboardInterrupt:

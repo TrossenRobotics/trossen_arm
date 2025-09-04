@@ -99,6 +99,9 @@ int main() {
       // std::cout << "Friction viscous coefficient:" << std::endl;
       // std::cout << joint_characteristics[INDEX].friction_viscous_coef << std::endl;
 
+      // std::cout << "Position offsets:" << std::endl;
+      // std::cout << joint_characteristics[INDEX].position_offset << std::endl;
+
       std::cout << "Enter the increment "
         "(default 0.0, positive to increase, negative to decrease): ";
       std::string input;
@@ -117,6 +120,8 @@ int main() {
       // joint_characteristics[INDEX].friction_coulomb_coef += increment;
 
       // joint_characteristics[INDEX].friction_viscous_coef += increment;
+
+      // joint_characteristics[INDEX].position_offset += increment;
 
       driver.set_joint_characteristics(joint_characteristics);
     } catch (const std::exception& e) {

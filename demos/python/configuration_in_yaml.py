@@ -50,17 +50,34 @@ def print_configurations(driver: trossen_arm.TrossenArmDriver):
     print("EEPROM DNS:", driver.get_dns())
     print("EEPROM gateway:", driver.get_gateway())
     print("EEPROM subnet:", driver.get_subnet())
-    print("EEPROM effort corrections:", driver.get_effort_corrections())
-    print(
-        "EEPROM friction transition velocities:",
-        driver.get_friction_transition_velocities()
-    )
-    print(
-        "EEPROM friction constant terms:",
-        driver.get_friction_constant_terms()
-    )
-    print("EEPROM friction coulomb coefs:", driver.get_friction_coulomb_coefs())
-    print("EEPROM friction viscous coefs:", driver.get_friction_viscous_coefs())
+    joint_characteristics = driver.get_joint_characteristics()
+    print("Joint characteristics:")
+    for i, joint_characteristic in enumerate(joint_characteristics):
+        print(f"  Joint {i}:")
+        print(
+            "    EEPROM Effort correction:",
+            joint_characteristic.effort_correction
+        )
+        print(
+            "    EEPROM Friction constant term:",
+            joint_characteristic.friction_constant_term
+        )
+        print(
+            "    EEPROM Friction transition velocity:",
+            joint_characteristic.friction_transition_velocity
+        )
+        print(
+            "    EEPROM Friction coulomb coefficient:",
+            joint_characteristic.friction_coulomb_coef
+        )
+        print(
+            "    EEPROM Friction viscous coefficient:",
+            joint_characteristic.friction_viscous_coef
+        )
+        print(
+            "    Position offset:",
+            joint_characteristic.position_offset
+        )
     print("Modes:", [mode.value for mode in driver.get_modes()])
 
     end_effector = driver.get_end_effector()

@@ -10,36 +10,43 @@ joint_characteristics:
     friction_constant_term: 0.23999999463558197
     friction_coulomb_coef: 0
     friction_viscous_coef: 0
+    position_offset: 0
   - effort_correction: 1.100000023841858
     friction_transition_velocity: 0.03999999910593033
     friction_constant_term: 0.07999999821186066
     friction_coulomb_coef: 0.10000000149011612
     friction_viscous_coef: 0
+    position_offset: 0
   - effort_correction: 1.100000023841858
     friction_transition_velocity: 0.03999999910593033
     friction_constant_term: 0.1599999964237213
     friction_coulomb_coef: 0.11999999731779099
     friction_viscous_coef: 0
+    position_offset: 0
   - effort_correction: 1.25
     friction_transition_velocity: 0.009999999776482582
     friction_constant_term: -0.009999999776482582
     friction_coulomb_coef: 0.019999999552965164
     friction_viscous_coef: 0
+    position_offset: 0
   - effort_correction: 1.149999976158142
     friction_transition_velocity: 0.009999999776482582
     friction_constant_term: 0.03999999910593033
     friction_coulomb_coef: 0.019999999552965164
     friction_viscous_coef: 0
+    position_offset: 0
   - effort_correction: 1.149999976158142
     friction_transition_velocity: 0.009999999776482582
     friction_constant_term: 0.05999999865889549
     friction_coulomb_coef: 0
     friction_viscous_coef: 0
+    position_offset: 0
   - effort_correction: 1.149999976158142
     friction_transition_velocity: 9.999999747378752e-05
     friction_constant_term: 7
     friction_coulomb_coef: 0
     friction_viscous_coef: 0
+    position_offset: 0
 modes:
   - idle
   - idle

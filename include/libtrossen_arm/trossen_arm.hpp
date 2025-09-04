@@ -519,7 +519,7 @@ public:
    *
    * @param effort_corrections Effort corrections in motor effort unit / Nm or N
    *
-   * @details This configuration is used to map the efforts in Nm or N to the motor
+   * @note This configuration is used to map the efforts in Nm or N to the motor
    * effort unit, i.e., effort_correction = motor effort unit / Nm or N
    *
    * @note The size of the vector should be equal to the number of joints
@@ -571,6 +571,15 @@ public:
    * @note The size of the vector should be equal to the number of joints
    */
   void set_friction_viscous_coefs(const std::vector<double> & friction_viscous_coefs);
+
+  /**
+   * @brief Set the position offsets
+   *
+   * @param position_offsets Position offsets in rad for arm joints and m for the gripper joint
+   *
+   * @note The size of the vector should be equal to the number of joints
+   */
+  void set_position_offsets(const std::vector<double> & position_offsets);
 
   /**
    * @brief Set the modes of each joint
@@ -1123,6 +1132,13 @@ public:
   std::vector<double> get_friction_viscous_coefs();
 
   /**
+   * @brief Get the position offsets
+   *
+   * @return Position offsets in rad for arm joints and m for the gripper joint
+   */
+  std::vector<double> get_position_offsets();
+
+  /**
    * @brief Get the error information of the robot
    *
    * @return Error information
@@ -1620,6 +1636,10 @@ private:
 
   // Atomic flag for maintaining and stopping the daemon thread
   std::atomic<bool> activated_{false};
+
+  // Joint characteristic position offsets
+  // TODO: remove at next minor
+  std::vector<double> joint_characteristic_position_offsets_{};
 
   // Multithreading design
   //

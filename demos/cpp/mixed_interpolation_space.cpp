@@ -46,40 +46,40 @@
 #include "libtrossen_arm/trossen_arm.hpp"
 
 int main() {
-    std::cout << "Initializing the drivers..." << std::endl;
-    trossen_arm::TrossenArmDriver driver;
+  std::cout << "Initializing the drivers..." << std::endl;
+  trossen_arm::TrossenArmDriver driver;
 
-    std::cout << "Configuring the drivers..." << std::endl;
-    driver.configure(
-        trossen_arm::Model::wxai_v0,
-        trossen_arm::StandardEndEffector::wxai_v0_leader,
-        "192.168.1.2",
-        false
-    );
+  std::cout << "Configuring the drivers..." << std::endl;
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    "192.168.1.2",
+    false
+  );
 
-    // Interpolation space transitions
-    std::array<double, 6> p = driver.get_cartesian_positions();
-    p.at(2) += 0.1;
-    driver.set_all_modes(trossen_arm::Mode::position);
-    driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::cartesian);
+  // Interpolation space transitions
+  std::array<double, 6> p = driver.get_cartesian_positions();
+  p.at(2) += 0.1;
+  driver.set_all_modes(trossen_arm::Mode::position);
+  driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::cartesian);
 
-    driver.set_all_positions(std::vector<double>(driver.get_num_joints(), 0.0));
+  driver.set_all_positions(std::vector<double>(driver.get_num_joints(), 0.0));
 
-    // Mode transitions
-    p = driver.get_cartesian_positions();
-    p.at(0) += 0.1;
-    p.at(2) += 0.2;
-    driver.set_arm_modes(trossen_arm::Mode::position);
-    driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::cartesian);
+  // Mode transitions
+  p = driver.get_cartesian_positions();
+  p.at(0) += 0.1;
+  p.at(2) += 0.2;
+  driver.set_arm_modes(trossen_arm::Mode::position);
+  driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::cartesian);
 
-    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
-    driver.set_gripper_external_effort(20);
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(20);
 
-    p.at(0)-= 0.1;
-    p.at(2)-= 0.2;
-    driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::joint);
+  p.at(0)-= 0.1;
+  p.at(2)-= 0.2;
+  driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::joint);
 
-    driver.set_gripper_external_effort(-20);
+  driver.set_gripper_external_effort(-20);
 
-    return 0;
+  return 0;
 }

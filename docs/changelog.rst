@@ -16,6 +16,19 @@ Trossen Arm Driver
 - Added a temporary implementation for :ref:`getting_started/configuration:position_offset`.
   Different from its fellow joint characteristics, it currently initializes to zeros at driver configuration and resets at cleanup.
   This peculiarity will be addressed in the next minor update.
+- Threw exceptions when setting configurations that may cause sudden movements while joints are in position mode.
+  The following methods are affected:
+
+  - :func:`trossen_arm::TrossenArmDriver::set_joint_characteristics` and all its helper methods
+
+    - :func:`trossen_arm::TrossenArmDriver::set_effort_corrections`
+    - :func:`trossen_arm::TrossenArmDriver::set_friction_constant_terms`
+    - :func:`trossen_arm::TrossenArmDriver::set_friction_coulomb_coefs`
+    - :func:`trossen_arm::TrossenArmDriver::set_friction_transition_velocities`
+    - :func:`trossen_arm::TrossenArmDriver::set_friction_viscous_coefs`
+    - :func:`trossen_arm::TrossenArmDriver::set_position_offsets`
+
+  - :func:`trossen_arm::TrossenArmDriver::set_end_effector`
 
 1.8.6
 -----

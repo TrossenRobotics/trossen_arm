@@ -1212,6 +1212,7 @@ private:
     float friction_constant_term{0.0f};
     float friction_coulomb_coef{0.0f};
     float friction_viscous_coef{0.0f};
+    float position_offset{0.0f};
 
     /**
      * @brief Convert JointCharacteristic to JointCharacteristicRaw
@@ -1407,21 +1408,37 @@ private:
     } command{};
   };
 
-  /// @brief Joint output
-  struct JointOutputRaw
+  /// @brief Robot output raw
+  struct RobotOutputRaw
   {
-    /// @brief Joint position in rad for arm joints or m for the gripper joint
-    float position{0.0f};
-    /// @brief Joint velocity in rad/s for arm joints or m/s for the gripper joint
-    float velocity{0.0f};
-    /// @brief Joint effort in Nm for arm joints or N for the gripper joint
-    float effort{0.0f};
-    /// @brief External effort in Nm for arm joints or N for the gripper joint
-    float external_effort{0.0f};
-    /// @brief Motor/rotor temperature in °C
-    float rotor_temperature{0.0f};
-    /// @brief Driver/MOSFET temperature in °C
-    float driver_temperature{0.0f};
+    /// @brief Header raw
+    struct HeaderRaw
+    {
+      /// @brief Consecutively increasing ID since configuration
+      uint32_t id{0};
+      /// @brief Timestamp in microseconds since configuration
+      uint64_t timestamp{0};
+    } header{};
+
+    /// @brief Joint output raw
+    struct JointOutputRaw
+    {
+      /// @brief Joint position in rad for arm joints or m for the gripper joint
+      float position{0.0f};
+      /// @brief Joint velocity in rad/s for arm joints or m/s for the gripper joint
+      float velocity{0.0f};
+      /// @brief Joint effort in Nm for arm joints or N for the gripper joint
+      float effort{0.0f};
+      /// @brief External effort in Nm for arm joints or N for the gripper joint
+      float external_effort{0.0f};
+      /// @brief Motor/rotor temperature in °C
+      float rotor_temperature{0.0f};
+      /// @brief Driver/MOSFET temperature in °C
+      float driver_temperature{0.0f};
+    };
+
+    /// @brief Raw joint outputs
+    std::vector<JointOutputRaw> joint_output_raws{};
   };
 
   /// @brief Robot input
@@ -1609,11 +1626,11 @@ private:
   // Interpolation space
   InterpolationSpace interpolation_space_{InterpolationSpace::joint};
 
-  // Joint inputs
+  // Joint input raws
   std::vector<JointInputRaw> joint_input_raws_{};
 
-  // Joint outputs
-  std::vector<JointOutputRaw> joint_output_raws_{};
+  // Robot output raw
+  RobotOutputRaw robot_output_raw_{};
 
   // Number of joints
   uint8_t num_joints_{0};
@@ -1637,17 +1654,13 @@ private:
   // Atomic flag for maintaining and stopping the daemon thread
   std::atomic<bool> activated_{false};
 
-  // Joint characteristic position offsets
-  // TODO: remove at next minor
-  std::vector<double> joint_characteristic_position_offsets_{};
-
   // Multithreading design
   //
   // Goal
   //
   // - only one thread can run at a time
   // - another thread cannot cut in until the full communication cycle is completed
-  //   for example, set_joint_inputs --nothing-in-between--> receive_joint_outputs
+  //   for example, set_joint_inputs --nothing-in-between--> receive_robot_output
   // - the other thread has priority to run after the current thread finishes
   //
   // Mutex ownership
@@ -1738,12 +1751,12 @@ private:
   void set_joint_inputs();
 
   /**
-   * @brief Receive the joint outputs
+   * @brief Receive the robot output
    *
-   * @return true Successfully received the joint outputs
-   * @return false Failed to receive the joint outputs within the timeout
+   * @return true Successfully received the robot output
+   * @return false Failed to receive the robot output within the timeout
    */
-  bool receive_joint_outputs();
+  bool receive_robot_output();
 
   /**
    * @brief Check the error state

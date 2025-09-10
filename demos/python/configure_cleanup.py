@@ -59,27 +59,27 @@ def print_states(driver: trossen_arm.TrossenArmDriver):
     print("EEPROM gateway:", driver.get_gateway())
     print("EEPROM subnet:", driver.get_subnet())
     joint_characteristics = driver.get_joint_characteristics()
-    print("Joint characteristics:")
+    print("EEPROM Joint characteristics:")
     for i, joint_characteristic in enumerate(joint_characteristics):
         print(f"  Joint {i}:")
         print(
-            "    EEPROM Effort correction:",
+            "    Effort correction:",
             joint_characteristic.effort_correction
         )
         print(
-            "    EEPROM Friction constant term:",
+            "    Friction constant term:",
             joint_characteristic.friction_constant_term
         )
         print(
-            "    EEPROM Friction transition velocity:",
+            "    Friction transition velocity:",
             joint_characteristic.friction_transition_velocity
         )
         print(
-            "    EEPROM Friction coulomb coefficient:",
+            "    Friction coulomb coefficient:",
             joint_characteristic.friction_coulomb_coef
         )
         print(
-            "    EEPROM Friction viscous coefficient:",
+            "    Friction viscous coefficient:",
             joint_characteristic.friction_viscous_coef
         )
         print(
@@ -142,6 +142,9 @@ def print_states(driver: trossen_arm.TrossenArmDriver):
 
     robot_output = driver.get_robot_output()
     print("Robot output:")
+    print("  Header:")
+    print("    id:", robot_output.header.id)
+    print("    timestamp:", robot_output.header.timestamp)
     print("  Joint outputs:")
     print("    positions:", robot_output.joint.all.positions)
     print("    velocities:", robot_output.joint.all.velocities)

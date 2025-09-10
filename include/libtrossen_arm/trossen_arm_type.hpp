@@ -184,6 +184,15 @@ struct AlgorithmParameter
 /// @brief Robot output
 struct RobotOutput
 {
+  /// @brief Header
+  struct Header
+  {
+    /// @brief Consecutively increasing ID since configuration
+    uint32_t id{0};
+    /// @brief Timestamp in microseconds since configuration
+    uint64_t timestamp{0};
+  } header{};
+
   /// @brief Outputs in joint space
   struct Joint
   {

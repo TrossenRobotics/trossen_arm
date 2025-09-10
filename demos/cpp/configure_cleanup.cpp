@@ -62,28 +62,28 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
   std::cout << "EEPROM subnet: " << driver.get_subnet() << std::endl;
   const std::vector<trossen_arm::JointCharacteristic>& joint_characteristics =
     driver.get_joint_characteristics();
-  std::cout << "Joint characteristics:" << std::endl;
+  std::cout << "EEPROM Joint characteristics:" << std::endl;
   for (size_t i = 0; i < joint_characteristics.size(); ++i) {
     const trossen_arm::JointCharacteristic& joint_characteristic = joint_characteristics.at(i);
     std::cout << "  Joint " << i << ":" << std::endl;
     std::cout <<
-      "    EEPROM Effort correction: " <<
+      "    Effort correction: " <<
       joint_characteristic.effort_correction <<
       std::endl;
     std::cout <<
-      "    EEPROM Friction constant term: " <<
+      "    Friction constant term: " <<
       joint_characteristic.friction_constant_term <<
       std::endl;
     std::cout <<
-      "    EEPROM Friction transition velocity: " <<
+      "    Friction transition velocity: " <<
       joint_characteristic.friction_transition_velocity <<
       std::endl;
     std::cout <<
-      "    EEPROM Friction coulomb coefficient: " <<
+      "    Friction coulomb coefficient: " <<
       joint_characteristic.friction_coulomb_coef <<
       std::endl;
     std::cout <<
-      "    EEPROM Friction viscous coefficient: " <<
+      "    Friction viscous coefficient: " <<
       joint_characteristic.friction_viscous_coef <<
       std::endl;
     std::cout <<
@@ -194,6 +194,9 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
   }
   const trossen_arm::RobotOutput& robot_output = driver.get_robot_output();
   std::cout << "Robot output:" << std::endl;
+  std::cout << "  Header:" << std::endl;
+  std::cout << "    id: " << robot_output.header.id << std::endl;
+  std::cout << "    timestamp: " << robot_output.header.timestamp << std::endl;
   std::cout << "  Joint outputs:" << std::endl;
   std::cout << "    positions: ";
   for (double position : robot_output.joint.all.positions) {

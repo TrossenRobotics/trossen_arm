@@ -5,6 +5,11 @@ Changelog
 Trossen Arm Driver
 ==================
 
+1.8.8
+-----
+
+- Warned instead of throwing an exception at calling :func:`trossen_arm::TrossenArmDriver::set_end_effector` when the gripper joint is in position mode.
+
 1.8.7
 -----
 

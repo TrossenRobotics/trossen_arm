@@ -79,6 +79,9 @@ The driver is designed to be flexible and easy to use for a wide range of applic
 
           //     Get the robot outputs if needed
           //     The robot output includes
+          //     - header
+          //       - id
+          //       - timestamp
           //     - joint space states
           //       - positions
           //       - velocities
@@ -163,6 +166,9 @@ The driver is designed to be flexible and easy to use for a wide range of applic
 
             #         Get the robot outputs if needed
             #         The robot output includes
+            #         - header
+            #           - id
+            #           - timestamp
             #         - joint space states
             #           - positions
             #           - velocities

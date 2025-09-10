@@ -5,6 +5,12 @@ Changelog
 Trossen Arm Driver
 ==================
 
+1.9.0
+-----
+
+- Moved :ref:`getting_started/configuration:position_offset` to EEPROM so it persists across power cycles as other joint characteristics.
+- Added :class:`trossen_arm::RobotOutput::Header` that contains :class:`trossen_arm::RobotOutput::Header::id` and :class:`trossen_arm::RobotOutput::Header::timestamp`.
+
 1.8.8
 -----
 
@@ -186,6 +192,14 @@ Trossen Arm Driver
 
 Trossen Arm Controller Firmware
 ===============================
+
+1.9.0
+-----
+
+- Moved :ref:`getting_started/configuration:position_offset` to EEPROM so it persists across power cycles as other joint characteristics.
+- Added :class:`trossen_arm::RobotOutput::Header` that contains :class:`trossen_arm::RobotOutput::Header::id` and :class:`trossen_arm::RobotOutput::Header::timestamp`.
+- In multi-motor joints, following motors copy leading motor's command instead of running independently.
+- Bug fixes for multi-motor joint logic.
 
 1.8.4
 -----

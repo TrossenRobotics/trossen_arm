@@ -11,20 +11,20 @@ Background
 
 Refer to the `Pi-0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ for understanding the model architecture and training procedure.
 Also, look into the limitations section for known issues and challenges. 
-In order to get good results, a good quality dataset is necessary as mentioned in the paper.
+In order to get good results, a good quality dataset is necessary as mentioned in the paper:
 
 
-    Our experiments imply that an analogous phenomenon might take place with robot foundation models, where pre-trained models have some zero-shot capabilities, but complex tasks like laundry following require fine-tuning with high-quality data.
-    Training on only this high-quality data results in a brittle model that does not reliably recover from mistakes, while running the pre-trained model in zero shot does not always exhibit the fluent strategies demonstrated in the post-training data.
-
+    "Our experiments imply that an analogous phenomenon might take place with robot foundation models, where pre-trained models have some zero-shot capabilities, but complex tasks like laundry following require fine-tuning with high-quality data.
+    Training on only this high-quality data results in a brittle model that does not reliably recover from mistakes, while running the pre-trained model in zero shot does not always exhibit the fluent strategies demonstrated in the post-training data."
+    
 The paper also mentions it's experimental setup and success results, which can be used as a reference for your own experiments.
 One such setup is mentioned as follows:
 
-    Shirt folding: Shirt folding is recorded as either success or failure.
+    "Shirt folding: Shirt folding is recorded as either success or failure.
     We begin each shirt folding eval by laying the shirt flat on the table.
     Success is defined as having folded in the sleeves and performed one half-fold along the length of the shirt.
     Our eval includes 4 small t-shirts and 1 medium t-shirt.
-    We run 2 evals for each item for a maximum of 15000 steps or approximately 5 minutes each.
+    We run 2 evals for each item for a maximum of 15000 steps or approximately 5 minutes each.""
 
 These are the results from the original paper, showing average scores per task over 10 trials, are presented in figure below.
 The scoring rubrics are mentioned in the paper appendix.

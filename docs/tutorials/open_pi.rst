@@ -6,6 +6,8 @@ OpenPi Training & Evaluating a Policy with LeRobot
    This is an experimental tutorial and may change in the future.
    Also, minimal testing has been done on the Trossen AI setup and results may vary.
 
+Background
+----------
 
 Refer to the `Pi-0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ for understanding the model architecture and training procedure.
 Also, look into the limitations section for known issues and challenges. 
@@ -33,7 +35,17 @@ A score of 1.0 represents a perfect execution, while partial scores correspond t
    :align: center
    :width: 60%
 
-This guide walks you through collecting episodes, training with OpenPi, fine-tuning using LoRA, evaluating, and running inference.
+These are the **original Pi-0 results**, provided here to set expectations.  
+Since **Trossen AI arms were not part of the original Pi-0 training dataset**, performance may be weaker out of the box.
+However, we found that **fine-tuning on a small, high-quality dataset** can still yield useful performance (see :ref:`results-section`).
+
+This tutorial walks you through:
+
+- Collecting episodes  
+- Training with OpenPi  
+- Fine-tuning using LoRA  
+- Evaluating policies  
+- Running inference  
 
 Collect Episodes using LeRobot
 ------------------------------
@@ -45,7 +57,7 @@ We collect episodes using ``Interbotix/lerobot``. For more information on instal
 
 Here is a recorded dataset using the above instructions:
 
-- `Recorded Dataset <https://huggingface.co/datasets/TrossenRoboticsCommunity/bimanual-widowxai-handover-cube>`_
+- `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/bimanual-widowxai-handover-cube>`_
 
 You can also visualize the dataset using the following link. Just paste the dataset name here:
 
@@ -54,7 +66,7 @@ You can also visualize the dataset using the following link. Just paste the data
 Install UV
 ----------
 
-Follow the `UV installation instructions <https://docs.astral.sh/uv/getting-started/installation/>`_ to set it up.
+Install `uv <https://docs.astral.sh/uv/getting-started/installation/>`_ for dependency management.
 
 OpenPi Setup
 ------------
@@ -185,15 +197,16 @@ Launch the policy server using your trained checkpoint and configuration:
 
 Start the Client
 ~~~~~~~~~~~~~~~~
+.. note::
 
-Run the client to interact with the policy server:
+    The client script requires the **latest version of LeRobot**, while the OpenPi repository depends on an older version for data loading.  
+    To prevent version conflicts, the ``trossen_ai`` package uses the ``Interbotix/lerobot`` repository as its dependency.  
+    When using ``uv`` for package management, this setup creates a **separate virtual environment** for ``trossen_ai``.  
+    If you need to modify any LeRobot packages, ensure you are editing them in the **correct environment**.
 
-.. code-block:: bash
+Before running the client, make sure that your **Trossen AI arms and cameras** are properly set up and connected to your network.
 
-   cd examples/trossen_ai
-   uv run main.py --mode autonomous --task_prompt "grab red cube"
-
-Camera and arm IP address configuration can be edited in the script:
+You can edit the **camera and arm IP address configuration** directly in the script:
 
 .. code-block:: python
 
@@ -222,31 +235,47 @@ Camera and arm IP address configuration can be edited in the script:
        }
    )
 
-The client script also has parameters for controlling the rate of inference and temporal ensembling. 
-The rate of inference is how often the policy is queried for new actions. 
-Each query takes a significant amount of time that drops the control frequency to around 10Hz.
-This can cause jerky motions, so we recommend setting the rate of inference to a value that balances smooth control and responsiveness.
-As mentioned in the Pi-0 paper, control loop frequency of 50Hz inference is run every 0.5s (after executing 25 actions).
-In our case we run the control loop at 30Hz to match the camera frame rate.
-With a rate of inference of 50, the policy is less responsive to changes in the environment, but the motion is much smoother.
-With a rate of inference of 25, the policy is more responsive, but the motion is jerky.
-Depending on your setup, you may want to adjust this value.
+The client script provides parameters to control both the **rate of inference** and **temporal ensembling**.  
+
+The **rate of inference** determines how often the policy is queried for new actions.  
+Since each query is computationally expensive, frequent queries reduce the control frequency to around **10 Hz**, which can lead to jerky motions.  
+To avoid this, you should choose a rate that balances **smoothness** and **responsiveness**.  
+
+- According to the Pi-0 paper, the control loop runs at **50 Hz**, with inference every **0.5 s** (after 25 actions).  
+- In our case, the control loop runs at **30 Hz** to align with the camera frame rate.  
+
+Practical trade-offs:
+
+- **Rate = 50** → smoother motion, less responsive to environment changes.  
+- **Rate = 25** → more responsive, but noticeably jerky motion.  
+
+Depending on your setup, you may need to adjust this parameter for optimal performance.
 
 .. code-block:: python
 
    self.rate_of_inference = 50  # Number of control steps per policy inference
 
-Temporal ensembling:
 
-Temporal ensembling is a method mentioned in the Pi-0 paper to smooth out the actions taken by the policy.
-This method was introduced in the ACT paper (https://arxiv.org/abs/2304.13705) and is a simple way to smooth out the actions taken by the policy.
-The appendix of Pi-0 mention using temporal ensembling which hurts the policy's performance.
-We found that temporal ensembling did not help in our experiments, so we set the temporal ensembling weight to None.
-We have implemented temporal ensembling in the client script, just for users to experiment with.
+**Temporal ensembling** is a technique for smoothing the actions generated by the policy.  
+It was originally introduced in the `ACT paper <https://arxiv.org/abs/2304.13705>`_, and later mentioned in the Pi-0 paper.  
+
+While simple to implement, the **Pi-0 appendix notes that temporal ensembling can actually hurt performance**.  
+Our own experiments confirmed this — we observed no benefit, so by default the temporal ensembling weight is set to ``None``.  
+
+That said, we have included an implementation of temporal ensembling in the client script for users who wish to experiment with it.
+
 
 .. code-block:: python
 
    self.m = None  # Temporal ensembling weight (None = no ensembling)
+
+
+Run the client to interact with the policy server:
+
+.. code-block:: bash
+
+   cd examples/trossen_ai
+   uv run main.py --mode autonomous --task_prompt "grab red cube"
 
 
 Results

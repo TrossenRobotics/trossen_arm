@@ -221,7 +221,7 @@ As stated above, the Arm Controller uses the following factory network settings:
 -   DNS: ``8.8.8.8``
 
 You may want to change the Arm Controller's IP address to fit your application, e.g., you have multiple arms or want to set the IP address to a static IP address in your local network.
-To change the IP address, follow the :ref:`set_manual_ip demo <getting_started/demo_scripts:`set_manual_ip`_>`.
+To change the IP address, follow the :ref:`getting_started/demo_scripts:`set_manual_ip`_` demo.
 
 Software Upgrade
 ================

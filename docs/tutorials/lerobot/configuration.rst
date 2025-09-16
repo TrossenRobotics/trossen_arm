@@ -9,7 +9,7 @@ The following steps will guide you on how to configure the Trossen AI Kits with 
 This is an example of a configuration file for the Trossen AI Kits with LeRobot, you can find this in :guilabel:`lerobot/common/robot_devices/robots/configs.py`:
 
 .. tabs::
-    .. group-tab:: Trossen AI Stationary    
+    .. group-tab:: Trossen AI Stationary
 
         .. code-block:: python
 
@@ -134,9 +134,9 @@ This is an example of a configuration file for the Trossen AI Kits with LeRobot,
                     )
 
                 mock: bool = False
-    
+
     .. group-tab:: Trossen AI Mobile
-        
+
         .. code-block:: python
 
             @RobotConfig.register_subclass("trossen_ai_mobile")
@@ -253,7 +253,7 @@ This is an example of a configuration file for the Trossen AI Kits with LeRobot,
 
 
     .. group-tab:: Trossen AI Solo
-        
+
         .. code-block:: python
 
             @RobotConfig.register_subclass("trossen_ai_solo")
@@ -349,11 +349,11 @@ Setup IP Address
 
 .. note::
 
-    By default, the IP address for a Trossen AI arm is set to ``192.168.1.2``. 
+    By default, the IP address for a Trossen AI arm is set to ``192.168.1.2``.
     Make sure to change the IP addresses of your Trossen AI arms to match the ones in the configuration file.
-    
+
 To set up the IP address for the Trossen AI Arms, you must first ensure that the arms are connected to the same network as your computer.
-Refer to :ref:`Ethernet Setup <getting_started/software_setup:Ethernet Setup>` for correct connection instructions.
+Refer to the :ref:`PC Network Setup guide <getting_started/software_setup:PC Network Setup>` for correct connection instructions.
 Once connected, you can find or configure the IP address using the :ref:`getting_started/demo_scripts:`configure_cleanup`_` demo or the :ref:`getting_started/demo_scripts:`set_ip_method`_` and :ref:`getting_started/demo_scripts:`set_manual_ip`_` demos.
 
 Camera Serial Number
@@ -393,7 +393,7 @@ We will look at this in more detail in the next sections.
 
     .. group-tab:: OpenCV Interface
 
-        The `OpenCVCamera <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/cameras/opencv.py>`_ class allows you to efficiently record frames from most cameras using the `opencv2 <https://docs.opencv.org>`_ library. 
+        The `OpenCVCamera <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/cameras/opencv.py>`_ class allows you to efficiently record frames from most cameras using the `opencv2 <https://docs.opencv.org>`_ library.
         For more details on compatibility, see `Video I/O with OpenCV Overview <https://docs.opencv.org/4.x/d0/da7/videoio_overview.html>`_.
 
         To instantiate an `OpenCVCamera <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/cameras/opencv.py>`_, you need a camera index (e.g. :guilabel:`OpenCVCamera(camera_index=0)`).
@@ -439,7 +439,7 @@ We will look at this in more detail in the next sections.
 
 
             .. note::
-                
+
                 Some cameras may take a few seconds to warm up, and the first frame might be black or green.
 
         #. Put the camera index in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.

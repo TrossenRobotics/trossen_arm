@@ -9,16 +9,16 @@ What You Need
 
 To get started, please make sure you have gone through the :doc:`/getting_started/hardware_setup`.
 
-Ethernet Setup
-==============
+PC Network Setup
+================
 
 The Trossen Arm Controller communicates with the Linux PC via Ethernet.
 As a result, the following network configurations are required on the Linux PC.
 
 -   IPv4 Method: Manual
--   IP Address: any unused IP addresses under the same subnet as the Arm Controller, e.g., ``192.168.1.1``
--   Subnet Mask: the same subnet mask used by the Arm Controller, e.g., ``255.255.255.0``
--   Other settings can be left as default
+-   IP Address: Any unused IP addresses under the same subnet as the Arm Controller, e.g., ``192.168.1.1``
+-   Subnet Mask: The same subnet mask used by the Arm Controller, e.g., ``255.255.255.0``
+-   Other settings (Gateway, DNS, etc.) can be left as default
 
 .. note::
 
@@ -209,6 +209,20 @@ To install and use the C++ driver, follow these steps.
 
         ./path/to/install/bin/my_script
 
+Arm Network Setup
+=================
+
+As stated above, the Arm Controller uses the following factory network settings:
+
+-   IPv4 method: Manual
+-   IP address: ``192.168.1.2``
+-   Subnet mask ``255.255.255.0``
+-   Gateway: ``192.168.1.1``
+-   DNS: ``8.8.8.8``
+
+You may want to change the Arm Controller's IP address to fit your application, e.g., you have multiple arms or want to set the IP address to a static IP address in your local network.
+To change the IP address, follow the :ref:`set_manual_ip demo <getting_started/demo_scripts:`set_manual_ip`_>`.
+
 Software Upgrade
 ================
 
@@ -258,8 +272,6 @@ To upgrade, follow these steps.
         teensy_loader_cli --mcu=TEENSY41 -s firmware-wxai_v0.hex
 
 .. warning::
-
-    Upgrading the firmware will reset all configurations to the factory settings.
 
     If you have made any customized configurations, we assume you are already familiar with :doc:`/getting_started/configuration` using the driver.
 

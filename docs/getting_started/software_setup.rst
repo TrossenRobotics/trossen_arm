@@ -9,16 +9,16 @@ What You Need
 
 To get started, please make sure you have gone through the :doc:`/getting_started/hardware_setup`.
 
-Ethernet Setup
-==============
+PC Network Setup
+================
 
 The Trossen Arm Controller communicates with the Linux PC via Ethernet.
 As a result, the following network configurations are required on the Linux PC.
 
 -   IPv4 Method: Manual
--   IP Address: any unused IP addresses under the same subnet as the Arm Controller, e.g., ``192.168.1.1``
--   Subnet Mask: the same subnet mask used by the Arm Controller, e.g., ``255.255.255.0``
--   Other settings can be left as default
+-   IP Address: Any unused IP addresses under the same subnet as the Arm Controller, e.g., ``192.168.1.1``
+-   Subnet Mask: The same subnet mask used by the Arm Controller, e.g., ``255.255.255.0``
+-   Other settings (Gateway, DNS, etc.) can be left as default
 
 .. note::
 
@@ -209,6 +209,20 @@ To install and use the C++ driver, follow these steps.
 
         ./path/to/install/bin/my_script
 
+Arm Network Setup
+=================
+
+As stated above, the Arm Controller uses the following factory network settings:
+
+-   IPv4 method: Manual
+-   IP address: ``192.168.1.2``
+-   Subnet mask ``255.255.255.0``
+-   Gateway: ``192.168.1.1``
+-   DNS: ``8.8.8.8``
+
+You may want to change the Arm Controller's IP address to fit your application, e.g., you have multiple arms or want to set the IP address to a static IP address in your local network.
+To change the IP address, follow the :ref:`getting_started/demo_scripts:`set_manual_ip`_` demo.
+
 Software Upgrade
 ================
 
@@ -243,11 +257,13 @@ To upgrade, follow these steps.
 
 #.  Flash the firmware
 
+    IMPORTANT! Use the driver compatible with the current firmware to backup all configurations as in :ref:`getting_started/demo_scripts:`configuration_in_yaml`_`.
+
     Connect the controller to the Linux PC with a USB to micro-USB cable.
 
-    Download the firmware at :doc:`/downloads`.
+    Download the new firmware at :doc:`/downloads`.
 
-    Unzip and flash the firmware using the following commands.
+    Unzip and flash the new firmware using the following commands.
 
     .. code:: bash
 
@@ -259,16 +275,18 @@ To upgrade, follow these steps.
 
 .. warning::
 
-    Upgrading the firmware will reset all configurations to the factory settings.
+    The expected behavior of :doc:`/getting_started/configuration` through a firmware upgrade is as follows.
 
-    If you have made any customized configurations, we assume you are already familiar with :doc:`/getting_started/configuration` using the driver.
+    -   Upgrade, e.g., from ``v1.8.x`` to ``v1.9.x``
 
-    A typical workflow is given below.
+        -   Fields compatible with the new firmware will be retained.
+        -   Fields added in the new firmware will be set to default values.
 
-    #.  Use the driver compatible with the current firmware to backup all customized configurations.
-    #.  Update the driver to the latest version.
-    #.  Flash the latest firmware.
-    #.  Set the customized configurations using the latest driver.
+    -   Downgrade, e.g., from ``v1.9.x`` to ``v1.8.x``
+
+        -   STRONGLY NOT RECOMMENDED
+        -   All fields will be reset to default values.
+        -   Default values of arm-specific fields calibrated at manufacturing, e.g., :class:`trossen_arm::JointCharacteristic`, will be replaced by one-size-fits-all values leading to degraded performance.
 
 Video Overview
 ==============

@@ -67,7 +67,7 @@ Once the pre-installation setup is complete, install the **Trossen AI Data Colle
 
     For other systems, see: `Compiling PyAV <https://pyav.org/docs/develop/overview/installation.html#bring-your-own-ffmpeg>`_.
 
-#.  Run the post-installation script to install the application:
+#.  Install the application:
 
     .. code-block:: bash
 
@@ -176,48 +176,51 @@ An example configuration for the stationary robot is shown below:
                 height: 480
                 fps: 30
 
-
-- ``max_relative_target`` : Limits the magnitude of the relative positional target vector for safety purposes.
+- ``max_relative_target``: Limits the magnitude of the relative positional target vector for safety purposes.
   Set this to a positive scalar to have the same value for all motors.
   The magnitude defines the maximum distance (in radians for rotational joints and meters for linear joints) that the end-effector can be commanded to move in a single command.
   When you feel more confident with teleoperation or running the policy, you can extend this safety limit and even remove it by setting it to ``null``.
 
-- ``min_time_to_move_multiplier`` :  Multiplier for computing minimum time (in seconds) for the arm to reach a target position.
+- ``min_time_to_move_multiplier``:  Multiplier for computing minimum time (in seconds) for the arm to reach a target position.
   The final goal time is computed as: min_time_to_move = multiplier / fps.
   A smaller multiplier results in faster (but potentially jerky) motion.
   A larger multiplier results in smoother motion but with increased lag.
   A recommended starting value is 3.0.
 
-- ``camera_interface`` : Set this according to the camera interface you want to use.
-  ``opencv`` is the default and recommended option.
-  ``intel_realsense`` can be used if you have Intel RealSense cameras connected to the system.
+- ``camera_interface``: Set this according to the camera interface you want to use.
 
-- ``leader_arms`` : 
-  Contains the IP addresses and models of the leader arms.
-    - ``ip`` : Update the IP addresses to match those assigned to your leader arms.
-    - ``model``: The currently supported leader arm model is ``V0_LEADER``.
+  - ``opencv`` is the default and recommended option.
+  - ``intel_realsense`` can be used if you have Intel RealSense cameras connected to the system.
 
-- ``follower_arms`` : 
-  Contains the IP addresses and models of the follower arms.
-    - ``ip`` : Update the IP addresses to match those assigned to your follower arms.
-    - ``model``: The currently supported follower arm model is ``V0_FOLLOWER``.
+- ``leader_arms``: Contains the IP addresses and models of the leader arms.
 
-  .. note:: 
+  - ``ip``: Update the IP addresses to match those assigned to your leader arms.
+  - ``model``: The currently supported leader arm model is ``V0_LEADER``.
+
+- ``follower_arms``: Contains the IP addresses and models of the follower arms.
+
+  - ``ip``: Update the IP addresses to match those assigned to your follower arms.
+  - ``model``: The currently supported follower arm model is ``V0_FOLLOWER``.
+
+  .. note::
+
     Refer to :ref:`tutorials/lerobot/configuration:Setup IP Address` for more details on obtaining IP addresses.
 
-- ``cameras`` : The ``cameras`` section defines the configuration for each camera used in the system.
+- ``cameras``: The ``cameras`` section defines the configuration for each camera used in the system.
   Each camera entry (such as ``cam_high``, ``cam_low``, ``cam_right_wrist``, and ``cam_left_wrist``) includes:
+
     - ``serial_number``: The unique identifier for the camera device.
       For ``intel_realsense`` cameras, use the actual device serial number (e.g., 123456789).
       For ``opencv`` cameras, specify the camera index (e.g., 0, 1, 2).
     - ``width``: The width of the camera image in pixels.
     - ``height``: The height of the camera image in pixels.
     - ``fps``: The desired frames per second for capturing images.
+
   .. note::
+
     - Do not change the camera names (e.g., ``cam_high``, ``cam_low``, etc.) as they are referenced in the application for creating predefined robot layouts.
     - Ensure that the specified FPS is supported by the camera hardware.
     - Larger resolutions may require more processing power and could impact the overall system performance.
-
 
 Configuring the Tasks
 =====================
@@ -251,26 +254,27 @@ An example configuration for tasks is shown below:
       - name: "YourOperator1"
         email: "youroperatoremail1@example.com"
 
-- ``task_name`` : Name of the task. This should be unique for each task.
+- ``task_name``: Name of the task. This should be unique for each task.
   This will also set the name of the dataset.
-- ``robot_model`` : The robot model associated with the task.
+- ``robot_model``: The robot model associated with the task.
   This should match one of the robot configurations defined in the robot configuration YAML.
-- ``task_description`` : A brief description of the task.
-- ``episode_length_s`` : Duration of each episode in seconds.
-- ``warmup_time_s`` : Time in seconds to wait before starting the episode.
-- ``reset_time_s`` : Time in seconds to wait after the episode ends before resetting.
-- ``hf_user`` : Your Hugging Face username.
+- ``task_description``: A brief description of the task.
+- ``episode_length_s``: Duration of each episode in seconds.
+- ``warmup_time_s``: Time in seconds to wait before starting the episode.
+- ``reset_time_s``: Time in seconds to wait after the episode ends before resetting.
+- ``hf_user``: Your Hugging Face username.
   This is used if you plan to push data to the Hugging Face Hub.
-- ``fps`` : Frames per second for data collection.
-- ``push_to_hub`` : Boolean flag indicating whether to push the collected data to the Hugging Face Hub.
-- ``play_sounds`` : Boolean flag indicating whether to play sounds during the task.
-- ``disable_active_ui_updates`` : Boolean flag to disable active UI updates during the task.
-- ``operators`` : Optional list of operators involved in the task.
+- ``fps``: Frames per second for data collection.
+- ``push_to_hub``: Boolean flag indicating whether to push the collected data to the Hugging Face Hub.
+- ``play_sounds``: Boolean flag indicating whether to play sounds during the task.
+- ``disable_active_ui_updates``: Boolean flag to disable active UI updates during the task.
+- ``operators``: Optional list of operators involved in the task.
   The operator information will be saved in ``info.json`` in the metadata folder.
   You can add multiple operators by specifying their names and email addresses.
   You can add, remove, or edit operators at any time; the most recent changes to the operator list will be reflected in the metadata.
-    - ``name`` : Name of the operator.
-    - ``email`` : Optional email address of the operator.
+
+    - ``name``: Name of the operator.
+    - ``email``: Optional email address of the operator.
 
 .. note::
 

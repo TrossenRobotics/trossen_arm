@@ -257,11 +257,13 @@ To upgrade, follow these steps.
 
 #.  Flash the firmware
 
+    IMPORTANT! Use the driver compatible with the current firmware to backup all configurations as in :ref:`getting_started/demo_scripts:`configuration_in_yaml`_`.
+
     Connect the controller to the Linux PC with a USB to micro-USB cable.
 
-    Download the firmware at :doc:`/downloads`.
+    Download the new firmware at :doc:`/downloads`.
 
-    Unzip and flash the firmware using the following commands.
+    Unzip and flash the new firmware using the following commands.
 
     .. code:: bash
 
@@ -273,14 +275,18 @@ To upgrade, follow these steps.
 
 .. warning::
 
-    If you have made any customized configurations, we assume you are already familiar with :doc:`/getting_started/configuration` using the driver.
+    The expected behavior of :doc:`/getting_started/configuration` through a firmware upgrade is as follows.
 
-    A typical workflow is given below.
+    -   Upgrade, e.g., from ``v1.8.x`` to ``v1.9.x``
 
-    #.  Use the driver compatible with the current firmware to backup all customized configurations.
-    #.  Update the driver to the latest version.
-    #.  Flash the latest firmware.
-    #.  Set the customized configurations using the latest driver.
+        -   Fields compatible with the new firmware will be retained.
+        -   Fields added in the new firmware will be set to default values.
+
+    -   Downgrade, e.g., from ``v1.9.x`` to ``v1.8.x``
+
+        -   STRONGLY NOT RECOMMENDED
+        -   All fields will be reset to default values.
+        -   Default values of arm-specific fields calibrated at manufacturing, e.g., :class:`trossen_arm::JointCharacteristic`, will be replaced by one-size-fits-all values leading to degraded performance.
 
 Video Overview
 ==============

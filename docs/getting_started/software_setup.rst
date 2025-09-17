@@ -223,6 +223,22 @@ As stated above, the Arm Controller uses the following factory network settings:
 You may want to change the Arm Controller's IP address to fit your application, e.g., you have multiple arms or want to set the IP address to a static IP address in your local network.
 To change the IP address, follow the :ref:`getting_started/demo_scripts:`set_manual_ip`_` demo.
 
+.. tip::
+
+    If you have a kit and are using a Trossen-supported framework like :doc:`LeRobot</tutorials/lerobot>`, the expected IP addresses are:
+
+    .. list-table::
+        :align: center
+
+        * - Leader Left
+          - ``192.168.1.3``
+        * - Leader Right
+          - ``192.168.1.2``
+        * - Follower Left
+          - ``192.168.1.5``
+        * - Follower Right
+          - ``192.168.1.4``
+
 Software Upgrade
 ================
 

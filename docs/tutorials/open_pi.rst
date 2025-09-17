@@ -10,13 +10,12 @@ Background
 ----------
 
 Refer to the `Pi-0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ for understanding the model architecture and training procedure.
-Also, look into the limitations section for known issues and challenges. 
+Also, look into the limitations section for known issues and challenges.
 In order to get good results, a good quality dataset is necessary as mentioned in the paper:
-
 
     "Our experiments imply that an analogous phenomenon might take place with robot foundation models, where pre-trained models have some zero-shot capabilities, but complex tasks like laundry following require fine-tuning with high-quality data.
     Training on only this high-quality data results in a brittle model that does not reliably recover from mistakes, while running the pre-trained model in zero shot does not always exhibit the fluent strategies demonstrated in the post-training data."
-    
+
 The paper also mentions it's experimental setup and success results, which can be used as a reference for your own experiments.
 One such setup is mentioned as follows:
 
@@ -35,17 +34,31 @@ A score of 1.0 represents a perfect execution, while partial scores correspond t
    :align: center
    :width: 60%
 
-These are the **original Pi-0 results**, provided here to set expectations.  
+These are the **original Pi-0 results**, provided here to set expectations.
 Since **Trossen AI arms were not part of the original Pi-0 training dataset**, performance may be weaker out of the box.
 However, we found that **fine-tuning on a small, high-quality dataset** can still yield useful performance (see :ref:`results-section`).
 
 This tutorial walks you through:
 
-- Collecting episodes  
-- Training with OpenPi  
-- Fine-tuning using LoRA  
-- Evaluating policies  
-- Running inference  
+- Collecting episodes
+- Training with OpenPi
+- Fine-tuning using LoRA
+- Evaluating policies
+- Running inference
+
+
+.. note::
+
+    - This example uses two different versions of LeRobot:
+      - **LeRobot V0.1.0** for training and dependency management.
+      - **LeRobot V0.3.2** for running the client and inference.
+    - The custom LeRobot V0.3.2 (with BiWidowXAIFollower support) is available on GitHub:
+      [Interbotix/lerobot – `trossen_ai_open_pi` branch](https://github.com/Interbotix/lerobot/tree/trossen_ai_open_pi)
+    - **LeRobot V0.1.0** is installed at `.venv/lib/python3.11/site-packages/lerobot`.
+    - **LeRobot V0.3.2** is installed at `examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot`.
+    - **Training commands** should be run from the project root to use LeRobot V0.1.0.
+    - **Client commands** should be run from the `examples/trossen_ai` directory to use LeRobot V0.3.2.
+    - This setup works because `uv` manages dependencies in isolated virtual environments for each project.
 
 Collect Episodes using LeRobot
 ------------------------------
@@ -122,6 +135,13 @@ After updating the configuration, reference your new config name in the training
 
 Example configuration for training on the Trossen AI dataset:
 
+
+.. note::
+
+    The camera mapping are used to map the camera names in the dataset to the expected input names for the Pi-0 model.
+    In this example the dataset has 4 cameras: ``top``, ``bottom``, ``left`` and ``right``.
+    We map them to the expected input names of the model: ``cam_high``, ``cam_low``, ``cam_left_wrist`` and ``cam_right_wrist``.
+
 .. code-block:: python
 
    TrainConfig(
@@ -144,6 +164,7 @@ Example configuration for training on the Trossen AI dataset:
                                "cam_high": "observation.images.top",
                                "cam_left_wrist": "observation.images.left",
                                "cam_right_wrist": "observation.images.right",
+                               "cam_low": "observation.images.bottom",
                            },
                            "state": "observation.state",
                            "actions": "action",
@@ -154,7 +175,7 @@ Example configuration for training on the Trossen AI dataset:
        ),
        weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
        num_train_steps=20_000,
-       batch_size=2,
+       batch_size=8,
        freeze_filter=pi0.Pi0Config(
            paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
        ).get_freeze_filter(),
@@ -163,6 +184,14 @@ Example configuration for training on the Trossen AI dataset:
    )
 
 We trained on a RTX5090 and fine-tuned using LoRA.
+
+.. note::
+
+    - LoRA (Low-Rank Adaptation) is a technique for fine-tuning large pre-trained models efficiently.
+      Instead of updating all model parameters, LoRA inserts small, trainable matrices (low-rank adapters) into certain layers (usually linear layers like attention projections).
+      This drastically reduces the number of trainable parameters while keeping most of the model frozen.
+
+    - We have also seen that a higher batch_size (eg 8) yields better results than a lower batch_size (eg 4).
 
 Checkpoints
 -----------
@@ -189,12 +218,6 @@ Launch the policy server using your trained checkpoint and configuration:
        --policy.config=pi0_trossen_transfer_block \
        --policy.dir=checkpoints/pi0_trossen_transfer_block/test_pi0_finetuning/19999
 
-.. code-block:: bash
-
-   uv run scripts/serve_policy.py policy:checkpoint \
-       --policy.config=pi0_trossen_transfer_block \
-       --policy.dir=checkpoints/pi0_trossen_transfer_block/block_transfer_training_100k/99999
-
 Start the Client
 ~~~~~~~~~~~~~~~~
 .. note::
@@ -216,19 +239,19 @@ You can edit the **camera and arm IP address configuration** directly in the scr
        min_time_to_move_multiplier=4.0,
        id="bimanual_follower",
        cameras={
-           "top": RealSenseCameraConfig(
+           "cam_high": RealSenseCameraConfig(
                serial_number_or_name="218622270304",
                width=640, height=480, fps=30, use_depth=False
            ),
-           "bottom": RealSenseCameraConfig(
+           "cam_low": RealSenseCameraConfig(
                serial_number_or_name="130322272628",
                width=640, height=480, fps=30, use_depth=False
            ),
-           "right": RealSenseCameraConfig(
+           "cam_right_wrist": RealSenseCameraConfig(
                serial_number_or_name="128422271347",
                width=640, height=480, fps=30, use_depth=False
            ),
-           "left": RealSenseCameraConfig(
+           "cam_left_wrist": RealSenseCameraConfig(
                serial_number_or_name="218622274938",
                width=640, height=480, fps=30, use_depth=False
            ),
@@ -303,3 +326,9 @@ We used the same command for all tests:
 .. code-block:: bash
 
    uv run main.py --mode autonomous --task_prompt "grab red cube"
+
+If you want to run the client in test mode (no movement, just logs the actions that would be taken), you can use the following command:
+
+.. code-block:: bash
+
+   uv run main.py --mode test --task_prompt "grab red cube"

@@ -11,6 +11,16 @@ See the `cable replacement guides`_ for detailed instructions on how to replace 
 
 .. _cable replacement guides: https://drive.google.com/drive/folders/1fTkOV6DC5rlOQEOLTlptDM7j4ATTRVNL
 
+Cable routing diagrams can be seen below:
+
+.. image:: service/images/cables_side.png
+    :align: center
+    :width: 800px
+
+.. image:: service/images/cables_top.png
+    :align: center
+    :width: 800px
+
 Motor Replacement Guides
 ========================
 

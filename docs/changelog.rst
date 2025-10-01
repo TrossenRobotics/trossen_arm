@@ -193,6 +193,12 @@ Trossen Arm Driver
 Trossen Arm Controller Firmware
 ===============================
 
+1.9.1
+-----
+
+- Fixed an issue introduced in v1.9.0 where the controller would throw an error if the gripper was not detected.
+  The controller now behaves as in previous versions if the gripper is not used.
+
 1.9.0
 -----
 

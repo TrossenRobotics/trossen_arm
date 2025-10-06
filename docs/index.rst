@@ -8,6 +8,9 @@ Trossen Arm Documentation
     The API is subject to frequent changes and may not be stable.
     We advise pinning your dependencies to a specific version to avoid breaking changes and referring to the latest documentation for updates.
 
+.. image:: images/banner.jpg
+    :align: center
+
 Documentation for the Trossen Arm hardware and software, including setup guides, integrations, and API references.
 
 What's Here

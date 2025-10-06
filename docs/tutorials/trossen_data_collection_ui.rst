@@ -248,6 +248,7 @@ An example configuration for tasks is shown below:
       push_to_hub: false
       play_sounds: true
       disable_active_ui_updates: false
+      save_interval: 1
       operators:
       - name: "YourOperator0"
         email: "youroperatoremail0@example.com"
@@ -268,6 +269,10 @@ An example configuration for tasks is shown below:
 - ``push_to_hub``: Boolean flag indicating whether to push the collected data to the Hugging Face Hub.
 - ``play_sounds``: Boolean flag indicating whether to play sounds during the task.
 - ``disable_active_ui_updates``: Boolean flag to disable active UI updates during the task.
+- ``save_interval``: Interval in episodes at which to encode images to video and save data to disk.
+  For example, if set to 5, data will be saved every 5 episodes.
+  Default is 1 (save after every episode).
+  Setting save interval to ``-1``, ``0``, or ``> total number of episodes`` will only save data at the end of the entire data collection session.
 - ``operators``: Optional list of operators involved in the task.
   The operator information will be saved in ``info.json`` in the metadata folder.
   You can add multiple operators by specifying their names and email addresses.
@@ -280,6 +285,12 @@ An example configuration for tasks is shown below:
 
     If you choose to push data to the Hugging Face Hub, ensure that you have an account and have set up the necessary authentication.
     Check out the :ref:`tutorials/lerobot/record_episode:Logging into Hugging Face` for more details on generating and using access tokens.
+
+.. note::
+
+    The video encoding process can be resource-intensive.
+    This can cause longer wait times between episodes, especially if you are recording at longer episode lengths.
+    To mitigate this, consider adjusting the ``save_interval`` parameter to save data less frequently or at the end of the entire session.
 
 Application Features
 ====================

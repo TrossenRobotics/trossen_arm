@@ -134,6 +134,12 @@ Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
    If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
    Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
 
+.. note::
+
+    The video encoding process can be resource-intensive.
+    This can cause longer wait times between episodes, especially if you are recording at longer episode lengths.
+    To mitigate this, consider adjusting the ``save_interval`` parameter to save data less frequently or at the end of the entire session.
+
 Handling Camera FPS Issues
 ==========================
 
@@ -303,3 +309,7 @@ When recording a dataset, you can specify command line arguments to customize th
 - ``--control.play_sounds`` (bool): Flag to use vocal synthesis to read events.
 - ``--control.resume`` (bool): Flag to resume recording on an existing dataset.
 - ``--control.local_files_only`` (bool): Flag to use local files only.
+- ``--control.save_interval`` (int): Interval in episodes at which to encode images to video and save data to disk.
+   For example, if set to 5, data will be saved every 5 episodes.
+   Default is 1 (save after every episode).
+   Setting save interval to ``-1``, ``0``, or ``> total number of episodes`` will only save data at the end of the entire data collection session.

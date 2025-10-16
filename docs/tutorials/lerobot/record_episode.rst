@@ -341,7 +341,7 @@ Experimental Feature
 
     The GOP (Group of Pictures) size for video encoding can be adjusted by setting the ``LEROBOT_GOP_SIZE`` environment variable (default is 30).
     A smaller GOP size can lead to better video quality but may increase file size.
-    GPU encoding requires a the GOP size to be a multiple of the FPS.
+    GPU encoding requires the GOP size to be a multiple of the FPS.
 
     .. code-block:: bash
 

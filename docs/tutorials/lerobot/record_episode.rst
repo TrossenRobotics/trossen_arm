@@ -313,3 +313,36 @@ When recording a dataset, you can specify command line arguments to customize th
    For example, if set to 5, data will be saved every 5 episodes.
    Default is 1 (save after every episode).
    Setting save interval to ``-1``, ``0``, or ``> total number of episodes`` will only save data at the end of the entire data collection session.
+
+Experimental Feature
+=====================
+
+.. note::
+
+    The following features are experimental and may not be fully stable.
+    Use them at your own discretion.
+
+
+#. GPU Acceleration for Video Encoding
+
+    The application supports GPU acceleration for video encoding using NVIDIA GPUs with CUDA support.
+    To enable this feature, ensure that you have the necessary NVIDIA drivers and CUDA toolkit installed on your system.
+    You can enable GPU acceleration by setting the ``LEROBOT_GPU_ENCODING`` environment variable.
+
+    .. code-block:: bash
+
+        export LEROBOT_GPU_ENCODING=1
+
+    You can also choose the GPU device by setting the ``LEROBOT_GPU_ID`` environment variable to the desired GPU index (default is 0).
+
+    .. code-block:: bash
+
+        export LEROBOT_GPU_ID=0
+
+    The GOP (Group of Pictures) size for video encoding can be adjusted by setting the ``LEROBOT_GOP_SIZE`` environment variable (default is 30).
+    A smaller GOP size can lead to better video quality but may increase file size.
+    GPU encoding requires a the GOP size to be a multiple of the FPS.
+
+    .. code-block:: bash
+
+        export LEROBOT_GOP_SIZE=30

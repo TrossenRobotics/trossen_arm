@@ -2,347 +2,146 @@
 Trossen AI Configuration
 ========================
 
-In order to use the Trossen AI Kits with LeRobot, you need to first configure the arms with the necessary specifications.
-The specifications include the IP address, model_name, and camera serial numbers.
+In order to use the Trossen AI Kits with LeRobot, you need to identify specifications for your setup.
+The specifications include the IP address, model_name, and camera serial numbers. 
+we will pass the specifications in as arguments using ``--robot.ip_address``, ``--robot.type``, and ``--robot.cameras``.
+
+
 The following steps will guide you on how to configure the Trossen AI Kits with LeRobot.
 
-This is an example of a configuration file for the Trossen AI Kits with LeRobot, you can find this in :guilabel:`lerobot/common/robot_devices/robots/configs.py`:
+The configuration File for the follower arm for the Trossen AI Kits with LeRobot can be found in :guilabel:`lerobot_trossen/packages/leroborot_robot_trossen/src/leroborot_robot_trossen`.
+
+The configuration File for the leader arm for the Trossen AI Kits with LeRobot can be found in :guilabel:`lerobot_trossen/packages/lerobot_teleoperation_trossen/src/lerobot_teleoperation_trossen`.
 
 .. tabs::
-    .. group-tab:: Trossen AI Stationary    
+    .. group-tab:: Trossen AI Solo Follower   
 
         .. code-block:: python
 
-            @RobotConfig.register_subclass("trossen_ai_stationary")
+            @RobotConfig.register_subclass("widowxai_follower_robot")
             @dataclass
-            class TrossenAIStationaryRobotConfig(ManipulatorRobotConfig):
-                # /!\ FOR SAFETY, READ THIS /!\
-                # `max_relative_target` limits the magnitude of the relative positional target vector for safety purposes.
-                # Set this to a positive scalar to have the same value for all motors, or a list that is the same length as
-                # the number of motors in your follower arms.
-                # For Trossen AI Arms, for every goal position request, motor rotations are capped at 5 degrees by default.
-                # When you feel more confident with teleoperation or running the policy, you can extend
-                # this safety limit and even removing it by setting it to `null`.
-                # Also, everything is expected to work safely out-of-the-box, but we highly advise to
-                # first try to teleoperate the grippers only (by commenting out the rest of the motors in this yaml),
-                # then to gradually add more motors (by uncommenting), until you can teleoperate both arms fully
-                max_relative_target: int | None = 5
+            class WidowXAIFollowerConfig(RobotConfig):
+                # IP address of the arm
+                ip_address: str
 
-                # Gain applied to external efforts sensed on the follower arm and transmitted to the leader arm.
-                # This enables the user to feel external forces (e.g., contact with objects) through force feedback.
-                # A value of 0.0 disables force feedback. A good starting value for a responsive experience is 0.1.
-                force_feedback_gain: float = 0.0
+                # `max_relative_target` limits the magnitude of the relative positional target vector for
+                # safety purposes. Set this to a positive scalar to have the same value for all motors, or a
+                # list that is the same length as the number of motors in your follower arms.
+                max_relative_target: float | None = 5.0
 
-                # Set this according to the camera interface you want to use.
-                # "intel_realsense" is the default and recommended option.
-                # "opencv" is a fallback option that uses OpenCV to access the cameras.
-                camera_interface: Literal["intel_realsense", "opencv"] = "intel_realsense"
+                # Multiplier for computing minimum time (in seconds) for the arm to reach a target position.
+                # The final goal time is computed as: min_time_to_move = multiplier / fps.
+                # A smaller multiplier results in faster (but potentially jerky) motion.
+                # A larger multiplier results in smoother motion but with increased lag.
+                # A recommended starting value is 3.0.
+                min_time_to_move_multiplier: float = 3.0
 
-                leader_arms: dict[str, MotorsBusConfig] = field(
-                    default_factory=lambda: {
-                        "left": TrossenArmDriverConfig(
-                            # wxai
-                            ip="192.168.1.3",
-                            model="V0_LEADER",
-                        ),
-                        "right": TrossenArmDriverConfig(
-                            # wxai
-                            ip="192.168.1.2",
-                            model="V0_LEADER",
-                        ),
-                    }
+                # Control loop rate in Hz
+                loop_rate: int = 30
+
+                # cameras
+                cameras: dict[str, CameraConfig] = field(default_factory=dict)
+                # Troubleshooting: If one of your IntelRealSense cameras freeze during
+                # data recording due to bandwidth limit, you might need to plug the camera
+                # on another USB hub or PCIe card.
+
+                # Joint names for the WidowX AI follower arm
+                joint_names: list[str] = field(
+                    default_factory=lambda: [
+                        "joint_0",
+                        "joint_1",
+                        "joint_2",
+                        "joint_3",
+                        "joint_4",
+                        "joint_5",
+                        "left_carriage_joint",
+                    ]
                 )
 
-                follower_arms: dict[str, MotorsBusConfig] = field(
-                    default_factory=lambda: {
-                        "left": TrossenArmDriverConfig(
-                            ip="192.168.1.5",
-                            model="V0_FOLLOWER",
-                        ),
-                        "right": TrossenArmDriverConfig(
-                            ip="192.168.1.4",
-                            model="V0_FOLLOWER",
-                        ),
-                    }
+                # "Staged" positions in rad for the arm and m for the gripper
+                #
+                # The robot will move to these positions when first started and before the arm is sent to the
+                # sleep position.
+                staged_positions: list[float] = field(
+                    default_factory=lambda: [0, np.pi / 3, np.pi / 6, np.pi / 5, 0, 0, 0]
                 )
 
-                if camera_interface == "opencv":
-                    print("Using OpenCV camera interface")
-                    cameras: dict[str, CameraConfig] = field(
-                        default_factory=lambda: {
-                            "cam_high": OpenCVCameraConfig(
-                                camera_index=26,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_low": OpenCVCameraConfig(
-                                camera_index=14,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_left_wrist": OpenCVCameraConfig(
-                                camera_index=8,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_right_wrist": OpenCVCameraConfig(
-                                camera_index=20,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                        }
-                    )
-                elif camera_interface == "intel_realsense":
-                    # Troubleshooting: If one of your IntelRealSense cameras freeze during
-                    # data recording due to bandwidth limit, you might need to plug the camera
-                    # on another USB hub or PCIe card.
-                    cameras: dict[str, CameraConfig] = field(
-                        default_factory=lambda: {
-                            "cam_high": IntelRealSenseCameraConfig(
-                                serial_number=218622270304,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_low": IntelRealSenseCameraConfig(
-                                serial_number=130322272628,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_left_wrist": IntelRealSenseCameraConfig(
-                                serial_number=218622274938,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_right_wrist": IntelRealSenseCameraConfig(
-                                serial_number=128422271347,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                        }
-                    )
-                else:
-                    raise ValueError(
-                        f"Unknown camera interface: {camera_interface}. Supported values are 'opencv' and 'intel_realsense'."
-                    )
 
-                mock: bool = False
+    .. group-tab:: Trossen AI Bi Follower
+        
+        .. code-block:: python
+
+            @RobotConfig.register_subclass("bi_widowxai_follower_robot")
+            @dataclass
+            class BiWidowXAIFollowerRobotConfig(RobotConfig):
+                # IP address of the arms
+                left_arm_ip_address: str
+                right_arm_ip_address: str
+
+                # `max_relative_target` limits the magnitude of the relative positional target vector for
+                # safety purposes. Set this to a positive scalar to have the same value for all motors, or a
+                # list that is the same length as the number of motors in your follower arms.
+                left_arm_max_relative_target: float | None = None
+                right_arm_max_relative_target: float | None = None
+
+                # Multiplier for computing minimum time (in seconds) for the arm to reach a target position.
+                # The final goal time is computed as: min_time_to_move = multiplier / fps.
+                # A smaller multiplier results in faster (but potentially jerky) motion.
+                # A larger multiplier results in smoother motion but with increased lag.
+                # A recommended starting value is 3.0.
+                # This value is shared between both arms.
+                min_time_to_move_multiplier: float = 3.0
+
+                # Expected control loop rate in Hz (shared between both arms).
+                loop_rate: int = 30
+
+                # cameras (shared between both arms)
+                cameras: dict[str, CameraConfig] = field(default_factory=dict)
+
+
+    .. group-tab:: Trossen AI Solo Leader
+
+        .. code-block:: python
+
+            @TeleoperatorConfig.register_subclass("widowxai_leader_teleop")
+            @dataclass
+            class WidowXAILeaderTeleopConfig(TeleoperatorConfig):
+                # IP address of the arm
+                ip_address: str
+
+                # Joint names for the WidowX AI leader arm
+                joint_names: list[str] = field(
+                    default_factory=lambda: [
+                        "joint_0",
+                        "joint_1",
+                        "joint_2",
+                        "joint_3",
+                        "joint_4",
+                        "joint_5",
+                        "left_carriage_joint",
+                    ]
+                )
+
+                # "Staged" positions in rad for the arm and m for the gripper
+                #
+                # The robot will move to these positions when first started and before the arm is sent to the
+                # sleep position.
+                staged_positions: list[float] = field(
+                    default_factory=lambda: [0, np.pi / 3, np.pi / 6, np.pi / 5, 0, 0, 0]
+                )
+
     
-    .. group-tab:: Trossen AI Mobile
-        
+    .. group-tab:: Trossen AI Bi Leader
+
         .. code-block:: python
 
-            @RobotConfig.register_subclass("trossen_ai_mobile")
+            @TeleoperatorConfig.register_subclass("bi_widowxai_leader_teleop")
             @dataclass
-            class TrossenAIMobileRobotConfig(RobotConfig):
-                # /!\ FOR SAFETY, READ THIS /!\
-                # `max_relative_target` limits the magnitude of the relative positional target vector for safety purposes.
-                # Set this to a positive scalar to have the same value for all motors, or a list that is the same length as
-                # the number of motors in your follower arms.
-                # For Trossen AI Arms, for every goal position request, motor rotations are capped at 5 degrees by default.
-                # When you feel more confident with teleoperation or running the policy, you can extend
-                # this safety limit and even removing it by setting it to `null`.
-                # Also, everything is expected to work safely out-of-the-box, but we highly advise to
-                # first try to teleoperate the grippers only (by commenting out the rest of the motors in this yaml),
-                # then to gradually add more motors (by uncommenting), until you can teleoperate both arms fully
-                max_relative_target: int | None = 5
-
-                # Gain applied to external efforts sensed on the follower arm and transmitted to the leader arm.
-                # This enables the user to feel external forces (e.g., contact with objects) through force feedback.
-                # A value of 0.0 disables force feedback. A good starting value for a responsive experience is 0.1.
-                force_feedback_gain: float = 0.0
-
-                # Set this according to the camera interface you want to use.
-                # "intel_realsense" is the default and recommended option.
-                # "opencv" is a fallback option that uses OpenCV to access the cameras.
-                camera_interface: Literal["intel_realsense", "opencv"] = "intel_realsense"
-
-                enable_motor_torque: bool = False
-
-                leader_arms: dict[str, MotorsBusConfig] = field(
-                    default_factory=lambda: {
-                        "left": TrossenArmDriverConfig(
-                            # wxai
-                            ip="192.168.1.3",
-                            model="V0_LEADER",
-                        ),
-                        "right": TrossenArmDriverConfig(
-                            # wxai
-                            ip="192.168.1.2",
-                            model="V0_LEADER",
-                        ),
-                    }
-                )
-
-                follower_arms: dict[str, MotorsBusConfig] = field(
-                    default_factory=lambda: {
-                        "left": TrossenArmDriverConfig(
-                            ip="192.168.1.5",
-                            model="V0_FOLLOWER",
-                        ),
-                        "right": TrossenArmDriverConfig(
-                            ip="192.168.1.4",
-                            model="V0_FOLLOWER",
-                        ),
-                    }
-                )
-
-                if camera_interface == "opencv":
-                    cameras: dict[str, CameraConfig] = field(
-                        default_factory=lambda: {
-                            "cam_high": OpenCVCameraConfig(
-                                camera_index=26,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_left_wrist": OpenCVCameraConfig(
-                                camera_index=8,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_right_wrist": OpenCVCameraConfig(
-                                camera_index=20,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                        }
-                    )
-                elif camera_interface == "intel_realsense":
-                    # Troubleshooting: If one of your IntelRealSense cameras freeze during
-                    # data recording due to bandwidth limit, you might need to plug the camera
-                    # on another USB hub or PCIe card.
-
-                    cameras: dict[str, CameraConfig] = field(
-                        default_factory=lambda: {
-                            "cam_high": IntelRealSenseCameraConfig(
-                                serial_number=130322274102,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_left_wrist": IntelRealSenseCameraConfig(
-                                serial_number=130322271087,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_right_wrist": IntelRealSenseCameraConfig(
-                                serial_number=130322270184,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                        }
-                    )
-                else:
-                    raise ValueError(
-                        f"Unknown camera interface: {camera_interface}. Supported values are 'opencv' and 'intel_realsense'."
-                    )
-
-                mock: bool = False
+            class BiWidowXAILeaderRobotConfig(TeleoperatorConfig):
+                left_arm_ip_address: str
+                right_arm_ip_address: str
 
 
-    .. group-tab:: Trossen AI Solo
-        
-        .. code-block:: python
-
-            @RobotConfig.register_subclass("trossen_ai_solo")
-            @dataclass
-            class TrossenAISoloRobotConfig(ManipulatorRobotConfig):
-                # /!\ FOR SAFETY, READ THIS /!\
-                # `max_relative_target` limits the magnitude of the relative positional target vector for safety purposes.
-                # Set this to a positive scalar to have the same value for all motors, or a list that is the same length as
-                # the number of motors in your follower arms.
-                # For Trossen AI Arms, for every goal position request, motor rotations are capped at 5 degrees by default.
-                # When you feel more confident with teleoperation or running the policy, you can extend
-                # this safety limit and even removing it by setting it to `null`.
-                # Also, everything is expected to work safely out-of-the-box, but we highly advise to
-                # first try to teleoperate the grippers only (by commenting out the rest of the motors in this yaml),
-                # then to gradually add more motors (by uncommenting), until you can teleoperate both arms fully
-                max_relative_target: int | None = 5
-
-                # Gain applied to external efforts sensed on the follower arm and transmitted to the leader arm.
-                # This enables the user to feel external forces (e.g., contact with objects) through force feedback.
-                # A value of 0.0 disables force feedback. A good starting value for a responsive experience is 0.1.
-                force_feedback_gain: float = 0.0
-
-                # Set this according to the camera interface you want to use.
-                # "intel_realsense" is the default and recommended option.
-                # "opencv" is a fallback option that uses OpenCV to access the cameras.
-                camera_interface: Literal["intel_realsense", "opencv"] = "intel_realsense"
-
-                leader_arms: dict[str, MotorsBusConfig] = field(
-                    default_factory=lambda: {
-                        "main": TrossenArmDriverConfig(
-                            # wxai
-                            ip="192.168.1.2",
-                            model="V0_LEADER",
-                        ),
-                    }
-                )
-
-                follower_arms: dict[str, MotorsBusConfig] = field(
-                    default_factory=lambda: {
-                        "main": TrossenArmDriverConfig(
-                            ip="192.168.1.3",
-                            model="V0_FOLLOWER",
-                        ),
-                    }
-                )
-
-                if camera_interface == "opencv":
-                    cameras: dict[str, CameraConfig] = field(
-                        default_factory=lambda: {
-                            "cam_main": OpenCVCameraConfig(
-                                camera_index=26,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_wrist": OpenCVCameraConfig(
-                                camera_index=8,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                        }
-                    )
-                elif camera_interface == "intel_realsense":
-                    # Troubleshooting: If one of your IntelRealSense cameras freeze during
-                    # data recording due to bandwidth limit, you might need to plug the camera
-                    # on another USB hub or PCIe card.
-                    cameras: dict[str, CameraConfig] = field(
-                        default_factory=lambda: {
-                            "cam_main": IntelRealSenseCameraConfig(
-                                serial_number=130322270184,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                            "cam_wrist": IntelRealSenseCameraConfig(
-                                serial_number=218622274938,
-                                fps=30,
-                                width=640,
-                                height=480,
-                            ),
-                        }
-                    )
-                else:
-                    raise ValueError(
-                        f"Unknown camera interface: {camera_interface}. Supported values are 'opencv' and 'intel_realsense'."
-                    )
-
-                mock: bool = False
 
 Setup IP Address
 ----------------
@@ -350,7 +149,7 @@ Setup IP Address
 .. note::
 
     By default, the IP address for a Trossen AI arm is set to ``192.168.1.2``. 
-    Make sure to change the IP addresses of your Trossen AI arms to match the ones in the configuration file.
+    Make sure to change the IP addresses of your Trossen AI arms to match the ones that will be passed in the arguments.
     
 To set up the IP address for the Trossen AI Arms, you must first ensure that the arms are connected to the same network as your computer.
 Refer to :ref:`Ethernet Setup <getting_started/software_setup:Ethernet Setup>` for correct connection instructions.
@@ -361,9 +160,20 @@ Camera Serial Number
 
 There are two ways to set up the camera serial numbers for the Trossen AI Kits with LeRobot: using the Intel RealSense interface or the OpenCV interface.
 Based on the camera interface you choose, follow the appropriate steps below to set up the camera serial numbers.
-You can setup both interfaces at the same time, and use the ``--robot.camera_interface`` argument to switch between them.
-By default, the camera interface is set to ``intel_realsense``.
-We will look at this in more detail in the next sections.
+
+Camera serial numbers are required to uniquely identify each camera connected to your system. 
+You will pass the cameras as a dictionary argument using ``--robot.cameras``.
+
+The dictionary will look like this for two cameras:
+
+.. code-block:: bash
+    
+    --robot.cameras="{
+        wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+        top: {type: intelrealsense, serial_number_or_name: "1123456789", width: 640, height: 480, fps: 30}
+    }"
+
+We will look at setting up the specific camera types in more detail below.
 
 .. tabs::
     .. group-tab:: Intel RealSense Interface
@@ -378,6 +188,7 @@ We will look at this in more detail in the next sections.
 
                 If realsense-viewer is not already installed on your machine, follow `these steps on the librealsense GitHub repository <https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md>`_  to install ``librealsense2-utils``.
 
+
         #.  Plug in a single camera and check the sidebar for its entry.
             If it does not show up in the side bar, click Add Source and find the Intel RealSense D405 in the drop down.
 
@@ -386,8 +197,18 @@ We will look at this in more detail in the next sections.
             .. image:: images/rsviewer_serialno2.png
                 :alt: Realsense Viewer
                 :align: center
+            
+            
+            .. note::
 
-        #.  Put the camera serial number in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
+                You can also find your cameras using the command 
+
+                .. code-block:: bash
+
+                    lerobot-find-cameras realsense
+        
+
+        #.  Put the camera serial number in the appropriate dictionary item as specified above.
 
         #.  Repeat for the rest of the cameras.
 

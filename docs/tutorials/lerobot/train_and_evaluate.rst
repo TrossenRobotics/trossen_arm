@@ -22,37 +22,40 @@ Here is an example command:
 
       .. code-block:: bash
 
-         python lerobot/scripts/train.py \
+          uv run lerobot-train \
            --dataset.repo_id=${HF_USER}/trossen_ai_stationary_test \
            --policy.type=act \
            --output_dir=outputs/train/act_trossen_ai_stationary_test \
            --job_name=act_trossen_ai_stationary_test \
-           --device=cuda \
+           --policy.device=cuda \
            --wandb.enable=true
+           --policy.repo_id=${HF_USER}/my_policy
    
    .. group-tab:: Trossen AI Mobile
 
       .. code-block:: bash
 
-         python lerobot/scripts/train.py \
+          uv run lerobot-train \
            --dataset.repo_id=${HF_USER}/trossen_ai_mobile_test \
            --policy.type=act \
            --output_dir=outputs/train/act_trossen_ai_mobile_test \
            --job_name=act_trossen_ai_mobile_test \
-           --device=cuda \
+           --policy.device=cuda \
            --wandb.enable=true
+           --policy.repo_id=${HF_USER}/my_policy
 
    .. group-tab:: Trossen AI Solo
 
       .. code-block:: bash
 
-         python lerobot/scripts/train.py \
+          uv run lerobot-train \
            --dataset.repo_id=${HF_USER}/trossen_ai_solo_test \
            --policy.type=act \
            --output_dir=outputs/train/act_trossen_ai_solo_test \
            --job_name=act_trossen_ai_solo_test \
-           --device=cuda \
+           --policy.device=cuda \
            --wandb.enable=true
+           --policy.repo_id=${HF_USER}/my_policy
 
 Explanation of the Command
 --------------------------
@@ -60,8 +63,8 @@ Explanation of the Command
 #. We provided the dataset using ``--dataset.repo_id=${HF_USER}/trossen_ai_xxxxxxx_test``.
 #. We specified the policy with ``--policy.type=act``, which loads configurations from `configuration_act.py <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/policies/act/configuration_act.py>`_.
    This policy will automatically adapt to the **number of motor states, motor actions, and cameras** recorded in your dataset.
-#. We set ``--device=cuda`` to train on an **NVIDIA GPU**.
-   If using Apple Silicon, you can replace it with ``--device=mps``.
+#. We set ``--policy.device=cuda`` to train on an **NVIDIA GPU**.
+   If using Apple Silicon, you can replace it with ``--policy.device=mps``.
 #. We enabled **Weights & Biases** logging using ``--wandb.enable=true`` for visualizing training plots.
    This is optional, but if used, ensure you're logged in by running:
 
@@ -73,6 +76,15 @@ Explanation of the Command
 
    **Training will take several hours.** Checkpoints will be saved in:
    :guilabel:`outputs/train/act_trossen_ai_xxxxx_test/checkpoints`.
+
+
+To resume training from a checkpoint, below is an example command to resume from last checkpoint of the trossen_ai_xxxxxxx_test policy:
+
+   .. code-block:: bash
+
+      uv run lerobot-train \
+         --config_path=outputs/train/trossen_ai_xxxxxxx_test/checkpoints/last/pretrained_model/train_config.json \
+         --resume=true
 
 
 Training Pipeline Configuration
@@ -107,74 +119,19 @@ The training pipeline can be configured using the following parameters:
 Evaluating Your Policy
 ======================
 
-You can use the ``record`` function from :guilabel:`lerobot/scripts/control_robot.py` but with a **policy checkpoint as input**.
-Run the following command to record **10 evaluation episodes**:
+You can evaluate your trained policy on you robot using the script below:
 
-.. tabs::
+   .. code-block:: bash
 
-   .. group-tab:: Trossen AI Stationary
-
-      .. code-block:: bash
-
-         python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_stationary \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Stationary." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_stationary_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_stationary_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1
-   
-   .. group-tab:: Trossen AI Mobile
-
-      .. code-block:: bash
-
-         python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_mobile \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Mobile." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_mobile_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_mobile_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1 \
-           --robot.enable_motor_torque=true
-
-   .. group-tab:: Trossen AI Solo
-
-      .. code-block:: bash
-
-         python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_solo \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Solo." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_solo_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_solo_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1
-
-.. note::
-
-   You can change the camera interface to use for recording by adding the following command line argument:
-   ``--robot.camera_interface='opencv'``.
-   This is useful if you have configured multiple camera interfaces as explained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
+      uv run lerobot-record  \
+      --robot.type= widowxai_follower_robot \
+      --robot.port=/dev/ttyACM1 \
+      --robot.cameras="{ up: {type: opencv, index_or_path: /dev/video10, width: 640, height: 480, fps: 30}, side: {type: intelrealsense, serial_number_or_name: 233522074606, width: 640, height: 480, fps: 30}}" \
+      --robot.id=follower \
+      --display_data=false \
+      --dataset.repo_id=${HF_USER}/eval_trossen_ai_xxxxxxx_test \
+      --dataset.single_task="Grab and handover the red cube to the other arm"
+      --policy.path=${HF_USER}/my_policy
 
 .. note::
 

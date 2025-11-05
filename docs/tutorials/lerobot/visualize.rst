@@ -21,12 +21,6 @@ You can retrieve your repository ID by running the following command in your ter
       .. code-block:: bash
 
          echo ${HF_USER}/trossen_ai_stationary_test
-
-   .. group-tab:: Trossen AI Mobile
-      
-      .. code-block:: bash
-
-         echo ${HF_USER}/trossen_ai_mobile_test
    
    .. group-tab:: Trossen AI Solo
       
@@ -40,31 +34,25 @@ Here, **${HF_USER}** represents your **Hugging Face username**, and **trossen_ai
 Local Visualization
 ===================
 
+You can also locally visualize episodes from a dataset on the hub by executing our script from the command line:
+
+.. code-block:: bash
+
+   uv run lerobot-dataset-viz \
+      --repo-id ${HF_USER}/${datasetname} \
+      --episode-index 0
+
+
+
 If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``), you can still visualize it locally with:
 
 
-.. tabs::
+.. code-block:: bash
 
-   .. group-tab:: Trossen AI Stationary
+   uv run lerobot-dataset-viz \
+      --repo-id ${HF_USER}/${datasetname}
+      --root .cache/huggingface/lerobot/${HF_USER}/${datasetname}/videos \
+      --mode local \
+      --episode-index 0
 
-      .. code-block:: bash
-
-         python lerobot/scripts/visualize_dataset_html.py \
-           --repo-id ${HF_USER}/trossen_ai_stationary_test \
-           --local-files-only 1
-
-   .. group-tab:: Trossen AI Mobile
-      
-      .. code-block:: bash
-
-         python lerobot/scripts/visualize_dataset_html.py \
-           --repo-id ${HF_USER}/trossen_ai_mobile_test \
-           --local-files-only 1
-   
-   .. group-tab:: Trossen AI Solo
-      
-      .. code-block:: bash
-
-         python lerobot/scripts/visualize_dataset_html.py \
-           --repo-id ${HF_USER}/trossen_ai_solo_test \
-           --local-files-only 1
+The ``--root`` argument above is the default path huggingface creates. If you specified a different path for ``--root`` during recording, use that path instead.

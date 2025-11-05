@@ -226,61 +226,72 @@ We will look at setting up the specific camera types in more detail below.
 
             .. code-block:: bash
 
-                python lerobot/common/robot_devices/cameras/opencv.py \
-                --images-dir outputs/images_from_opencv_cameras
-
+                uv run lerobot-find-cameras opencv
+            
             The output will look something like this if you have two cameras connected:
 
             .. code-block:: bash
 
-                Mac or Windows detected. Finding available camera indices through scanning all indices from 0 to 60
-                [...]
-                Camera found at index 0
-                Camera found at index 1
-                [...]
-                Connecting cameras
-                OpenCVCamera(0, fps=30.0, width=1920.0, height=1080.0, color_mode=rgb)
-                OpenCVCamera(1, fps=24.0, width=1920.0, height=1080.0, color_mode=rgb)
-                Saving images to outputs/images_from_opencv_cameras
-                Frame: 0000	Latency (ms): 39.52
-                [...]
-                Frame: 0046	Latency (ms): 40.07
-                Images have been saved to outputs/images_from_opencv_cameras
+                --- Detected Cameras ---
+                Camera #0:
+                Name: OpenCV Camera @ /dev/video10
+                Type: OpenCV
+                Id: /dev/video10
+                Backend api: V4L2
+                Default stream profile:
+                    Format: 0.0
+                    Fourcc: YUYV
+                    Width: 640
+                    Height: 480
+                    Fps: 30.0
+                --------------------
+                Camera #1:
+                Name: OpenCV Camera @ /dev/video14
+                Type: OpenCV
+                Id: /dev/video14
+                Backend api: V4L2
+                Default stream profile:
+                    Format: 0.0
+                    Fourcc: UYVY
+                    Width: 640
+                    Height: 480
+                    Fps: 30.0
 
-        #. Check the saved images in :guilabel:`outputs/images_from_opencv_cameras` to identify which camera index corresponds to which physical camera (e.g. ``0`` for ``camera_00`` or ``1`` for ``camera_01``):
+                [...]
+                --------------------
+                Camera #9:
+                Name: OpenCV Camera @ /dev/video8
+                Type: OpenCV
+                Id: /dev/video8
+                Backend api: V4L2
+                Default stream profile:
+                    Format: 0.0
+                    Fourcc: UYVY
+                    Width: 640
+                    Height: 480
+                    Fps: 30.0
+                --------------------
+
+                Finalizing image saving...
+                Image capture finished. Images saved to outputs/captured_images
+
+
+
+        #. Check the saved images in :guilabel:`outputs/captured_images` to identify which camera index corresponds to which physical camera (e.g. ``0`` for ``video0`` or ``1`` for ``video1``):
 
             .. code-block:: bash
 
-                camera_00_frame_000000.png
+                opencv__dev_video6.png
                 [...]
-                camera_00_frame_000047.png
-                camera_01_frame_000000.png
+                opencv__dev_video10.png
+                opencv__dev_video12.png
+                opencv__dev_video18.png
                 [...]
-                camera_01_frame_000047.png
+                opencv__dev_video24.png
 
 
             .. note::
                 
                 Some cameras may take a few seconds to warm up, and the first frame might be black or green.
 
-        #. Put the camera index in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
-
-
-            .. code-block:: python
-
-                cameras: dict[str, CameraConfig] = field(
-                    default_factory=lambda: {
-                        "cam_xxxx": OpenCVCameraConfig(
-                            camera_index=0,
-                            fps=30,
-                            width=640,
-                            height=480,
-                        ),
-                        "cam_xxxx": OpenCVCameraConfig(
-                            camera_index=1,
-                            fps=30,
-                            width=640,
-                            height=480,
-                        ),
-                    }
-                )
+        #. Find all the camera indices and put them in the appropriate dictionary items as specified above.

@@ -53,7 +53,7 @@ Teleoperation Configuration
 ===========================
 
 .. note::
-  for additional configuration options, use the command below to see all available commad line arguments:
+  for additional configuration options, use the command below to see all available command line arguments:
 
   .. code-block:: bash
 

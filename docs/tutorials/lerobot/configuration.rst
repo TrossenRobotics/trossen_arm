@@ -9,7 +9,7 @@ we will pass the specifications in as arguments using ``--robot.ip_address``, ``
 
 The following steps will guide you on how to configure the Trossen AI Kits with LeRobot.
 
-The configuration File for the follower arm for the Trossen AI Kits with LeRobot can be found in :guilabel:`lerobot_trossen/packages/leroborot_robot_trossen/src/leroborot_robot_trossen`.
+The configuration File for the follower arm for the Trossen AI Kits with LeRobot can be found in :guilabel:`lerobot_trossen/packages/lerobot_robot_trossen/src/lerobot_robot_trossen`.
 
 The configuration File for the leader arm for the Trossen AI Kits with LeRobot can be found in :guilabel:`lerobot_trossen/packages/lerobot_teleoperation_trossen/src/lerobot_teleoperation_trossen`.
 

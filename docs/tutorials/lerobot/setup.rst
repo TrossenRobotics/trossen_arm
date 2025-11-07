@@ -39,4 +39,4 @@ On your computer:
 
          uv pip list | grep lerobot
 
-      For other systems, see: `installing uv https://docs.astral.sh/uv/getting-started/installation/`_.
+      For other systems, see: `installing uv <https://docs.astral.sh/uv/getting-started/installation/>`_.

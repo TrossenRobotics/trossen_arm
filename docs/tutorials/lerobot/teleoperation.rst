@@ -19,8 +19,8 @@ By running the following code, you can start your first **SAFE** teleoperation:
           --robot.ip_address=192.168.1.4 \
           --robot.id=follower \
           --robot.cameras="{
-            cam_left: {type: intelrealsense, serial_number_or_name: "000000000000", width: 640, height: 480, fps: 30},
-            cam_right: {type: intelrealsense, serial_number_or_name: "000000000000", width: 640, height: 480, fps: 30},
+            cam_left: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+            cam_right: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
             }" \
           --teleop.type=widowxai_leader_teleop \
           --teleop.ip_address=192.168.1.2 \
@@ -37,10 +37,10 @@ By running the following code, you can start your first **SAFE** teleoperation:
           --robot.right_arm_ip_address=192.168.1.4 \
           --robot.id=bimanual_follower \
           --robot.cameras="{
-            cam_left: {type: intelrealsense, serial_number_or_name: "000000000000", width: 640, height: 480, fps: 30},
-            cam_right: {type: intelrealsense, serial_number_or_name: "000000000000", width: 640, height: 480, fps: 30},
-            cam_top: {type: intelrealsense, serial_number_or_name: "000000000000", width: 640, height: 480, fps: 30},
-            cam_low: {type: intelrealsense, serial_number_or_name: "000000000000", width: 640, height: 480, fps: 30},
+            cam_left: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+            cam_right: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+            cam_top: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+            cam_low: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
             }" \
           --teleop.type=bi_widowxai_leader_teleop \
           --teleop.left_arm_ip_address=192.168.1.3 \
@@ -61,7 +61,7 @@ Teleoperation Configuration
 
 When using the robot in teleoperation mode you can specify command line arguments to customize the behavior:
 
-- ``--fps``: The number of frames per second to send to the robot.
-- ``--teleop_time_s``: The duration of the teleoperation in seconds.
-- ``--robot.max_relative_target [float]``: limits the magnitude of the relative positional target vector for safety purposes (default: 5.0). Once you’re confident in controlling the robot safely, you can remove this restriction by setting it to null. 
-- ``--robot.loop_rate``: Control loop rate in Hz (default: 30)
+- ``--fps`` (int): The number of frames per second to send to the robot.
+- ``--teleop_time_s`` (int): The duration of the teleoperation in seconds.
+- ``--robot.max_relative_target`` (float): limits the magnitude of the relative positional target vector for safety purposes (default: 5.0). Once you’re confident in controlling the robot safely, you can remove this restriction by setting it to null. 
+- ``--robot.loop_rate`` (int): Control loop rate in Hz (default: 30)

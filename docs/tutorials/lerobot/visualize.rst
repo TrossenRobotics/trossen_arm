@@ -39,7 +39,7 @@ You can also locally visualize episodes from a dataset on the hub by executing o
 .. code-block:: bash
 
    uv run lerobot-dataset-viz \
-      --repo-id ${HF_USER}/${datasetname} \
+      --repo-id ${HF_USER}/datasetname \
       --episode-index 0
 
 
@@ -50,8 +50,8 @@ If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``
 .. code-block:: bash
 
    uv run lerobot-dataset-viz \
-      --repo-id ${HF_USER}/${datasetname}
-      --root .cache/huggingface/lerobot/${HF_USER}/${datasetname}/videos \
+      --repo-id ${HF_USER}/datasetname
+      --root .cache/huggingface/lerobot/${HF_USER}/datasetname/videos \
       --mode local \
       --episode-index 0
 

@@ -11,22 +11,31 @@ Replaying an Episode
 
 Now try to replay the first recorded episode on your robot:
 
+..  tabs::
+    .. group-tab:: Trossen AI Stationary
 
-    .. code-block:: bash
+      .. code-block:: bash
 
-      uv run lerobot-replay \
-        --robot.type=widowxai_follower_robot \
-        --robot.ip_address=192.168.1.4 \
-        --robot.id=follower \
-        --dataset.repo_id=${HF_USER}/${datasetname} \
-        --dataset.episode=0 # choose the episode you want to replay
+        uv run lerobot-replay \
+          --robot.type=widowxai_follower_robot \
+          --robot.ip_address=192.168.1.4 \
+          --robot.id=follower \
+          --robot.type=widowxai_follower_robot \
+          --robot.ip_address=192.168.1.2 \
+          --robot.id=follower \
+          --dataset.repo_id=${HF_USER}/${datasetname} \
+          --dataset.episode=0 # choose the episode you want to replay
+      
+    .. group-tab:: Trossen AI Bi Stationary
 
-.. note::
+        .. code-block:: bash
 
-    The leader arms will be disabled in replay mode.
-
-    This change was introduced in the :ref:`tutorials/lerobot/changelog:Leader Arm Deactivation During Inference` update to allow users to replay episodes or run inference without requiring the leader arms to be connected or initialized.
-    Only the follower arms are needed for executing recorded trajectories or evaluating policies.
+          uv run lerobot-replay \
+            --robot.type=widowxai_follower_robot \
+            --robot.ip_address=192.168.1.4 \
+            --robot.id=follower \
+            --dataset.repo_id=${HF_USER}/${datasetname} \
+            --dataset.episode=0 # choose the episode you want to replay
 
 Replay Configuration
 ====================

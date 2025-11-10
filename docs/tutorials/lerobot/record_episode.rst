@@ -86,12 +86,6 @@ Record **2 episodes** and upload your dataset to the **Hugging Face Hub**:
    - **Joints 0-5**: Radians
    - **Joint 6 (Gripper)**: Millimeters (mm)
 
-.. warning::
-
-   We have introdced a new change in how the values are saved in the dataset.
-   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
-   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
-   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
 
 Handling Camera FPS Issues
 ==========================
@@ -157,7 +151,7 @@ Handling Camera FPS Issues
          --display_data=false
 
 
-If using ``IntelRealsense`` camera interface is causing fps issues, you can try using the ``OpenCV`` interface instead.
+If using ``Realsense`` camera interface is causing fps issues, you can try using the ``OpenCV`` interface instead.
 Make sure that you have configured the cameras correctly as described in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
 
 Recording Configuration

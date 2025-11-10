@@ -2,13 +2,6 @@
 Training and Evaluating a Policy
 ================================
 
-.. warning::
-
-   We have introdced a new change in how the values are saved in the dataset.
-   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
-   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
-   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
-
 Training a Policy
 =================
 
@@ -31,19 +24,6 @@ Here is an example command:
            --wandb.enable=true
            --policy.repo_id=${HF_USER}/my_policy
    
-   .. group-tab:: Trossen AI Mobile
-
-      .. code-block:: bash
-
-          uv run lerobot-train \
-           --dataset.repo_id=${HF_USER}/trossen_ai_mobile_test \
-           --policy.type=act \
-           --output_dir=outputs/train/act_trossen_ai_mobile_test \
-           --job_name=act_trossen_ai_mobile_test \
-           --policy.device=cuda \
-           --wandb.enable=true
-           --policy.repo_id=${HF_USER}/my_policy
-
    .. group-tab:: Trossen AI Solo
 
       .. code-block:: bash
@@ -95,26 +75,21 @@ The training pipeline can be configured using the following parameters:
 - ``--dataset``: Configuration for the dataset.
 - ``--env``: Configuration for the environment. Can be ``None``.
 - ``--policy``: Configuration for the pre-trained policy. Can be ``None``.
-- ``--output_dir``: Directory to save all run outputs. If another training session is run with the same value, its contents will be overwritten unless ``resume`` is set to true.
 - ``--job_name``: Name of the job. Can be ``None``.
-- ``--resume``: Set to true to resume a previous run. Ensure ``output_dir`` is the directory of an existing run with at least one checkpoint.
 - ``--device``: Device to use for training (e.g., ``cuda``, ``cpu``, ``mps``).
-- ``--use_amp``: Determines whether to use Automatic Mixed Precision (AMP) for training and evaluation.
-- ``--seed``: Seed for training and evaluation environments.
 - ``--steps``: Number of training steps to run.
-- ``--num_workers``: Number of workers for the dataloader.
 - ``--batch_size``: Batch size for training.
 - ``--eval_freq``: Frequency of evaluation during training.
-- ``--log_freq``: Frequency of logging during training.
 - ``--save_checkpoint``: Whether to save checkpoints during training.
-- ``--save_freq``: Frequency of saving checkpoints.
-- ``--offline``: Configuration for offline training.
-- ``--online``: Configuration for online training.
-- ``--use_policy_training_preset``: Whether to use policy training preset.
-- ``--optimizer``: Configuration for the optimizer. Can be ``None``.
-- ``--scheduler``: Configuration for the learning rate scheduler. Can be ``None``.
-- ``--eval``: Configuration for evaluation.
 - ``--wandb``: Configuration for Weights & Biases logging.
+
+.. note::
+
+   for additional configuration options, use the command below to see all available command line arguments:
+
+   .. code-block:: bash
+
+       uv run lerobot-train --help
 
 Evaluating Your Policy
 ======================
@@ -126,19 +101,15 @@ You can evaluate your trained policy on you robot using the script below:
       uv run lerobot-record  \
       --robot.type= widowxai_follower_robot \
       --robot.port=/dev/ttyACM1 \
-      --robot.cameras="{ up: {type: opencv, index_or_path: /dev/video10, width: 640, height: 480, fps: 30}, side: {type: intelrealsense, serial_number_or_name: 233522074606, width: 640, height: 480, fps: 30}}" \
+      --robot.cameras='{ 
+         up: {type: opencv, index_or_path: 10, width: 640, height: 480, fps: 30},
+         side: {type: opencv, index_or_path: 8, width: 640, height: 480, fps: 30}
+         }' \
       --robot.id=follower \
       --display_data=false \
       --dataset.repo_id=${HF_USER}/eval_trossen_ai_xxxxxxx_test \
       --dataset.single_task="Grab and handover the red cube to the other arm"
       --policy.path=${HF_USER}/my_policy
-
-.. note::
-
-    The leader arms will be disabled in evaluation mode.
-
-    This change was introduced in the :ref:`tutorials/lerobot/changelog:Leader Arm Deactivation During Inference` update to allow users to replay episodes or run inference without requiring the leader arms to be connected or initialized.
-    Only the follower arms are needed for executing recorded trajectories or evaluating policies.
 
 .. note::
 

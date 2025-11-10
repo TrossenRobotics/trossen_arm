@@ -23,7 +23,7 @@ On your computer:
 
    .. code-block:: bash
 
-      git clone -b trossen-ai https://github.com/TrossenRobotics/lerobot_trossen.git ~/lerobot
+      git clone -b trossen-ai https://github.com/TrossenRobotics/lerobot_trossen.git ~/lerobot_trossen
 
 #. Install the trossen lerobot packages and their dependencies
 

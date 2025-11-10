@@ -14,7 +14,7 @@ The configuration File for the follower arm for the Trossen AI Kits with LeRobot
 The configuration File for the leader arm for the Trossen AI Kits with LeRobot can be found in :guilabel:`lerobot_trossen/packages/lerobot_teleoperation_trossen/src/lerobot_teleoperation_trossen`.
 
 .. tabs::
-    .. group-tab:: Trossen AI Solo Follower   
+    .. group-tab:: WidowXAI Follower   
 
         .. code-block:: python
 
@@ -67,7 +67,7 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
                 )
 
 
-    .. group-tab:: Trossen AI Bi Follower
+    .. group-tab:: Bi WidowXAI Follower
         
         .. code-block:: python
 
@@ -99,7 +99,7 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
                 cameras: dict[str, CameraConfig] = field(default_factory=dict)
 
 
-    .. group-tab:: Trossen AI Solo Leader
+    .. group-tab:: WidowXAI Leader
 
         .. code-block:: python
 
@@ -131,7 +131,7 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
                 )
 
     
-    .. group-tab:: Trossen AI Bi Leader
+    .. group-tab:: Bi WidowXAI Leader
 
         .. code-block:: python
 
@@ -166,17 +166,30 @@ You will pass the cameras as a dictionary argument using ``--robot.cameras``.
 
 The dictionary will look like this for two cameras:
 
-.. code-block:: bash
+.. tabs::
+    .. group-tab:: RealSense Interface
+
+        .. code-block:: bash
+            
+            --robot.cameras="{
+                wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                top: {type: intelrealsense, serial_number_or_name: "1123456789", width: 640, height: 480, fps: 30}
+            }"
     
-    --robot.cameras="{
-        wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
-        top: {type: intelrealsense, serial_number_or_name: "1123456789", width: 640, height: 480, fps: 30}
-    }"
+    .. group-tab:: OpenCV Interface
+
+        .. code-block:: bash
+            
+            --robot.cameras="{
+                wrist: {type: opencv, index_or_path: 8, width: 640, height: 480, fps: 30},
+                top: {type: opencv, index_or_path: 10, width: 640, height: 480, fps: 30}
+            }"
+    
 
 We will look at setting up the specific camera types in more detail below.
 
 .. tabs::
-    .. group-tab:: Intel RealSense Interface
+    .. group-tab:: RealSense Interface
 
         #.  Open realsense-viewer
 
@@ -208,19 +221,35 @@ We will look at setting up the specific camera types in more detail below.
                     lerobot-find-cameras realsense
         
 
+                .. code-block:: bash
+
+                    --- Detected Cameras ---
+                    Camera #0:
+                    Name: Intel RealSense D405
+                    Type: IntelRealSense
+                    Id: 0123456789
+                    Serial Number: 0123456789
+                    Firmware Version:
+        
+        #.  check the saved output in :ref: `output/captured_images:` to identify which serial number corresponds to which physical camera:
+
+            .. code-block:: bash
+
+                realsense__0123456789.png
+                [...]
+                realsense__1123456789.png
+                realsense__2123456789.png
+                [...]
+                realsense__3123456789.png
+
         #.  Put the camera serial number in the appropriate dictionary item as specified above.
 
         #.  Repeat for the rest of the cameras.
 
     .. group-tab:: OpenCV Interface
 
-        The `OpenCVCamera <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/cameras/opencv.py>`_ class allows you to efficiently record frames from most cameras using the `opencv2 <https://docs.opencv.org>`_ library. 
+        The `OpenCVCamera <https://github.com/lerobot/src/lerobot/cameras/>`_ class in the original lerobot repository allows you to efficiently record frames from most cameras using the `opencv2 <https://docs.opencv.org>`_ library. 
         For more details on compatibility, see `Video I/O with OpenCV Overview <https://docs.opencv.org/4.x/d0/da7/videoio_overview.html>`_.
-
-        To instantiate an `OpenCVCamera <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/cameras/opencv.py>`_, you need a camera index (e.g. :guilabel:`OpenCVCamera(camera_index=0)`).
-        When you only have one camera like a webcam of a laptop, the camera index is usually ``0`` but it might differ, and the camera index might change if you reboot your computer or re-plug your camera.
-        This behavior depends on your operating system.
-
 
         #.  To find the camera indices, run the following utility script, which will save a few frames from each detected camera:
 

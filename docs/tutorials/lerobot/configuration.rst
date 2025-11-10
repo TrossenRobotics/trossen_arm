@@ -204,6 +204,10 @@ We will look at setting up the specific camera types in more detail below.
 
         #.  Plug in a single camera and check the sidebar for its entry.
             If it does not show up in the side bar, click Add Source and find the Intel RealSense D405 in the drop down.
+            
+            .. note::
+
+                Troubleshooting: If the camera does not show up in the sidebar after plugging it in, try a hardware reset.
 
         #.  Click on Info for the camera, find the Serial Number, and copy it.
 
@@ -324,3 +328,8 @@ We will look at setting up the specific camera types in more detail below.
                 Some cameras may take a few seconds to warm up, and the first frame might be black or green.
 
         #. Find all the camera indices and put them in the appropriate dictionary items as specified above.
+        
+
+
+.. note::
+    For best practices on multi-camera setups, refer to `<https://dev.realsenseai.com/docs/lidar-camera-l515-multi-camera-setup>` .

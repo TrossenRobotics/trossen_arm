@@ -60,20 +60,20 @@ This tutorial walks you through:
     - This example uses two different versions of LeRobot:
 
       - **LeRobot V0.1.0** for training and dependency management.
-      - **LeRobot V0.3.2** for running the client and inference.
+      - **LeRobot V0.4.1** for running the client and inference.
 
-    - The custom LeRobot V0.3.2 (with BiWidowXAIFollower support) is available on GitHub:
-      [Interbotix/lerobot - ``trossen_ai_open_pi`` branch](https://github.com/Interbotix/lerobot/tree/trossen_ai_open_pi)
+    - The custom LeRobot V0.4.1 (with BiWidowXAIFollower support) is available on GitHub:
+      [TrossenRobotics/lerobot_trossen - ``main`` branch](https://github.com/TrossenRobotics/lerobot_trossen.git)
     - **LeRobot V0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
-    - **LeRobot V0.3.2** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
+    - **LeRobot V0.4.1** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
     - **Training commands** should be run from the project root to use LeRobot V0.1.0.
-    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot V0.3.2.
+    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot V0.4.1.
     - This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
 
 Collect Episodes using LeRobot
 ==============================
 
-We collect episodes using ``Interbotix/lerobot``. For more information on installation and recording episodes check the following:
+We collect episodes using ``TrossenRobotics/lerobot_trossen``. For more information on installation and recording episodes check the following:
 
 #. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/setup.html>`_
 #. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/record_episode.html>`_
@@ -155,46 +155,138 @@ Example configuration for training on the Trossen AI dataset:
     In this example the dataset has 4 cameras: ``top``, ``bottom``, ``left`` and ``right``.
     We map them to the expected input names of the model: ``cam_high``, ``cam_low``, ``cam_left_wrist`` and ``cam_right_wrist``.
 
-.. code-block:: python
 
-   TrainConfig(
-       name="pi0_trossen_transfer_block",
-       model=pi0.Pi0Config(paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"),
-       data=LeRobotAlohaDataConfig(
-           use_delta_joint_actions=False,
-           adapt_to_pi=False,
-           repo_id="TrossenRoboticsCommunity/bimanual-widowxai-handover-cube",
-           assets=AssetsConfig(
-               assets_dir="gs://openpi-assets/checkpoints/pi0_base/assets",
-               asset_id="trossen",
-           ),
-           default_prompt="grab and handover the red cube",
-           repack_transforms=_transforms.Group(
-               inputs=[
-                   _transforms.RepackTransform(
-                       {
-                           "images": {
-                               "cam_high": "observation.images.top",
-                               "cam_left_wrist": "observation.images.left",
-                               "cam_right_wrist": "observation.images.right",
-                               "cam_low": "observation.images.bottom",
-                           },
-                           "state": "observation.state",
-                           "actions": "action",
-                       }
-                   )
-               ]
-           ),
-       ),
-       weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
-       num_train_steps=20_000,
-       batch_size=8,
-       freeze_filter=pi0.Pi0Config(
-           paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
-       ).get_freeze_filter(),
-       # Turn off EMA for LoRA finetuning.
-       ema_decay=None,
-   )
+.. tabs::
+
+   .. group-tab:: Pi 0 Training Configuration
+
+        .. code-block:: python
+
+            TrainConfig(
+                name="pi0_trossen_transfer_block",
+                model=pi0_config.Pi0Config(paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"),
+                data=LeRobotAlohaDataConfig(
+                    use_delta_joint_actions=False,
+                    adapt_to_pi=False,
+                    repo_id="TrossenRoboticsCommunity/bimanual-widowxai-handover-cube",
+                    assets=AssetsConfig(
+                        assets_dir="gs://openpi-assets/checkpoints/pi0_base/assets",
+                        asset_id="trossen",
+                    ),
+                    default_prompt="grab and handover the red cube",
+                    repack_transforms=_transforms.Group(
+                        inputs=[
+                            _transforms.RepackTransform(
+                                {
+                                    "images": {
+                                        "cam_high": "observation.images.top",
+                                        "cam_left_wrist": "observation.images.left",
+                                        "cam_right_wrist": "observation.images.right",
+                                    },
+                                    "state": "observation.state",
+                                    "actions": "action",
+                                }
+                            )
+                        ]
+                    ),
+                ),
+                weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
+                num_train_steps=20_000,
+                batch_size=2,
+                freeze_filter=pi0_config.Pi0Config(
+                    paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
+                ).get_freeze_filter(),
+                # Turn off EMA for LoRA finetuning.
+                ema_decay=None,
+            )
+
+   .. group-tab:: Pi 0.5 Training Configuration
+
+        .. code-block:: python
+            :emphasize-lines: 3,9,28
+
+            TrainConfig(
+                name="pi05_trossen_transfer_block",
+                model=pi0_config.Pi0Config(pi05=True),
+                data=LeRobotAlohaDataConfig(
+                    use_delta_joint_actions=False,
+                    adapt_to_pi=False,
+                    repo_id="TrossenRoboticsCommunity/bimanual-widowxai-handover-cube",
+                    assets=AssetsConfig(
+                        assets_dir="gs://openpi-assets/checkpoints/pi05_base/assets",
+                        asset_id="trossen",
+                    ),
+                    default_prompt="grab and handover the red cube",
+                    repack_transforms=_transforms.Group(
+                        inputs=[
+                            _transforms.RepackTransform(
+                                {
+                                    "images": {
+                                        "cam_high": "observation.images.top",
+                                        "cam_left_wrist": "observation.images.left",
+                                        "cam_right_wrist": "observation.images.right",
+                                    },
+                                    "state": "observation.state",
+                                    "actions": "action",
+                                }
+                            )
+                        ]
+                    ),
+                ),
+                weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi05_base/params"),
+                num_train_steps=80_000,
+                batch_size=8,
+            )
+    
+   .. group-tab:: Multi Task Training 
+
+        We train using the task prompt provided in the dataset instead of a default prompt.
+        This prompt is prepended to the model input during training.
+
+        .. code-block:: python
+           :emphasize-lines: 8,25
+
+           TrainConfig(
+                name="pi05_trossen_multitask_training",
+                model=pi0_config.Pi0Config(pi05=True),
+                data=LeRobotAlohaDataConfig(
+                    use_delta_joint_actions=False,
+                    adapt_to_pi=False,
+                    repo_id="TrossenRoboticsCommunity/trossen_ai_stationary_organize_tools",
+                    base_config=DataConfig(prompt_from_task=True),
+                    assets=AssetsConfig(
+                        assets_dir="gs://openpi-assets/checkpoints/pi05_base/assets",
+                        asset_id="trossen",
+                    ),
+                    repack_transforms=_transforms.Group(
+                        inputs=[
+                            _transforms.RepackTransform(
+                                {
+                                    "images": {
+                                        "cam_high": "observation.images.cam_high",
+                                        "cam_left_wrist": "observation.images.cam_left_wrist",
+                                        "cam_right_wrist": "observation.images.cam_right_wrist",
+                                        "cam_low": "observation.images.cam_low",
+                                    },
+                                    "state": "observation.state",
+                                    "actions": "action",
+                                    "prompt": "prompt",
+                                }
+                            )
+                        ]
+                    ),
+                ),
+                weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi05_base/params"),
+                num_train_steps=100_000,
+                batch_size=2,
+                freeze_filter=pi0_config.Pi0Config(
+                    paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
+                ).get_freeze_filter(),
+                # Turn off EMA for LoRA finetuning.
+                ema_decay=None,
+                save_interval=5000,
+            )
+
 
 We trained on a RTX5090 and fine-tuned using LoRA.
 

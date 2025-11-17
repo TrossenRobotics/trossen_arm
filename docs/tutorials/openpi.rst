@@ -306,6 +306,7 @@ Checkpoints are stored in the ``checkpoints`` folder at the root of your project
 To use a pretrained policy, download and extract the following checkpoint into your ``checkpoints`` directory:
 
 - `OpenPi Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/shantanu-tr/open_pi_finetune_checkpoint>`_
+- `OpenPi0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
 
 Running Inference with Your Trained Policy
 ==========================================
@@ -407,7 +408,7 @@ Run the client to interact with the policy server:
 Results
 -------
 
-Here are some preliminary results from our experiments with the π0 policy on the bimanual WidowX setup.
+Here are some preliminary results from our experiments with the π0 and π0.5 policy on the bimanual WidowX setup.
 
 - The π0 base checkpoint has no episodes collected using Trossen AI arms, so fine tuning is necessary.
 - We collected a small dataset of 50 episodes (very small compared to other robot modalities).
@@ -423,6 +424,7 @@ Scenarios:
 2. ``openpi_trossen_ai_blue_lego [fail]`` : Robot fails due to different block size and color.
 3. ``openpi_trossen_ai_environment_disturbances [fail]`` : Robot struggles under disturbances.
 4. ``openpi_trossen_ai_wooden_block [fail]`` : Robot fails with wooden block, poor generalization.
+5. ``openpi_trossen_ai_pi05_red_block [success]`` : π0.5 model successfully picks up and transfers red block on first try.
 
 We used the same command for all tests:
 

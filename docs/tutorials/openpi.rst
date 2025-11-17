@@ -330,7 +330,7 @@ Start the Client
 .. note::
 
     The client script requires the latest version of LeRobot, while the openpi repository depends on an older version for data loading.
-    To prevent version conflicts, the ``trossen_ai`` package uses the ``Interbotix/lerobot`` repository as its dependency.
+    To prevent version conflicts, the ``trossen_ai`` package uses the ``TrossenRobotics/lerobot_trossen`` repository as its dependency.
     When using ``uv`` for package management, this setup creates a separate virtual environment for ``trossen_ai``.
     If you need to modify any LeRobot packages, ensure you are editing them in the correct environment.
 

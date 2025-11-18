@@ -146,7 +146,7 @@ Handling Camera FPS Issues
                 --dataset.reset_time_s=15 \
                 --dataset.num_episodes=2 \
                 --dataset.push_to_hub=true \
-                --dataset.single_task="Grab the cube"
+                --dataset.single_task="Grab the cube" \
                 --dataset.num_image_writer_threads_per_camera=8 \
                 --display_data=false
 

@@ -231,7 +231,7 @@ We will look at setting up the specific camera types in more detail below.
                     Serial Number: 0123456789
                     Firmware Version:
 
-        #.  check the saved output in :ref: `output/captured_images:` to identify which serial number corresponds to which physical camera:
+        #.  Check the saved output in :guilabel:`outputs/captured_images` to identify which serial number corresponds to which physical camera:
 
             .. code-block:: bash
 

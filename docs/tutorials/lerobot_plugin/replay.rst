@@ -14,9 +14,6 @@ Now try to replay the first recorded episode on your robot:
                 --robot.type=widowxai_follower_robot \
                 --robot.ip_address=192.168.1.4 \
                 --robot.id=follower \
-                --robot.type=widowxai_follower_robot \
-                --robot.ip_address=192.168.1.2 \
-                --robot.id=follower \
                 --dataset.repo_id=${HF_USER}/<dataset-id> \
                 --dataset.episode=0
 

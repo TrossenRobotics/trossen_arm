@@ -21,7 +21,7 @@ Here is an example command:
                 --output_dir=outputs/train/act_trossen_ai_stationary_test \
                 --job_name=act_trossen_ai_stationary_test \
                 --policy.device=cuda \
-                --wandb.enable=true
+                --wandb.enable=true \
                 --policy.repo_id=${HF_USER}/my_policy
 
     .. group-tab:: Trossen AI Solo
@@ -34,7 +34,7 @@ Here is an example command:
                 --output_dir=outputs/train/act_trossen_ai_solo_test \
                 --job_name=act_trossen_ai_solo_test \
                 --policy.device=cuda \
-                --wandb.enable=true
+                --wandb.enable=true \
                 --policy.repo_id=${HF_USER}/my_policy
 
 Explanation of the Command
@@ -97,7 +97,7 @@ You can evaluate your trained policy on you robot using the script below:
     .. code-block:: bash
 
         uv run lerobot-record  \
-            --robot.type= widowxai_follower_robot \
+            --robot.type=widowxai_follower_robot \
             --robot.port=/dev/ttyACM1 \
             --robot.cameras='{
                 up: {type: opencv, index_or_path: 10, width: 640, height: 480, fps: 30},
@@ -106,7 +106,7 @@ You can evaluate your trained policy on you robot using the script below:
             --robot.id=follower \
             --display_data=false \
             --dataset.repo_id=${HF_USER}/eval_trossen_ai_xxxxxxx_test \
-            --dataset.single_task="Grab and handover the red cube to the other arm"
+            --dataset.single_task="Grab and handover the red cube to the other arm" \
             --policy.path=${HF_USER}/my_policy
 
 .. note::

@@ -8,6 +8,7 @@ These comprehensive tutorials offer step-by-step guidance on utilizing the Tross
     :maxdepth: 1
     :caption: Contents:
 
+    tutorials/lerobot_plugin.rst
     tutorials/lerobot.rst
     tutorials/trossen_data_collection_ui.rst
     tutorials/trossen_arm_mujoco.rst

@@ -4,58 +4,57 @@ Replaying an Episode
 
 .. warning::
 
-   We have introdced a new change in how the values are saved in the dataset.
-   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
-   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
-   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
+    We have introduced a new change in how the values are saved in the dataset.
+    The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
+    If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
+    Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
 
 Now try to replay the first recorded episode on your robot:
 
 
 .. tabs::
 
-  .. group-tab:: Trossen AI Stationary
+    .. group-tab:: Trossen AI Stationary
 
-    .. code-block:: bash
+        .. code-block:: bash
 
-      python lerobot/scripts/control_robot.py \
-        --robot.type=trossen_ai_stationary \
-        --robot.max_relative_target=null \
-        --control.type=replay \
-        --control.fps=30 \
-        --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
-        --control.episode=0 \
-    
-  .. group-tab:: Trossen AI Mobile
-    
-    .. code-block:: bash
+            python lerobot/scripts/control_robot.py \
+                --robot.type=trossen_ai_stationary \
+                --robot.max_relative_target=null \
+                --control.type=replay \
+                --control.fps=30 \
+                --control.repo_id=${HF_USER}/trossen_ai_stationary_test \
+                --control.episode=0 \
 
-      python lerobot/scripts/control_robot.py \
-        --robot.type=trossen_ai_mobile \
-        --robot.max_relative_target=null \
-        --control.type=replay \
-        --control.fps=30 \
-        --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
-        --control.episode=0 \
-        --robot.enable_motor_torque=true
-    
+    .. group-tab:: Trossen AI Mobile
+
+        .. code-block:: bash
+
+            python lerobot/scripts/control_robot.py \
+                --robot.type=trossen_ai_mobile \
+                --robot.max_relative_target=null \
+                --control.type=replay \
+                --control.fps=30 \
+                --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+                --control.episode=0 \
+                --robot.enable_motor_torque=true
+
     .. note::
 
-      The Trossen AI Mobile robot needs the base torque to be enabled to move in replay mode.
-      You can enable it by adding ``--robot.enable_motor_torque=true`` to the command line.
+        The Trossen AI Mobile robot needs the base torque to be enabled to move in replay mode.
+        You can enable it by adding ``--robot.enable_motor_torque=true`` to the command line.
 
-    
-  .. group-tab:: Trossen AI Solo
+    .. group-tab:: Trossen AI Solo
 
-    .. code-block:: bash
+        .. code-block:: bash
 
-      python lerobot/scripts/control_robot.py \
-        --robot.type=trossen_ai_solo \
-        --robot.max_relative_target=null \
-        --control.type=replay \
-        --control.fps=30 \
-        --control.repo_id=${HF_USER}/trossen_ai_solo_test \
-        --control.episode=0 \
+            python lerobot/scripts/control_robot.py \
+                --robot.type=trossen_ai_solo \
+                --robot.max_relative_target=null \
+                --control.type=replay \
+                --control.fps=30 \
+                --control.repo_id=${HF_USER}/trossen_ai_solo_test \
+                --control.episode=0 \
 
 .. note::
 

@@ -52,11 +52,12 @@ Teleoperation Configuration
 ===========================
 
 .. note::
-  for additional configuration options, use the command below to see all available command line arguments:
 
-  .. code-block:: bash
+    For additional configuration options, use the command below to see all available command line arguments:
 
-      uv run lerobot-teleoperate --help
+    .. code-block:: bash
+
+        uv run lerobot-teleoperate --help
 
 When using the robot in teleoperation mode you can specify command line arguments to customize the behavior:
 

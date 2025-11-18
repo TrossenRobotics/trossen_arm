@@ -92,7 +92,7 @@ The training pipeline can be configured using the following parameters:
 Evaluating Your Policy
 ======================
 
-You can evaluate your trained policy on you robot using the script below:
+You can evaluate your trained policy on your robot using the script below:
 
     .. code-block:: bash
 

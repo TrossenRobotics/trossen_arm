@@ -4,10 +4,10 @@ Training and Evaluating a Policy
 
 .. warning::
 
-   We have introdced a new change in how the values are saved in the dataset.
-   The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
-   If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
-   Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
+    We have introduced a new change in how the values are saved in the dataset.
+    The values are now saved in the dataset as **radians** for all joints and no scaling is applied for the gripper.
+    If you are using a **previous version** of the dataset, the values for joints 0-5 will be in **degrees** and a scaling of 10000 will be applied to gripper.
+    Check  :ref:`tutorials/lerobot/changelog:Trossen v1.0 Dataset Format` before using datasets from previous versions.
 
 Training a Policy
 =================
@@ -18,62 +18,61 @@ Here is an example command:
 
 .. tabs::
 
-   .. group-tab:: Trossen AI Stationary
+    .. group-tab:: Trossen AI Stationary
 
-      .. code-block:: bash
+        .. code-block:: bash
 
-         python lerobot/scripts/train.py \
-           --dataset.repo_id=${HF_USER}/trossen_ai_stationary_test \
-           --policy.type=act \
-           --output_dir=outputs/train/act_trossen_ai_stationary_test \
-           --job_name=act_trossen_ai_stationary_test \
-           --device=cuda \
-           --wandb.enable=true
-   
-   .. group-tab:: Trossen AI Mobile
+            python lerobot/scripts/train.py \
+                --dataset.repo_id=${HF_USER}/trossen_ai_stationary_test \
+                --policy.type=act \
+                --output_dir=outputs/train/act_trossen_ai_stationary_test \
+                --job_name=act_trossen_ai_stationary_test \
+                --device=cuda \
+                --wandb.enable=true
 
-      .. code-block:: bash
+    .. group-tab:: Trossen AI Mobile
 
-         python lerobot/scripts/train.py \
-           --dataset.repo_id=${HF_USER}/trossen_ai_mobile_test \
-           --policy.type=act \
-           --output_dir=outputs/train/act_trossen_ai_mobile_test \
-           --job_name=act_trossen_ai_mobile_test \
-           --device=cuda \
-           --wandb.enable=true
+        .. code-block:: bash
 
-   .. group-tab:: Trossen AI Solo
+            python lerobot/scripts/train.py \
+                --dataset.repo_id=${HF_USER}/trossen_ai_mobile_test \
+                --policy.type=act \
+                --output_dir=outputs/train/act_trossen_ai_mobile_test \
+                --job_name=act_trossen_ai_mobile_test \
+                --device=cuda \
+                --wandb.enable=true
 
-      .. code-block:: bash
+    .. group-tab:: Trossen AI Solo
 
-         python lerobot/scripts/train.py \
-           --dataset.repo_id=${HF_USER}/trossen_ai_solo_test \
-           --policy.type=act \
-           --output_dir=outputs/train/act_trossen_ai_solo_test \
-           --job_name=act_trossen_ai_solo_test \
-           --device=cuda \
-           --wandb.enable=true
+        .. code-block:: bash
+
+            python lerobot/scripts/train.py \
+                --dataset.repo_id=${HF_USER}/trossen_ai_solo_test \
+                --policy.type=act \
+                --output_dir=outputs/train/act_trossen_ai_solo_test \
+                --job_name=act_trossen_ai_solo_test \
+                --device=cuda \
+                --wandb.enable=true
 
 Explanation of the Command
 --------------------------
 
 #. We provided the dataset using ``--dataset.repo_id=${HF_USER}/trossen_ai_xxxxxxx_test``.
 #. We specified the policy with ``--policy.type=act``, which loads configurations from `configuration_act.py <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/policies/act/configuration_act.py>`_.
-   This policy will automatically adapt to the **number of motor states, motor actions, and cameras** recorded in your dataset.
-#. We set ``--device=cuda`` to train on an **NVIDIA GPU**.
+   This policy will automatically adapt to the number of motor states, motor actions, and cameras recorded in your dataset.
+#. We set ``--device=cuda`` to train on an NVIDIA GPU.
    If using Apple Silicon, you can replace it with ``--device=mps``.
-#. We enabled **Weights & Biases** logging using ``--wandb.enable=true`` for visualizing training plots.
+#. We enabled Weights & Biases logging using ``--wandb.enable=true`` for visualizing training plots.
    This is optional, but if used, ensure you're logged in by running:
 
-   .. code-block:: bash
+    .. code-block:: bash
 
-      wandb login
+        wandb login
 
 .. note::
 
-   **Training will take several hours.** Checkpoints will be saved in:
-   :guilabel:`outputs/train/act_trossen_ai_xxxxx_test/checkpoints`.
-
+    Training will take several hours.
+    Checkpoints will be saved in: :guilabel:`outputs/train/act_trossen_ai_xxxxx_test/checkpoints`.
 
 Training Pipeline Configuration
 -------------------------------
@@ -107,74 +106,74 @@ The training pipeline can be configured using the following parameters:
 Evaluating Your Policy
 ======================
 
-You can use the ``record`` function from :guilabel:`lerobot/scripts/control_robot.py` but with a **policy checkpoint as input**.
-Run the following command to record **10 evaluation episodes**:
+You can use the ``record`` function from :guilabel:`lerobot/scripts/control_robot.py` but with a policy checkpoint as input.
+Run the following command to record 10 evaluation episodes:
 
 .. tabs::
 
-   .. group-tab:: Trossen AI Stationary
+    .. group-tab:: Trossen AI Stationary
 
-      .. code-block:: bash
+        .. code-block:: bash
 
-         python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_stationary \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Stationary." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_stationary_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_stationary_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1
-   
-   .. group-tab:: Trossen AI Mobile
+            python lerobot/scripts/control_robot.py \
+                --robot.type=trossen_ai_stationary \
+                --control.type=record \
+                --control.fps=30 \
+                --control.single_task="Recording evaluation episode using Trossen AI Stationary." \
+                --control.repo_id=${HF_USER}/eval_act_trossen_ai_stationary_test \
+                --control.tags='["tutorial"]' \
+                --control.warmup_time_s=5 \
+                --control.episode_time_s=30 \
+                --control.reset_time_s=30 \
+                --control.num_episodes=10 \
+                --control.push_to_hub=true \
+                --control.policy.path=outputs/train/act_trossen_ai_stationary_test/checkpoints/last/pretrained_model \
+                --control.num_image_writer_processes=1
 
-      .. code-block:: bash
+    .. group-tab:: Trossen AI Mobile
 
-         python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_mobile \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Mobile." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_mobile_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_mobile_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1 \
-           --robot.enable_motor_torque=true
+        .. code-block:: bash
 
-   .. group-tab:: Trossen AI Solo
+            python lerobot/scripts/control_robot.py \
+                --robot.type=trossen_ai_mobile \
+                --control.type=record \
+                --control.fps=30 \
+                --control.single_task="Recording evaluation episode using Trossen AI Mobile." \
+                --control.repo_id=${HF_USER}/eval_act_trossen_ai_mobile_test \
+                --control.tags='["tutorial"]' \
+                --control.warmup_time_s=5 \
+                --control.episode_time_s=30 \
+                --control.reset_time_s=30 \
+                --control.num_episodes=10 \
+                --control.push_to_hub=true \
+                --control.policy.path=outputs/train/act_trossen_ai_mobile_test/checkpoints/last/pretrained_model \
+                --control.num_image_writer_processes=1 \
+                --robot.enable_motor_torque=true
 
-      .. code-block:: bash
+    .. group-tab:: Trossen AI Solo
 
-         python lerobot/scripts/control_robot.py \
-           --robot.type=trossen_ai_solo \
-           --control.type=record \
-           --control.fps=30 \
-           --control.single_task="Recording evaluation episode using Trossen AI Solo." \
-           --control.repo_id=${HF_USER}/eval_act_trossen_ai_solo_test \
-           --control.tags='["tutorial"]' \
-           --control.warmup_time_s=5 \
-           --control.episode_time_s=30 \
-           --control.reset_time_s=30 \
-           --control.num_episodes=10 \
-           --control.push_to_hub=true \
-           --control.policy.path=outputs/train/act_trossen_ai_solo_test/checkpoints/last/pretrained_model \
-           --control.num_image_writer_processes=1
+        .. code-block:: bash
+
+            python lerobot/scripts/control_robot.py \
+                --robot.type=trossen_ai_solo \
+                --control.type=record \
+                --control.fps=30 \
+                --control.single_task="Recording evaluation episode using Trossen AI Solo." \
+                --control.repo_id=${HF_USER}/eval_act_trossen_ai_solo_test \
+                --control.tags='["tutorial"]' \
+                --control.warmup_time_s=5 \
+                --control.episode_time_s=30 \
+                --control.reset_time_s=30 \
+                --control.num_episodes=10 \
+                --control.push_to_hub=true \
+                --control.policy.path=outputs/train/act_trossen_ai_solo_test/checkpoints/last/pretrained_model \
+                --control.num_image_writer_processes=1
 
 .. note::
 
-   You can change the camera interface to use for recording by adding the following command line argument:
-   ``--robot.camera_interface='opencv'``.
-   This is useful if you have configured multiple camera interfaces as explained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
+    You can change the camera interface to use for recording by adding the following command line argument:
+    ``--robot.camera_interface='opencv'``.
+    This is useful if you have configured multiple camera interfaces as explained in :ref:`tutorials/lerobot/configuration:Camera Serial Number`.
 
 .. note::
 
@@ -185,29 +184,28 @@ Run the following command to record **10 evaluation episodes**:
 
 .. note::
 
-   If the arms move violently during evaluation because of the policy, you can smooth out the motion by increasing the motion duration.
-   You can do this by setting a higher multiplier using the following command-line argument:
-   ``--robot.min_time_to_move_multiplier=6.0``
+    If the arms move violently during evaluation because of the policy, you can smooth out the motion by increasing the motion duration.
+    You can do this by setting a higher multiplier using the following command-line argument:
+    ``--robot.min_time_to_move_multiplier=6.0``
 
-   This value controls the time to reach each goal as ``min_time_to_move = multiplier / fps``.
-   Lower values result in quicker but potentially jerky movement; higher values improve smoothness but increase lag.
-   A good starting value is ``3.0``.
-
+    This value controls the time to reach each goal as ``min_time_to_move = multiplier / fps``.
+    Lower values result in quicker but potentially jerky movement; higher values improve smoothness but increase lag.
+    A good starting value is ``3.0``.
 
 Key Differences from Training Data Recording
 --------------------------------------------
 
 #. Policy Checkpoint:
 
-   - The command includes ``--control.policy.path``, which specifies the path to the trained policy checkpoint (e.g., :guilabel:`outputs/train/act_trossen_ai_xxxxx_test/checkpoints/last/pretrained_model`).
-   - If you uploaded the model checkpoint to **Hugging Face Hub**, you can also specify it as: :guilabel:`--control.policy.path=${HF_USER}/act_trossen_ai_xxxxx_test`.
+    - The command includes ``--control.policy.path``, which specifies the path to the trained policy checkpoint (e.g., :guilabel:`outputs/train/act_trossen_ai_xxxxx_test/checkpoints/last/pretrained_model`).
+    - If you uploaded the model checkpoint to Hugging Face Hub, you can also specify it as: ``--control.policy.path=${HF_USER}/act_trossen_ai_xxxxx_test``.
 
 #. Dataset Naming Convention:
 
-   - The dataset name now begins with ``eval_`` (e.g., ``${HF_USER}/eval_act_trossen_ai_xxxxx_test``) to indicate that **this is an evaluation dataset**.
+    - The dataset name now begins with ``eval_`` (e.g., ``${HF_USER}/eval_act_trossen_ai_xxxxx_test``) to indicate that this is an evaluation dataset.
 
 #. Image Writing Process:
 
-   - We set ``--control.num_image_writer_processes=1`` instead of the default ``0``.
-   - On some systems, using a **dedicated process** for writing images (from multiple cameras) allows achieving **a consistent 30 FPS during inference**.
-   - You can experiment with different values of ``--control.num_image_writer_processes`` to optimize performance.
+    - We set ``--control.num_image_writer_processes=1`` instead of the default ``0``.
+    - On some systems, using a dedicated process for writing images (from multiple cameras) allows achieving a consistent 30 FPS during inference.
+    - You can experiment with different values of ``--control.num_image_writer_processes`` to optimize performance.

@@ -1,6 +1,11 @@
-=======
-LeRobot
-=======
+=========================
+LeRobot Fork (Deprecated)
+=========================
+
+.. warning::
+
+    Support for the fork-based LeRobot integration has been deprecated.
+    We recommend using the :doc:`plugin-based LeRobot integration <./lerobot_plugin>` instead.
 
 This page contains tutorials for using the Trossen AI Kits with LeRobot for data collection and imitation learning.
 

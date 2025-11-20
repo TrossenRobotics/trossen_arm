@@ -17,9 +17,11 @@ This guide walks through the use of the `openpi <https://github.com/trossenRobot
 Background and Disclaimers
 ==========================
 
-Refer to the following papers to understand the model architecture and training procedure.
- - `π0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ 
- - `π0.5 Paper <https://www.physicalintelligence.company/download/pi05.pdf>`_  
+Refer to the following papers to understand the model architecture and training procedure:
+
+- `π0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_
+- `π0.5 Paper <https://www.physicalintelligence.company/download/pi05.pdf>`_
+
 Look into the limitations section for known issues and challenges.
 As mentioned in the paper, high-quality datasets are required to get good results.
 
@@ -61,15 +63,15 @@ This tutorial walks you through:
 
     - This example uses two different versions of LeRobot:
 
-      - **LeRobot V0.1.0** for training and dependency management.
-      - **LeRobot >=V0.4** for running the client and inference.
+      - **LeRobot v0.1.0** for training and dependency management.
+      - **LeRobot >=v0.4** for running the client and inference.
 
     - The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
       `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
-    - **LeRobot V0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
-    - **LeRobot >=V0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
-    - **Training commands** should be run from the project root to use LeRobot V0.1.0.
-    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot >=V0.4.
+    - **LeRobot v0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
+    - **LeRobot >=v0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
+    - **Training commands** should be run from the project root to use LeRobot v0.1.0.
+    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot >=v0.4.
     - This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
 
 Collect Episodes using LeRobot
@@ -243,8 +245,8 @@ Example configuration for training on the Trossen AI dataset:
                 num_train_steps=80_000,
                 batch_size=8,
             )
-    
-   .. group-tab:: Multi Task Training 
+
+   .. group-tab:: Multi Task Training
 
         We train using the task prompt provided in the dataset instead of a default prompt.
         This prompt is prepended to the model input during training.

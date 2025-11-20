@@ -64,7 +64,7 @@ This tutorial walks you through:
       - **LeRobot V0.1.0** for training and dependency management.
       - **LeRobot >=V0.4** for running the client and inference.
 
-    - The LeRobot BYOB Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
+    - The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
       `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
     - **LeRobot V0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
     - **LeRobot >=V0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
@@ -81,8 +81,8 @@ Collect Episodes using LeRobot
 
 We collect episodes using ``TrossenRobotics/lerobot_trossen``. For more information on installation and recording episodes check the following:
 
-#. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot_plugin/setup.html>`_
-#. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot_plugin/record_episode.html>`_
+#. :ref:`tutorials/lerobot_plugin/setup:LeRobot Installation Guide`
+#. :ref:`tutorials/lerobot_plugin/record_episode:Record Episodes`
 
 Here is a recorded dataset using the above instructions:
 
@@ -90,7 +90,7 @@ Here is a recorded dataset using the above instructions:
 
 You can also visualize the dataset using the following link. Just paste the dataset name here:
 
-- Visualize using `the HuggingFace visualize_dataset space <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot_plugin/visualize.html>`_
+- Visualize using :ref:`tutorials/lerobot_plugin/visualize:Visualize`
 
 Install UV
 ==========

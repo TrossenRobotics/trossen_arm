@@ -62,14 +62,14 @@ This tutorial walks you through:
     - This example uses two different versions of LeRobot:
 
       - **LeRobot V0.1.0** for training and dependency management.
-      - **LeRobot V0.4.1** for running the client and inference.
+      - **LeRobot >=V0.4** for running the client and inference.
 
-    - The custom LeRobot V0.4.1 (with BiWidowXAIFollower support) is available on GitHub:
+    - The LeRobot BYOB Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
       `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
     - **LeRobot V0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
-    - **LeRobot V0.4.1** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
+    - **LeRobot >=V0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
     - **Training commands** should be run from the project root to use LeRobot V0.1.0.
-    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot V0.4.1.
+    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot >=V0.4.
     - This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
 
 Collect Episodes using LeRobot
@@ -77,9 +77,7 @@ Collect Episodes using LeRobot
 
 .. warning::
 
-    Support for the fork-based `LeRobot integration <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot.html>`_ has been deprecated. We recommend using the plugin-based LeRobot integration instead.
-
-
+    Support for the fork-based :ref:`tutorials/lerobot:LeRobot` has been deprecated. We recommend using the plugin-based LeRobot integration instead.
 
 We collect episodes using ``TrossenRobotics/lerobot_trossen``. For more information on installation and recording episodes check the following:
 

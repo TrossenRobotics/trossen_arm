@@ -166,7 +166,7 @@ Example configuration for training on the Trossen AI dataset:
 
 .. tabs::
 
-   .. group-tab:: Pi 0 Training Configuration
+   .. group-tab:: π0 Training Configuration
 
         .. code-block:: python
 
@@ -208,7 +208,7 @@ Example configuration for training on the Trossen AI dataset:
                 ema_decay=None,
             )
 
-   .. group-tab:: Pi 0.5 Training Configuration
+   .. group-tab:: π0.5 Training Configuration
 
         .. code-block:: python
             :emphasize-lines: 3,9,28
@@ -313,8 +313,8 @@ Checkpoints are stored in the ``checkpoints`` folder at the root of your project
 
 To use a pretrained policy, download and extract the following checkpoint into your ``checkpoints`` directory:
 
-- `OpenPi Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0_trossen_transfer_block>`_
-- `OpenPi0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
+- `π0 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0_trossen_transfer_block>`_
+- `π0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
 
 Running Inference with Your Trained Policy
 ==========================================

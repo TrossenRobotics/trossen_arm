@@ -17,7 +17,9 @@ This guide walks through the use of the `openpi <https://github.com/trossenRobot
 Background and Disclaimers
 ==========================
 
-Refer to the `π0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ to understand the model architecture and training procedure.
+Refer to the following papers to understand the model architecture and training procedure.
+ - `π0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ 
+ - `π0.5 Paper <https://www.physicalintelligence.company/download/pi05.pdf>`_  
 Look into the limitations section for known issues and challenges.
 As mentioned in the paper, high-quality datasets are required to get good results.
 
@@ -63,7 +65,7 @@ This tutorial walks you through:
       - **LeRobot V0.4.1** for running the client and inference.
 
     - The custom LeRobot V0.4.1 (with BiWidowXAIFollower support) is available on GitHub:
-      [TrossenRobotics/lerobot_trossen - ``main`` branch](https://github.com/TrossenRobotics/lerobot_trossen.git)
+      `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
     - **LeRobot V0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
     - **LeRobot V0.4.1** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
     - **Training commands** should be run from the project root to use LeRobot V0.1.0.
@@ -73,10 +75,16 @@ This tutorial walks you through:
 Collect Episodes using LeRobot
 ==============================
 
+.. warning::
+
+    Support for the fork-based `LeRobot integration <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot.html>`_ has been deprecated. We recommend using the plugin-based LeRobot integration instead.
+
+
+
 We collect episodes using ``TrossenRobotics/lerobot_trossen``. For more information on installation and recording episodes check the following:
 
-#. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/setup.html>`_
-#. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/record_episode.html>`_
+#. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot_plugin/setup.html>`_
+#. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot_plugin/record_episode.html>`_
 
 Here is a recorded dataset using the above instructions:
 
@@ -84,7 +92,7 @@ Here is a recorded dataset using the above instructions:
 
 You can also visualize the dataset using the following link. Just paste the dataset name here:
 
-- Visualize using `the HuggingFace visualize_dataset space <https://huggingface.co/spaces/lerobot/visualize_dataset>`_
+- Visualize using `the HuggingFace visualize_dataset space <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot_plugin/visualize.html>`_
 
 Install UV
 ==========
@@ -130,7 +138,7 @@ Run this command from the project root:
 
 .. code-block:: bash
 
-    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py pi0_trossen_transfer_block \
+    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py <your_custom_config_name> \
         --exp-name=my_experiment \
         --overwrite
 
@@ -305,7 +313,7 @@ Checkpoints are stored in the ``checkpoints`` folder at the root of your project
 
 To use a pretrained policy, download and extract the following checkpoint into your ``checkpoints`` directory:
 
-- `OpenPi Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/shantanu-tr/open_pi_finetune_checkpoint>`_
+- `OpenPi Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0_trossen_transfer_block>`_
 - `OpenPi0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
 
 Running Inference with Your Trained Policy

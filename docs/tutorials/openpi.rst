@@ -106,7 +106,7 @@ Clone the repo and update its submodules:
 
 .. code-block:: bash
 
-   git clone --recurse-submodules git@github.com:TrossenRobotics/openpi.git
+   git clone --recurse-submodules https://github.com/TrossenRobotics/openpi.git
 
    # Or if you already cloned the repo:
    git submodule update --init --recursive

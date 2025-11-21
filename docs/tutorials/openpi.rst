@@ -17,7 +17,11 @@ This guide walks through the use of the `openpi <https://github.com/trossenRobot
 Background and Disclaimers
 ==========================
 
-Refer to the `π0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_ to understand the model architecture and training procedure.
+Refer to the following papers to understand the model architecture and training procedure:
+
+- `π0 Paper <https://www.physicalintelligence.company/download/pi0.pdf>`_
+- `π0.5 Paper <https://www.physicalintelligence.company/download/pi05.pdf>`_
+
 Look into the limitations section for known issues and challenges.
 As mentioned in the paper, high-quality datasets are required to get good results.
 
@@ -59,24 +63,28 @@ This tutorial walks you through:
 
     - This example uses two different versions of LeRobot:
 
-      - **LeRobot V0.1.0** for training and dependency management.
-      - **LeRobot V0.3.2** for running the client and inference.
+      - **LeRobot v0.1.0** for training and dependency management.
+      - **LeRobot >=v0.4** for running the client and inference.
 
-    - The custom LeRobot V0.3.2 (with BiWidowXAIFollower support) is available on GitHub:
-      [Interbotix/lerobot - ``trossen_ai_open_pi`` branch](https://github.com/Interbotix/lerobot/tree/trossen_ai_open_pi)
-    - **LeRobot V0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
-    - **LeRobot V0.3.2** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
-    - **Training commands** should be run from the project root to use LeRobot V0.1.0.
-    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot V0.3.2.
+    - The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
+      `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
+    - **LeRobot v0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
+    - **LeRobot >=v0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
+    - **Training commands** should be run from the project root to use LeRobot v0.1.0.
+    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot >=v0.4.
     - This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
 
 Collect Episodes using LeRobot
 ==============================
 
-We collect episodes using ``Interbotix/lerobot``. For more information on installation and recording episodes check the following:
+.. warning::
 
-#. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/setup.html>`_
-#. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/record_episode.html>`_
+    Support for the fork-based :ref:`tutorials/lerobot:LeRobot` has been deprecated. We recommend using the plugin-based LeRobot integration instead.
+
+We collect episodes using ``TrossenRobotics/lerobot_trossen``. For more information on installation and recording episodes check the following:
+
+#. :ref:`tutorials/lerobot_plugin/setup:LeRobot Installation Guide`
+#. :ref:`tutorials/lerobot_plugin/record_episode:Record Episodes`
 
 Here is a recorded dataset using the above instructions:
 
@@ -84,7 +92,7 @@ Here is a recorded dataset using the above instructions:
 
 You can also visualize the dataset using the following link. Just paste the dataset name here:
 
-- Visualize using `the HuggingFace visualize_dataset space <https://huggingface.co/spaces/lerobot/visualize_dataset>`_
+- Visualize using :ref:`tutorials/lerobot_plugin/visualize:Visualize`
 
 Install UV
 ==========
@@ -98,7 +106,7 @@ Clone the repo and update its submodules:
 
 .. code-block:: bash
 
-   git clone --recurse-submodules git@github.com:TrossenRobotics/openpi.git
+   git clone --recurse-submodules https://github.com/TrossenRobotics/openpi.git
 
    # Or if you already cloned the repo:
    git submodule update --init --recursive
@@ -130,7 +138,7 @@ Run this command from the project root:
 
 .. code-block:: bash
 
-    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py pi0_trossen_transfer_block \
+    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py <your_custom_config_name> \
         --exp-name=my_experiment \
         --overwrite
 
@@ -155,46 +163,138 @@ Example configuration for training on the Trossen AI dataset:
     In this example the dataset has 4 cameras: ``top``, ``bottom``, ``left`` and ``right``.
     We map them to the expected input names of the model: ``cam_high``, ``cam_low``, ``cam_left_wrist`` and ``cam_right_wrist``.
 
-.. code-block:: python
 
-   TrainConfig(
-       name="pi0_trossen_transfer_block",
-       model=pi0.Pi0Config(paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"),
-       data=LeRobotAlohaDataConfig(
-           use_delta_joint_actions=False,
-           adapt_to_pi=False,
-           repo_id="TrossenRoboticsCommunity/bimanual-widowxai-handover-cube",
-           assets=AssetsConfig(
-               assets_dir="gs://openpi-assets/checkpoints/pi0_base/assets",
-               asset_id="trossen",
-           ),
-           default_prompt="grab and handover the red cube",
-           repack_transforms=_transforms.Group(
-               inputs=[
-                   _transforms.RepackTransform(
-                       {
-                           "images": {
-                               "cam_high": "observation.images.top",
-                               "cam_left_wrist": "observation.images.left",
-                               "cam_right_wrist": "observation.images.right",
-                               "cam_low": "observation.images.bottom",
-                           },
-                           "state": "observation.state",
-                           "actions": "action",
-                       }
-                   )
-               ]
-           ),
-       ),
-       weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
-       num_train_steps=20_000,
-       batch_size=8,
-       freeze_filter=pi0.Pi0Config(
-           paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
-       ).get_freeze_filter(),
-       # Turn off EMA for LoRA finetuning.
-       ema_decay=None,
-   )
+.. tabs::
+
+   .. group-tab:: π0 Training Configuration
+
+        .. code-block:: python
+
+            TrainConfig(
+                name="pi0_trossen_transfer_block",
+                model=pi0_config.Pi0Config(paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"),
+                data=LeRobotAlohaDataConfig(
+                    use_delta_joint_actions=False,
+                    adapt_to_pi=False,
+                    repo_id="TrossenRoboticsCommunity/bimanual-widowxai-handover-cube",
+                    assets=AssetsConfig(
+                        assets_dir="gs://openpi-assets/checkpoints/pi0_base/assets",
+                        asset_id="trossen",
+                    ),
+                    default_prompt="grab and handover the red cube",
+                    repack_transforms=_transforms.Group(
+                        inputs=[
+                            _transforms.RepackTransform(
+                                {
+                                    "images": {
+                                        "cam_high": "observation.images.top",
+                                        "cam_left_wrist": "observation.images.left",
+                                        "cam_right_wrist": "observation.images.right",
+                                    },
+                                    "state": "observation.state",
+                                    "actions": "action",
+                                }
+                            )
+                        ]
+                    ),
+                ),
+                weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi0_base/params"),
+                num_train_steps=20_000,
+                batch_size=2,
+                freeze_filter=pi0_config.Pi0Config(
+                    paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
+                ).get_freeze_filter(),
+                # Turn off EMA for LoRA finetuning.
+                ema_decay=None,
+            )
+
+   .. group-tab:: π0.5 Training Configuration
+
+        .. code-block:: python
+            :emphasize-lines: 3,9,28
+
+            TrainConfig(
+                name="pi05_trossen_transfer_block",
+                model=pi0_config.Pi0Config(pi05=True),
+                data=LeRobotAlohaDataConfig(
+                    use_delta_joint_actions=False,
+                    adapt_to_pi=False,
+                    repo_id="TrossenRoboticsCommunity/bimanual-widowxai-handover-cube",
+                    assets=AssetsConfig(
+                        assets_dir="gs://openpi-assets/checkpoints/pi05_base/assets",
+                        asset_id="trossen",
+                    ),
+                    default_prompt="grab and handover the red cube",
+                    repack_transforms=_transforms.Group(
+                        inputs=[
+                            _transforms.RepackTransform(
+                                {
+                                    "images": {
+                                        "cam_high": "observation.images.top",
+                                        "cam_left_wrist": "observation.images.left",
+                                        "cam_right_wrist": "observation.images.right",
+                                    },
+                                    "state": "observation.state",
+                                    "actions": "action",
+                                }
+                            )
+                        ]
+                    ),
+                ),
+                weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi05_base/params"),
+                num_train_steps=80_000,
+                batch_size=8,
+            )
+
+   .. group-tab:: Multi Task Training
+
+        We train using the task prompt provided in the dataset instead of a default prompt.
+        This prompt is prepended to the model input during training.
+
+        .. code-block:: python
+           :emphasize-lines: 8,25
+
+           TrainConfig(
+                name="pi05_trossen_multitask_training",
+                model=pi0_config.Pi0Config(pi05=True),
+                data=LeRobotAlohaDataConfig(
+                    use_delta_joint_actions=False,
+                    adapt_to_pi=False,
+                    repo_id="TrossenRoboticsCommunity/trossen_ai_stationary_organize_tools",
+                    base_config=DataConfig(prompt_from_task=True),
+                    assets=AssetsConfig(
+                        assets_dir="gs://openpi-assets/checkpoints/pi05_base/assets",
+                        asset_id="trossen",
+                    ),
+                    repack_transforms=_transforms.Group(
+                        inputs=[
+                            _transforms.RepackTransform(
+                                {
+                                    "images": {
+                                        "cam_high": "observation.images.cam_high",
+                                        "cam_left_wrist": "observation.images.cam_left_wrist",
+                                        "cam_right_wrist": "observation.images.cam_right_wrist",
+                                        "cam_low": "observation.images.cam_low",
+                                    },
+                                    "state": "observation.state",
+                                    "actions": "action",
+                                    "prompt": "prompt",
+                                }
+                            )
+                        ]
+                    ),
+                ),
+                weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi05_base/params"),
+                num_train_steps=100_000,
+                batch_size=2,
+                freeze_filter=pi0_config.Pi0Config(
+                    paligemma_variant="gemma_2b_lora", action_expert_variant="gemma_300m_lora"
+                ).get_freeze_filter(),
+                # Turn off EMA for LoRA finetuning.
+                ema_decay=None,
+                save_interval=5000,
+            )
+
 
 We trained on a RTX5090 and fine-tuned using LoRA.
 
@@ -213,7 +313,8 @@ Checkpoints are stored in the ``checkpoints`` folder at the root of your project
 
 To use a pretrained policy, download and extract the following checkpoint into your ``checkpoints`` directory:
 
-- `OpenPi Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/shantanu-tr/open_pi_finetune_checkpoint>`_
+- `π0 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0_trossen_transfer_block>`_
+- `π0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
 
 Running Inference with Your Trained Policy
 ==========================================
@@ -237,7 +338,7 @@ Start the Client
 .. note::
 
     The client script requires the latest version of LeRobot, while the openpi repository depends on an older version for data loading.
-    To prevent version conflicts, the ``trossen_ai`` package uses the ``Interbotix/lerobot`` repository as its dependency.
+    To prevent version conflicts, the ``trossen_ai`` package uses the ``TrossenRobotics/lerobot_trossen`` repository as its dependency.
     When using ``uv`` for package management, this setup creates a separate virtual environment for ``trossen_ai``.
     If you need to modify any LeRobot packages, ensure you are editing them in the correct environment.
 
@@ -315,7 +416,7 @@ Run the client to interact with the policy server:
 Results
 -------
 
-Here are some preliminary results from our experiments with the π0 policy on the bimanual WidowX setup.
+Here are some preliminary results from our experiments with the π0 and π0.5 policy on the bimanual WidowX setup.
 
 - The π0 base checkpoint has no episodes collected using Trossen AI arms, so fine tuning is necessary.
 - We collected a small dataset of 50 episodes (very small compared to other robot modalities).
@@ -331,6 +432,7 @@ Scenarios:
 2. ``openpi_trossen_ai_blue_lego [fail]`` : Robot fails due to different block size and color.
 3. ``openpi_trossen_ai_environment_disturbances [fail]`` : Robot struggles under disturbances.
 4. ``openpi_trossen_ai_wooden_block [fail]`` : Robot fails with wooden block, poor generalization.
+5. ``openpi_trossen_ai_pi05_red_block [success]`` : π0.5 model successfully picks up and transfers red block on first try.
 
 We used the same command for all tests:
 

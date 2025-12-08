@@ -79,6 +79,12 @@ Collect Episodes using LeRobot
 
 We collect episodes using ``Interbotix/lerobot``. For more information on installation and recording episodes check the following:
 
+.. note::
+
+    We use ``Interbotix/lerobot`` because it uses LeRobot dataset v2.1, which is the only version compatible with the openpi training scripts.
+    The openpi framework has specific dependencies on LeRobot dataset v2.1's data format and API.
+    Newer versions of LeRobot dataset (v3.0+) have breaking changes that are not compatible with openpi's training pipeline.
+
 #. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/setup.html>`_
 #. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/record_episode.html>`_
 
@@ -131,7 +137,21 @@ Creating a Custom Training Configuration
 To train on your dataset, you need to add a custom training configuration to the ``openpi/src/training/config.py`` file.
 This configuration defines the model parameters, dataset source, camera mappings, prompts, and training options specific to your dataset.
 
-Below is an example configuration for training on the Trossen AI dataset, change the parameters as needed.
+**Key Configuration Parameters:**
+
+- **name**: A unique identifier for your training configuration (used when running the training command)
+- **repo_id**: The HuggingFace dataset repository ID. Datasets are automatically downloaded from HuggingFace on first use and cached locally in ``~/.cache/huggingface/hub/``
+- **default_prompt**: The text prompt describing the task (used during training and inference)
+- **repack_transforms**: Maps your dataset's camera and observation names to the π0 model's expected input names
+- **num_train_steps**: Total number of training iterations
+- **batch_size**: Number of samples per training batch (adjust based on GPU memory)
+
+**Dataset Location:**
+
+- **Remote datasets**: If you specify a HuggingFace ``repo_id``, the dataset will be automatically downloaded to ``~/.cache/huggingface/hub/`` the first time you run training
+- **Local datasets**: To use a local dataset, you can push it to HuggingFace first using ``huggingface-cli upload`` or modify the data loader to point to a local directory
+
+Below is an example configuration for training on the Trossen AI dataset. **You must customize these parameters for your specific dataset:**
 
 .. note::
 
@@ -289,7 +309,12 @@ Run this command from the project root:
         --exp-name=my_experiment \
         --overwrite
 
-Replace ``<your_custom_config_name>`` with the name you specified in your ``TrainConfig`` (e.g., ``pi0_trossen_transfer_block``).
+**Command Arguments Explained:**
+
+- **XLA_PYTHON_CLIENT_MEM_FRACTION=0.9**: Environment variable that limits JAX/XLA GPU memory usage to 90% of available VRAM. This prevents out-of-memory errors and leaves some memory for system operations. Adjust lower (e.g., 0.7) if you encounter memory issues or higher (e.g., 0.95) if you have dedicated GPU resources.
+- **<your_custom_config_name>**: Replace with the ``name`` field from your ``TrainConfig`` (e.g., ``pi0_trossen_transfer_block``)
+- **--exp-name**: A friendly name for this training run. Checkpoints will be saved to ``checkpoints/<exp-name>/``
+- **--overwrite**: If a checkpoint directory with the same name exists, overwrite it. Remove this flag if you want to resume training from an existing checkpoint.
 
 We trained on a RTX5090 and fine-tuned using LoRA.
 

@@ -61,27 +61,41 @@ This tutorial walks you through:
 
 .. note::
 
-    - This example uses two different versions of LeRobot:
+    This workflow uses three different versions of LeRobot for different stages:
 
-      - **LeRobot v0.1.0** for training and dependency management.
-      - **LeRobot >=v0.4** for running the client and inference.
+    - **Data Collection**: LeRobot v2.1 (``Interbotix/lerobot``) - Collects episodes in LeRobot Dataset v2 format
+    - **Training**: LeRobot v0.1.0 (OpenPI dependency) - Compatible with LeRobot Dataset v2 format for training
+    - **Inference**: LeRobot v0.4.0 - Uses the hardware plugin system and is independent of dataset format
 
-    - The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
-      `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
-    - **LeRobot v0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
-    - **LeRobot >=v0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
-    - **Training commands** should be run from the project root to use LeRobot v0.1.0.
-    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot >=v0.4.
-    - This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
+    **Installation Locations:**
+
+    - **LeRobot v0.1.0** (training) is installed at ``.venv/lib/python3.11/site-packages/lerobot``
+    - **LeRobot v0.4.0** (inference) is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``
+
+    **Where to Run Commands:**
+
+    - **Training commands**: Run from the project root (uses LeRobot v0.1.0)
+    - **Inference commands**: Run from ``examples/trossen_ai`` directory (uses LeRobot v0.4.0)
+
+    This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
+
+    The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
+    `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
 
 Collect Episodes using LeRobot
 ==============================
 
-.. warning::
+We collect episodes using ``Interbotix/lerobot`` (LeRobot v2.1). For more information on installation and recording episodes check the following:
 
-    Support for the fork-based :ref:`tutorials/lerobot:LeRobot` has been deprecated. We recommend using the plugin-based LeRobot integration instead.
+.. note::
 
-We collect episodes using ``TrossenRobotics/lerobot_trossen``. For more information on installation and recording episodes check the following:
+    We use ``Interbotix/lerobot`` (LeRobot v2.1) for data collection because it saves episodes in the LeRobot Dataset v2 format.
+    This Dataset v2 format is compatible with OpenPI's training scripts, which use LeRobot v0.1.0.
+    Newer dataset formats (v3.0+) have breaking changes that are not compatible with OpenPI's training pipeline.
+    
+    **Version Summary:**
+    
+    - LeRobot v2.1 → Produces Dataset v2 format → Compatible with OpenPI training (LeRobot v0.1.0)
 
 #. :ref:`tutorials/lerobot_plugin/setup:LeRobot Installation Guide`
 #. :ref:`tutorials/lerobot_plugin/record_episode:Record Episodes`
@@ -90,9 +104,14 @@ Here is a recorded dataset using the above instructions:
 
 - `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/bimanual-widowxai-handover-cube>`_
 
-You can also visualize the dataset using the following link. Just paste the dataset name here:
+You can also visualize the dataset using the following link. Just paste the dataset name in the input box.
+
+- Visualize using `the HuggingFace visualize_dataset space <https://huggingface.co/spaces/lerobot/visualize_dataset>`
+
+Or you can also visualize it locally using LeRobot:
 
 - Visualize using :ref:`tutorials/lerobot_plugin/visualize:Visualize`
+
 
 Install UV
 ==========
@@ -125,37 +144,30 @@ We use `uv <https://docs.astral.sh/uv/>`_ to manage Python dependencies. Once uv
 Training
 ========
 
-Once you have recorded your dataset, you can begin training using the command below.
-We provide a custom training configuration for the Trossen AI dataset.
-Since the Aloha Legacy and Trossen AI Stationary share the same joint layout, this configuration is compatible.
-Explicit support for Trossen AI will be added in the future.
+Before you can train on your recorded dataset, you **must** create a custom training configuration.
+There are no pre-configured options for custom datasets - each dataset requires its own configuration.
 
-Run this command from the project root:
+Creating a Custom Training Configuration
+-----------------------------------------
 
-.. code-block:: bash
+To train on your dataset, you need to add a custom training configuration to the ``openpi/src/training/config.py`` file.
+This configuration defines the model parameters, dataset source, camera mappings, prompts, and training options specific to your dataset.
 
-   cd openpi
+**Key Configuration Parameters:**
 
-.. code-block:: bash
+- **name**: A unique identifier for your training configuration (used when running the training command)
+- **repo_id**: The HuggingFace dataset repository ID. Datasets are automatically downloaded from HuggingFace on first use and cached locally in ``~/.cache/huggingface/lerobot/<your_huggingface_id>/``
+- **default_prompt**: The text prompt describing the task (used during training and inference)
+- **repack_transforms**: Maps your dataset's camera and observation names to the π0 model's expected input names
+- **num_train_steps**: Total number of training iterations
+- **batch_size**: Number of samples per training batch (adjust based on GPU memory)
 
-    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py <your_custom_config_name> \
-        --exp-name=my_experiment \
-        --overwrite
+**Dataset Location:**
 
-Custom Training Configuration
-=============================
+- **Remote datasets**: If you specify a HuggingFace ``repo_id``, the dataset will be automatically downloaded to ``~/.cache/huggingface/lerobot/<your_huggingface_id>/`` the first time you run training
+- **Local datasets**: To use a local dataset, you can push it to HuggingFace first using ``huggingface-cli upload`` or modify the data loader to point to a local directory
 
-To add a custom training configuration, edit the ``openpi/src/training/config.py`` file.
-You can define your own ``TrainConfig`` with specific model parameters, dataset sources, prompts, and training options.
-After updating the configuration, reference your new config name in the training command:
-
-.. code-block:: bash
-
-    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py <your_custom_config_name> \
-        --exp-name=my_experiment \
-        --overwrite
-
-Example configuration for training on the Trossen AI dataset:
+Below is an example configuration for training on the Trossen AI dataset. **You must customize these parameters for your specific dataset:**
 
 .. note::
 
@@ -295,6 +307,30 @@ Example configuration for training on the Trossen AI dataset:
                 save_interval=5000,
             )
 
+
+Running the Training Command
+-----------------------------
+
+After adding your custom configuration to ``openpi/src/training/config.py``, you can start training.
+
+Run this command from the project root:
+
+.. code-block:: bash
+
+   cd openpi
+
+.. code-block:: bash
+
+    XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 uv run scripts/train.py <your_custom_config_name> \
+        --exp-name=my_experiment \
+        --overwrite
+
+**Command Arguments Explained:**
+
+- **XLA_PYTHON_CLIENT_MEM_FRACTION=0.9**: Environment variable that limits JAX/XLA GPU memory usage to 90% of available VRAM. 
+- **<your_custom_config_name>**: Replace with the ``name`` field from your ``TrainConfig`` (e.g., ``pi0_trossen_transfer_block``)
+- **--exp-name**: A friendly name for this training run. Checkpoints will be saved to ``checkpoints/<exp-name>/``
+- **--overwrite**: If a checkpoint directory with the same name exists, overwrite it. Remove this flag if you want to resume training from an existing checkpoint.
 
 We trained on a RTX5090 and fine-tuned using LoRA.
 

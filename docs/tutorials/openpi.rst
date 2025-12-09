@@ -106,7 +106,7 @@ Here is a recorded dataset using the above instructions:
 
 You can also visualize the dataset using the following link. Just paste the dataset name here:
 
-- Visualize using :ref:`tutorials/lerobot/visualize:Visualize`
+- Visualize using :ref:`tutorials/lerobot_plugin/visualize:Visualize`
 
 
 Install UV

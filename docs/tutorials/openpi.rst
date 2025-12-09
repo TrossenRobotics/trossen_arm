@@ -61,32 +61,44 @@ This tutorial walks you through:
 
 .. note::
 
-    - This example uses two different versions of LeRobot:
+    This workflow uses three different versions of LeRobot for different stages:
 
-      - **LeRobot v0.1.0** for training and dependency management.
-      - **LeRobot >=v0.4** for running the client and inference.
+    - **Data Collection**: LeRobot v2.1 (``Interbotix/lerobot``) - Collects episodes in LeRobot Dataset v2 format
+    - **Training**: LeRobot v0.1.0 (OpenPI dependency) - Compatible with LeRobot Dataset v2 format for training
+    - **Inference**: LeRobot v0.4.0 - Uses the hardware plugin system and is independent of dataset format
 
-    - The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
-      `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
-    - **LeRobot v0.1.0** is installed at ``.venv/lib/python3.11/site-packages/lerobot``.
-    - **LeRobot >=v0.4** is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``.
-    - **Training commands** should be run from the project root to use LeRobot v0.1.0.
-    - **Client commands** should be run from the ``examples/trossen_ai`` directory to use LeRobot >=v0.4.
-    - This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
+    **Installation Locations:**
+
+    - **LeRobot v0.1.0** (training) is installed at ``.venv/lib/python3.11/site-packages/lerobot``
+    - **LeRobot v0.4.0** (inference) is installed at ``examples/trossen_ai/.venv/lib/python3.11/site-packages/lerobot``
+
+    **Where to Run Commands:**
+
+    - **Training commands**: Run from the project root (uses LeRobot v0.1.0)
+    - **Inference commands**: Run from ``examples/trossen_ai`` directory (uses LeRobot v0.4.0)
+
+    This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
+
+    The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
+    `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
 
 Collect Episodes using LeRobot
 ==============================
 
-We collect episodes using ``Interbotix/lerobot``. For more information on installation and recording episodes check the following:
+We collect episodes using ``Interbotix/lerobot`` (LeRobot v2.1). For more information on installation and recording episodes check the following:
 
 .. note::
 
-    We use ``Interbotix/lerobot`` because it uses LeRobot dataset v2.1, which is the only version compatible with the openpi training scripts.
-    The openpi framework has specific dependencies on LeRobot dataset v2.1's data format and API.
-    Newer versions of LeRobot dataset (v3.0+) have breaking changes that are not compatible with openpi's training pipeline.
+    We use ``Interbotix/lerobot`` (LeRobot v2.1) for data collection because it saves episodes in the LeRobot Dataset v2 format.
+    This Dataset v2 format is compatible with OpenPI's training scripts, which use LeRobot v0.1.0.
+    Newer dataset formats (v3.0+) have breaking changes that are not compatible with OpenPI's training pipeline.
+    
+    **Version Summary:**
+    
+    - LeRobot v2.1 → Produces Dataset v2 format → Compatible with OpenPI training (LeRobot v0.1.0)
 
-#. `Installation <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/setup.html>`_
-#. `Recording Episode <https://docs.trossenrobotics.com/trossen_arm/main/tutorials/lerobot/record_episode.html>`_
+#. :ref:`tutorials/lerobot/setup:LeRobot Installation Guide`
+#. :ref:`tutorials/lerobot/record_episode:Record Episodes`
 
 Here is a recorded dataset using the above instructions:
 
@@ -140,7 +152,7 @@ This configuration defines the model parameters, dataset source, camera mappings
 **Key Configuration Parameters:**
 
 - **name**: A unique identifier for your training configuration (used when running the training command)
-- **repo_id**: The HuggingFace dataset repository ID. Datasets are automatically downloaded from HuggingFace on first use and cached locally in ``~/.cache/huggingface/hub/``
+- **repo_id**: The HuggingFace dataset repository ID. Datasets are automatically downloaded from HuggingFace on first use and cached locally in ``~/.cache/huggingface/lerobot/<your_huggingface_id>/``
 - **default_prompt**: The text prompt describing the task (used during training and inference)
 - **repack_transforms**: Maps your dataset's camera and observation names to the π0 model's expected input names
 - **num_train_steps**: Total number of training iterations
@@ -148,7 +160,7 @@ This configuration defines the model parameters, dataset source, camera mappings
 
 **Dataset Location:**
 
-- **Remote datasets**: If you specify a HuggingFace ``repo_id``, the dataset will be automatically downloaded to ``~/.cache/huggingface/hub/`` the first time you run training
+- **Remote datasets**: If you specify a HuggingFace ``repo_id``, the dataset will be automatically downloaded to ``~/.cache/huggingface/lerobot/<your_huggingface_id>/`` the first time you run training
 - **Local datasets**: To use a local dataset, you can push it to HuggingFace first using ``huggingface-cli upload`` or modify the data loader to point to a local directory
 
 Below is an example configuration for training on the Trossen AI dataset. **You must customize these parameters for your specific dataset:**

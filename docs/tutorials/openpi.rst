@@ -104,7 +104,11 @@ Here is a recorded dataset using the above instructions:
 
 - `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/bimanual-widowxai-handover-cube>`_
 
-You can also visualize the dataset using the following link. Just paste the dataset name here:
+You can also visualize the dataset using the following link. Just paste the dataset name in the input box.
+
+- Visualize using `the HuggingFace visualize_dataset space <https://huggingface.co/spaces/lerobot/visualize_dataset>`
+
+Or you can also visualize it locally using LeRobot:
 
 - Visualize using :ref:`tutorials/lerobot_plugin/visualize:Visualize`
 

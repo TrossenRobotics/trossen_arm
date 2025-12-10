@@ -106,7 +106,7 @@ Here is a recorded dataset using the above instructions:
 
 You can also visualize the dataset using the following link. Just paste the dataset name in the input box.
 
-- Visualize using `the HuggingFace visualize_dataset space <https://huggingface.co/spaces/lerobot/visualize_dataset>`
+- Visualize using `the HuggingFace visualize_dataset space <https://huggingface.co/spaces/lerobot/visualize_dataset>`_
 
 Or you can also visualize it locally using LeRobot:
 
@@ -181,6 +181,7 @@ Below is an example configuration for training on the Trossen AI dataset. **You 
    .. group-tab:: π0 Training Configuration
 
         .. code-block:: python
+            :emphasize-lines: 2,7,12,13,30,31
 
             TrainConfig(
                 name="pi0_trossen_transfer_block",
@@ -223,7 +224,7 @@ Below is an example configuration for training on the Trossen AI dataset. **You 
    .. group-tab:: π0.5 Training Configuration
 
         .. code-block:: python
-            :emphasize-lines: 3,9,28
+            :emphasize-lines: 3,9,29
 
             TrainConfig(
                 name="pi05_trossen_transfer_block",

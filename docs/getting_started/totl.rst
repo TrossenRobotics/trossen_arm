@@ -97,7 +97,7 @@ Before you begin, make sure you have:
 
 You are now running a live environment.
 
-#.  Wipe and Recreate the Internal Drive (GNOME Disks)
+4.  Wipe and Recreate the Internal Drive (GNOME Disks)
 ------------------------------------------------------
 
 #.  Open **Disks**:

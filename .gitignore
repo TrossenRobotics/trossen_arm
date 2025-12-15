@@ -1,6 +1,6 @@
 .vscode/**
 build/
 _build/
-venv/
+*venv/
 api/
 doxygen/

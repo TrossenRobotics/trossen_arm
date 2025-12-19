@@ -448,6 +448,32 @@ The motor parameters define the control parameters of each motor.
 As shown in the block diagram above, each motor :class:`trossen_arm::MotorParameter` has two PID controllers for position and velocity regulation.
 By setting different parameters in :class:`trossen_arm::PIDParameter`, we can achieve the behavior of different :enum:`trossen_arm::Mode`.
 
+A guideline to tune the motor parameters is given below.
+
+-   :enumerator:`trossen_arm::Mode::position`:
+
+    1.  Start with all parameters set to zero
+    2.  Set the position and velocity loop :member:`trossen_arm::PIDParameter::kp` to small positive values such that the joint starts moving towards the desired position
+    3.  Increase the position loop :member:`trossen_arm::PIDParameter::kp` until the joint starts to overshoot
+    4.  Increase the velocity loop :member:`trossen_arm::PIDParameter::kp` until the overshoot disappears
+    5.  Repeat steps 3 and 4 until the joint starts oscillating
+    6.  Decrease both position and velocity loop :member:`trossen_arm::PIDParameter::kp`, e.g., half the values
+    7.  Set the velocity loop :member:`trossen_arm::PIDParameter::imax` to a reasonable value, e.g., rated torque of the motor
+    8.  Increase the velocity loop :member:`trossen_arm::PIDParameter::ki` until the joint starts to overshoot
+    9.  Decrease the velocity loop :member:`trossen_arm::PIDParameter::ki`, e.g., half the value
+
+-   :enumerator:`trossen_arm::Mode::idle`:
+
+    1.  Use the same parameters as in :enumerator:`trossen_arm::Mode::position`
+    2.  Zero out all position loop parameters
+    3.  Set the velocity loop :member:`trossen_arm::PIDParameter::imax` to a reasonable value, e.g., max torque of the motor
+    4.  Increase the velocity loop :member:`trossen_arm::PIDParameter::ki` until the joint starts to oscillate
+
+-   :enumerator:`trossen_arm::Mode::velocity`, :enumerator:`trossen_arm::Mode::external_effort`, and :enumerator:`trossen_arm::Mode::effort`:
+
+    1.  Use the same parameters as in :enumerator:`trossen_arm::Mode::position`
+    2.  Zero out the velocity loop :member:`trossen_arm::PIDParameter::ki` and :member:`trossen_arm::PIDParameter::imax`
+
 Ranges: :math:`\mathbb{R}`
 
 Algorithm Parameter

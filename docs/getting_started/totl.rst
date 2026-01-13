@@ -5,9 +5,9 @@ TOTL Workstation
 Logging In
 ==========
 
-The default username for the TOTL Workstation is `trossen`.
-The default password for the TOTL Workstation is `TOTL`.
-For some older models, the default password may be `trossen ai` or `trossen-ai`.
+The default username for the TOTL Workstation is ``trossen``.
+The default password for the TOTL Workstation is ``TOTL``.
+For some older models, the default password may be ``trossen ai`` or ``trossen-ai``.
 You can change this password after logging in for the first time.
 
 .. note::

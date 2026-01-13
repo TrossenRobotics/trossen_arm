@@ -24,7 +24,7 @@ Overall Specifications
   * - Peak Current
     - 15 A
   * - Communication
-    - UDP over Ethernet
+    - Ethernet
 
 Joint Limits
 ============
@@ -99,7 +99,7 @@ Joint Limits
 Workspace
 =========
 
-.. image:: specifications/images/wxai_workspace.png
+.. image:: images/wxai_workspace.png
    :alt: WidowX AI Workspace
    :align: center
 

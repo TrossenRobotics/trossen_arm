@@ -62,7 +62,7 @@ Stationary AI Kit
 
 Download :download:`this guide</_downloads/Stationary AI Assembly Guide.pdf>` or watch the YouTube video below for assembly instructions for the Stationary AI kit:
 
-.. youtube:: LUU2ktpvOAo
+.. youtube:: TDYpRS654gk
     :align: center
 
 What's Next

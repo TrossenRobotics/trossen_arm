@@ -64,3 +64,18 @@ The process for homing the arm is as follows:
 #.  Remove the homing jigs from the base and wrist rotate motors.
 #.  Reinstall the gripper fingers or paddles on the gripper carriages.
 #.  Your arm is now homed and ready for use!
+
+Encoder Hardware test
+=====================
+
+Occasionally, the encoder in the gripper motor malfunctions and reads incorrect values.
+This can cause issues including but not limited to:
+
+-   Gripper position of a follower does not match the leader gripper position during teleoperation.
+-   Position limit exceeded error: ``[ERROR] [Motor Interface] Joint 6 position limit exceeded: expected in range [-0.004000, 0.044000], motor reported x.xxxxxx. Setting to idle.``
+
+Please follow the steps below to test the encoder.
+
+#.  Download, unzip, and run the :download:`Encoder Test Script<_downloads/encoder_test.zip>`.
+#.  Follow the instructions in the script to test the encoder.
+#.  If the encoder is malfunctioning, please contact us at https://www.trossenrobotics.com/support.

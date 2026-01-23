@@ -65,8 +65,8 @@ The process for homing the arm is as follows:
 #.  Reinstall the gripper fingers or paddles on the gripper carriages.
 #.  Your arm is now homed and ready for use!
 
-Encoder Hardware test
-=====================
+Gripper Encoder Test
+====================
 
 Occasionally, the encoder in the gripper motor malfunctions and reads incorrect values.
 This can cause issues including but not limited to:

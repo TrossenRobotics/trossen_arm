@@ -2,10 +2,12 @@
 Trossen AI Configuration
 ========================
 
-.. warning::
+.. note::
 
-    Support for the fork-based LeRobot integration has been deprecated.
+    Ongoing support for the LeRobot fork is deprecated.
     We recommend using the :doc:`plugin-based LeRobot integration <../lerobot_plugin>` instead.
+
+    However, this integration is necessary for users who wish to use the :doc:`openpi integration <../openpi>`.
 
 In order to use the Trossen AI Kits with LeRobot, you need to first configure the arms with the necessary specifications.
 The specifications include the IP address, model_name, and camera serial numbers.

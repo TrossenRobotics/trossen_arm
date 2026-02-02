@@ -2,6 +2,13 @@
 Teleoperation
 =============
 
+.. note::
+
+    Ongoing support for the LeRobot fork is deprecated.
+    We recommend using the :doc:`plugin-based LeRobot integration <../lerobot_plugin>` instead.
+
+    However, this integration is necessary for users who wish to use the :doc:`openpi integration <../openpi>`.
+
 By running the following code, you can start your first **SAFE** teleoperation:
 
 .. tabs::

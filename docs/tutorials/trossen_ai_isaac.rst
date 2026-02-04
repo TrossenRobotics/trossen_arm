@@ -237,7 +237,7 @@ Training Options
 ~~~~~~~~~~~~~~~~
 
 * ``--num_envs 32``: Number of parallel environments (adjust based on GPU memory)
-* ``--max_iterations 4000``: Number of iterations steps (adjust as per training tasks)
+* ``--max_iterations 4000``: Number of iteration steps (adjust as per training tasks)
 * ``--headless``: Run without GUI for faster training
 
 Training logs and checkpoints are saved to :guilabel:`logs/rsl_rl/<task>/<timestamp>/`.

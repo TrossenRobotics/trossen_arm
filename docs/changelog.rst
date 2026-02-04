@@ -193,6 +193,16 @@ Trossen Arm Driver
 Trossen Arm Controller Firmware
 ===============================
 
+1.9.3
+-----
+
+- Fixed an issue where the controller would sometimes fail to ignore invalid UDP packets, leading to unexpected behavior.
+
+1.9.2
+-----
+
+- Minor improvements to user experience.
+
 1.9.1
 -----
 

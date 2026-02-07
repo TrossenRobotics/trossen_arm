@@ -12,45 +12,90 @@ This section explains the common issues while using the Trossen Arm and the corr
 Connection Issues
 =================
 
-Failed to connect to the arm controller's TCP server: Connection refused
-------------------------------------------------------------------------
+Common connection errors are listed below.
 
-This warning messages indicates that the drivers is unable to connect to the Trossen Arm controller's TCP server.
-This can happen for a few reasons:
+-   ``[CRITICAL] Failed to connect to the arm controller's TCP server at 192.168.1.2:50001 within 22.556093953 seconds``
+-   ``[CRITICAL] The major and minor versions of the driver and controller firmware must match.``
+-   ``[CRITICAL] Failed to receive initial joint outputs``
+-   ``[CRITICAL] Failed to read UDP message due to Success``
+-   ``[CRITICAL] Failed to send UDP message to 192.168.1.2:50000 due to Network is unreachable``
+-   ``[CRITICAL] Failed to read TCP message from 192.168.1.2:50001 due to Resource temporarily unavailable``
+-   ``[CRITICAL] TCP connection closed unexpectedly``
+-   ``[WARNING] Failed to connect to the arm controller's TCP server at 192.168.1.2:50001 due to Connection timed out``
+-   ``[WARNING] Failed to connect to the arm controller's TCP server at 192.168.1.2:50001 due to Connection refused``
+-   ``[WARNING] Among the last 5000 UDP messages expected from 192.168.1.2:50000, 4756 messages were lost``
+-   Driver hangs forever
 
-Controller Not Powered On
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Common causes and associated solutions to these issues are listed below.
 
-If the controller is not powered on, the driver will not be able to connect to it.
-To resolve this, check that the controller is powered on and the status LED is solid green.
+-   Controller Not Powered On
 
-Controller Not Connected to the Network
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    If the controller is not powered on, the driver will not be able to connect to it.
 
-If the controller is not connected to the network, the driver will not be able to connect to it.
-To resolve this, check that the controller is connected to the network and the network cable is plugged in on both ends.
+    To resolve this, check that the controller is powered on and the status LED is solid green.
 
-Misconfigured Controller IP Address
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-   Controller Not Connected to the Network
 
-If the controller's IP address is not set correctly when configuring the driver, the driver will not be able to connect to it.
-To resolve this, check that the controller's IP address is set correctly in the driver's configuration.
+    If the controller is not connected to the network, the driver will not be able to connect to it.
 
-.. tip::
+    To resolve this, check that the controller is connected to the network and the network cable is plugged in on both ends.
 
-    You can use nmap to search for the controller's IP address on the network.
-    For example, if the controller's IP address is in the ``192.168.1.X`` subnet, you can run the following command to scan that subnet for devices:
+-   Misconfigured Controller IP Address
 
-    .. code-block:: bash
+    If the controller's IP address is not set correctly when configuring the driver, the driver will not be able to connect to it.
 
-        nmap -sn 192.168.1.0/24
+    To resolve this, check that the controller's IP address is set correctly in the driver's configuration.
 
-Incompatible Driver Version
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    .. tip::
 
-If the driver version is not compatible with the controller firmware version, the driver will not be able to connect to it.
-Driver and firmware versions are compatible if they have the same minor version number.
-See the guide on updating the controller firmware in :ref:`getting_started/software_setup:Software Upgrade` for more information.
+        You can use nmap to search for the controller's IP address on the network.
+        For example, if the controller's IP address is in the ``192.168.1.X`` subnet, you can run the following command to scan that subnet for devices:
+
+        .. code-block:: bash
+
+            nmap -sn 192.168.1.0/24
+
+-   Misconfigured Network Settings
+
+    The driver and controller must be on the same network to communicate with each other.
+
+    -   If there are multiple network interfaces such as Ethernet and Wi-Fi, check that the one connected to the controller is configured with an IP address in the same subnet as the controller's IP address.
+    -   If the driver is running on a virtual machine or a docker container, check that the traffic is directly routed to the subnet that the controller is on, e.g., `host network driver in Docker`_ and `bridged network driver in VirtualBox`_.
+    -   If there is a firewall enabled on the host machine, check that TCP and UDP traffic are allowed.
+
+.. _`host network driver in Docker`: https://docs.docker.com/network/host/
+.. _`bridged network driver in VirtualBox`: https://www.virtualbox.org/manual/ch06.html#network_bridged
+
+-   Incompatible Driver Version
+
+    If the driver version is not compatible with the controller firmware version, the driver will not be able to connect to it.
+    Driver and firmware versions are compatible if they have the same minor version number.
+
+    See the guide on updating the controller firmware in :ref:`getting_started/software_setup:Software Upgrade` for more information.
+
+-   Another driver owning the Controller
+
+    If a driver is configured without being cleaned up or deconstructed, other instances of the driver will not be able to connect to the controller.
+
+    To resolve this, check that there are no other instances of the driver owning the controller.
+
+-   Resource Limitations
+
+    If the host machine is running out of resources such as CPU, memory, or network bandwidth, the driver may not be able to maintain a stable connection to the controller.
+
+    To resolve this, check that the host machine has sufficient resources.
+
+-   Outdated Controller Firmware
+
+    If the driver is killed in exceptional circumstances, controller firmware older than 1.9.2 inclusively is known to hang and don't respond to the driver until it's power cycled.
+
+    To resolve this, update the firmware to version 1.9.3 or later.
+
+-   Outdated Driver
+
+    Drivers older than 1.9.0 inclusively will hang forever in cases like controller being unresponsive or controller owned by another driver.
+
+    To resolve this, update the driver to version 1.9.1 or later, which will throw an exception instead of hanging forever.
 
 Error Codes
 ===========

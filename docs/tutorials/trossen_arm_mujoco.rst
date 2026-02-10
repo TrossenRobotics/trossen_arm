@@ -87,7 +87,8 @@ Installation
 Assets
 ======
 
-All robot models are located in :guilabel:`trossen_arm_mujoco/assets/`. The assets folder contains all robot models organized by robot type, along with mesh files and scene configurations.
+All robot models are located in :guilabel:`trossen_arm_mujoco/assets/`.
+The assets folder contains all robot models organized by robot type, along with mesh files and scene configurations.
 
 Directory Structure
 -------------------

@@ -25,7 +25,8 @@ Trossen Arm MuJoCo
 Overview
 ========
 
-This repository provides MuJoCo simulation environments for Trossen AI robotic arms. It includes comprehensive robot models, inverse kinematics-based control, and tools for policy execution, data collection, and visualization.
+This repository provides MuJoCo simulation environments for Trossen AI robotic arms.
+It includes comprehensive robot models, inverse kinematics-based control, and tools for policy execution, data collection, and visualization.
 
 What This Repository Offers
 ----------------------------

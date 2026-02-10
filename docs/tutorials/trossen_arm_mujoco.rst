@@ -3,24 +3,28 @@ Trossen Arm MuJoCo
 ==================
 
 .. video:: trossen_arm_mujoco/stationary_ai_pick_place.mp4
-    :align: center
-    :nocontrols:
-    :autoplay:
-    :playsinline:
-    :muted:
-    :loop:
-    :width: 80%
-    :caption: Stationary AI Pick-and-Place Demo
+    :class: hidden
 
 .. video:: trossen_arm_mujoco/sim_to_real.mp4
-    :align: center
-    :nocontrols:
-    :autoplay:
-    :playsinline:
-    :muted:
-    :loop:
-    :width: 80%
-    :caption: Sim-to-Real Transfer Demo
+    :class: hidden
+
+.. raw:: html
+
+    <style>.hidden { display: none; }</style>
+    <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+        <div style="text-align: center; flex: 1; max-width: 48%;">
+            <video autoplay loop muted playsinline style="width: 100%; height: 300px; object-fit: contain; background: #000;">
+                <source src="../_images/stationary_ai_pick_place.mp4" type="video/mp4">
+            </video>
+            <p><em>Stationary AI Pick-and-Place Demo</em></p>
+        </div>
+        <div style="text-align: center; flex: 1; max-width: 48%;">
+            <video autoplay loop muted playsinline style="width: 100%; height: 300px; object-fit: contain; background: #000;">
+                <source src="../_images/sim_to_real.mp4" type="video/mp4">
+            </video>
+            <p><em>Sim-to-Real Transfer Demo</em></p>
+        </div>
+    </div>
 
 Overview
 ========
@@ -244,7 +248,7 @@ Data Collection
 ===============
 
 Modules
-=======================================================
+-------
 
 The :guilabel:`trossen_arm_mujoco` folder contains all Python modules necessary for running simulations, executing policies, recording episodes, and visualizing results.
 

@@ -213,7 +213,7 @@ Basic Usage
     robot = Controller(
         model=mujoco_model,
         data=mujoco_data,
-        robot_type="wxai",  # or "stationary_ai", "mobile_ai"
+        robot_type=RobotType.WXAI,  # or RobotType.STATIONARY_AI, RobotType.MOBILE_AI
         arm_joint_names=["joint_1", "joint_2", ...],
         gripper_joint_names=["left_carriage_joint"],
         ik_scale=1.0,

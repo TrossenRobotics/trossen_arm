@@ -2,6 +2,16 @@
 Trossen Arm MuJoCo
 ==================
 
+.. video:: trossen_arm_mujoco/stationary_ai_pick_place.mp4
+    :align: center
+    :nocontrols:
+    :autoplay:
+    :playsinline:
+    :muted:
+    :loop:
+    :width: 80%
+    :caption: Stationary AI Pick-and-Place Demo
+
 .. video:: trossen_arm_mujoco/sim_to_real.mp4
     :align: center
     :nocontrols:
@@ -15,13 +25,28 @@ Trossen Arm MuJoCo
 Overview
 ========
 
-This package provides all the necessary tools for simulating Trossen AI robotic kits in MuJoCo.
-It includes URDFs, mesh models, and MuJoCo XML files for robot configuration, along with Python scripts for data collection, sim-to-real replay, and visualization.
+This repository provides MuJoCo simulation environments for Trossen AI robotic arms. It includes comprehensive robot models, inverse kinematics-based control, and tools for policy execution, data collection, and visualization.
 
-Supported simulation environments:
+What This Repository Offers
+----------------------------
 
-#. **End-Effector (EE) Controlled Simulation** :guilabel:`ee_sim_env.py`: Utilizes motion capture bodies to control the arms, enabling smooth end-effector movements.
-#. **Joint-Controlled Simulation** :guilabel:`sim_env.py`: Employs joint position controllers for precise joint-level control, mimicking real-world robot behavior.
+* MuJoCo XML models for Trossen AI robots:
+
+    * WidowX AI (single arm manipulator)
+    * Stationary AI (dual-arm stationary platform)
+    * Mobile AI (dual-arm mobile manipulator)
+
+* Differential inverse kinematics controller for Cartesian end-effector control
+* Pick-and-place and target following demonstration scripts
+* Motion capture and joint-controlled simulation environments
+* Data collection and visualization tools for imitation learning
+
+Tested Environment
+------------------
+
+* Ubuntu 22.04
+* MuJoCo 3.2.3
+* Python 3.10+
 
 Installation
 ============
@@ -52,35 +77,169 @@ Installation
 
     .. code-block:: bash
 
-        python trossen_arm_mujoco/ee_sim_env.py
+        python3 trossen_arm_mujoco/scripts/wxai_pick_place.py
 
-    If the simulation window appears, the setup was successful.
+    If the simulation window appears with the robot performing pick-and-place, the setup was successful.
 
     In case of any issues, please refer to the `Troubleshooting`_ section.
 
 Assets
 ======
 
-The :guilabel:`assets/` folder, located in the root directory of the repository, is essential for customizing and extending the MuJoCo simulation environment.
-It contains all necessary configuration files, such as XML and URDF files, along with mesh models in STL and OBJ formats.
-These resources enable users to modify the environment by adjusting object placements, adding new objects, or altering constraints, as well as configure camera settings for different viewpoints.
-Additionally, users can customize robot models by editing physical properties like joint limits or link dimensions and include new objects by referencing mesh files.
-This flexibility makes the :guilabel:`assets/` folder a critical component for tailoring simulations to specific research or development needs.
+All robot models are located in :guilabel:`trossen_arm_mujoco/assets/`. The assets folder contains all robot models organized by robot type, along with mesh files and scene configurations.
 
-Key Files:
-----------
+Directory Structure
+-------------------
 
-* ``trossen_ai.xml``: Base model definition of the Trossen AI robot.
-* ``trossen_ai_scene.xml``: Uses mocap bodies to control the simulated arms.
-* ``trossen_ai_scene_joint.xml``: Uses joint controllers, similar to real hardware, to control the simulated arms.
-* ``wxai_follower.urdf`` & ``wxai_follower.xml``: URDF and XML descriptions of the follower arms.
-* ``meshes/``: Contains STL and OBJ files for the robot components, including arms, cameras, and environmental objects.
+.. code-block:: text
 
-Motion Capture vs Joint-Controlled Environments:
+    trossen_arm_mujoco/assets/
+    ├── meshes/          # STL files for robot components
+    ├── wxai/
+    │   ├── wxai_base.xml              # WidowX AI base model
+    │   ├── wxai_follower.xml          # WidowX AI follower arm with camera
+    │   ├── scene.xml                  # Basic visualization scene
+    │   ├── scene_wxai_pick_place.xml  # Pick-and-place scene
+    │   └── scene_wxai_follow_target.xml # Target following scene
+    ├── stationary_ai/
+    │   ├── stationary_ai.xml          # Dual-arm stationary platform
+    │   ├── stationary_ai_mocap.xml    # Mocap-enabled model with weld constraints
+    │   ├── scene.xml                  # Basic visualization scene
+    │   ├── scene_stationary_ai_pick_place.xml # Pick-and-place with handoff
+    │   ├── scene_joint.xml            # Joint-controlled setup
+    │   └── scene_mocap.xml            # Motion capture-controlled setup
+    └── mobile_ai/
+        ├── mobile_ai.xml              # Mobile base + dual-arm
+        ├── scene.xml                  # Basic visualization scene
+        └── scene_mobile_ai_pick_place.xml # Mobile pick-and-place
+
+Asset Details
+-------------
+
+**WidowX AI** - Single-arm manipulator:
+
+* Base model (``wxai_base.xml``): 6-DOF arm
+* Follower model (``wxai_follower.xml``): 6-DOF arm with camera
+
+**Stationary AI** - Dual-arm stationary platform:
+
+* Dual WXAI arms on shared base
+
+**Mobile AI** - Mobile manipulator:
+
+* Differential drive mobile base
+* Dual WXAI arms
+
+Motion Capture vs Joint-Controlled Environments
 ------------------------------------------------
 
-* Motion Capture :guilabel:`trossen_ai_scene.xml`: Uses predefined mocap bodies that move the robot arms based on scripted end effector movements.
-* Joint Control :guilabel:`trossen_ai_scene_joint.xml`: Uses position controllers for each joint, similar to a real-world robot setup.
+**Motion Capture** (``stationary_ai/scene_mocap.xml``):
+
+* Uses predefined mocap bodies that move the robot arms based on scripted end effector movements
+* Useful for defining task trajectories and generating reference motions
+
+**Joint Control** (``stationary_ai/scene_joint.xml``):
+
+* Uses position controllers for each joint, similar to real-world robot setup
+* Used for replaying recorded trajectories with realistic joint-level control
+* Enables clean simulation visuals without mocap bodies visible in rendered output
+
+All models are derived from URDF descriptions in `TrossenRobotics/trossen_arm_description <https://github.com/TrossenRobotics/trossen_arm_description>`_. See individual ``README.md`` files in asset folders for detailed URDF→MJCF derivation steps.
+
+MuJoCo IK Demo Scripts
+======================
+
+These scripts demonstrate inverse kinematics-based control for manipulation tasks.
+
+Pick-and-Place Demonstrations
+------------------------------
+
+**WidowX AI** - Single arm pick-and-place:
+
+.. code-block:: bash
+
+    python3 trossen_arm_mujoco/scripts/wxai_pick_place.py
+
+**Stationary AI** - Dual-arm pick-and-place with handoff:
+
+.. code-block:: bash
+
+    python3 trossen_arm_mujoco/scripts/stationary_ai_pick_place.py
+
+**Mobile AI** - Mobile base navigation + dual-arm manipulation:
+
+.. code-block:: bash
+
+    python3 trossen_arm_mujoco/scripts/mobile_ai_pick_place.py
+
+Target Following Demo
+----------------------
+
+Real-time end-effector tracking using differential IK:
+
+.. code-block:: bash
+
+    python3 trossen_arm_mujoco/scripts/wxai_follow_target.py
+
+**Mouse Controls:**
+
+* Double-click to select/highlight the target cube
+* Ctrl + Left-click to rotate the view
+* Ctrl + Right-click to move the target cube
+
+The robot will track the target cube position in real-time.
+
+Controller API
+==============
+
+The differential inverse kinematics controller (``Controller`` in :guilabel:`controller.py`) provides Cartesian end-effector control for all Trossen AI robots.
+
+Key Features
+------------
+
+* Damped least squares differential IK for smooth motion
+* Gripper control with open/close commands
+* Support for all robot types (WidowX AI, Stationary AI, Mobile AI)
+* Position-only or full 6D pose control
+
+Basic Usage
+-----------
+
+.. code-block:: python
+
+    from trossen_arm_mujoco.src.controller import Controller, RobotType
+
+    # Initialize controller
+    robot = Controller(
+        model=mujoco_model,
+        data=mujoco_data,
+        robot_type="wxai",  # or "stationary_ai", "mobile_ai"
+        arm_joint_names=["joint_1", "joint_2", ...],
+        gripper_joint_names=["left_carriage_joint"],
+        ik_scale=1.0,
+        ik_damping=0.03,
+    )
+
+    # Command end-effector pose
+    error = robot.set_ee_pose(
+        target_position=np.array([0.3, 0.0, 0.2]),
+        target_orientation=np.array([1.0, 0.0, 0.0, 0.0]),  # [w, x, y, z]
+        position_only=False,
+    )
+
+    # Gripper control
+    robot.open_gripper()
+    robot.close_gripper()
+
+Controller Parameters
+---------------------
+
+* ``ik_scale``: Scaling factor for IK velocity (default: 1.0)
+* ``ik_damping``: Damping factor for singularity avoidance (default: 0.03)
+* ``position_only``: When True, only controls position, orientation remains free
+
+Data Collection
+===============
 
 Modules
 =======================================================
@@ -92,13 +251,13 @@ Simulations
 
 #. :guilabel:`ee_sim_env.py`
 
-    * Loads ``trossen_ai_scene.xml`` (motion capture-based control).
+    * Loads ``stationary_ai/scene_mocap.xml`` (motion capture-based control).
     * The arms move by following the positions commanded to the mocap bodies.
-    * Used for generating scripted policies that control the robot’s arms in predefined ways.
+    * Used for generating scripted policies that control the robot's arms in predefined ways.
 
 #. :guilabel:`sim_env.py`
 
-    * Loads ``trossen_ai_scene_joint.xml`` (position-controlled joints).
+    * Loads ``stationary_ai/scene_joint.xml`` (position-controlled joints).
     * Uses joint controllers instead of mocap bodies.
     * Replays joint trajectories from :guilabel:`ee_sim_env.py`, enabling clean simulation visuals without mocap bodies visible in the rendered output.
 
@@ -140,7 +299,7 @@ Replay in Joint-Controlled Environment
 
 The recorded joint trajectories are later replayed in a second scene where:
 
-* The mocap bodies are removed (e.g., in ``trossen_ai_scene_joint.xml``).
+* The mocap bodies are removed (e.g., in ``stationary_ai/scene_joint.xml``).
 * The arm is directly controlled using joint position commands.
 * Observations are collected without the mocap artifacts.
 
@@ -167,13 +326,13 @@ Step-by-Step Process
 
     To generate and save simulation episodes, use:
 
-    .. code-block:: bash
+.. code-block:: bash
 
-        python trossen_arm_mujoco/scripts/record_sim_episodes.py \
-            --task_name sim_transfer_cube \
-            --data_dir sim_transfer_cube \
-            --num_episodes 5 \
-            --onscreen_render
+    python trossen_arm_mujoco/scripts/record_sim_episodes.py \
+        --task_name sim_transfer_cube \
+        --data_dir sim_transfer_cube \
+        --num_episodes 5 \
+        --onscreen_render
 
     Arguments:
 
@@ -638,3 +797,12 @@ If you encounter Mesa Loader or ``mujoco.FatalError: gladLoadGL error`` issues, 
 .. code-block:: bash
 
     export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+
+Related Links
+=============
+
+- `Trossen Robotics <https://www.trossenrobotics.com/>`_
+- `Trossen Arm Documentation <https://docs.trossenrobotics.com/trossen_arm/>`_
+- `Trossen Arm Description (URDF) <https://github.com/TrossenRobotics/trossen_arm_description>`_
+- `MuJoCo Documentation <https://mujoco.readthedocs.io/>`_
+- `MuJoCo Python Bindings <https://mujoco.readthedocs.io/en/stable/python.html>`_

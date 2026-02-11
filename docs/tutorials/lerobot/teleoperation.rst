@@ -42,7 +42,7 @@ By running the following code, you can start your first **SAFE** teleoperation:
 
 .. tip::
 
-    To stop the teleoperation, press ``CTRL+C`` in the terminal.
+    To stop the teleoperation, press :kbd:`CTRL+C` in the terminal.
 
 By adding ``--robot.max_relative_target=5``, we override the default value for **max_relative_target** defined in
 `Trossen AI Robot Configurations <https://github.com/Interbotix/lerobot/blob/trossen-ai/lerobot/common/robot_devices/robots/configs.py>`_.

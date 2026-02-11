@@ -249,6 +249,7 @@ An example configuration for tasks is shown below:
       play_sounds: true
       disable_active_ui_updates: false
       save_interval: 1
+      display_fps: 1
       operators:
       - name: "YourOperator0"
         email: "youroperatoremail0@example.com"
@@ -272,6 +273,10 @@ An example configuration for tasks is shown below:
 - ``save_interval``: Interval in episodes at which to encode images to video and save data to disk.
   For example, if set to 5, data will be saved every 5 episodes.
   Default is 1 (save after every episode).
+- ``display_fps``: Controls how often camera images are refreshed in the UI (frames per second).
+  The UI uses frame-skipping to render only at the specified frequency, reducing compute load while keeping controls responsive.
+  Applies to both recording and dry-run modes. Default: 1 FPS.
+  Increase for smoother visuals at the cost of more processing; decrease to improve performance.
   Setting save interval to ``-1``, ``0``, or ``> total number of episodes`` will only save data at the end of the entire data collection session.
 - ``operators``: Optional list of operators involved in the task.
   The operator information will be saved in ``info.json`` in the metadata folder.
@@ -398,4 +403,4 @@ Disable Camera Views
 
 If the camera views are causing lag, consider disabling them temporarily to see if performance improves.
 This just disables the camera feeds in the GUI but does not affect data collection.
-Click the checkbox labeled ``Disable Camera Views`` in the top-right corner of the GUI.
+Make the ``display_fps`` parameter 0 to disable camera updates in the UI.

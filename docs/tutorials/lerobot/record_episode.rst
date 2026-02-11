@@ -131,7 +131,7 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
     The units for each joint are as follows:
 
     - **Joints 0-5**: Radians
-    - **Joint 6 (Gripper)**: Millimeters (mm)
+    - **Joint 6 (Gripper)**: Meters (m)
 
 .. warning::
 

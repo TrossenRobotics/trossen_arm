@@ -55,21 +55,21 @@ If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``
         .. code-block:: bash
 
             python lerobot/scripts/visualize_dataset_html.py \
-                --repo-id ${HF_USER}/trossen_ai_stationary_test \
-                --local-files-only 1
+                --repo-id <local_dir_name>/trossen_ai_stationary_test \
+                --load-from-hf-hub 0
 
     .. group-tab:: Trossen AI Mobile
 
         .. code-block:: bash
 
             python lerobot/scripts/visualize_dataset_html.py \
-                --repo-id ${HF_USER}/trossen_ai_mobile_test \
-                --local-files-only 1
+                --repo-id <local_dir_name>/trossen_ai_mobile_test \
+                --load-from-hf-hub 0
 
     .. group-tab:: Trossen AI Solo
 
         .. code-block:: bash
 
             python lerobot/scripts/visualize_dataset_html.py \
-                --repo-id ${HF_USER}/trossen_ai_solo_test \
-                --local-files-only 1
+                --repo-id <local_dir_name>/trossen_ai_solo_test \
+                --load-from-hf-hub 0

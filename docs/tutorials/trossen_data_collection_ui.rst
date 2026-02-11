@@ -114,6 +114,181 @@ Once the installation and post-installation setup are complete, you can launch t
 
         trossen_ai_data_collection_ui
 
+
+Application Overview
+====================
+
+The Trossen AI Data Collection UI is organized into several sections, each providing specific functionality for managing and monitoring your data collection sessions.
+
+Menu Bar
+--------
+
+The top menu bar provides access to key application settings and controls:
+
+Edit
+^^^^
+
+The **Edit** menu provides access to configuration editors:
+
+- **Robot Configuration**: Opens a YAML editor to modify robot settings including:
+  
+  - Camera serial numbers and resolutions
+  - Arm IP addresses and models
+  - Motion parameters (``max_relative_target``, ``min_time_to_move_multiplier``)
+  - Camera interface selection
+
+- **Task Configuration**: Opens a YAML editor to modify task settings including:
+  
+  - Task names and descriptions
+  - Episode parameters (length, warmup time, reset time)
+  - Recording settings (FPS, save interval, display FPS)
+  - Hugging Face Hub integration
+  - Operator information
+
+Changes made through these editors are automatically saved and applied to the current session.
+
+Calibration
+^^^^^^^^^^^
+
+The **Calibration** menu provides tools for positioning and calibrating robot arms:
+
+- Pose arms in specific positions for calibration purposes
+- Save arm positions that can be reused later
+- Calibrate sensors connected to the arms
+- Load previously saved positions for consistent setup
+
+Calibration should be performed when:
+
+- You need to save reference positions for your workflow
+- Calibrating sensors attached to the arms
+- Restoring arms to previously saved calibration positions
+
+Quit
+^^^^
+
+The **Quit** menu option safely exits the application.
+
+
+Task Management Panel
+---------------------
+
+The task management panel is located in the upper right section of the interface:
+
+Task Selection Dropdown
+^^^^^^^^^^^^^^^^^^^^^^^
+
+A dropdown menu displaying all available tasks configured in your task configuration YAML file:
+
+- Shows task names (e.g., "trossen_ai_solo_dummy_2")
+- Updates the session parameters when a new task is selected
+- Displays "Selected new task: [task_name]" message when changed
+- Automatically loads associated robot configuration for the selected task
+
+To switch tasks:
+
+#. Click the dropdown menu
+#. Select the desired task from the list
+#. The UI will update with the new task's parameters
+
+Episode Count Selection
+^^^^^^^^^^^^^^^^^^^^^^^
+
+A numeric spinbox showing the target number of episodes for the current session:
+
+- Located next to the task selection dropdown
+- Default value shown (e.g., "30")
+- Can be adjusted using:
+  
+  - **+** button: Increment episode count
+  - **-** button: Decrement episode count
+
+- This determines how many episodes will be recorded in the current data collection session
+
+Camera View Section
+-------------------
+
+The camera view section occupies the left side of the interface and provides real-time visual feedback:
+
+Camera Feed Windows
+^^^^^^^^^^^^^^^^^^^
+
+Displays live video feeds from all configured cameras:
+
+- Typically shows 4 camera views in a 2×2 grid layout:
+  
+  - **Top-left**: High-angle camera (``cam_high``)
+  - **Top-right**: Low-angle camera (``cam_low``)
+  - **Bottom-left**: Right wrist camera (``cam_right_wrist``)
+  - **Bottom-right**: Left wrist camera (``cam_left_wrist``)
+
+- Each window shows:
+  
+  - Real-time video stream from the corresponding camera
+  - Camera feed updates at the rate specified by ``display_fps``
+  - "No camera" icon when a camera is disconnected or not configured
+
+Camera Feed Display FPS
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Displayed at the top of the camera view section (e.g., "Camera Feed Display FPS: 0"):
+
+- Shows the current refresh rate of camera displays in the UI
+- Controlled by the ``display_fps`` parameter in task configuration
+- Values:
+  
+  - **0**: Camera displays are disabled (performance mode)
+  - **1-5**: Low refresh rate (recommended for most use cases)
+  - **10-30**: Higher refresh rate (smoother visuals, higher CPU usage)
+
+- This only affects UI display; actual recording always uses the ``fps`` parameter
+- Lower values improve performance on resource-constrained systems
+- Display FPS applies to both recording and dry run modes
+
+Progress Tracking Section
+-------------------------
+
+Located in the lower right section, this area provides real-time feedback on session progress:
+
+Episode Progress Bar
+^^^^^^^^^^^^^^^^^^^^
+
+A visual progress bar showing completion status for the current episode:
+
+- Label: "EPISODE PROGRESS"
+- Fills from left to right as the episode progresses
+- Shows percentage completion of the current episode based on elapsed time vs. ``episode_length_s``
+- Resets to 0% when starting each new episode
+- Updates in real-time during recording
+
+Example:
+- If ``episode_length_s`` is 10 seconds and 5 seconds have elapsed, progress shows 50%
+
+Total Time Display
+^^^^^^^^^^^^^^^^^^
+
+Displays the total duration configured for the current episode:
+
+- Label: "Total Time:"
+- Shows the episode duration in seconds as defined by ``episode_length_s`` in the task configuration
+- This is a static value displaying the target episode length (e.g., "Total Time: 10" for a 10-second episode)
+- Does not track elapsed time; instead shows the total allocated time for each episode
+- Helps users know the expected duration of the recording session
+
+Log Terminal
+------------
+
+Although not always visible in the main UI, the log terminal provides detailed status messages:
+
+- Displays real-time system messages and status updates
+- Shows:
+  
+  - Connection status for arms and cameras
+  - Episode start/end notifications
+  - Error messages and warnings
+  - Data saving confirmations
+  - Task selection changes
+  - Configuration loading status
+
 Configuring the Robots
 ======================
 
@@ -363,6 +538,7 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 #. Quit Button
 
     - The application features a Quit button in the menu that lets you exit safely, making sure all your data is saved and everything shuts down properly.
+
 
 Troubleshooting
 ===============

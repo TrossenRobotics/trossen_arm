@@ -31,3 +31,21 @@ On your computer:
 
         cd ~/lerobot_trossen
         uv pip list | grep lerobot
+
+#. For Trossen AI Mobile only, configure the SLATE mobile base:
+
+    The SLATE mobile base uses a USB-Serial converter to communicate with the host computer.
+
+    Remove ``brltty`` to prevent it from claiming the device:
+
+    .. code-block:: bash
+
+        sudo apt-get remove brltty
+
+    Add your user to the ``dialout`` group:
+
+    .. code-block:: bash
+
+        sudo usermod -a -G dialout $USER
+
+    Log out and log back in, or reboot your computer to apply the changes.

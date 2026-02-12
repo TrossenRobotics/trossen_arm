@@ -53,59 +53,59 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
                 --control.num_episodes=2 \
                 --control.push_to_hub=true
 
-   .. group-tab:: Trossen AI Mobile
+    .. group-tab:: Trossen AI Mobile
 
-    The Trossen AI Mobile robot supports two teleoperation modes.
-    In the first mode, with motor **torque disabled**, you can manually push the base to collect data.
-    In the second mode, with motor **torque enabled**, you can control the robot using the Remote Control.
-    For details on using the Remote Control, refer to the `Remote Control Operation <https://docs.trossenrobotics.com/slate_docs/operation/rc_controller.html>`_.
+        The Trossen AI Mobile robot supports two teleoperation modes.
+        In the first mode, with motor **torque disabled**, you can manually push the base to collect data.
+        In the second mode, with motor **torque enabled**, you can control the robot using the Remote Control.
+        For details on using the Remote Control, refer to the `Remote Control Operation <https://docs.trossenrobotics.com/slate_docs/operation/rc_controller.html>`_.
 
-    .. note::
+        .. note::
 
-        By default, ``enable_motor_torque`` is set to ``false`` on the Trossen AI Mobile robot.
-        To enable remote control, set it to ``true`` by adding ``--robot.enable_motor_torque=true`` to the command line.
-        If you'd like to change the default behavior, you can modify the ``lerobot/common/robot_devices/robots/configs.py`` file.
+            By default, ``enable_motor_torque`` is set to ``false`` on the Trossen AI Mobile robot.
+            To enable remote control, set it to ``true`` by adding ``--robot.enable_motor_torque=true`` to the command line.
+            If you'd like to change the default behavior, you can modify the ``lerobot/common/robot_devices/robots/configs.py`` file.
 
-    .. tabs::
+        .. tabs::
 
-        .. tab:: Trossen AI Mobile with Torque Disabled
+            .. tab:: Trossen AI Mobile with Torque Disabled
 
-            .. code-block:: bash
-            :emphasize-lines: 12,13
+                .. code-block:: bash
+                    :emphasize-lines: 12,13
 
-            python lerobot/scripts/control_robot.py \
-                --robot.type=trossen_ai_mobile \
-                --robot.max_relative_target=null \
-                --control.type=record \
-                --control.fps=30 \
-                --control.single_task="Test recording episode using Trossen AI Mobile." \
-                --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
-                --control.tags='["tutorial"]' \
-                --control.warmup_time_s=5 \
-                --control.episode_time_s=30 \
-                --control.reset_time_s=30 \
-                --control.num_episodes=2 \
-                --control.push_to_hub=true
+                    python lerobot/scripts/control_robot.py \
+                        --robot.type=trossen_ai_mobile \
+                        --robot.max_relative_target=null \
+                        --control.type=record \
+                        --control.fps=30 \
+                        --control.single_task="Test recording episode using Trossen AI Mobile." \
+                        --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+                        --control.tags='["tutorial"]' \
+                        --control.warmup_time_s=5 \
+                        --control.episode_time_s=30 \
+                        --control.reset_time_s=30 \
+                        --control.num_episodes=2 \
+                        --control.push_to_hub=true
 
-        .. tab:: Trossen AI Mobile with Torque Enabled
+            .. tab:: Trossen AI Mobile with Torque Enabled
 
-            .. code-block:: bash
-            :emphasize-lines: 12,13,14
+                .. code-block:: bash
+                    :emphasize-lines: 12,13,14
 
-            python lerobot/scripts/control_robot.py \
-                --robot.type=trossen_ai_mobile \
-                --robot.max_relative_target=null \
-                --control.type=record \
-                --control.fps=30 \
-                --control.single_task="Test recording episode using Trossen AI Mobile." \
-                --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
-                --control.tags='["tutorial"]' \
-                --control.warmup_time_s=5 \
-                --control.episode_time_s=30 \
-                --control.reset_time_s=30 \
-                --control.num_episodes=2 \
-                --control.push_to_hub=true \
-                --robot.enable_motor_torque=true
+                    python lerobot/scripts/control_robot.py \
+                        --robot.type=trossen_ai_mobile \
+                        --robot.max_relative_target=null \
+                        --control.type=record \
+                        --control.fps=30 \
+                        --control.single_task="Test recording episode using Trossen AI Mobile." \
+                        --control.repo_id=${HF_USER}/trossen_ai_mobile_test \
+                        --control.tags='["tutorial"]' \
+                        --control.warmup_time_s=5 \
+                        --control.episode_time_s=30 \
+                        --control.reset_time_s=30 \
+                        --control.num_episodes=2 \
+                        --control.push_to_hub=true \
+                        --robot.enable_motor_torque=true
 
     .. group-tab:: Trossen AI Solo
 
@@ -113,18 +113,18 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
             :emphasize-lines: 12,13
 
             python lerobot/scripts/control_robot.py \
-            --robot.type=trossen_ai_solo \
-            --robot.max_relative_target=null \
-            --control.type=record \
-            --control.fps=30 \
-            --control.single_task="Test recording episode using Trossen AI Solo." \
-            --control.repo_id=${HF_USER}/trossen_ai_solo_test \
-            --control.tags='["tutorial"]' \
-            --control.warmup_time_s=5 \
-            --control.episode_time_s=30 \
-            --control.reset_time_s=30 \
-            --control.num_episodes=2 \
-            --control.push_to_hub=true
+                --robot.type=trossen_ai_solo \
+                --robot.max_relative_target=null \
+                --control.type=record \
+                --control.fps=30 \
+                --control.single_task="Test recording episode using Trossen AI Solo." \
+                --control.repo_id=${HF_USER}/trossen_ai_solo_test \
+                --control.tags='["tutorial"]' \
+                --control.warmup_time_s=5 \
+                --control.episode_time_s=30 \
+                --control.reset_time_s=30 \
+                --control.num_episodes=2 \
+                --control.push_to_hub=true
 
 .. note::
 

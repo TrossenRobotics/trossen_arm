@@ -100,6 +100,18 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
                 cameras: dict[str, CameraConfig] = field(default_factory=dict)
 
 
+    .. group-tab:: MobileAI
+
+        .. code-block:: python
+
+            @RobotConfig.register_subclass("mobileai_robot")
+            @dataclass
+            class MobileAIRobotConfig(BiWidowXAIFollowerRobotConfig):
+                # Mobile AI uses the same configuration as BiWidowXAIFollowerRobotConfig.
+                # The base of the kit does not require any configuration parameters.
+                enable_base_motor_torque: bool = False
+
+
     .. group-tab:: WidowXAI Leader
 
         .. code-block:: python
@@ -141,6 +153,17 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
             class BiWidowXAILeaderRobotConfig(TeleoperatorConfig):
                 left_arm_ip_address: str
                 right_arm_ip_address: str
+
+
+    .. group-tab:: MobileAI Leader
+
+        .. code-block:: python
+
+            @TeleoperatorConfig.register_subclass("mobileai_leader_teleop")
+            @dataclass
+            class MobileAILeaderTeleopConfig(BiWidowXAILeaderRobotConfig):
+                # Mobile AI uses the same configuration as BiWidowXAILeaderRobotConfig.
+                pass
 
 Setup IP Address
 ----------------

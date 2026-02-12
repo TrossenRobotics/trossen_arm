@@ -19,8 +19,8 @@ By running the following code, you can start your first **SAFE** teleoperation:
                 --robot.ip_address=192.168.1.4 \
                 --robot.id=follower \
                 --robot.cameras="{
-                    cam_left: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
-                    cam_right: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_main: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
                     }" \
                 --teleop.type=widowxai_leader_teleop \
                 --teleop.ip_address=192.168.1.2 \
@@ -37,16 +37,40 @@ By running the following code, you can start your first **SAFE** teleoperation:
             --robot.right_arm_ip_address=192.168.1.4 \
             --robot.id=bimanual_follower \
             --robot.cameras="{
-                cam_left: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
-                cam_right: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
-                cam_top: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                cam_high: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
                 cam_low: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                cam_left_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                cam_right_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
                 }" \
             --teleop.type=bi_widowxai_leader_teleop \
             --teleop.left_arm_ip_address=192.168.1.3 \
             --teleop.right_arm_ip_address=192.168.1.2 \
             --teleop.id=bimanual_leader \
             --display_data=false
+
+    .. group-tab:: Trossen AI Mobile
+
+        .. code-block:: bash
+
+            uv run lerobot-teleoperate \
+            --robot.type=mobileai_robot \
+            --robot.left_arm_ip_address=192.168.1.5 \
+            --robot.right_arm_ip_address=192.168.1.4 \
+            --robot.id=mobile_follower \
+            --robot.cameras="{
+                cam_high: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                cam_left_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                cam_right_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                }" \
+            --teleop.type=mobileai_leader_teleop \
+            --teleop.left_arm_ip_address=192.168.1.3 \
+            --teleop.right_arm_ip_address=192.168.1.2 \
+            --teleop.id=mobile_leader \
+            --display_data=false
+
+.. tip::
+
+    To stop the teleoperation, press :kbd:`CTRL+C` in the terminal.
 
 Teleoperation Configuration
 ===========================

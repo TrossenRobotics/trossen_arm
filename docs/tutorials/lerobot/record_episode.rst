@@ -314,7 +314,7 @@ When recording a dataset, you can specify command line arguments to customize th
 - ``--control.display_cameras`` (bool): Flag to display all cameras on screen.
 - ``--control.play_sounds`` (bool): Flag to use vocal synthesis to read events.
 - ``--control.resume`` (bool): Flag to resume recording on an existing dataset.
-- ``--control.local_files_only`` (bool): Flag to use local files only.
+- ``--load-from-hf-hub`` (int): Flag to load dataset from Hugging Face Hub. Set to 0 to use local files only.
 - ``--control.save_interval`` (int): Interval in episodes at which to encode images to video and save data to disk.
    For example, if set to 5, data will be saved every 5 episodes.
    Default is 1 (save after every episode).

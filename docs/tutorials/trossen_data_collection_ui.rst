@@ -223,9 +223,9 @@ Displays live video feeds from all configured cameras:
 
 - Each window shows:
   
-  - Real-time video stream from the corresponding camera
-  - Camera feed updates at the rate specified by ``display_fps``
-  - "No camera" icon when a camera is disconnected or not configured
+  - Live video stream from the corresponding camera
+  - The UI refreshes the displayed frames at the ``display_fps`` frequency specified in the task YAML file
+  - Displays a "No Camera" icon when a camera is disconnected, not configured, or when recording is not active.
 
 Camera Feed Display FPS
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -258,7 +258,7 @@ A visual progress bar showing completion status for the current episode:
 - Fills from left to right as the episode progresses
 - Shows percentage completion of the current episode based on elapsed time vs. ``episode_length_s``
 - Resets to 0% when starting each new episode
-- Updates in real-time during recording
+- Updates at the ``display_fps`` frequency defined in the task configuration.
 
 Example:
 - If ``episode_length_s`` is 10 seconds and 5 seconds have elapsed, progress shows 50%

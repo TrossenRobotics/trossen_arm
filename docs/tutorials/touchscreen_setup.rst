@@ -231,16 +231,16 @@ If the Trossen AI Data Collection UI application opens on a different monitor th
 
 **Method 1: Using F11 (Full Screen Toggle)**
 
-#. Press ``F11`` to exit full-screen mode (if the application is in full-screen)
+#. Press :kbd:`F11` to exit full-screen mode (if the application is in full-screen)
 #. Drag the application window to the touchscreen display
-#. Press ``F11`` again to return to full-screen mode on the correct display
+#. Press :kbd:`F11` again to return to full-screen mode on the correct display
 
 **Method 2: Using Keyboard Shortcuts**
 
-Use ``Shift + Windows + Left/Right Arrow`` to move the application window between monitors:
+Use :kbd:`Shift+Windows+Left/Right Arrow` to move the application window between monitors:
 
-- ``Shift + Windows + Right Arrow``: Move window to the monitor on the right
-- ``Shift + Windows + Left Arrow``: Move window to the monitor on the left
+- :kbd:`Shift+Windows+Right Arrow`: Move window to the monitor on the right
+- :kbd:`Shift+Windows+Left Arrow`: Move window to the monitor on the left
 
 Repeat the key combination until the window appears on the touchscreen display.
 

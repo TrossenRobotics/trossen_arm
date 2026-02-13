@@ -17,7 +17,7 @@ Required Hardware Components
 Touchscreen Display
 ^^^^^^^^^^^^^^^^^^^
 
-.. image:: touchscreen_setup/images/touchscreen.jpg
+.. image:: images/touchscreen.jpg
    :width: 60%
    :alt: Touchscreen Display
    :align: center
@@ -34,7 +34,7 @@ Touchscreen Display
 Power Supply
 ^^^^^^^^^^^^
 
-.. image:: touchscreen_setup/images/power_supply.jpg
+.. image:: images/power_supply.jpg
    :width: 40%
    :alt: Power Supply
    :align: center
@@ -49,7 +49,7 @@ Power Supply
 HDMI Cable
 ^^^^^^^^^^
 
-.. image:: touchscreen_setup/images/hdmi_cable.jpg
+.. image:: images/hdmi_cable.jpg
    :width: 40%
    :alt: HDMI Cable
    :align: center
@@ -63,7 +63,7 @@ HDMI Cable
 USB Cable
 ^^^^^^^^^
 
-.. image:: touchscreen_setup/images/usb_cable.jpg
+.. image:: images/usb_cable.jpg
    :width: 40%
    :alt: USB Cable for Touch Input
    :align: center
@@ -78,7 +78,7 @@ Physical Connection
 -------------------
 
 
-.. image:: touchscreen_setup/images/ports.jpg
+.. image:: images/ports.jpg
    :width: 80%
    :alt: Connection Diagram showing cable connections
    :align: center
@@ -112,6 +112,14 @@ After connecting all cables, verify the display is detected by the system:
 .. code-block:: bash
 
     xrandr --query | grep " connected"
+
+Example output:
+
+.. code-block:: text
+
+    eDP-1 connected (normal left inverted right x axis y axis)
+    HDMI-1-0 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 290mm x 172mm
+    DP-1-4 connected primary 1920x1080+1920+0 (normal left inverted right x axis y axis) 1394mm x 784mm
 
 You should see your touchscreen display listed among the connected outputs (e.g., ``HDMI-1-0`` or similar).
 
@@ -237,10 +245,10 @@ If the Trossen AI Data Collection UI application opens on a different monitor th
 
 **Method 2: Using Keyboard Shortcuts**
 
-Use :kbd:`Shift+Windows+Left/Right Arrow` to move the application window between monitors:
+Use :kbd:`Shift+Windows+←/→` to move the application window between monitors:
 
-- :kbd:`Shift+Windows+Right Arrow`: Move window to the monitor on the right
-- :kbd:`Shift+Windows+Left Arrow`: Move window to the monitor on the left
+- :kbd:`Shift+Windows+→`: Move window to the monitor on the right
+- :kbd:`Shift+Windows+←`: Move window to the monitor on the left
 
 Repeat the key combination until the window appears on the touchscreen display.
 

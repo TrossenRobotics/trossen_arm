@@ -16,3 +16,4 @@ Let's get started with the :doc:`/getting_started/hardware_setup`.
     getting_started/configuration.rst
     getting_started/demo_scripts.rst
     getting_started/totl.rst
+    getting_started/touchscreen.rst

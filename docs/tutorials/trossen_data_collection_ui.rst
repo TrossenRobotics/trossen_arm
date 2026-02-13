@@ -690,3 +690,23 @@ Disable Camera Views
 If the camera views are causing lag, consider disabling them temporarily to see if performance improves.
 This just disables the camera feeds in the GUI but does not affect data collection.
 Make the ``display_fps`` parameter 0 to disable camera updates in the UI.
+
+Changelog
+=========
+
+1.2.0
+------
+
+- Separated display FPS from control loop FPS with intelligent frame skipping and a configurable ``display_fps`` parameter (default 1 FPS), preventing camera UI updates from degrading control loop stability and responsiveness during recording while reducing UI overhead.
+- Moved RGB-to-BGR color space conversion from the time-critical control loop thread to the UI rendering thread, reducing control loop workload and improving real-time control performance.
+- Environment reset now runs asynchronously, allowing video encoding operations to happen in parallel with other tasks instead of blocking the UI, significantly reducing idle wait time between episodes and improving overall recording throughput.
+- Throttled progress bar updates during batch saves and long operations to prevent excessive UI redraws that could cause control FPS drops.
+- Logs now display as formatted HTML with proper text colors instead of raw ANSI escape codes, improving readability in the log viewer with enhanced phase logging and clearer status messages during warmup, reset, saving, and completion phases.
+- Optimized log message appending by avoiding expensive full-document reads on each new log entry, eliminating UI lag during verbose logging operations, with a configurable log entry limit (default 20 entries) and automatic pruning to prevent unbounded memory growth.
+- Camera layout reorganized with dynamic camera name labels displayed above each feed for easier identification, improved structure, and proper resource cleanup before hardware resets to avoid camera hardware conflicts and lock-ups.
+- Dedicated "RESET ARMS" and "HARDWARE RESET CAMERAS" buttons replacing the previous checkbox-based camera feed control for clearer, more intuitive operation of hardware reset functions.
+- 30-second robot connection timeout to prevent indefinite hangs during robot initialization and startup, providing faster failure detection, with improved error handling and automatic restoration of UI elements (buttons, progress bars, controls) to their correct states after failures.
+- Automatic teleoperation enablement check before each episode to ensure robots requiring explicit teleop mode are properly configured before recording begins.
+- Episode numbering now correctly accounts for unsaved batched episodes, preventing incorrect episode counts when using batch save intervals.
+- Re-record button is now only enabled during active recording sessions to prevent accidental activation outside of valid recording contexts.
+- Added F11 keyboard shortcut for full-screen toggle, allowing users to easily move the application window between displays and maximize screen usage on touchscreen displays.

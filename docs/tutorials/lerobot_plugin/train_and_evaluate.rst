@@ -11,6 +11,19 @@ Here is an example command:
 
 .. tabs::
 
+    .. group-tab:: Trossen AI Solo
+
+        .. code-block:: bash
+
+            uv run lerobot-train \
+                --dataset.repo_id=${HF_USER}/trossen_ai_solo_test \
+                --policy.type=act \
+                --output_dir=outputs/train/act_trossen_ai_solo_test \
+                --job_name=act_trossen_ai_solo_test \
+                --policy.device=cuda \
+                --wandb.enable=true \
+                --policy.repo_id=${HF_USER}/my_policy
+
     .. group-tab:: Trossen AI Stationary
 
         .. code-block:: bash
@@ -24,15 +37,15 @@ Here is an example command:
                 --wandb.enable=true \
                 --policy.repo_id=${HF_USER}/my_policy
 
-    .. group-tab:: Trossen AI Solo
+    .. group-tab:: Trossen AI Mobile
 
         .. code-block:: bash
 
             uv run lerobot-train \
-                --dataset.repo_id=${HF_USER}/trossen_ai_solo_test \
+                --dataset.repo_id=${HF_USER}/trossen_ai_mobile_test \
                 --policy.type=act \
-                --output_dir=outputs/train/act_trossen_ai_solo_test \
-                --job_name=act_trossen_ai_solo_test \
+                --output_dir=outputs/train/act_trossen_ai_mobile_test \
+                --job_name=act_trossen_ai_mobile_test \
                 --policy.device=cuda \
                 --wandb.enable=true \
                 --policy.repo_id=${HF_USER}/my_policy
@@ -94,20 +107,63 @@ Evaluating Your Policy
 
 You can evaluate your trained policy on your robot using the script below:
 
-    .. code-block:: bash
+.. tabs::
 
-        uv run lerobot-record  \
-            --robot.type=widowxai_follower_robot \
-            --robot.port=/dev/ttyACM1 \
-            --robot.cameras='{
-                up: {type: opencv, index_or_path: 10, width: 640, height: 480, fps: 30},
-                side: {type: opencv, index_or_path: 8, width: 640, height: 480, fps: 30}
-                }' \
-            --robot.id=follower \
-            --display_data=false \
-            --dataset.repo_id=${HF_USER}/eval_trossen_ai_xxxxxxx_test \
-            --dataset.single_task="Grab and handover the red cube to the other arm" \
-            --policy.path=${HF_USER}/my_policy
+    .. group-tab:: Trossen AI Solo
+
+        .. code-block:: bash
+
+            uv run lerobot-record \
+                --robot.type=widowxai_follower_robot \
+                --robot.ip_address=192.168.1.4 \
+                --robot.id=follower \
+                --robot.cameras='{
+                    cam_main: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30}
+                    }' \
+                --display_data=false \
+                --dataset.repo_id=${HF_USER}/eval_trossen_ai_solo_test \
+                --dataset.single_task="Grab the cube" \
+                --policy.path=${HF_USER}/my_policy
+
+    .. group-tab:: Trossen AI Stationary
+
+        .. code-block:: bash
+
+            uv run lerobot-record \
+                --robot.type=bi_widowxai_follower_robot \
+                --robot.left_arm_ip_address=192.168.1.5 \
+                --robot.right_arm_ip_address=192.168.1.4 \
+                --robot.id=bimanual_follower \
+                --robot.cameras='{
+                    cam_high: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_low: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_left_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_right_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30}
+                    }' \
+                --display_data=false \
+                --dataset.repo_id=${HF_USER}/eval_trossen_ai_stationary_test \
+                --dataset.single_task="Grab and handover the red cube to the other arm" \
+                --policy.path=${HF_USER}/my_policy
+
+    .. group-tab:: Trossen AI Mobile
+
+        .. code-block:: bash
+
+            uv run lerobot-record \
+                --robot.type=mobileai_robot \
+                --robot.left_arm_ip_address=192.168.1.5 \
+                --robot.right_arm_ip_address=192.168.1.4 \
+                --robot.id=mobile_follower \
+                --robot.cameras='{
+                    cam_high: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_left_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_right_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30}
+                    }' \
+                --display_data=false \
+                --dataset.repo_id=${HF_USER}/eval_trossen_ai_mobile_test \
+                --dataset.single_task="Pick and place the object" \
+                --policy.path=${HF_USER}/my_policy
 
 .. note::
 

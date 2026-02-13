@@ -194,8 +194,8 @@ The dictionary will look like this for two cameras:
         .. code-block:: bash
 
             --robot.cameras="{
-                wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
-                top: {type: intelrealsense, serial_number_or_name: "1123456789", width: 640, height: 480, fps: 30}
+                cam_main: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                cam_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30}
             }"
 
     .. group-tab:: OpenCV Interface
@@ -203,8 +203,8 @@ The dictionary will look like this for two cameras:
         .. code-block:: bash
 
             --robot.cameras="{
-                wrist: {type: opencv, index_or_path: 8, width: 640, height: 480, fps: 30},
-                top: {type: opencv, index_or_path: 10, width: 640, height: 480, fps: 30}
+                cam_main: {type: opencv, index_or_path: 8, width: 640, height: 480, fps: 30},
+                cam_wrist: {type: opencv, index_or_path: 10, width: 640, height: 480, fps: 30}
             }"
 
 We will look at setting up the specific camera types in more detail below.

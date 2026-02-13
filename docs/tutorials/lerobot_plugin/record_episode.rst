@@ -27,6 +27,30 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
 
 .. tabs::
 
+    .. group-tab:: Trossen AI Solo
+
+        .. code-block:: bash
+            :emphasize-lines: 16,17
+
+            uv run lerobot-record \
+                --robot.type=widowxai_follower_robot \
+                --robot.ip_address=192.168.1.4 \
+                --robot.id=follower \
+                --robot.cameras="{
+                    cam_main: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
+                    cam_wrist: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30}
+                }" \
+                --teleop.type=widowxai_leader_teleop \
+                --teleop.ip_address=192.168.1.2 \
+                --teleop.id=leader \
+                --display_data=true \
+                --dataset.repo_id=${HF_USER}/widowxai-cube-pickup \
+                --dataset.episode_time_s=45 \
+                --dataset.reset_time_s=15 \
+                --dataset.num_episodes=2 \
+                --dataset.push_to_hub=true \
+                --dataset.single_task="Grab the cube"
+
     .. group-tab:: Trossen AI Stationary
 
         .. code-block:: bash
@@ -38,8 +62,8 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
                 --robot.right_arm_ip_address=192.168.1.4 \
                 --robot.id=bimanual_follower \
                 --robot.cameras='{
-                cam_low: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 cam_high: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_low: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 cam_left_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 cam_right_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 }' \
@@ -55,29 +79,32 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
                 --dataset.push_to_hub=true \
                 --dataset.single_task="Grab and handover the red cube to the other arm"
 
-    .. group-tab:: Trossen AI Solo
+    .. group-tab:: Trossen AI Mobile
 
         .. code-block:: bash
-            :emphasize-lines: 16,17
+            :emphasize-lines: 19,20
 
             uv run lerobot-record \
-                --robot.type=widowxai_follower_robot \
-                --robot.ip_address=192.168.1.4 \
-                --robot.id=follower \
-                --robot.cameras="{
-                    cam_low: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30},
-                    cam_high: {type: intelrealsense, serial_number_or_name: "1123456789", width: 640, height: 480, fps: 30}
-                }" \
-                --teleop.type=widowxai_leader_teleop \
-                --teleop.ip_address=192.168.1.2 \
-                --teleop.id=leader \
+                --robot.type=mobileai_robot \
+                --robot.left_arm_ip_address=192.168.1.5 \
+                --robot.right_arm_ip_address=192.168.1.4 \
+                --robot.id=mobile_follower \
+                --robot.cameras='{
+                cam_high: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_left_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_right_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                }' \
+                --teleop.type=mobileai_leader_teleop \
+                --teleop.left_arm_ip_address=192.168.1.3 \
+                --teleop.right_arm_ip_address=192.168.1.2 \
+                --teleop.id=mobile_leader \
                 --display_data=true \
-                --dataset.repo_id=${HF_USER}/widowxai-cube-pickup \
-                --dataset.episode_time_s=45 \
+                --dataset.repo_id=${HF_USER}/mobileai-pick-and-place \
+                --dataset.episode_time_s=60 \
                 --dataset.reset_time_s=15 \
                 --dataset.num_episodes=2 \
                 --dataset.push_to_hub=true \
-                --dataset.single_task="Grab the cube"
+                --dataset.single_task="Pick and place the object"
 
 .. note::
 
@@ -95,6 +122,31 @@ Handling Camera FPS Issues
 
 .. tabs::
 
+   .. group-tab:: Trossen AI Solo
+
+        .. code-block:: bash
+            :emphasize-lines: 18,19
+
+            uv run lerobot-record \
+                --robot.type=widowxai_follower_robot \
+                --robot.ip_address=192.168.1.4 \
+                --robot.id=follower \
+                --robot.cameras='{
+                cam_main: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30}}' \
+                --teleop.type=widowxai_leader_teleop \
+                --teleop.ip_address=192.168.1.2 \
+                --teleop.id=leader \
+                --display_data=true \
+                --dataset.repo_id=${HF_USER}/widowxai-cube-pickup \
+                --dataset.episode_time_s=45 \
+                --dataset.reset_time_s=15 \
+                --dataset.num_episodes=2 \
+                --dataset.push_to_hub=true \
+                --dataset.single_task="Grab the cube" \
+                --dataset.num_image_writer_threads_per_camera=8 \
+                --display_data=false
+
    .. group-tab:: Trossen AI Stationary
 
         .. code-block:: bash
@@ -105,9 +157,9 @@ Handling Camera FPS Issues
                 --robot.left_arm_ip_address=192.168.1.5 \
                 --robot.right_arm_ip_address=192.168.1.4 \
                 --robot.id=bimanual_follower \
-                --robot.cameras= '{
-                cam_low: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                --robot.cameras='{
                 cam_high: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_low: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 cam_left_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 cam_right_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
                 }' \
@@ -125,28 +177,32 @@ Handling Camera FPS Issues
                 --dataset.num_image_writer_threads_per_camera=8 \
                 --display_data=false
 
-    .. group-tab:: Trossen AI Solo
+   .. group-tab:: Trossen AI Mobile
 
         .. code-block:: bash
-            :emphasize-lines: 19,20
+            :emphasize-lines: 22,23
 
             uv run lerobot-record \
-                --robot.type=widowxai_follower_robot \
-                --robot.ip_address=192.168.1.4 \
-                --robot.id=follower \
-                --robot.cameras= '{
-                cam_low: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
-                cam_high: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30}}' \
-                --teleop.type=widowxai_leader_teleop \
-                --teleop.ip_address=192.168.1.2 \
-                --teleop.id=leader \
+                --robot.type=mobileai_robot \
+                --robot.left_arm_ip_address=192.168.1.5 \
+                --robot.right_arm_ip_address=192.168.1.4 \
+                --robot.id=mobile_follower \
+                --robot.cameras='{
+                cam_high: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_left_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                cam_right_wrist: {"type": "intelrealsense", "serial_number_or_name": "0123456789", "width": 640, "height": 480, "fps": 30},
+                }' \
+                --teleop.type=mobileai_leader_teleop \
+                --teleop.left_arm_ip_address=192.168.1.3 \
+                --teleop.right_arm_ip_address=192.168.1.2 \
+                --teleop.id=mobile_leader \
                 --display_data=true \
-                --dataset.repo_id=${HF_USER}/widowxai-cube-pickup \
-                --dataset.episode_time_s=45 \
+                --dataset.repo_id=${HF_USER}/mobileai-pick-and-place \
+                --dataset.episode_time_s=60 \
                 --dataset.reset_time_s=15 \
                 --dataset.num_episodes=2 \
                 --dataset.push_to_hub=true \
-                --dataset.single_task="Grab the cube" \
+                --dataset.single_task="Pick and place the object" \
                 --dataset.num_image_writer_threads_per_camera=8 \
                 --display_data=false
 

@@ -289,6 +289,84 @@ Although not always visible in the main UI, the log terminal provides detailed s
   - Task selection changes
   - Configuration loading status
 
+Button Controls
+===============
+
+The UI provides several buttons for controlling the data collection process and managing hardware:
+
+RESET ARMS
+----------
+
+Resets all connected robot arms for the chosen task to their sleep positions. This button is useful when:
+
+- Arms have drifted from their expected positions
+- Recovering from an error state
+
+Click this button to send all follower and leader arms back to their default positions.
+
+HARDWARE RESET CAMERAS
+-----------------------
+
+Performs a hardware reset of all connected cameras. Use this button when:
+
+- Camera feeds become unresponsive or frozen
+- You experience video quality issues
+- Cameras fail to initialize properly
+
+This will reinitialize all camera connections and restart the video streams.
+
+START RECORDING SESSION
+------------------------
+
+Begins a new data collection session for the selected task. When clicked:
+
+- Initiates the warmup period (as defined in ``warmup_time_s``)
+- Starts recording robot actions and camera feeds
+- Begins the episode timer
+- Changes the button state to indicate active recording
+
+The button is colored green and is the primary control for beginning data collection.
+
+END RECORDING SESSION
+----------------------
+
+Stops the current data collection session. When clicked:
+
+- Terminates the active recording
+- Saves the collected data for the most recently completed episodes.
+- Returns the system to an idle state
+
+The button is colored red and should be used to cleanly end a recording session.
+
+RE-RECORD LAST EPISODE
+-----------------------
+
+Allows you to discard and re-record the most recent episode. This button:
+
+- Becomes available while a episode is actively recording.
+- Deletes the data from the currently active episode.
+- Resets the episode counter to the previous value.
+- Allows you to immediately start a new recording for that episode.
+- The button is disabled when the episode ends and encoding begins, to prevent re-recording after the fact.
+
+The button is colored yellow/orange and is essential for maintaining dataset quality by removing episodes with errors or unwanted behaviors.
+
+DRY RUN
+--------
+
+Executes a practice run without saving data. This mode:
+
+- Displays live camera feeds without recording
+- Allows you to test your setup before actual recording
+- Helps verify that all hardware is functioning correctly
+
+The button is colored gray and is useful for:
+
+- Testing camera angles and positions
+- Verifying robot movements and workspace
+- Practicing the task before formal data collection
+- Troubleshooting system issues without creating dataset entries
+
 Configuring the Robots
 ======================
 

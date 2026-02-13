@@ -14,6 +14,8 @@ The **Trossen AI Data Collection UI** is a Python-based graphical user interface
 It allows users to easily manage robot configurations, record tasks, and streamline data collection with real-time feedback, camera views, task management, and progress tracking.
 This documentation provides a comprehensive guide to setting up, installing, and using the Trossen AI Data Collection UI, including all its features and functionalities.
 
+
+
 Pre-Installation Setup
 ======================
 
@@ -95,6 +97,10 @@ Run the following command to complete the post-installation setup:
     trossen_ai_data_collection_ui_post_install
 
 Once the desktop icon is created, right-click on it and select **Allow Launching** to ensure the application has the necessary permissions to run.
+
+.. note::
+
+    **Touchscreen Interface Setup**: If you plan to use a touchscreen display with the Trossen AI Data Collection UI, refer to the :doc:`touchscreen_setup` guide for complete hardware setup, cable connections, and touchscreen mapping configuration.
 
 Launching the Application
 =========================

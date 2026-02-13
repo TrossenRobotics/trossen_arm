@@ -155,7 +155,7 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
                 right_arm_ip_address: str
 
 
-    .. group-tab:: MobileAI Leader
+    .. group-tab:: Mobile AI Leader
 
         .. code-block:: python
 

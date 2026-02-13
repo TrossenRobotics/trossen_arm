@@ -11,6 +11,7 @@ These comprehensive tutorials offer step-by-step guidance on utilizing the Tross
     tutorials/lerobot_plugin.rst
     tutorials/lerobot.rst
     tutorials/trossen_data_collection_ui.rst
+    tutorials/touchscreen_setup.rst
     tutorials/trossen_arm_mujoco.rst
     tutorials/trossen_ai_isaac.rst
     tutorials/ros2.rst

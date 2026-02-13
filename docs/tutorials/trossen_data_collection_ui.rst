@@ -174,6 +174,32 @@ Quit
 
 The **Quit** menu option safely exits the application.
 
+Keyboard Shortcuts
+------------------
+
+The application supports the following keyboard shortcuts:
+
+Full Screen Toggle (F11)
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Press :kbd:`F11` to toggle full-screen mode for the application window. This is particularly useful for:
+
+- Moving the application between different displays
+- Maximizing screen real estate on the touchscreen display
+- Adjusting the window position before entering full-screen mode
+
+**To move the application to a different display:**
+
+#. Press :kbd:`F11` to exit full-screen mode (if the application is in full-screen)
+#. Drag the application window to the touchscreen display
+#. Press :kbd:`F11` again to return to full-screen mode on the correct display
+
+Quit Application (Ctrl+Q)
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Press :kbd:`Ctrl+Q` to safely exit the application.
+This is equivalent to selecting **Quit** from the menu bar.
+
 
 Task Management Panel
 ---------------------

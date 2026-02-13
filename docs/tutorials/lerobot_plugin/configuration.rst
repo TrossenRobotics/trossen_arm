@@ -100,7 +100,7 @@ The configuration File for the leader arm for the Trossen AI Kits with LeRobot c
                 cameras: dict[str, CameraConfig] = field(default_factory=dict)
 
 
-    .. group-tab:: MobileAI
+    .. group-tab:: Mobile AI
 
         .. code-block:: python
 

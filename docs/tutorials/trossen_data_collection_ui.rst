@@ -100,7 +100,7 @@ Once the desktop icon is created, right-click on it and select **Allow Launching
 
 .. note::
 
-    **Touchscreen Interface Setup**: If you plan to use a touchscreen display with the Trossen AI Data Collection UI, refer to the :doc:`touchscreen_setup` guide for complete hardware setup, cable connections, and touchscreen mapping configuration.
+    **Touchscreen Interface Setup**: If you plan to use a touchscreen display with the Trossen AI Data Collection UI, refer to the :doc:`../getting_started/touchscreen` guide for complete hardware setup, cable connections, and touchscreen mapping configuration.
 
 Launching the Application
 =========================

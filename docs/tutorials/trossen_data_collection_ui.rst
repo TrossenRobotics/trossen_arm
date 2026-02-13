@@ -694,7 +694,7 @@ Make the ``display_fps`` parameter 0 to disable camera updates in the UI.
 Changelog
 =========
 
-1.1.13
+1.2.0
 ------
 
 - Separated display FPS from control loop FPS with intelligent frame skipping and a configurable ``display_fps`` parameter (default 1 FPS), preventing camera UI updates from degrading control loop stability and responsiveness during recording while reducing UI overhead.
@@ -709,3 +709,4 @@ Changelog
 - Automatic teleoperation enablement check before each episode to ensure robots requiring explicit teleop mode are properly configured before recording begins.
 - Episode numbering now correctly accounts for unsaved batched episodes, preventing incorrect episode counts when using batch save intervals.
 - Re-record button is now only enabled during active recording sessions to prevent accidental activation outside of valid recording contexts.
+- Added F11 keyboard shortcut for full-screen toggle, allowing users to easily move the application window between displays and maximize screen usage on touchscreen displays.

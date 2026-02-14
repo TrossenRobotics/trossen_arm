@@ -96,6 +96,8 @@ It is provided as a static library and is statically linked to the following lib
     * - Boost
       - 1.71.0
 
+Python wheels are built for Python 3.10 ~ Python 3.13 on the supported platforms.
+
 Python
 ------
 

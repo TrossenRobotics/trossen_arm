@@ -449,6 +449,12 @@ We will look at this in more detail in the next sections.
 
                 Some cameras may take a few seconds to warm up, and the first frame might be black or green.
 
+            .. note::
+
+                RealSense cameras expose multiple video streams when accessed via OpenCV. One stream is optimized for RGB color output with full image processing, 
+                while others are optimized for depth calculation and may appear darker or less processed.
+                Review the captured images and select the video index that provides properly processed RGB color output.
+
         #. Put the camera index in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
 
 

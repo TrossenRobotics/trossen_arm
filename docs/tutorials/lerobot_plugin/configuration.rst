@@ -347,4 +347,10 @@ We will look at setting up the specific camera types in more detail below.
 
                 Some cameras may take a few seconds to warm up, and the first frame might be black or green.
 
+            .. note::
+
+                RealSense cameras expose multiple video streams when accessed via OpenCV. One stream is optimized for RGB color output with full image processing, 
+                while others are optimized for depth calculation and may appear darker or less processed.
+                Review the captured images and select the video index that provides properly processed RGB color output.
+
         #. Find all the camera indices and put them in the appropriate dictionary items as specified above.

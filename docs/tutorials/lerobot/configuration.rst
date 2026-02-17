@@ -451,28 +451,40 @@ We will look at this in more detail in the next sections.
 
             .. note::
 
-                **RealSense D405 Dual Sensor Architecture:**
+                **Multiple Color Streams on Intel RealSense D405 (OpenCV Behavior)**
                 
-                The Intel RealSense D405 depth camera uses a dual sensor architecture with a master sensor and a slave sensor:
+                When using the Intel® RealSense™ D405, you may observe two different "color" images in OpenCV: one bright and natural-looking, and another slightly dull. This behavior is expected and results from the D405's internal hardware architecture.
                 
-                - **Master Sensor (left)** - The left sensor receives full Image Signal Processing (ISP) for optimal RGB color output. This sensor produces properly exposed, color-corrected images suitable for vision tasks.
-                - **Slave Sensor (right)** - The right sensor is optimized for depth calculation with minimal ISP processing, resulting in darker, less processed images.
+                **Internal Camera Architecture**
                 
-                When accessing the D405 via OpenCV, both sensors appear as separate video stream indices. You must select the video index corresponding to the **Master Sensor** for proper RGB color output.
+                The D405 contains:
+                
+                - A stereo depth module (D401) with left and right global shutter imagers
+                - A dedicated RGB sensor (OmniVision OV9782)
+                - An onboard Image Signal Processor (ISP) for RGB processing
+                
+                The camera exposes multiple video streams as separate UVC endpoints:
+                
+                - **UYVY (Left Stereo Imager)** - Originates from the stereo depth sensor, optimized for depth matching (not color accuracy), limited color fidelity, appears flatter or duller
+                - **YUY2 (RGB Sensor OV9782 via ISP)** - Comes from the dedicated RGB sensor, processed through the ISP (white balance, demosaicing, color correction, gamma, exposure control), produces a bright, natural-looking image
                 
                 **Visual Comparison:**
                 
-                .. image:: images/master_sensor.png
+                .. image:: images/left_stereo_imager_uyvy.png
                    :width: 45%
-                   :alt: Master Sensor - Properly processed RGB output
+                   :alt: UYVY - Left Stereo Imager (dull appearance)
                 
-                .. image:: images/slave_sensor.png
+                .. image:: images/rgb_sensor_yuy2.png
                    :width: 45%
-                   :alt: Slave Sensor - Darker, depth-optimized output
+                   :alt: YUY2 - RGB Sensor via ISP (bright, natural)
                 
-                *Left: Master Sensor with full ISP processing. Right: Slave Sensor optimized for depth.*
+                *Left: UYVY stream from stereo imager (dull). Right: YUY2 stream from RGB sensor via ISP (bright).*
                 
-                Review the captured images and select the video index that provides the properly processed RGB color output (brighter, color-corrected image).
+                **Which Stream Should Be Used?**
+                
+                For robotics, object detection, visual servoing, and color-based processing: **Use the brighter YUY2 stream** (RGB sensor OV9782 via ISP). The UYVY stream is primarily useful for stereo debugging or low-level inspection of the depth imager.
+                
+                Review the captured images and select the video index that provides the bright, natural-looking YUY2 RGB stream.
 
         #. Put the camera index in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
 

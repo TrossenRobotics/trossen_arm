@@ -351,7 +351,8 @@ We will look at setting up the specific camera types in more detail below.
 
                 **Multiple Color Streams on Intel RealSense D405 (OpenCV Behavior)**
                 
-                When using the Intel® RealSense™ D405, you may observe two different "color" images in OpenCV: one bright and natural-looking, and another slightly dull. This behavior is expected and results from the D405's internal hardware architecture.
+                When using the Intel® RealSense™ D405, you may observe two different "color" images in OpenCV: one bright and natural-looking, and another slightly dull.
+                This behavior is expected and results from the D405's internal hardware architecture.
                 
                 **Internal Camera Architecture**
                 
@@ -380,7 +381,8 @@ We will look at setting up the specific camera types in more detail below.
                 
                 **Which Stream Should Be Used?**
                 
-                For robotics, object detection, visual servoing, and color-based processing: **Use the brighter YUY2 stream** (RGB sensor OV9782 via ISP). The UYVY stream is primarily useful for stereo debugging or low-level inspection of the depth imager.
+                For robotics, object detection, visual servoing, and color-based processing: **Use the brighter YUY2 stream** (RGB sensor OV9782 via ISP).
+                The UYVY stream is primarily useful for stereo debugging or low-level inspection of the depth imager.
                 
                 Review the captured images in ``outputs/captured_images`` and select the video index that provides the bright, natural-looking YUY2 RGB stream.
 

@@ -451,9 +451,28 @@ We will look at this in more detail in the next sections.
 
             .. note::
 
-                RealSense cameras expose multiple video streams when accessed via OpenCV. One stream is optimized for RGB color output with full image processing, 
-                while others are optimized for depth calculation and may appear darker or less processed.
-                Review the captured images and select the video index that provides properly processed RGB color output.
+                **RealSense D405 Dual Sensor Architecture:**
+                
+                The Intel RealSense D405 depth camera uses a dual sensor architecture with a master sensor and a slave sensor:
+                
+                - **Master Sensor (left)** - The left sensor receives full Image Signal Processing (ISP) for optimal RGB color output. This sensor produces properly exposed, color-corrected images suitable for vision tasks.
+                - **Slave Sensor (right)** - The right sensor is optimized for depth calculation with minimal ISP processing, resulting in darker, less processed images.
+                
+                When accessing the D405 via OpenCV, both sensors appear as separate video stream indices. You must select the video index corresponding to the **Master Sensor** for proper RGB color output.
+                
+                **Visual Comparison:**
+                
+                .. image:: images/master_sensor.png
+                   :width: 45%
+                   :alt: Master Sensor - Properly processed RGB output
+                
+                .. image:: images/slave_sensor.png
+                   :width: 45%
+                   :alt: Slave Sensor - Darker, depth-optimized output
+                
+                *Left: Master Sensor with full ISP processing. Right: Slave Sensor optimized for depth.*
+                
+                Review the captured images and select the video index that provides the properly processed RGB color output (brighter, color-corrected image).
 
         #. Put the camera index in the appropriate config entry at :guilabel:`lerobot/common/robot_devices/robots/configs.py`.
 

@@ -243,7 +243,7 @@ Make sure that you have configured the cameras correctly as described in :ref:`t
                 --control.push_to_hub=true \
                 --control.num_image_writer_threads_per_camera=8 \
                 --control.display_cameras=false \
-                --camera.interface_type=opencv
+                --camera.interface_type='opencv'
 
     .. group-tab:: Trossen AI Mobile
 
@@ -265,7 +265,7 @@ Make sure that you have configured the cameras correctly as described in :ref:`t
                 --control.push_to_hub=true \
                 --control.num_image_writer_threads_per_camera=8 \
                 --control.display_cameras=false \
-                --camera.interface_type=opencv
+                --camera.interface_type='opencv'
 
     .. group-tab:: Trossen AI Solo
 
@@ -287,7 +287,7 @@ Make sure that you have configured the cameras correctly as described in :ref:`t
                 --control.push_to_hub=true \
                 --control.num_image_writer_threads_per_camera=8 \
                 --control.display_cameras=false \
-                --camera.interface_type=opencv
+                --camera.interface_type='opencv'
 
 Recording Configuration
 =======================

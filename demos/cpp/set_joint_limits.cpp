@@ -49,7 +49,7 @@
 #include "libtrossen_arm/trossen_arm.hpp"
 
 void print_joint_limits(trossen_arm::TrossenArmDriver& driver) {
-  const std::vector<trossen_arm::JointLimit>& joint_limits = driver.get_joint_limits();
+  std::vector<trossen_arm::JointLimit> joint_limits = driver.get_joint_limits();
   std::cout << "Joint limits:" << std::endl;
   for (size_t i = 0; i < joint_limits.size(); ++i) {
     const trossen_arm::JointLimit& joint_limit = joint_limits.at(i);

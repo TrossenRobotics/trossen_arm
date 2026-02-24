@@ -695,46 +695,35 @@ public:
    *
    * @return Driver version
    */
-  const std::string & get_driver_version() const;
+  std::string get_driver_version() const;
 
   /**
    * @brief Get controller firmware version
    *
    * @return Controller firmware version
    */
-  const std::string & get_controller_version() const;
+  std::string get_controller_version() const;
 
   /**
    * @brief Get the robot output
    *
    * @return Robot output
    */
-  const RobotOutput & get_robot_output();
-
-  /**
-   * @brief Get the positions
-   *
-   * @return Positions in rad for arm joints and m for the gripper joint
-   */
-  [[deprecated(
-    "get_positions will be deprecated in the next version, "
-    "please use get_all_positions instead"
-  )]]
-  const std::vector<double> & get_positions();
+  RobotOutput get_robot_output();
 
   /**
    * @brief Get the positions of all joints
    *
    * @return Positions in rad for arm joints and m for the gripper joint
    */
-  const std::vector<double> & get_all_positions();
+  std::vector<double> get_all_positions();
 
   /**
    * @brief Get the positions of the arm joints
    *
    * @return Positions in rad
    */
-  const std::vector<double> & get_arm_positions();
+  std::vector<double> get_arm_positions();
 
   /**
    * @brief Get the position of the gripper
@@ -759,32 +748,21 @@ public:
    * @note The first 3 elements are the translation and the last 3 elements are the angle-axis
    * representation of the rotation
    */
-  const std::array<double, 6> & get_cartesian_positions();
-
-  /**
-   * @brief Get the velocities
-   *
-   * @return Velocities in rad/s for arm joints and m/s for the gripper joint
-   */
-  [[deprecated(
-    "get_velocities will be deprecated in the next version, "
-    "please use get_all_velocities instead"
-  )]]
-  const std::vector<double> & get_velocities();
+  std::array<double, 6> get_cartesian_positions();
 
   /**
    * @brief Get the velocities of all joints
    *
    * @return Velocities in rad/s for arm joints and m/s for the gripper joint
    */
-  const std::vector<double> & get_all_velocities();
+  std::vector<double> get_all_velocities();
 
   /**
    * @brief Get the velocities of the arm joints
    *
    * @return Velocities in rad/s
    */
-  const std::vector<double> & get_arm_velocities();
+  std::vector<double> get_arm_velocities();
 
   /**
    * @brief Get the velocity of the gripper
@@ -810,21 +788,21 @@ public:
    * @note The first 3 elements are the linear velocity and the last 3 elements are the angular
    * velocity
    */
-  const std::array<double, 6> & get_cartesian_velocities();
+  std::array<double, 6> get_cartesian_velocities();
 
   /**
    * @brief Get the accelerations
    *
    * @return Accelerations in rad/s^2 for arm joints and m/s^2 for the gripper joint
    */
-  const std::vector<double> & get_all_accelerations();
+  std::vector<double> get_all_accelerations();
 
   /**
    * @brief Get the accelerations of all joints
    *
    * @return Accelerations in rad/s^2 for arm joints and m/s^2 for the gripper joint
    */
-  const std::vector<double> & get_arm_accelerations();
+  std::vector<double> get_arm_accelerations();
 
   /**
    * @brief Get the acceleration of the gripper
@@ -850,32 +828,21 @@ public:
    * @note The first 3 elements are the linear acceleration and the last 3 elements are the
    * angular acceleration
    */
-  const std::array<double, 6> & get_cartesian_accelerations();
-
-  /**
-   * @brief Get the efforts
-   *
-   * @return Efforts in Nm for arm joints and N for the gripper joint
-   */
-  [[deprecated(
-    "get_efforts will be deprecated in the next version, "
-    "please use get_all_efforts instead"
-  )]]
-  const std::vector<double> & get_efforts();
+  std::array<double, 6> get_cartesian_accelerations();
 
   /**
    * @brief Get the efforts of all joints
    *
    * @return Efforts in Nm for arm joints and N for the gripper joint
    */
-  const std::vector<double> & get_all_efforts();
+  std::vector<double> get_all_efforts();
 
   /**
    * @brief Get the efforts of the arm joints
    *
    * @return Efforts in Nm
    */
-  const std::vector<double> & get_arm_efforts();
+  std::vector<double> get_arm_efforts();
 
   /**
    * @brief Get the effort of the gripper
@@ -893,29 +860,18 @@ public:
   double get_joint_effort(uint8_t joint_index);
 
   /**
-   * @brief Get the external efforts
-   *
-   * @return External efforts in Nm for arm joints and N for the gripper joint
-   */
-  [[deprecated(
-    "get_external_efforts will be deprecated in the next version, "
-    "please use get_all_external_efforts instead"
-  )]]
-  const std::vector<double> & get_external_efforts();
-
-  /**
    * @brief Get the external efforts of all joints
    *
    * @return External efforts in Nm for arm joints and N for the gripper joint
    */
-  const std::vector<double> & get_all_external_efforts();
+  std::vector<double> get_all_external_efforts();
 
   /**
    * @brief Get the external efforts of the arm joints
    *
    * @return External efforts in Nm
    */
-  const std::vector<double> & get_arm_external_efforts();
+  std::vector<double> get_arm_external_efforts();
 
   /**
    * @brief Get the external effort of the gripper
@@ -940,32 +896,21 @@ public:
    *
    * @note The first 3 elements are the force and the last 3 elements are the torque
    */
-  const std::array<double, 6> & get_cartesian_external_efforts();
-
-  /**
-   * @brief Get the compensation efforts
-   *
-   * @return Compensation efforts in Nm for arm joints and N for the gripper joint
-   */
-  [[deprecated(
-    "get_compensation_efforts will be deprecated in the next version, "
-    "please use get_all_compensation_efforts instead"
-  )]]
-  const std::vector<double> & get_compensation_efforts();
+  std::array<double, 6> get_cartesian_external_efforts();
 
   /**
    * @brief Get the compensation efforts of all joints
    *
    * @return Compensation efforts in Nm for arm joints and N for the gripper joint
    */
-  const std::vector<double> & get_all_compensation_efforts();
+  std::vector<double> get_all_compensation_efforts();
 
   /**
    * @brief Get the compensation efforts of the arm joints
    *
    * @return Compensation efforts in Nm
    */
-  const std::vector<double> & get_arm_compensation_efforts();
+  std::vector<double> get_arm_compensation_efforts();
 
   /**
    * @brief Get the compensation effort of the gripper
@@ -987,14 +932,14 @@ public:
    *
    * @return Rotor temperatures in C
    */
-  const std::vector<double> & get_all_rotor_temperatures();
+  std::vector<double> get_all_rotor_temperatures();
 
   /**
    * @brief Get the rotor temperatures of the arm joints
    *
    * @return Rotor temperatures in C
    */
-  const std::vector<double> & get_arm_rotor_temperatures();
+  std::vector<double> get_arm_rotor_temperatures();
 
   /**
    * @brief Get the rotor temperature of the gripper
@@ -1016,14 +961,14 @@ public:
    *
    * @return Driver temperatures in C
    */
-  const std::vector<double> & get_all_driver_temperatures();
+  std::vector<double> get_all_driver_temperatures();
 
   /**
    * @brief Get the driver temperatures of the arm joints
    *
    * @return Driver temperatures in C
    */
-  const std::vector<double> & get_arm_driver_temperatures();
+  std::vector<double> get_arm_driver_temperatures();
 
   /**
    * @brief Get the driver temperature of the gripper
@@ -1672,20 +1617,28 @@ private:
   // Exception handling
   //
   // - if an exception is thrown in the main thread
-  //   - the daemon thread gets std::terminate
-  //   - the main thread unwind the stack: ~TrossenArmDriver() -> cleanup()
+  //   - if not caught
+  //     - at stack unwinding, the driver's deconstructor is called which
+  //       - breaks the loop in the daemon thread and waits for the daemon thread to return
+  //       - cleans up the resources related to the driver
+  //   - if caught
+  //     - the main thread leaves the try-catch block as is
+  //     - optimally, the driver can be cleaned up and configured again
   // - if an exception is thrown in the daemon thread
   //   - the exception is stored in exception_ptr_
   //   - the daemon thread returns
-  //   - the main thread gets the exception and rethrows it at the next operation
-  //   - the main thread unwind the stack: ~TrossenArmDriver() -> cleanup()
+  //   - at the next function call in the main thread, the exception is rethrown
+  //   - if not caught
+  //     - at stack unwinding, the driver's deconstructor is called which
+  //       - cleans up the resources related to the driver'
+  //   - if caught
+  //     - the main thread leaves the try-catch block as is
+  //     - optimally, the driver can be cleaned up and configured again
   //
   // Notes
   //
   // - the mutex claiming cannot be nested or there will be deadlocks, i.e., |-1-|-12-|-2-|-12-|-2-|
   //   is not allowed
-  // - when an exception is thrown by the main thread, the program is expected to terminate either
-  //   immediately or right after cleaning up the resources not related to the driver
 
   // Daemon thread
   std::thread daemon_thread_{};

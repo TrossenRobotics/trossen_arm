@@ -51,7 +51,7 @@ void print_configurations(trossen_arm::TrossenArmDriver& driver) {
   std::cout << "EEPROM DNS: " << driver.get_dns() << std::endl;
   std::cout << "EEPROM gateway: " << driver.get_gateway() << std::endl;
   std::cout << "EEPROM subnet: " << driver.get_subnet() << std::endl;
-  const std::vector<trossen_arm::JointCharacteristic>& joint_characteristics =
+  std::vector<trossen_arm::JointCharacteristic> joint_characteristics =
     driver.get_joint_characteristics();
   std::cout << "EEPROM Joint characteristics:" << std::endl;
   for (size_t i = 0; i < joint_characteristics.size(); ++i) {
@@ -87,7 +87,7 @@ void print_configurations(trossen_arm::TrossenArmDriver& driver) {
     std::cout << static_cast<int>(mode) << " ";
   }
   std::cout << std::endl;
-  const trossen_arm::EndEffector& end_effector = driver.get_end_effector();
+  trossen_arm::EndEffector end_effector = driver.get_end_effector();
   std::cout << "End effector:" << std::endl;
   std::cout << "  palm:" << std::endl;
   std::cout << "    mass: " << end_effector.palm.mass << std::endl;
@@ -148,7 +148,7 @@ void print_configurations(trossen_arm::TrossenArmDriver& driver) {
     std::cout << t_flange_tool << " ";
   }
   std::cout << std::endl;
-  const std::vector<trossen_arm::JointLimit>& joint_limits = driver.get_joint_limits();
+  std::vector<trossen_arm::JointLimit> joint_limits = driver.get_joint_limits();
   std::cout << "Joint limits:" << std::endl;
   for (size_t i = 0; i < joint_limits.size(); ++i) {
     const trossen_arm::JointLimit& joint_limit = joint_limits.at(i);
@@ -161,7 +161,7 @@ void print_configurations(trossen_arm::TrossenArmDriver& driver) {
     std::cout << "    effort max: " << joint_limit.effort_max << std::endl;
     std::cout << "    effort tolerance: " << joint_limit.effort_tolerance << std::endl;
   }
-  const std::vector<std::map<trossen_arm::Mode, trossen_arm::MotorParameter>>& motor_parameters =
+  std::vector<std::map<trossen_arm::Mode, trossen_arm::MotorParameter>> motor_parameters =
     driver.get_motor_parameters();
   std::cout << "Motor parameters:" << std::endl;
   for (size_t i = 0; i < motor_parameters.size(); ++i) {
@@ -182,7 +182,7 @@ void print_configurations(trossen_arm::TrossenArmDriver& driver) {
       std::cout << ", imax: " << parameter.velocity.imax << std::endl;
     }
   }
-  const trossen_arm::AlgorithmParameter& algorithm_parameter = driver.get_algorithm_parameter();
+  trossen_arm::AlgorithmParameter algorithm_parameter = driver.get_algorithm_parameter();
   std::cout << "Algorithm parameter:" << std::endl;
   std::cout << "  singularity threshold: ";
   std::cout << algorithm_parameter.singularity_threshold << std::endl;

@@ -5,6 +5,26 @@ Changelog
 Trossen Arm Driver
 ==================
 
+1.9.1
+-----
+
+- Removed the following deprecated getter functions from both C++ and Python APIs.
+  Use the ``get_all_*`` variants instead:
+
+  - ``get_positions`` -> ``get_all_positions``
+  - ``get_velocities`` -> ``get_all_velocities``
+  - ``get_efforts`` -> ``get_all_efforts``
+  - ``get_external_efforts`` -> ``get_all_external_efforts``
+  - ``get_compensation_efforts`` -> ``get_all_compensation_efforts``
+
+- All ``get_*`` functions now return copies instead of ``const`` references.
+  This prevents dangling reference issues when the underlying data is updated by the daemon thread.
+- TCP send and receive timeouts are now both applied using the user-specified timeout value.
+- Fixed an uncaught exception during Ethernet connection handling.
+- Added wheel builds for Python 3.13 on Linux (x86_64 and arm64) and macOS (Apple Silicon).
+- All ``critical`` log messages now append a link to the troubleshooting guide at ``https://docs.trossenrobotics.com/trossen_arm/main/troubleshooting.html``.
+- On successful connection, the driver now logs the client IP address along with the TCP and UDP port numbers.
+
 1.9.0
 -----
 

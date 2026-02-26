@@ -102,6 +102,37 @@ Once the desktop icon is created, right-click on it and select **Allow Launching
 
     **Touchscreen Interface Setup**: If you plan to use a touchscreen display with the Trossen AI Data Collection UI, refer to the :doc:`../getting_started/touchscreen` guide for complete hardware setup, cable connections, and touchscreen mapping configuration.
 
+Updating the Application
+========================
+
+To update to the latest version of the **Trossen AI Data Collection UI**, follow these steps:
+
+#. Activate your virtual environment:
+
+   .. code-block:: bash
+
+      conda activate trossen_ai_data_collection_ui_env
+
+#. Update the application package:
+
+   .. code-block:: bash
+
+      pip install trossen_ai_data_collection_ui --upgrade
+
+#. Run the post-installation script:
+
+   .. code-block:: bash
+
+      trossen_ai_data_collection_ui_post_install
+
+   The post-installation script will pull the latest updates from the Interbotix/lerobot repository and rebuild it in your environment.
+
+.. note::
+
+    The UI application uses a local copy of the Interbotix/lerobot repository stored at ``~/.lerobot_trossen_ai_data_collection_ui/``.
+    Do not manually edit files in this directory, as it may cause compatibility issues with the UI application.
+    The post-installation script manages this repository automatically.
+
 Launching the Application
 =========================
 

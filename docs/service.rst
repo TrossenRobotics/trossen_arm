@@ -67,7 +67,15 @@ The process for homing the arm is as follows:
 
 .. note::
 
+    If you would like to print your own homing jigs, you can use the Trossen-provided STEP files to do so.
     STEP files for the homing jigs can be found in the :ref:`Downloads <downloads:homing jigs>` section of the documentation.
+    We print these in PLA on a Prusa Mk3 printer with the following settings:
+
+    - 0.2mm layer height
+    - 0.4mm nozzle
+    - 3 perimeter walls
+    - 25% infill
+    - Gyroid infill
 
 Gripper Encoder Test
 ====================

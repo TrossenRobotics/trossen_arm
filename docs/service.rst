@@ -67,7 +67,7 @@ The process for homing the arm is as follows:
 
 .. note::
 
-    STEP files for the homing jigs can be found in the :ref:`Downloads <downloads/homing-jigs>` section of the documentation.
+    STEP files for the homing jigs can be found in the :ref:`Downloads <downloads:homing jigs>` section of the documentation.
 
 Gripper Encoder Test
 ====================

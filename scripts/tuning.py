@@ -453,7 +453,6 @@ def main() -> None:
                 driver.cleanup()
             except Exception:
                 pass
-        console.print("[dim]Goodbye.[/dim]")
 
 
 if __name__ == "__main__":

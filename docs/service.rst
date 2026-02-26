@@ -65,6 +65,10 @@ The process for homing the arm is as follows:
 #.  Reinstall the gripper fingers or paddles on the gripper carriages.
 #.  Your arm is now homed and ready for use!
 
+.. note::
+
+    STEP files for the homing jigs can be found in the :ref:`Downloads <downloads/homing-jigs>` section of the documentation.
+
 Gripper Encoder Test
 ====================
 

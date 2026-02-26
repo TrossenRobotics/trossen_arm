@@ -64,6 +64,13 @@ Arm Controller STEP Files
 
 -   :download:`Arm Controller STEPs</_downloads/arm_controller_v0_steps.zip>`
 
+.. _downloads/homing-jigs:
+
+Homing Jigs
+-----------
+
+-   :download:`Homing Jigs</_downloads/homing_jigs.zip>`
+
 CAD Drawings
 ============
 

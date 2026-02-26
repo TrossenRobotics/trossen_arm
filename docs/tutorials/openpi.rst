@@ -130,7 +130,7 @@ Clone the repo and update its submodules:
    # Or if you already cloned the repo:
    git submodule update --init --recursive
 
-We use `uv <https://docs.astral.sh/uv/>`_ to manage Python dependencies. Once uv is installed, run the following to set up the environment:
+Run the following to set up the environment:
 
 .. code-block:: bash
 

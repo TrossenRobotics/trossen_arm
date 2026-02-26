@@ -35,7 +35,6 @@ Table of Contents:
     specifications.rst
     getting_started.rst
     tutorials.rst
-    community.rst
     downloads.rst
     troubleshooting.rst
     service.rst

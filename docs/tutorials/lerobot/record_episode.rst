@@ -146,6 +146,36 @@ Record two episodes and upload your dataset to the Hugging Face Hub:
     This can cause longer wait times between episodes, especially if you are recording at longer episode lengths.
     To mitigate this, consider adjusting the ``save_interval`` parameter to save data less frequently or at the end of the entire session.
 
+Stopping the Recording Session
+===============================
+
+There are multiple ways to stop or exit the recording session. The recommended approach is to use keyboard controls for graceful shutdown.
+
+Keyboard-based Exit (Recommended)
+----------------------------------
+
+The control loop monitors for these keyboard inputs:
+
+- **Right Arrow** :kbd:`→`: Exits the current loop/episode early
+- **Left Arrow** :kbd:`←`: Exits and re-records the last episode
+- **Escape** :kbd:`Esc`: Stops the entire recording session
+
+CTRL+C
+------
+
+:kbd:`CTRL+C` **is NOT recommended** as it may not allow the dataset to be saved properly.
+Using :kbd:`CTRL+C`:
+
+- Will terminate the process abruptly
+- May result in the dataset not being saved
+- Can cause potential data loss from the current recording session
+
+.. note::
+
+    The keyboard listener only works in non-headless environments (requires ``pynput`` library).
+    If running headless or if ``pynput`` can't be imported, keyboard controls won't be available and you'd be limited to waiting for the control loop to complete naturally or using :kbd:`CTRL+C` with potential data loss.
+
+
 Handling Camera FPS Issues
 ==========================
 

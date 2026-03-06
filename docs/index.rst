@@ -2,12 +2,6 @@
 Trossen Arm Documentation
 =========================
 
-.. note::
-
-    The libtrossen_arm C++ library and trossen_arm Python package are under heavy development.
-    The API is subject to frequent changes and may not be stable.
-    We advise pinning your dependencies to a specific version to avoid breaking changes and referring to the latest documentation for updates.
-
 .. image:: images/banner.jpg
     :align: center
 

@@ -324,6 +324,11 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 
 This script demonstrates how to finetune the joint characteristic of one joint.
 
+`set_motor_parameters`_
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to set the motor parameters of the arm.
+
 .. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_external_effort.py
 
 .. _`cartesian_position`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_position.py
@@ -361,6 +366,8 @@ This script demonstrates how to finetune the joint characteristic of one joint.
 .. _`set_mode`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_mode.py
 
 .. _`set_joint_characteristics`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_joint_characteristics.py
+
+.. _`set_motor_parameters`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_motor_parameters.py
 
 .. _`simple_move`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/simple_move.py
 

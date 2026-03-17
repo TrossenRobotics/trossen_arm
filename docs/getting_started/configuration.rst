@@ -448,6 +448,11 @@ The motor parameters define the control parameters of each motor.
 As shown in the block diagram above, each motor :class:`trossen_arm::MotorParameter` has two PID controllers for position and velocity regulation.
 By setting different parameters in :class:`trossen_arm::PIDParameter`, we can achieve the behavior of different :enum:`trossen_arm::Mode`.
 
+.. tip::
+
+    Commonly used motor parameters are provided in :class:`trossen_arm::StandardMotorParameters`.
+    Check out the :ref:`getting_started/demo_scripts:`set_motor_parameters`_` demo for details.
+
 A guideline to tune the motor parameters is given below.
 
 -   :enumerator:`trossen_arm::Mode::position`:

@@ -1,0 +1,3 @@
+mcp[cli]>=1.0.0
+trossen_arm
+uvicorn>=0.30.0

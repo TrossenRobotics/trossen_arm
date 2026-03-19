@@ -528,6 +528,8 @@ An example configuration for the stationary robot is shown below:
     - ``serial_number``: The unique identifier for the camera device.
       For ``intel_realsense`` cameras, use the actual device serial number (e.g., 123456789).
       For ``opencv`` cameras, specify the camera index (e.g., 0, 1, 2).
+      Refer to :ref:`tutorials/lerobot/configuration:Camera Serial Number` for instructions on finding serial numbers for both Intel RealSense and OpenCV cameras.
+      
     - ``width``: The width of the camera image in pixels.
     - ``height``: The height of the camera image in pixels.
     - ``fps``: The desired frames per second for capturing images.
@@ -589,11 +591,11 @@ An example configuration for tasks is shown below:
 - ``save_interval``: Interval in episodes at which to encode images to video and save data to disk.
   For example, if set to 5, data will be saved every 5 episodes.
   Default is 1 (save after every episode).
+  Setting save interval to ``-1``, ``0``, or ``> total number of episodes`` will only save data at the end of the entire data collection session.
 - ``display_fps``: Controls how often camera images are refreshed in the UI (frames per second).
   The UI uses frame-skipping to render only at the specified frequency, reducing compute load while keeping controls responsive.
   Applies to both recording and dry-run modes. Default: 1 FPS.
   Increase for smoother visuals at the cost of more processing; decrease to improve performance.
-  Setting save interval to ``-1``, ``0``, or ``> total number of episodes`` will only save data at the end of the entire data collection session.
 - ``operators``: Optional list of operators involved in the task.
   The operator information will be saved in ``info.json`` in the metadata folder.
   You can add multiple operators by specifying their names and email addresses.

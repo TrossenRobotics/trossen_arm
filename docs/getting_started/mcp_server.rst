@@ -9,19 +9,19 @@ MCP Server
 Overview
 ========
 
-The Trossen Arm MCP (Model Context Protocol) server gives AI coding assistants like `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_ direct access to the Trossen Arm documentation and API reference.
+The Trossen Docs MCP server gives AI coding assistants like `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_ direct access to the Trossen Arm documentation and API reference.
 Instead of searching the web or copy-pasting docs, you can ask your assistant questions and it will look up the answers from the official documentation automatically.
 
 The server provides the following tools:
 
-- **list_doc_pages** — List all available documentation pages and API headers.
-- **search_docs** — Fuzzy search across all documentation with relevance-ranked results.
-- **read_doc_page** — Read a full documentation page or header file.
-- **read_doc_section** — Read a specific section from a documentation page by heading.
-- **get_api_reference** — Look up API symbols (classes, methods, enums, structs) with their documentation.
-- **list_demos** — List all Python and C++ demo scripts with their descriptions.
-- **search_demos** — Search demo scripts by keyword, returning purpose, hardware setup, and steps.
-- **get_demo** — Read the full source code of a demo script.
+- **list_doc_pages**: List all available documentation pages and API headers.
+- **search_docs**: Fuzzy search across all documentation with relevance-ranked results.
+- **read_doc_page**: Read a full documentation page or header file.
+- **read_doc_section**: Read a specific section from a documentation page by heading.
+- **get_api_reference**: Look up API symbols (classes, methods, enums, structs) with their documentation.
+- **list_demos**: List all Python and C++ demo scripts with their descriptions.
+- **search_demos**: Search demo scripts by keyword, returning purpose, hardware setup, and steps.
+- **get_demo**: Read the full source code of a demo script.
 
 Prerequisites
 =============
@@ -57,7 +57,7 @@ If you prefer to build the image yourself:
 
     .. code-block:: bash
 
-        docker build -f docs/mcp_server/Dockerfile -t trossen-arm-docs-mcp .
+        docker build -f docs/mcp_server/Dockerfile -t ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server .
 
 Adding the Server to Claude Code
 =================================
@@ -72,7 +72,7 @@ This configures Claude Code to launch the server automatically when needed using
 
 .. note::
 
-    If you built the image from source, replace ``ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server`` with your local image name in the command above.
+    If you built the image from source without the suggested tag, replace ``ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server`` with your local image name in the commands above.
 
 To verify the server was added:
 

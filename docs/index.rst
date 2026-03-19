@@ -2,6 +2,12 @@
 Trossen Arm Documentation
 =========================
 
+.. tip::
+
+    **New: AI-powered documentation with Claude Code.**
+    Install the Trossen Arm MCP server to give Claude Code direct access to this documentation, the C++ and Python API reference, and demo scripts.
+    See :doc:`getting_started/mcp_server` to get started.
+
 .. image:: images/banner.jpg
     :align: center
 

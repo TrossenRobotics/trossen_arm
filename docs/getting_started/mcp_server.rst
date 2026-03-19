@@ -66,7 +66,7 @@ Run the following command to register the MCP server with Claude Code:
 
 .. code-block:: bash
 
-    claude mcp add trossen-arm-docs -- docker run -i --rm ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server
+    claude mcp add trossen-docs -- docker run -i --rm ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server
 
 This configures Claude Code to launch the server automatically when needed using stdio transport.
 
@@ -80,7 +80,7 @@ To verify the server was added:
 
     claude mcp list
 
-You should see ``trossen-arm-docs`` in the output.
+You should see ``trossen-docs`` in the output.
 
 Usage
 =====
@@ -107,4 +107,4 @@ To remove the MCP server from Claude Code:
 
 .. code-block:: bash
 
-    claude mcp remove trossen-arm-docs
+    claude mcp remove trossen-docs

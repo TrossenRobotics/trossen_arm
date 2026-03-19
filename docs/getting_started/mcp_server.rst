@@ -28,6 +28,7 @@ Prerequisites
 
 - `Docker <https://docs.docker.com/get-docker/>`_ installed and running
 - AI coding assistant with MCP support installed, such as
+
   - `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_
   - `Github Copilot on VSCode <https://code.visualstudio.com/docs/copilot/customization/mcp-servers>`_
 

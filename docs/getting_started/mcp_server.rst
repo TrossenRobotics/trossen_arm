@@ -27,7 +27,10 @@ Prerequisites
 =============
 
 - `Docker <https://docs.docker.com/get-docker/>`_ installed and running
-- `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_ installed
+- AI coding assistant with MCP support installed, such as
+
+  - `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_
+  - `Github Copilot on VSCode <https://code.visualstudio.com/docs/copilot/customization/mcp-servers>`_
 
 Installation
 ============
@@ -81,6 +84,46 @@ To verify the server was added:
     claude mcp list
 
 You should see ``trossen-docs`` in the output.
+
+Adding the Server to Github Copilot on VSCode
+=============================================
+
+- Open the command palette by pressing ``Ctrl+Shift+P`` (Windows/Linux) / ``Command+Shift+P`` (Mac).
+- Type and select ``MCP: Add Server...``.
+- Type and select ``Command (stdio)``.
+- For the command to run, enter:
+
+  .. code-block:: bash
+
+      docker run -i --rm ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server
+
+- You can choose any unique identifier for the server, such as ``trossen-docs``.
+
+To verify the server was added:
+
+- Open the command palette by pressing ``Ctrl+Shift+P`` (Windows/Linux) / ``Command+Shift+P`` (Mac).
+- Type and select ``MCP: List Servers``.
+- You should be able to see and manage the status of ``trossen-docs``.
+
+The ``mcp.json`` configuration file should look like this:
+
+.. code-block:: json
+
+    {
+        "servers": {
+            "trossen-docs": {
+                "type": "stdio",
+                "command": "docker",
+                "args": [
+                    "run",
+                    "-i",
+                    "--rm",
+                    "ghcr.io/trossenrobotics/trossen_arm/docs-mcp-server"
+                ]
+            }
+        },
+        "inputs": []
+    }
 
 Usage
 =====

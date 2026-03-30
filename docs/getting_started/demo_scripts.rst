@@ -78,12 +78,12 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //
           //     To avoid numerical issues, interpolation type used is determined automatically
           //     based on the time to reach the goal[s]
-          //     - if longer than 0.2 seconds, quintic polynomial interpolation is used for
+          //     - if longer than 0.2s, quintic polynomial interpolation is used for
           //       position commands, cubic interpolation is used for velocity commands, and
           //       linear interpolation is used for effort and external effort commands, with
           //       goal derivatives defaulted to zero if not specified
-          //     - else if longer than 0.001 seconds, linear interpolation is used
-          //     - else, no interpolation is used
+          //     - else if longer than 0.001s, linear interpolation is used
+          //     - else, no interpolation is used and the goal values are applied immediately
           driver.set_yyy_zzz[s](...); | driver.set_cartesian_zzzs(...);
 
           //     Get the robot outputs if needed
@@ -174,12 +174,12 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #
             #         To avoid numerical issues, interpolation type used is determined automatically
             #         based on the time to reach the goal[s]
-            #         - if longer than 0.2 seconds, quintic polynomial interpolation is used for
+            #         - if longer than 0.2s, quintic polynomial interpolation is used for
             #           position commands, cubic interpolation is used for velocity commands, and
             #           linear interpolation is used for effort and external effort commands, with
             #           goal derivatives defaulted to zero if not specified
-            #         - else if longer than 0.001 seconds, linear interpolation is used
-            #         - else, no interpolation is used
+            #         - else if longer than 0.001s, linear interpolation is used
+            #         - else, no interpolation is used and the goal values are applied immediately
             driver.set_yyy_zzz[s](...) | driver.set_cartesian_zzzs(...)
 
             #         Get the robot outputs if needed

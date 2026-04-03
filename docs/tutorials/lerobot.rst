@@ -19,6 +19,7 @@ This page contains tutorials for using the Trossen AI Kits with LeRobot for data
     lerobot/configuration.rst
     lerobot/teleoperation.rst
     lerobot/record_episode.rst
+    lerobot/edit_dataset.rst
     lerobot/visualize.rst
     lerobot/replay.rst
     lerobot/train_and_evaluate.rst

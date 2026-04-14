@@ -1,3 +1,7 @@
+if(NOT TARGET libtrossen_arm)
+  find_package(libtrossen_arm REQUIRED)
+endif()
+
 include(FetchContent)
 
 FetchContent_Declare(

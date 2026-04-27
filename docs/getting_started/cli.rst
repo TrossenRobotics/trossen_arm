@@ -2,14 +2,12 @@
 Command Line Interface
 =======================
 
-This section describes the ``trossen-arm`` CLI tool, which provides a simple way to interact with
-Trossen Arm controllers from the terminal without writing any code.
+This section describes the ``trossen-arm`` CLI tool, which provides a simple way to interact with Trossen Arm controllers from the terminal without writing any code.
 
 What You Need
 =============
 
-To get started, please make sure you have gone through the :doc:`software_setup` and installed
-the Python driver.
+To get started, please make sure you have gone through the :doc:`software_setup` and installed the Python driver.
 
 Installation
 ============
@@ -23,13 +21,12 @@ Install it with the ``cli`` extra:
 
 .. note::
 
-    If you install ``trossen_arm`` without the ``[cli]`` extra, the ``trossen-arm`` command will
-    still be available in your PATH but will print an error message if run:
+    If you install ``trossen_arm`` without the ``[cli]`` extra, the ``trossen-arm`` command will still be available in your PATH but will print an error message if run:
 
     .. code-block:: bash
 
         Error: CLI dependencies are not installed.
-        Install them with: pip install "trossen_arm[cli]"
+        Install them with: pip install "trossen-arm[cli]"
 
 Usage
 =====
@@ -55,8 +52,8 @@ For help with a specific command, append ``--help``:
 
 .. note::
 
-    The CLI supports shell auto-completion. Run ``trossen-arm --install-completion`` to enable it
-    for your current shell, then restart your shell for it to take effect.
+    The CLI supports shell auto-completion.
+    Run ``trossen-arm --install-completion`` to enable it for your current shell, then restart your shell for it to take effect.
 
 Commands
 ========
@@ -113,7 +110,8 @@ identify
 --------
 
 Connects to an arm at a given IP address and identifies it by opening and closing its gripper.
-This is useful for confirming which physical arm corresponds to a given IP.
+The controller box LED will also change color during identification.
+This is useful for confirming which physical arm corresponds to a given IP address.
 
 .. code-block:: bash
 

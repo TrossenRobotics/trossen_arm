@@ -32,7 +32,9 @@
 #include <cstdint>
 
 #include <array>
+#include <map>
 #include <stdexcept>
+#include <string>
 #include <vector>
 
 namespace trossen_arm
@@ -511,6 +513,650 @@ struct StandardEndEffector {
     .pitch_circle_radius = 0.00875,
     .t_flange_tool = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
+};
+
+/// @brief Motor parameters commonly used
+struct StandardMotorParameters {
+  /**
+   * @brief WXAI V0 motor parameters first used in 2025-05-09
+   * @details Manually chosen parameters at the beginning of the development
+   */
+  static inline const std::vector<std::map<Mode, MotorParameter>> wxai_v0_20250509 {
+    {  // Joint 0
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.04, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.004, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 1
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.04, .kd = 0.0, .imax = 27.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.004, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 2
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.04, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.004, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 3
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.01, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.001, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 4
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.01, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.001, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 5
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.01, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.001, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 6
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 0.05, .ki = 0.0005, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.001, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+  };
+
+  /**
+   * @brief WXAI V0 motor parameters first used in 2026-03-17
+   * @details Reduced proportional gains for position loop of the first three joints
+   * and removed integral gains for the velocity loop from all joints
+   * compared to wxai_v0_20250509
+   */
+  static inline const std::vector<std::map<Mode, MotorParameter>> wxai_v0_20260317 {
+    {  // Joint 0
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.04, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 16.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 1
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.04, .kd = 0.0, .imax = 27.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 16.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 2
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.04, .kd = 0.0, .imax = 9.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 16.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 120.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 8.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 3
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.01, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 80.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 4
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.01, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 5
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.01, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 40.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+    {  // Joint 6
+      {
+        Mode::idle,
+        {
+          .position = {.kp = 0.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 0.05, .ki = 0.0005, .kd = 0.0, .imax = 3.0}
+        }
+      },
+      {
+        Mode::position,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::velocity,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::external_effort,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+      {
+        Mode::effort,
+        {
+          .position = {.kp = 20.0, .ki = 0.0, .kd = 0.0, .imax = 0.0},
+          .velocity = {.kp = 1.0, .ki = 0.0, .kd = 0.0, .imax = 0.0}
+        }
+      },
+    },
+  };
+
+  /// @brief Latest motor parameters for WXAI V0
+  static inline const std::vector<
+    std::map<Mode, MotorParameter>
+  >& wxai_v0_latest{wxai_v0_20260317};
+
+  /// @brief Default motor parameters for WXAI V0
+  static inline const std::vector<
+    std::map<Mode, MotorParameter>
+  >& wxai_v0_default{wxai_v0_20250509};
+};
+
+/// @brief Notices
+enum class Notice : uint8_t {
+  /// @brief Notice issued on 2026-03-17 about coming changes to default motor parameters
+  default_motor_parameters_20260317
+};
+
+/// @brief Error states reported by the arm controller
+enum class ErrorState : uint8_t {
+  /// @brief No error
+  none,
+  /// @brief Controller's Ethernet manager failed to initialize
+  ethernet_init_failed,
+  /// @brief Controller's CAN interface failed to initialize
+  can_init_failed,
+  /// @brief Controller's CAN interface failed to send a message
+  joint_command_failed,
+  /// @brief Controller's CAN interface failed to receive a message
+  joint_feedback_failed,
+  /// @brief Joint clear error command failed
+  joint_clear_error_failed,
+  /// @brief Joint enable command failed
+  joint_enable_failed,
+  /// @brief Joint disable command failed
+  joint_disable_failed,
+  /// @brief Joint home calibration command failed
+  joint_set_home_failed,
+  /// @brief Joint disabled unexpectedly
+  joint_disabled_unexpectedly,
+  /// @brief Joint overheated
+  joint_overheated,
+  /// @brief Invalid mode command received
+  invalid_mode,
+  /// @brief Invalid robot command indicator received
+  invalid_robot_command,
+  /// @brief Invalid configuration address
+  invalid_configuration_address,
+  /// @brief Robot input with modes different than configured modes received
+  robot_input_mode_mismatch,
+  /// @brief Joint limit exceeded
+  joint_limit_exceeded,
+  /// @brief Robot input infinite
+  robot_input_infinite
+};
+
+/// @brief Mapping from ErrorState to human-readable description
+inline const std::map<ErrorState, std::string> ERROR_INFORMATION = {
+  {ErrorState::none, "No error"},
+  {ErrorState::ethernet_init_failed, "Controller's Ethernet manager failed to initialize"},
+  {ErrorState::can_init_failed, "Controller's CAN interface failed to initialize"},
+  {ErrorState::joint_command_failed, "Controller's CAN interface failed to send a message"},
+  {ErrorState::joint_feedback_failed, "Controller's CAN interface failed to receive a message"},
+  {ErrorState::joint_clear_error_failed, "Joint clear error command failed"},
+  {ErrorState::joint_enable_failed, "Joint enable command failed"},
+  {ErrorState::joint_disable_failed, "Joint disable command failed"},
+  {ErrorState::joint_set_home_failed, "Joint home calibration command failed"},
+  {ErrorState::joint_disabled_unexpectedly, "Joint disabled unexpectedly"},
+  {ErrorState::joint_overheated, "Joint overheated"},
+  {ErrorState::invalid_mode, "Invalid mode command received"},
+  {ErrorState::invalid_robot_command, "Invalid robot command indicator received"},
+  {ErrorState::invalid_configuration_address, "Invalid configuration address"},
+  {
+    ErrorState::robot_input_mode_mismatch,
+    "Robot input with modes different than configured modes received"
+  },
+  {ErrorState::joint_limit_exceeded, "Joint limit exceeded"},
+  {ErrorState::robot_input_infinite, "Robot input with infinite values received"}
+};
+
+/// @brief Mapping from Model to model name string
+inline const std::map<Model, std::string> MODEL_NAME = {
+  {Model::wxai_v0, "wxai_v0"},
+  {Model::vxai_v0_right, "vxai_v0_right"},
+  {Model::vxai_v0_left, "vxai_v0_left"},
+};
+
+/// @brief Mapping from Mode to mode name string
+inline const std::map<Mode, std::string> MODE_NAME = {
+  {Mode::idle, "idle"},
+  {Mode::position, "position"},
+  {Mode::velocity, "velocity"},
+  {Mode::external_effort, "external_effort"},
+  {Mode::effort, "effort"},
+};
+
+/// @brief Information about a discovered arm controller
+struct DiscoverResult
+{
+  /// @brief IP address of the arm controller
+  std::string ip{};
+  /// @brief Model of the arm controller
+  Model model{Model::wxai_v0};
+  /// @brief Firmware version reported by the arm controller
+  std::string firmware_version{};
+  /// @brief Error state of the arm controller
+  ErrorState error_state{ErrorState::none};
 };
 
 }  // namespace trossen_arm

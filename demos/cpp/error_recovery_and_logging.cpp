@@ -112,6 +112,8 @@ int main() {
   } catch (const std::exception &e) {
     std::cout << "An error occurred: " << e.what() << std::endl;
     std::cout << "Recovering from the error..." << std::endl;
+
+    // Cleanup with reboot_controller = false and configure with clear_error = true
     driver.cleanup();
     driver.configure(
       trossen_arm::Model::wxai_v0,
@@ -119,6 +121,9 @@ int main() {
       "192.168.1.2",
       true
     );
+    // Simply calling driver.clear_error() would accomplish the same thing
+    // driver.clear_error();
+
     driver.set_all_modes(trossen_arm::Mode::position);
     driver.set_all_positions(sleep_positions);
   }

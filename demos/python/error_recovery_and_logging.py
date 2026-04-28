@@ -108,6 +108,8 @@ if __name__=='__main__':
     except Exception as e:
         print("An error occurred: ", e)
         print("Recovering from the error...")
+
+        # Cleanup with reboot_controller = False and configure with clear_error = True
         driver.cleanup()
         driver.configure(
             trossen_arm.Model.wxai_v0,
@@ -115,5 +117,8 @@ if __name__=='__main__':
             '192.168.1.2',
             True
         )
+        # Simply calling driver.clear_error() would accomplish the same thing
+        # driver.clear_error()
+
         driver.set_all_modes(trossen_arm.Mode.position)
         driver.set_all_positions(sleep_positions)

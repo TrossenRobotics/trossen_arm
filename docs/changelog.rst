@@ -28,7 +28,7 @@ Trossen Arm Driver
 
   - Trajectory start time is now anchored to the moment ``robot_input_`` is evaluated, so consecutive trajectories remain continuous across transitions regardless of host scheduling.
   - Pre-run inverse-kinematics feasibility checking on Cartesian trajectories is now opt-in (previously on by default), removing a substantial per-call cost in tight control loops.
-  - Very short trajectory durations are handled robustly: under 1 ms uses a step, under 200 ms uses linear interpolation, and feed-forward terms default to zero when not specified.
+  - Very short trajectory durations are handled robustly: under 1 ms uses a step, under 200 ms uses linear interpolation, otherwise uses linear, cubic, and quintic interpolations for effort, velocity, and position commands with feed-forward terms default to zero when not specified.
 
 - Fixed a race in spdlog logger registration that could throw when multiple :class:`trossen_arm::TrossenArmDriver` instances were constructed concurrently from different threads.
 - Fixed a segfault in the C++ demos triggered by spdlog initialization order.

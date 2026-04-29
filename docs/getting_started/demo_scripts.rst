@@ -75,6 +75,15 @@ The driver is designed to be flexible and easy to use for a wide range of applic
           //       Interpolate from start to goal state in joint space
           //     - trossen_arm::InterpolationSpace::cartesian
           //       Interpolate from start to goal state in Cartesian space
+          //
+          //     To avoid numerical issues, interpolation type used is determined automatically
+          //     based on the time to reach the goal[s]
+          //     - if longer than 0.2s, quintic polynomial interpolation is used for
+          //       position commands, cubic interpolation is used for velocity commands, and
+          //       linear interpolation is used for effort and external effort commands, with
+          //       goal derivatives defaulted to zero if not specified
+          //     - else if longer than 0.001s, linear interpolation is used
+          //     - else, no interpolation is used and the goal values are applied immediately
           driver.set_yyy_zzz[s](...); | driver.set_cartesian_zzzs(...);
 
           //     Get the robot outputs if needed
@@ -162,6 +171,15 @@ The driver is designed to be flexible and easy to use for a wide range of applic
             #           Interpolate from start to goal state in joint space
             #         - trossen_arm.InterpolationSpace.cartesian
             #           Interpolate from start to goal state in Cartesian space
+            #
+            #         To avoid numerical issues, interpolation type used is determined automatically
+            #         based on the time to reach the goal[s]
+            #         - if longer than 0.2s, quintic polynomial interpolation is used for
+            #           position commands, cubic interpolation is used for velocity commands, and
+            #           linear interpolation is used for effort and external effort commands, with
+            #           goal derivatives defaulted to zero if not specified
+            #         - else if longer than 0.001s, linear interpolation is used
+            #         - else, no interpolation is used and the goal values are applied immediately
             driver.set_yyy_zzz[s](...) | driver.set_cartesian_zzzs(...)
 
             #         Get the robot outputs if needed
@@ -329,6 +347,11 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 
 This script demonstrates how to finetune the joint characteristic of one joint.
 
+`set_motor_parameters`_
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This script demonstrates how to set the motor parameters of the arm.
+
 .. _`arm_discovery`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/arm_discovery.py
 
 .. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_external_effort.py
@@ -368,6 +391,8 @@ This script demonstrates how to finetune the joint characteristic of one joint.
 .. _`set_mode`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_mode.py
 
 .. _`set_joint_characteristics`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_joint_characteristics.py
+
+.. _`set_motor_parameters`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_motor_parameters.py
 
 .. _`simple_move`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/simple_move.py
 

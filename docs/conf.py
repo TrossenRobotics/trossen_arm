@@ -162,7 +162,8 @@ exhale_args = {
         INPUT                  = ../include
         EXCLUDE_SYMBOLS        = trossen_arm::TrossenArmDriver::RobotInput \
                                  trossen_arm::TrossenArmDriver::*Raw \
-                                 trossen_arm::TrossenArmDriver::RobotCommandIndicator
+                                 trossen_arm::TrossenArmDriver::RobotCommandIndicator \
+                                 trossen_arm::TrossenArmDriver::DriverConfiguration
     """),
 }
 

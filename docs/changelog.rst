@@ -13,8 +13,7 @@ Trossen Arm Driver
 - Promoted :enum:`trossen_arm::ErrorState` and the :var:`trossen_arm::ERROR_INFORMATION`, :var:`trossen_arm::MODEL_NAME`, and :var:`trossen_arm::MODE_NAME` maps from private to public so user code can render error and identifier strings.
 - Added a ``trossen-arm`` :doc:`command-line tool <getting_started/cli>` with ``discover``, ``identify``, and ``usage`` subcommands.
   Install it alongside the Python package via ``pip install "trossen_arm[cli]"``.
-- Fixed the driver hanging on ``Ctrl+C`` when the arm controller was unreachable.
-  ``poll()`` now handles ``EINTR`` so the connection attempt can be interrupted cleanly.
+- :func:`trossen_arm::TrossenArmDriver::configure` now respects small ``timeout`` values without depending on operating system's TCP connection timeout.
 - Added :func:`trossen_arm::TrossenArmDriver::clear_error`, a convenience method that internally calls :func:`trossen_arm::TrossenArmDriver::cleanup` with ``reboot_controller = false`` and then :func:`trossen_arm::TrossenArmDriver::configure` with ``clear_error = true``.
 - Added :class:`trossen_arm::StandardMotorParameters`, a collection of named, dated motor parameter sets that can be passed to :func:`trossen_arm::TrossenArmDriver::set_motor_parameters` instead of hand-tuning gains.
   The currently shipped sets are :member:`trossen_arm::StandardMotorParameters::wxai_v0_20250509` and :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317`, with :member:`trossen_arm::StandardMotorParameters::wxai_v0_default` aliasing whichever set is the current default.

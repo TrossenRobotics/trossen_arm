@@ -5,6 +5,34 @@ Changelog
 Trossen Arm Driver
 ==================
 
+1.9.3
+-----
+
+- Added :func:`trossen_arm::TrossenArmDriver::discover`, a static method that scans a subnet for reachable arm controllers and returns a :class:`trossen_arm::DiscoverResult` for each one with its model, firmware version, IP, and error state.
+  Demonstrated in the :ref:`getting_started/demo_scripts:`arm_discovery`_` demo.
+- Promoted :enum:`trossen_arm::ErrorState` and the :var:`trossen_arm::ERROR_INFORMATION`, :var:`trossen_arm::MODEL_NAME`, and :var:`trossen_arm::MODE_NAME` maps from private to public so user code can render error and identifier strings.
+- Added a ``trossen-arm`` :doc:`command-line tool <getting_started/cli>` with ``discover``, ``identify``, and ``usage`` subcommands.
+  Install it alongside the Python package via ``pip install "trossen_arm[cli]"``.
+- :func:`trossen_arm::TrossenArmDriver::configure` now respects small ``timeout`` values without depending on operating system's TCP connection timeout.
+- Added :func:`trossen_arm::TrossenArmDriver::clear_error`, a convenience method that internally calls :func:`trossen_arm::TrossenArmDriver::cleanup` with ``reboot_controller = false`` and then :func:`trossen_arm::TrossenArmDriver::configure` with ``clear_error = true``.
+- Added :class:`trossen_arm::StandardMotorParameters`, a collection of named, dated motor parameter sets that can be passed to :func:`trossen_arm::TrossenArmDriver::set_motor_parameters` instead of hand-tuning gains.
+  The currently shipped sets are :member:`trossen_arm::StandardMotorParameters::wxai_v0_20250509` and :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317`, with :member:`trossen_arm::StandardMotorParameters::wxai_v0_default` aliasing whichever set is the current default.
+  Demonstrated in the :ref:`getting_started/demo_scripts:`set_motor_parameters`_` demo.
+- Added a notice system for surfacing one-time messages from the driver at startup.
+  Each notice can be silenced individually by calling :func:`trossen_arm::TrossenArmDriver::disable_notice` with the corresponding :enum:`trossen_arm::Notice` value before constructing the driver.
+- Issued :enumerator:`trossen_arm::Notice::default_motor_parameters_20260317`: the default motor parameters will change from :member:`trossen_arm::StandardMotorParameters::wxai_v0_20250509` to :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317` in the next minor release (v1.10.0).
+  To opt in early or pin to the old defaults, set motor parameters explicitly as in the :ref:`getting_started/demo_scripts:`set_motor_parameters`_` demo.
+- Switching into :enumerator:`trossen_arm::Mode::velocity`, :enumerator:`trossen_arm::Mode::external_effort`, or :enumerator:`trossen_arm::Mode::effort` now starts from a zero command instead of seeding from the latest measurement, preventing unintended motion at the moment the mode changes.
+- Fixed two interpolation issues that caused unstable motion when trajectory goals were updated at a rate close to the trajectory evaluation rate:
+
+  - Trajectory start time is now anchored to the moment ``robot_input_`` is evaluated, so consecutive trajectories remain continuous across transitions regardless of host scheduling.
+  - Pre-run inverse-kinematics feasibility checking on Cartesian trajectories is now opt-in (previously on by default), removing a substantial per-call cost in tight control loops.
+  - Very short trajectory durations are handled robustly: under 1 ms uses a step, under 200 ms uses linear interpolation, otherwise uses linear, cubic, and quintic interpolations for effort, velocity, and position commands with feed-forward terms default to zero when not specified.
+
+- Fixed a race in spdlog logger registration that could throw when multiple :class:`trossen_arm::TrossenArmDriver` instances were constructed concurrently from different threads.
+- Fixed a segfault in the C++ demos: https://github.com/TrossenRobotics/trossen_arm/pull/179.
+- The `C++ demo template <https://github.com/TrossenRobotics/trossen_arm/blob/76599407313fa35589c4573124ed4d2a501baa42/demos/cpp/CMakeLists.txt>`_ now uses a guarded ``find_package(libtrossen_arm)``, so a standalone demo build no longer fails when the package is not pre-installed.
+
 1.9.1
 -----
 

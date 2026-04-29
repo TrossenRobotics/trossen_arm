@@ -10,7 +10,7 @@ Trossen Arm Driver
 
 - Added :func:`trossen_arm::TrossenArmDriver::discover`, a static method that scans a subnet for reachable arm controllers and returns a :class:`trossen_arm::DiscoverResult` for each one with its model, firmware version, IP, and error state.
   Demonstrated in the :ref:`getting_started/demo_scripts:`arm_discovery`_` demo.
-- Promoted ``trossen_arm::ErrorState`` and the ``ERROR_INFORMATION``, ``MODEL_NAME``, and ``MODE_NAME`` maps from private to public so user code can render error and identifier strings.
+- Promoted :enum:`trossen_arm::ErrorState` and the :var:`trossen_arm::ERROR_INFORMATION`, :var:`trossen_arm::MODEL_NAME`, and :var:`trossen_arm::MODE_NAME` maps from private to public so user code can render error and identifier strings.
 - Added a ``trossen-arm`` command-line tool with ``discover``, ``identify``, and ``usage`` subcommands.
   Install it alongside the Python package via ``pip install "trossen_arm[cli]"``.
 - Fixed the driver hanging on ``Ctrl+C`` when the arm controller was unreachable.
@@ -20,7 +20,7 @@ Trossen Arm Driver
   The currently shipped sets are :member:`trossen_arm::StandardMotorParameters::wxai_v0_20250509` and :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317`, with :member:`trossen_arm::StandardMotorParameters::wxai_v0_default` aliasing whichever set is the current default.
   Demonstrated in the :ref:`getting_started/demo_scripts:`set_motor_parameters`_` demo.
 - Added a notice system for surfacing one-time messages from the driver at startup.
-  Each notice can be silenced individually by calling :func:`trossen_arm::TrossenArmDriver::disable_notice` with the corresponding ``trossen_arm::Notice`` value before constructing the driver.
+  Each notice can be silenced individually by calling :func:`trossen_arm::TrossenArmDriver::disable_notice` with the corresponding :enum:`trossen_arm::Notice` value before constructing the driver.
 - Issued :enumerator:`trossen_arm::Notice::default_motor_parameters_20260317`: the default motor parameters will change from :member:`trossen_arm::StandardMotorParameters::wxai_v0_20250509` to :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317` in the next minor release (v1.10.0).
   To opt in early or pin to the old defaults, set motor parameters explicitly as in the :ref:`getting_started/demo_scripts:`set_motor_parameters`_` demo.
 - Switching into :enumerator:`trossen_arm::Mode::velocity`, :enumerator:`trossen_arm::Mode::external_effort`, or :enumerator:`trossen_arm::Mode::effort` now starts from a zero command instead of seeding from the latest measurement, preventing unintended motion at the moment the mode changes.

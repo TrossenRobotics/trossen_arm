@@ -30,7 +30,7 @@ Trossen Arm Driver
   - Very short trajectory durations are handled robustly: under 1 ms uses a step, under 200 ms uses linear interpolation, otherwise uses linear, cubic, and quintic interpolations for effort, velocity, and position commands with feed-forward terms default to zero when not specified.
 
 - Fixed a race in spdlog logger registration that could throw when multiple :class:`trossen_arm::TrossenArmDriver` instances were constructed concurrently from different threads.
-- Fixed a segfault in the C++ demos triggered by spdlog initialization order.
+- Fixed a segfault in the C++ demos: https://github.com/TrossenRobotics/trossen_arm/pull/179.
 - The `C++ demo template <https://github.com/TrossenRobotics/trossen_arm/blob/76599407313fa35589c4573124ed4d2a501baa42/demos/cpp/CMakeLists.txt>`_ now uses a guarded ``find_package(libtrossen_arm)``, so a standalone demo build no longer fails when the package is not pre-installed.
 
 1.9.1

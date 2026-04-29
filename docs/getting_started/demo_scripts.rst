@@ -244,6 +244,11 @@ This script demonstrates how to move a robot to different positions.
 
 This script tests transitions of the interpolation space.
 
+`arm_discovery`_
+^^^^^^^^^^^^^^^^
+
+This script discovers all arm controllers connected on a given subnet.
+
 Intermediate
 ------------
 
@@ -323,6 +328,8 @@ This script demonstrates how to set the joint characteristics in the EEPROM, usi
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This script demonstrates how to finetune the joint characteristic of one joint.
+
+.. _`arm_discovery`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/arm_discovery.py
 
 .. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_external_effort.py
 

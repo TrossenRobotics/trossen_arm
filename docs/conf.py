@@ -160,10 +160,10 @@ exhale_args = {
     "exhaleDoxygenStdin":    textwrap.dedent("""
         PROJECT_NAME           = "Trossen Arm API Documentation"
         INPUT                  = ../include
-        EXCLUDE_SYMBOLS        = trossen_arm::TrossenArmDriver::RobotInput \
-                                 trossen_arm::TrossenArmDriver::*Raw \
+        EXCLUDE_SYMBOLS        = trossen_arm::TrossenArmDriver::*Raw \
+                                 trossen_arm::TrossenArmDriver::DriverConfiguration \
                                  trossen_arm::TrossenArmDriver::RobotCommandIndicator \
-                                 trossen_arm::TrossenArmDriver::DriverConfiguration
+                                 trossen_arm::TrossenArmDriver::RobotInput
     """),
 }
 

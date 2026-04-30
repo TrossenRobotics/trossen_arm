@@ -241,6 +241,12 @@ Trossen Arm Driver
 Trossen Arm Controller Firmware
 ===============================
 
+1.9.4
+-----
+
+- Switching into :enumerator:`trossen_arm::Mode::velocity`, :enumerator:`trossen_arm::Mode::external_effort`, or :enumerator:`trossen_arm::Mode::effort` now starts from a zero command instead of seeding from the latest measurement, preventing unintended motion at the moment the mode changes.
+- Improved motor feedback handling so that transient communication issues no longer trigger spurious motor feedback errors.
+
 1.9.3
 -----
 

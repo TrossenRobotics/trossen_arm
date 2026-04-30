@@ -245,7 +245,7 @@ Trossen Arm Controller Firmware
 -----
 
 - Switching into :enumerator:`trossen_arm::Mode::velocity`, :enumerator:`trossen_arm::Mode::external_effort`, or :enumerator:`trossen_arm::Mode::effort` now starts from a zero command instead of seeding from the latest measurement, preventing unintended motion at the moment the mode changes.
-- Improved motor feedback handling so that transient communication issues no longer trigger spurious motor feedback errors.
+- Lowered sensitivity to transient CAN bus failures by triggering motor feedback error on two consecutive lost messages instead of one.
 
 1.9.3
 -----

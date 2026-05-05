@@ -32,6 +32,7 @@
 #include <cstdint>
 
 #include <array>
+#include <functional>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -39,6 +40,34 @@
 
 namespace trossen_arm
 {
+
+/// @brief Log severity levels
+enum class LogLevel : uint8_t {
+  /// @brief Trace level (most verbose)
+  trace,
+  /// @brief Debug level
+  debug,
+  /// @brief Informational level
+  info,
+  /// @brief Warning level
+  warn,
+  /// @brief Error level
+  error,
+  /// @brief Critical level (least verbose)
+  critical,
+};
+
+/**
+ * @brief Callback type for custom logger backends
+ * @param level Log severity level
+ * @param name Logger name (e.g. "trossen_arm_driver" or "wxai_v0@192.168.1.2")
+ * @param message Formatted log message
+ */
+using LogCallback = std::function<void(
+  LogLevel level,
+  const std::string & name,
+  const std::string & message
+)>;
 
 /// @brief Operation modes of a joint
 enum class Mode : uint8_t {
@@ -1059,7 +1088,7 @@ struct StandardMotorParameters {
   /// @brief Default motor parameters for WXAI V0
   static inline const std::vector<
     std::map<Mode, MotorParameter>
-  >& wxai_v0_default{wxai_v0_20250509};
+  >& wxai_v0_default{wxai_v0_20260317};
 };
 
 /// @brief Notices

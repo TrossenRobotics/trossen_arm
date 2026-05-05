@@ -59,23 +59,50 @@ int main() {
   const std::string SERV_IP = "192.168.1.2";
 
   std::cout << "Configuring logging..." << std::endl;
+
+  // Set up spdlog with stdout and file sinks
   auto stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
   auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
     "error_recovery_and_logging.log",
     true
   );
-  std::vector<spdlog::sink_ptr> sinks {stdout_sink, file_sink};
-  auto default_logger = std::make_shared<spdlog::logger>(
-    trossen_arm::TrossenArmDriver::get_default_logger_name(), sinks.begin(), sinks.end()
+  spdlog::sinks_init_list sinks{stdout_sink, file_sink};
+
+  // Route all library log messages through spdlog using set_logger_backend
+  trossen_arm::TrossenArmDriver::set_logger_backend(
+    [sinks](
+      trossen_arm::LogLevel level,
+      const std::string & name,
+      const std::string & message)
+    {
+      auto logger = spdlog::get(name);
+      if (!logger) {
+        logger = std::make_shared<spdlog::logger>(name, sinks);
+        spdlog::register_logger(logger);
+      }
+
+      switch (level) {
+        case trossen_arm::LogLevel::trace:
+          logger->trace(message);
+          break;
+        case trossen_arm::LogLevel::debug:
+          logger->debug(message);
+          break;
+        case trossen_arm::LogLevel::info:
+          logger->info(message);
+          break;
+        case trossen_arm::LogLevel::warn:
+          logger->warn(message);
+          break;
+        case trossen_arm::LogLevel::error:
+          logger->error(message);
+          break;
+        case trossen_arm::LogLevel::critical:
+          logger->critical(message);
+          break;
+      }
+    }
   );
-  spdlog::register_logger(default_logger);
-  auto logger = std::make_shared<spdlog::logger>(
-    trossen_arm::TrossenArmDriver::get_logger_name(
-      MODEL,
-      SERV_IP
-    ), sinks.begin(), sinks.end()
-  );
-  spdlog::register_logger(logger);
 
   std::cout << "Initializing the driver..." << std::endl;
   trossen_arm::TrossenArmDriver driver;

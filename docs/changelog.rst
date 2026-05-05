@@ -5,6 +5,18 @@ Changelog
 Trossen Arm Driver
 ==================
 
+1.10.0
+------
+
+- Replaced the built-in ``spdlog`` dependency with a custom logging frontend, and exposed a backend hook so users can plug in the logging library of their choice.
+  Related example scripts demonstrate how to use ``spdlog`` in C++ or the standard ``logging`` module or `loguru <https://github.com/Delgan/loguru>`_ in Python.
+  See the :ref:`getting_started/demo_scripts:`error_recovery_and_logging`_` demo for details.
+- Made :func:`trossen_arm::TrossenArmDriver::cleanup` ``noexcept`` and made Ethernet interface cleanup more graceful.
+- Fixed parsing of some error messages surfaced from the OS.
+- :member:`trossen_arm::StandardMotorParameters::wxai_v0_default` now aliases :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317`, completing the default parameter change announced in v1.9.3.
+  The same gains ship as the boot defaults in Arm Controller firmware v1.10.0, so arms running matched firmware and driver use the new tuning out of the box.
+  The corresponding :enumerator:`trossen_arm::Notice::default_motor_parameters_20260317` has been suppressed.
+
 1.9.3
 -----
 
@@ -240,6 +252,11 @@ Trossen Arm Driver
 
 Trossen Arm Controller Firmware
 ===============================
+
+1.10.0
+------
+
+- Set the :member:`trossen_arm::StandardMotorParameters::wxai_v0_20260317` motor parameters as default.
 
 1.9.4
 -----

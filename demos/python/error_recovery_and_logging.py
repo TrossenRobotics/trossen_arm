@@ -42,7 +42,6 @@
 # 7. Recovers from the error
 # 8. Moves the arm to the sleep position
 
-import logging
 from time import sleep
 
 import numpy as np
@@ -52,29 +51,66 @@ import trossen_arm
 if __name__=='__main__':
     MODEL = trossen_arm.Model.wxai_v0
     SERV_IP = '192.168.1.2'
+    USE_LOGURU = False  # Set to False to use Python's built-in logging module
 
     print("Configuring logging...")
-    formatter = logging.Formatter(
-        '[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s',
-        '%Y-%m-%d %H:%M:%S'
-    )
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(formatter)
-    file_handler = logging.FileHandler('error_recovery_and_logging.log')
-    file_handler.setFormatter(formatter)
-    default_logger = logging.getLogger(trossen_arm.TrossenArmDriver.get_default_logger_name())
-    default_logger.setLevel(logging.INFO)
-    default_logger.addHandler(stream_handler)
-    default_logger.addHandler(file_handler)
-    logger = logging.getLogger(
-        trossen_arm.TrossenArmDriver.get_logger_name(
-            MODEL,
-            SERV_IP
+    if USE_LOGURU:
+        # Using loguru as an example, but any logging library should work
+        # You might need to install loguru in your environment
+        from loguru import logger
+
+        # Remove loguru's default stderr sink and add custom sinks
+        logger.remove()
+        logger.add(
+            sink=lambda msg: print(msg, end=""),
+            format="[{time:YYYY-MM-DD HH:mm:ss}] [{extra[name]}] [{level}] {message}",
+            level="DEBUG",
         )
-    )
-    logger.setLevel(logging.INFO)
-    logger.addHandler(stream_handler)
-    logger.addHandler(file_handler)
+        logger.add(
+            "error_recovery_and_logging.log",
+            format="[{time:YYYY-MM-DD HH:mm:ss}] [{extra[name]}] [{level}] {message}",
+            level="DEBUG",
+        )
+
+        # Map C++ LogLevel to loguru level names
+        _LEVEL_MAP = {
+            trossen_arm.LogLevel.trace: "TRACE",
+            trossen_arm.LogLevel.debug: "DEBUG",
+            trossen_arm.LogLevel.info: "INFO",
+            trossen_arm.LogLevel.warn: "WARNING",
+            trossen_arm.LogLevel.error: "ERROR",
+            trossen_arm.LogLevel.critical: "CRITICAL",
+        }
+
+        def _loguru_backend(level, name, message):
+            loguru_level = _LEVEL_MAP.get(level, "CRITICAL")
+            logger.bind(name=name).log(loguru_level, message)
+
+        trossen_arm.TrossenArmDriver.set_logger_backend(_loguru_backend)
+    else:
+        import logging
+
+        formatter = logging.Formatter(
+            '[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s',
+            '%Y-%m-%d %H:%M:%S'
+        )
+        stream_handler = logging.StreamHandler()
+        stream_handler.setFormatter(formatter)
+        file_handler = logging.FileHandler('error_recovery_and_logging.log')
+        file_handler.setFormatter(formatter)
+        default_logger = logging.getLogger(trossen_arm.TrossenArmDriver.get_default_logger_name())
+        default_logger.setLevel(logging.INFO)
+        default_logger.addHandler(stream_handler)
+        default_logger.addHandler(file_handler)
+        logger = logging.getLogger(
+            trossen_arm.TrossenArmDriver.get_logger_name(
+                MODEL,
+                SERV_IP
+            )
+        )
+        logger.setLevel(logging.INFO)
+        logger.addHandler(stream_handler)
+        logger.addHandler(file_handler)
 
     print("Initializing the driver...")
     driver = trossen_arm.TrossenArmDriver()

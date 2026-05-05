@@ -1301,6 +1301,24 @@ public:
   bool get_is_configured();
 
   /**
+   * @brief Set this driver's minimum log level
+   *
+   * Messages below this level are silently dropped before reaching the backend.
+   *
+   * @param level Minimum log level
+   */
+  void set_log_level(LogLevel level);
+
+  /**
+   * @brief Set a custom logger backend
+   *
+   * If not called, the library logs to stderr (C++) or Python's logging module (Python).
+   *
+   * @param callback A callback invoked for each log message with (level, logger_name, message)
+   */
+  static void set_logger_backend(LogCallback callback);
+
+  /**
    * @brief Get the logger name
    * @param model Model of the robot
    * @param serv_ip IP address of the robot

@@ -4,6 +4,7 @@ endif()
 
 include(FetchContent)
 
+# Fetch spdlog for the error_recovery_and_logging demo
 FetchContent_Declare(
   spdlog
   SYSTEM
@@ -20,12 +21,11 @@ foreach(DEMO_SOURCE ${DEMO_SOURCES})
 
   message(STATUS "Building demo: ${DEMO_NAME}")
 
-  # The error_recovery_and_logging demo requires spdlog
+  # The error_recovery_and_logging demo uses spdlog as an example backend
   if(${DEMO_NAME} STREQUAL "error_recovery_and_logging")
     add_executable(${DEMO_NAME} ${DEMO_SOURCE})
     target_link_libraries(${DEMO_NAME} PRIVATE libtrossen_arm spdlog::spdlog)
   else()
-    # Other demos do not require spdlog
     add_executable(${DEMO_NAME} ${DEMO_SOURCE})
     target_link_libraries(${DEMO_NAME} PRIVATE libtrossen_arm)
   endif()

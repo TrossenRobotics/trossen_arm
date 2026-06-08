@@ -192,3 +192,32 @@ Key Differences from Training Data Recording
     - We set ``--num_image_writer_processes=1`` instead of the default ``0``.
     - On some systems, using a dedicated process for writing images (from multiple cameras) allows achieving a consistent 30 FPS during inference.
     - You can experiment with different values of ``--num_image_writer_processes`` to optimize performance.
+
+Evaluating VLA Policies
+=======================
+
+The examples above evaluate an **ACT** policy, which the lean base install (:doc:`setup`) runs directly.
+**VLA policies (π₀, π₀.₅, SmolVLA) need extra dependencies** (``transformers``/``peft``) that the base install omits.
+
+If you cloned and synced ``lerobot_trossen``, layer the extras at run time by prefixing the command with ``uv run --with "lerobot[pi]>=0.5.1"`` (use ``[smolvla]`` for SmolVLA):
+
+.. code-block:: bash
+
+    uv run --with "lerobot[pi]>=0.5.1" lerobot-record \
+        --robot.type=widowxai_follower_robot \
+        --robot.ip_address=192.168.1.4 \
+        --robot.id=follower \
+        --robot.cameras='{
+            cam_main: {type: intelrealsense, serial_number_or_name: "0123456789", width: 640, height: 480, fps: 30}
+            }' \
+        --display_data=false \
+        --dataset.repo_id=${HF_USER}/eval_trossen_ai_solo_test \
+        --dataset.single_task="Grab the cube" \
+        --policy.path=${HF_USER}/my_pi05_policy
+
+If you use your own project (:doc:`use_in_your_project`) and declared the ``pi`` / ``smolvla`` extras there, omit the ``--with "lerobot[pi]>=0.5.1"`` prefix and run ``lerobot-record`` directly.
+
+.. note::
+
+    Synchronous evaluation with ``lerobot-record`` runs the policy in the robot control loop, which large VLAs are often too slow for.
+    For responsive on-robot VLA evaluation, prefer the :doc:`async_inference` flow, which runs the policy in a separate server process.

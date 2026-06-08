@@ -5,6 +5,11 @@ LeRobot Installation Guide
 Install LeRobot
 ===============
 
+.. note::
+
+    This package requires **Python ≥ 3.12** (it depends on ``lerobot >= 0.5.1``).
+    ``uv`` provisions a compatible interpreter automatically, so no manual Python setup is needed.
+
 On your computer:
 
 #. Install uv:

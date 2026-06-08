@@ -9,9 +9,11 @@ This page contains tutorials for using the Trossen AI Kits with the LeRobot "bri
     :caption: Contents:
 
     lerobot_plugin/setup.rst
+    lerobot_plugin/use_in_your_project.rst
     lerobot_plugin/configuration.rst
     lerobot_plugin/teleoperation.rst
     lerobot_plugin/record_episode.rst
     lerobot_plugin/visualize.rst
     lerobot_plugin/replay.rst
     lerobot_plugin/train_and_evaluate.rst
+    lerobot_plugin/async_inference.rst

@@ -1,4 +1,3 @@
-
 =======================
 Use in Your Own Project
 =======================
@@ -15,8 +14,8 @@ The Packages
 
 ``lerobot_trossen`` is a ``uv`` workspace that publishes two plugin packages:
 
-- ``lerobot-robot-trossen`` — the follower-robot plugin (registers the ``widowxai_follower_robot``, ``bi_widowxai_follower_robot``, and ``mobileai_robot`` robot types).
-- ``lerobot-teleoperator-trossen`` — the leader / teleoperator plugin.
+- ``lerobot-robot-trossen``: the follower-robot plugin (registers the ``widowxai_follower_robot``, ``bi_widowxai_follower_robot``, and ``mobileai_robot`` robot types).
+- ``lerobot-teleoperator-trossen``: the leader / teleoperator plugin.
 
 Both require **Python ≥ 3.12** (they depend on ``lerobot >= 0.5.1``).
 They are not published to PyPI, so depend on them directly from Git.
@@ -96,13 +95,13 @@ Or in ``pyproject.toml``:
 
 .. note::
 
-    Only declare the extras you actually use — each one adds significant install size.
+    Only declare the extras you actually use; each one adds significant install size.
     If you only run ACT policies, the base plugin dependencies are enough and you can skip this section entirely.
 
 Running Commands
 ================
 
-With the dependencies declared, run the LeRobot entry points directly through your project's environment — no ``--with`` prefix:
+With the dependencies declared, run the LeRobot entry points directly through your project's environment, with no ``--with`` prefix:
 
 .. code-block:: bash
 

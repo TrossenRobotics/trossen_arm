@@ -10,9 +10,9 @@ Dependencies
 
 The server and client live in **upstream LeRobot**, and they need dependencies the lean base install (:doc:`setup`) omits:
 
-- ``async`` — the ``grpcio`` transport used between the server and client.
-- ``pi`` — ``transformers``/``peft``, required for the π-family policies (π₀, π₀.₅).
-- ``smolvla`` — required for SmolVLA policies.
+- ``async``: the ``grpcio`` transport used between the server and client.
+- ``pi``: ``transformers``/``peft``, required for the π-family policies (π₀, π₀.₅).
+- ``smolvla``: required for SmolVLA policies.
 
 Pick the policy extra that matches your policy family: ``pi`` for the π-family, ``smolvla`` for SmolVLA.
 If you cloned and synced ``lerobot_trossen``, layer these in at run time by prefixing the command with ``uv run --with "lerobot[async,pi]>=0.5.1"`` (swap ``pi`` for ``smolvla`` when serving SmolVLA; requires Python ≥ 3.12).
@@ -69,7 +69,7 @@ Start the policy server first, then the robot client.
 Notes
 =====
 
-- The Trossen robots **auto-register** — LeRobot discovers the installed ``lerobot_robot_trossen`` plugin, so ``--robot.type=bi_widowxai_follower_robot`` resolves with no manual import.
+- The Trossen robots **auto-register**: LeRobot discovers the installed ``lerobot_robot_trossen`` plugin, so ``--robot.type=bi_widowxai_follower_robot`` resolves with no manual import.
 - The model loads on the **first** client connection (large VLAs take 1–2 min) before the first action is produced.
 - The ``--task`` prompt **must match training** (π-family policies are language-conditioned).
 - ``--actions_per_chunk``, ``--chunk_size_threshold``, and ``--aggregate_fn_name`` control real-time chunking: how many predicted steps to execute per chunk, when to re-query the server, and how overlapping steps are blended (``weighted_average``).

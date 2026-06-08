@@ -199,7 +199,7 @@ Evaluating VLA Policies
 The examples above evaluate an **ACT** policy, which the lean base install (:doc:`setup`) runs directly.
 **VLA policies (π₀, π₀.₅, SmolVLA) need extra dependencies** (``transformers``/``peft``) that the base install omits.
 
-If you cloned and synced ``lerobot_trossen``, layer the extra at run time by prefixing the command with ``uv run --with "lerobot[pi]>=0.5.1"`` (use ``[smolvla]`` for SmolVLA):
+If you cloned and synced ``lerobot_trossen``, layer the extras at run time by prefixing the command with ``uv run --with "lerobot[pi]>=0.5.1"`` (use ``[smolvla]`` for SmolVLA):
 
 .. code-block:: bash
 

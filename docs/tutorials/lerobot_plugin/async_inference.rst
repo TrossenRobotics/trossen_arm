@@ -11,10 +11,12 @@ Dependencies
 The server and client live in **upstream LeRobot**, and they need dependencies the lean base install (:doc:`setup`) omits:
 
 - ``async`` — the ``grpcio`` transport used between the server and client.
-- ``pi`` — ``transformers``/``peft``, required for the π-family policies.
+- ``pi`` — ``transformers``/``peft``, required for the π-family policies (π₀, π₀.₅).
+- ``smolvla`` — required for SmolVLA policies.
 
-If you cloned and synced ``lerobot_trossen``, layer these in at run time by prefixing the command with ``uv run --with "lerobot[async,pi]>=0.5.1"`` (requires Python ≥ 3.12).
-If you consume the packages from :doc:`use_in_your_project` and declared the ``async`` / ``pi`` extras there, omit the ``--with`` prefix and run the modules directly.
+Pick the policy extra that matches your policy family: ``pi`` for the π-family, ``smolvla`` for SmolVLA.
+If you cloned and synced ``lerobot_trossen``, layer these in at run time by prefixing the command with ``uv run --with "lerobot[async,pi]>=0.5.1"`` (swap ``pi`` for ``smolvla`` when serving SmolVLA; requires Python ≥ 3.12).
+If you consume the packages from :doc:`use_in_your_project` and declared the ``async`` / ``pi`` / ``smolvla`` extras there, omit the ``--with`` prefix and run the modules directly.
 
 Running the Policy Server and Robot Client
 ==========================================

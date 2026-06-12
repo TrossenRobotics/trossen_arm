@@ -2,14 +2,11 @@
 TOTL Workstation
 ================
 
-For applications that demand significant onboard compute, such as training and
-running inference with learned policies, Trossen Robotics offers a pre-configured
-high performance desktop workstation, the TOTL (Top Of The Line) Workstation.
+For applications that demand significant onboard compute, such as training and running inference with learned policies, Trossen Robotics offers a pre-configured high performance desktop workstation, the TOTL (Top Of The Line) Workstation.
 
 .. note::
 
-  For login credentials, pre-installed software, and redeployment instructions,
-  see :doc:`/getting_started/totl`.
+  For login credentials, pre-installed software, and redeployment instructions, see :doc:`/getting_started/totl`.
 
 Specifications
 ==============
@@ -59,5 +56,4 @@ Ports
 
 .. note::
 
-  Specifications reflect the current pre-configured model and are subject to
-  change by the manufacturer.
+  Specifications reflect the current pre-configured model and are subject to change by the manufacturer.

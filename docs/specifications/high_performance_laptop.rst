@@ -2,9 +2,8 @@
 High Performance Laptop
 =======================
 
-For applications that demand significant onboard compute, such as training and
-running inference with learned policies, Trossen Robotics offers a pre-configured
-high performance laptop. The laptop is a Lenovo Legion Pro 7i Gen 10.
+For applications that demand significant onboard compute, such as training and running inference with learned policies, Trossen Robotics offers a pre-configured high performance laptop.
+The laptop is a Lenovo Legion Pro 7i Gen 10.
 
 Specifications
 ==============
@@ -76,5 +75,4 @@ Physical
 
 .. note::
 
-  Specifications reflect the current pre-configured model and are subject to
-  change by the manufacturer.
+  Specifications reflect the current pre-configured model and are subject to change by the manufacturer.

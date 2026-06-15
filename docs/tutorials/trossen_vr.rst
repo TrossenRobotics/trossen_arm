@@ -5,7 +5,7 @@ Trossen VR Teleoperation
 Overview
 ========
 
-C++ and Python SDK for controlling Trossen robot arms using Meta Quest VR controllers over network communication.
+The `trossen_vr <https://github.com/TrossenRobotics/trossen_vr>`_ package is a C++ and Python SDK for controlling Trossen robot arms using Meta Quest VR controllers over network communication.
 
 This package provides a complete solution for VR-based robot teleoperation, including:
 
@@ -156,7 +156,7 @@ Using ADB — Linux / Ubuntu
 App UI
 ------
 
-.. figure:: trossen_vr/VR_Teleop_ui.jpg
+.. figure:: trossen_vr/images/VR_Teleop_ui.jpg
     :align: center
     :width: 80%
 
@@ -168,6 +168,7 @@ UI Elements
 .. list-table::
     :widths: 30 70
     :header-rows: 1
+    :align: center
 
     * - Element
       - Description
@@ -255,9 +256,9 @@ C++ Demos
 
 Located in :guilabel:`demos/cpp/`:
 
-* **event_driven_teleop**: Event-driven dual-arm teleop using callback handlers.
+* `event_driven_teleop <https://github.com/TrossenRobotics/trossen_vr/blob/main/demos/cpp/event_driven_teleop.cpp>`_: Event-driven dual-arm teleop using callback handlers.
   Demonstrates the Teleop API with automatic engage/pause via deadman switch.
-* **manual_polling_teleop**: Manual frame polling with inline state tracking.
+* `manual_polling_teleop <https://github.com/TrossenRobotics/trossen_vr/blob/main/demos/cpp/manual_polling_teleop.cpp>`_: Manual frame polling with inline state tracking.
   Same functionality, different implementation pattern showing direct frame access.
 
 .. code-block:: bash
@@ -270,8 +271,8 @@ Python Demos
 
 Located in :guilabel:`demos/python/`:
 
-* **event_driven_teleop.py**: Python version of event-driven demo with callback-based control.
-* **manual_polling_teleop.py**: Python version of manual polling demo with direct frame access.
+* `event_driven_teleop.py <https://github.com/TrossenRobotics/trossen_vr/blob/main/demos/python/event_driven_teleop.py>`_: Python version of event-driven demo with callback-based control.
+* `manual_polling_teleop.py <https://github.com/TrossenRobotics/trossen_vr/blob/main/demos/python/manual_polling_teleop.py>`_: Python version of manual polling demo with direct frame access.
 
 .. code-block:: bash
 

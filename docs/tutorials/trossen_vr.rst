@@ -171,7 +171,7 @@ UI Elements
 
     * - Element
       - Description
-    * - **Robot PC Address field**
+    * - **Robot PC IP Address field**
       - IP address of the PC running this ``trossen_vr`` library
     * - **Connect**
       - Connect to the robot PC and start streaming arm data

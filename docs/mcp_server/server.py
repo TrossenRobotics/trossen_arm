@@ -91,6 +91,7 @@ mcp = FastMCP(
     ),
     host=TRANSPORT_HOST,
     port=TRANSPORT_PORT,
+    stateless_http=True,
 )
 
 

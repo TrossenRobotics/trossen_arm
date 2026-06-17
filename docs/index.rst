@@ -4,8 +4,9 @@ Trossen Arm Documentation
 
 .. tip::
 
-    **New: AI-powered documentation with Claude Code.**
-    Install the Trossen Arm MCP server to give Claude Code direct access to this documentation, the C++ and Python API reference, and demo scripts.
+    **New: AI-powered documentation.**
+    Connect this documentation, the C++ and Python API reference, and demo scripts to your AI assistant (Claude Code, GitHub Copilot, Claude.ai, ChatGPT, and more) via the Trossen Arm MCP server.
+    It is hosted at ``https://mcp.docs.trossenrobotics.com/mcp`` with no install required.
     See :doc:`getting_started/mcp_server` to get started.
 
 .. image:: images/banner.jpg

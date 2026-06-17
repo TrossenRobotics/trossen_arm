@@ -83,11 +83,10 @@ Claude.ai connects to remote MCP servers as custom connectors.
 See `Get started with custom connectors using remote MCP <https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp>`_ for the full walkthrough.
 In short:
 
-- On individual plans (Pro/Max), open **Settings > Connectors**. On Team and Enterprise plans, an Owner does this from **Organization settings > Connectors**.
-- Click **Add custom connector**.
+- On individual plans (Pro/Max), open the sidebar and navigate to **Customize** > **Connectors**.
+  On Team and Enterprise plans, an Owner does this from **Organization settings > Connectors**.
+- Click on the plus button and **Add custom connector**.
 - Enter a name such as ``Trossen Docs`` and the URL ``https://mcp.docs.trossenrobotics.com/mcp``, then click **Add**.
-
-No OAuth client ID or secret is needed, since the server is public and unauthenticated.
 
 ChatGPT
 -------
@@ -102,7 +101,8 @@ In short:
 
 .. note::
 
-    Connecting third-party MCP servers in ChatGPT Developer mode is in beta and the menus may change. Follow the linked OpenAI help article for the current steps.
+    Connecting third-party MCP servers in ChatGPT Developer mode is in beta and the menus may change.
+    Follow the linked OpenAI help article for the current steps.
 
 Running the server locally with Docker
 ======================================

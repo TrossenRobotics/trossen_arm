@@ -38,8 +38,8 @@ See the `motor replacement guides`_ for detailed instructions on how to replace 
 Arm Homing
 ==========
 
-If a motor is replaced or if the arm loses its position for any reason, it is necessary to home the arm.
-The process for homing the arm is as follows:
+If a motor is replaced or the arm loses its position for any reason, you must recalibrate its position by homing it.
+The homing process is as follows:
 
 #.  Power off the arm.
 #.  Remove the gripper fingers or paddles from the gripper carriages.
@@ -74,8 +74,7 @@ The process for homing the arm is as follows:
 
 .. note::
 
-    If you would like to print your own homing jigs, you can use the Trossen-provided STEP files to do so.
-    STEP files for the homing jigs can be found in the :ref:`Downloads <downloads:homing jigs>` section of the documentation.
+    To print your own homing jigs, use the Trossen-provided STEP files in the :ref:`Downloads <downloads:homing jigs>` section of the documentation.
     We print these in PLA on a Prusa Mk3 printer with the following settings:
 
     - 0.2mm layer height

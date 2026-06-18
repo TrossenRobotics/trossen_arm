@@ -675,7 +675,7 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 
 #. Configuration Management
 
-    - Edit Robot Configuration: The robot's YAML settings—like camera serial numbers and arm IP addresses—can be easily updated through the GUI, giving users detailed control over the robot's configuration.
+    - Edit Robot Configuration: The robot's YAML settings (like camera serial numbers and arm IP addresses) can be easily updated through the GUI, giving users detailed control over the robot's configuration.
     - Edit Task Configuration: Task-specific parameters can be adjusted via a YAML editor to tailor the task according to experiment requirements.
 
 #. Quit Button

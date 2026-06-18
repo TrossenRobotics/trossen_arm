@@ -18,6 +18,7 @@ extensions = [
     'exhale',
     'sphinx_copybutton',
     'sphinx_multiversion',
+    'sphinx_reredirects',
     'sphinx_tabs.tabs',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
@@ -26,6 +27,15 @@ extensions = [
     'sphinxcontrib.youtube',
     'sphinxcontrib.video',
 ]
+
+# Redirects for pages that moved, so existing links to the old URLs do not break.
+# Generates meta-refresh stub HTML at each old path (works over file:// and http).
+redirects = {
+    "getting_started/cli": "../software_tools/cli.html",
+    "getting_started/mcp_server": "../software_tools/mcp_server.html",
+    "getting_started/totl": "../tutorials/totl.html",
+    "getting_started/touchscreen": "../tutorials/touchscreen.html",
+}
 
 # Enable AutoSectionLabel
 autosectionlabel_prefix_document = True

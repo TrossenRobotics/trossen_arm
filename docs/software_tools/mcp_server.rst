@@ -10,7 +10,7 @@ Overview
 ========
 
 The Trossen Docs MCP server gives AI assistants direct access to the Trossen Arm documentation and API reference.
-Instead of searching the web or copy-pasting docs, you can ask your assistant questions and it will look up the answers from the official documentation automatically.
+Instead of searching the web or copy-pasting docs, ask your assistant questions and it retrieves the answers from the official documentation automatically.
 
 It works with any assistant that supports the `Model Context Protocol <https://modelcontextprotocol.io/>`_, including `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_, `GitHub Copilot in VS Code <https://code.visualstudio.com/docs/copilot/customization/mcp-servers>`_, `Claude.ai <https://claude.ai>`_, and `ChatGPT <https://chatgpt.com>`_.
 
@@ -30,8 +30,11 @@ Two ways to connect
 
 There are two ways to use the server:
 
-- **Hosted (recommended):** Trossen Robotics runs the server for you at ``https://mcp.docs.trossenrobotics.com/mcp``. There is nothing to install, you just point your assistant at the URL. This works with any client that supports remote (streamable HTTP) MCP servers.
-- **Local (Docker):** Run the server yourself as a Docker container. Use this if you want it fully offline or prefer not to depend on the hosted endpoint.
+- **Hosted (recommended):** Trossen Robotics runs the server for you at ``https://mcp.docs.trossenrobotics.com/mcp``.
+  Nothing to install; just point your assistant at the URL.
+  This works with any client that supports remote (streamable HTTP) MCP servers.
+- **Local (Docker):** Run the server yourself as a Docker container.
+  Use this if you want it fully offline or prefer not to depend on the hosted endpoint.
 
 Hosted server (recommended)
 ===========================

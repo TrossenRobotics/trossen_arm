@@ -1,6 +1,6 @@
-===============
-LeRobot Plugins
-===============
+==============================
+LeRobot Plugin (Recommended)
+==============================
 
 This page contains tutorials for using the Trossen AI Kits with the LeRobot "bring your own hardware" plugin system for data collection and imitation learning.
 

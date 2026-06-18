@@ -17,7 +17,7 @@ Required Hardware Components
 Touchscreen Display
 ^^^^^^^^^^^^^^^^^^^
 
-.. image:: images/touchscreen.jpg
+.. image:: touchscreen/images/touchscreen.jpg
    :width: 60%
    :alt: Touchscreen Display
    :align: center
@@ -34,7 +34,7 @@ Touchscreen Display
 Power Supply
 ^^^^^^^^^^^^
 
-.. image:: images/power_supply.jpg
+.. image:: touchscreen/images/power_supply.jpg
    :width: 40%
    :alt: Power Supply
    :align: center
@@ -49,7 +49,7 @@ Power Supply
 HDMI Cable
 ^^^^^^^^^^
 
-.. image:: images/hdmi_cable.jpg
+.. image:: touchscreen/images/hdmi_cable.jpg
    :width: 40%
    :alt: HDMI Cable
    :align: center
@@ -63,7 +63,7 @@ HDMI Cable
 USB Cable
 ^^^^^^^^^
 
-.. image:: images/usb_cable.jpg
+.. image:: touchscreen/images/usb_cable.jpg
    :width: 40%
    :alt: USB Cable for Touch Input
    :align: center
@@ -78,7 +78,7 @@ Physical Connection
 -------------------
 
 
-.. image:: images/ports.jpg
+.. image:: touchscreen/images/ports.jpg
    :width: 80%
    :alt: Connection Diagram showing cable connections
    :align: center
@@ -94,8 +94,8 @@ Follow these steps to physically connect the touchscreen display:
 #. **Connect the USB Cable for Touch Input**
 
    - Locate the USB input port on the touchscreen display.
-   - Connect the USB Type-A end to the touchscreen display
-   - Connect the USB Type-B end to an available USB port on your computer
+   - Connect the USB Type-B end to the USB input port on the touchscreen display
+   - Connect the USB Type-A end to an available USB port on your computer
 
 #. **Connect the Power Supply**
 

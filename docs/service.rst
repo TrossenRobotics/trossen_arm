@@ -4,6 +4,13 @@ Service and Maintenance
 
 This section provides information on how to service and maintain your Trossen Arm hardware.
 
+Additional Guides
+=================
+
+For all product and maintenance guides, see the `Trossen Arm guides`_.
+
+.. _Trossen Arm guides: https://drive.google.com/drive/folders/1m9u5zKqKZU7KRTSf5FuL-l54aKYpsh0m?usp=drive_link
+
 Cable Replacement Guides
 ========================
 

@@ -2,8 +2,12 @@
 Configuration
 =============
 
-This section walks you through the configurations that can be set on a Trossen AI arm.
+This section walks you through the configurations that can be set on a Trossen Arm.
 Properly configuring the arm for your application is crucial to ensure the arm operates as expected.
+
+.. contents::
+    :local:
+    :depth: 2
 
 What You Need
 =============
@@ -13,12 +17,8 @@ To get started, please make sure you have gone through the :doc:`software_setup`
 Overview
 ========
 
-Depending on
-
-- when the change takes effect
-- whether the changed configuration is reset to default at the next boot
-
-the configurations are divided into four categories as given in the following table.
+The configurations fall into four categories, based on two factors: when the change takes effect, and whether it resets to default at the next boot.
+The categories are summarized in the following table.
 
 .. list-table::
     :width: 100%
@@ -143,8 +143,8 @@ The default values are given in `default_configurations_wxai_v0.yaml`_.
 
 .. note:: The default value of the :ref:`getting_started/configuration:joint characteristics` is calibrated at manufacturing and different for each arm.
 
-How They Work?
-==============
+How Configurations Work
+=======================
 
 Here is a breakdown of how the configurations affect the behavior of the arm.
 
@@ -162,7 +162,7 @@ Choices: ``bool``
 Ethernet Configuration
 ----------------------
 
-At startup, the arm controller tries to connect to the network.
+At startup, the Arm Controller tries to connect to the network.
 The procedure is as follows.
 
 .. mermaid::
@@ -177,9 +177,9 @@ The procedure is as follows.
         E -->|no| D
 
 ip_method
-^^^^^^^^^
+~~~~~~~~~
 
-The IP method specifies whether the arm controller acquires its IP address from a DHCP server or uses a static IP address.
+The IP method specifies whether the Arm Controller acquires its IP address from a DHCP server or uses a static IP address.
 
 Choices: :enum:`trossen_arm::IPMethod`
 
@@ -189,7 +189,7 @@ Choices: :enum:`trossen_arm::IPMethod`
     It can be a router or a computer with a DHCP server running.
 
 manual_ip, dns, gateway, subnet
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the IP method is set to :enumerator:`trossen_arm::IPMethod::manual`, the manual IP address, DNS, gateway, and subnet are used.
 
@@ -201,7 +201,7 @@ Joint Characteristics
 The joint characteristics affect the behavior of each joint.
 
 effort_corrections
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 The :member:`trossen_arm::JointCharacteristic::effort_correction` maps a motor's effort unit to the standard unit, i.e., Nm and N.
 
@@ -220,7 +220,7 @@ Vice versa, the effort returned by the driver is given by the following expressi
 Range: :math:`[0.2, 5.0]`
 
 friction_transition_velocities, friction_constant_terms, friction_coulomb_coefs, and friction_viscous_coefs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We model joint friction as a function of velocity and effort of three components: Coulomb, viscous, and constant.
 
@@ -265,7 +265,7 @@ Ranges:
 -    others: :math:`\mathbb{R}`
 
 position_offset
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 The :member:`trossen_arm::JointCharacteristic::position_offset` offsets the joint position to account for homing error.
 It is added to the command sent to the motor and subtracted from the feedback received from the motor.
@@ -280,14 +280,14 @@ Range: :math:`\mathbb{R}`
 
 .. warning::
 
-    Since these configurations are arm specific, mixed usage of controller and arm with different serial numbers may cause deterioration in performance.
+    Since these configurations are arm specific, mixed usage of Arm Controller and arm with different serial numbers may cause deterioration in performance.
 
 End Effector
 ------------
 
-The :class:`trossen_arm::EndEffector` allow the usage of different end effectors.
+The :class:`trossen_arm::EndEffector` class lets you use different end effectors.
 It's important to match the end effector properties with the actual end effector attached to the arm.
-Otherwise, the controller won't be able to properly compensate for the end effector's weight and inertia.
+Otherwise, the Arm Controller won't be able to properly compensate for the end effector's weight and inertia.
 
 .. tip::
 
@@ -297,7 +297,7 @@ Otherwise, the controller won't be able to properly compensate for the end effec
 
     New in version :ref:`changelog:1.8.3`: the original rack-and-pinion end effector can be removed or replaced with a custom end effector.
 
-    On startup, the controller checks if the gripper motor exists.
+    On startup, the Arm Controller checks if the gripper motor exists.
     If the motor is not detected, it assumes that the gripper assembly has been removed.
     An example with nothing mounted at the flange is given by :member:`trossen_arm::StandardEndEffector::no_gripper`.
 
@@ -311,7 +311,7 @@ Otherwise, the controller won't be able to properly compensate for the end effec
     -   Input and output of the end effector
 
 Link Properties
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 The :class:`trossen_arm::Link` members of the end effector define the three links of an end effector.
 
@@ -333,7 +333,7 @@ Ranges:
 -   :member:`trossen_arm::Link::origin_rpy`: :math:`\mathbb{R}^3`
 
 Finger Offsets
-^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~
 
 The offsets of the left and right fingers define the home position specific to the fingers.
 
@@ -345,7 +345,7 @@ For a custom end effector, these offsets are ignored.
 Ranges: :math:`\mathbb{R}`
 
 pitch_circle_radius
-^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 
 The pitch circle radius defines the transmission ratio of the rack and pinion mechanism of the original end effector.
 
@@ -356,7 +356,7 @@ For a custom end effector, this value is ignored.
 Range: :math:`\mathbb{R}`
 
 t_flange_tool
-^^^^^^^^^^^^^
+~~~~~~~~~~~~~
 
 :member:`trossen_arm::EndEffector::t_flange_tool` defines the tool frame pose measured in the flange frame as shown in the image below.
 
@@ -413,13 +413,13 @@ The block diagram of the control loop of the motor is given below.
         N -->|beyond limit| P[error]
         O -->|beyond limit| P
 
-When the controller receives a command from the driver, it generates the command for a motor by clipping to the min and max limits.
+When the Arm Controller receives a command from the driver, it generates the command for a motor by clipping to the min and max limits.
 
 -   position = min(max(position, :member:`trossen_arm::JointLimit::position_min`), :member:`trossen_arm::JointLimit::position_max`)
 -   velocity = min(velocity, :member:`trossen_arm::JointLimit::velocity_max`)
 -   effort = min(effort, :member:`trossen_arm::JointLimit::effort_max`)
 
-When the controller receives a feedback from the motor, it triggers an error if anything is beyond the max and min limits padded by the tolerances.
+When the Arm Controller receives a feedback from the motor, it triggers an error if anything is beyond the max and min limits padded by the tolerances.
 
 -   position < :member:`trossen_arm::JointLimit::position_max` + :member:`trossen_arm::JointLimit::position_tolerance`
 -   position > :member:`trossen_arm::JointLimit::position_min` - :member:`trossen_arm::JointLimit::position_tolerance`

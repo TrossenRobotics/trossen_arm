@@ -2,7 +2,10 @@
 Software Setup
 ==============
 
-This section describes how to set up the software environment.
+This section walks you through preparing the host PC, the computer that runs your control software and communicates with the Arm Controller, by configuring its network and installing the Trossen Arm driver.
+
+.. contents::
+    :local:
 
 What You Need
 =============
@@ -108,20 +111,22 @@ To install and use the Python driver, follow these steps.
     Some of the popular package and environment management tools are listed below.
     Please setup one that suits your needs.
 
+    -   `uv <https://docs.astral.sh/uv/>`_
     -   `venv <https://docs.python.org/3/library/venv.html>`_
     -   `virtualenv <https://virtualenv.pypa.io/en/latest/installation.html>`_
     -   `conda <https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html>`_
 
 #.  Install the driver
 
-    Depending on the nature your application, you can install the driver in a virtual environment or the system environment.
-
-    -   Use virtual environment if the application is in pure Python
-    -   Use system environment if the application is for ROS
-
     .. code-block:: bash
 
         pip install trossen-arm
+
+    If you are using `uv <https://docs.astral.sh/uv/>`_, add it to your project instead:
+
+    .. code-block:: bash
+
+        uv add trossen-arm
 
 #.  Run a script
 
@@ -150,7 +155,7 @@ To install and use the C++ driver, follow these steps.
         cmake .. [-DCMAKE_INSTALL_PREFIX=/path/to/install]
         make install
 
-    If the ``CMAKE_INSTALL_PREFIX`` argument is specified, the driver will be installed in locally.
+    If the ``CMAKE_INSTALL_PREFIX`` argument is specified, the driver will be installed locally.
 
     -   static library and cmake configurations: ``/path/to/install/lib``
     -   header files: ``/path/to/install/include``.
@@ -222,7 +227,7 @@ As stated above, the Arm Controller uses the following factory network settings:
 -   Gateway: ``192.168.1.1``
 -   DNS: ``8.8.8.8``
 
-You may want to change the Arm Controller's IP address to fit your application, e.g., you have multiple arms or want to set the IP address to a static IP address in your local network.
+You may want to change the Arm Controller's IP address to fit your application, for example to support multiple arms or to assign a static IP on your local network.
 To change the IP address, follow the :ref:`getting_started/demo_scripts:`set_manual_ip`_` demo.
 
 .. tip::
@@ -251,3 +256,4 @@ What's Next
 ===========
 
 After setting up the software, let's :doc:`configure </getting_started/configuration>` the arm for your specific application.
+If your driver and Arm Controller firmware versions do not match, see :doc:`firmware_upgrade` first.

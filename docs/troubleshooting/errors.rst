@@ -19,7 +19,7 @@ There are two levels of detail available when an error occurs:
 
         [Motor Interface] Joint 3 position limit exceeded: expected in range [-3.054, 3.054], motor reported 3.210. Setting to idle.
 
-When a runtime error occurs, the Arm Controller sets all joints to idle as a safety measure, so the arm will go limp or brake-on depending on the fault.
+When a runtime error occurs, the Arm Controller sets all joints to idle as a safety measure.
 
 .. note::
 
@@ -75,7 +75,7 @@ Controller-to-Arm Communication and Motor Faults
 ------------------------------------------------
 
 The Arm Controller could not exchange messages with a joint motor over the CAN bus, or a motor reported a fault.
-These almost always point to the controller-to-arm cabling or to an individual motor.
+These almost always point to the controller-to-arm cabling, the cabling inside the arm, or an individual motor.
 
 The log names the specific motor, and the motors are 0-indexed (so ``motor 0`` is the first joint).
 Trace the cable running to that motor and reseat its connectors on both ends, then power-cycle the Arm Controller.
@@ -139,8 +139,8 @@ Driver and Firmware Protocol Errors
 -----------------------------------
 
 The Arm Controller received a command it does not recognize.
-This almost always means the driver and Arm Controller firmware versions are mismatched.
-Make sure they share the same minor version, see :doc:`/getting_started/firmware_upgrade`.
+This most often means the driver and Arm Controller firmware versions are mismatched, but it can also happen if another device on the network is sending unrecognized packets to the Arm Controller.
+Make sure the driver and firmware share the same minor version (see :doc:`/getting_started/firmware_upgrade`), and that no other device is sending traffic to it.
 
 .. list-table::
     :header-rows: 1

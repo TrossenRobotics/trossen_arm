@@ -4,8 +4,8 @@ Service and Maintenance
 
 This section provides information on how to service and maintain your Trossen Arm hardware.
 
-Additional Guides
-=================
+All Guides
+==========
 
 For all product and maintenance guides, see the `Trossen Arm guides`_.
 

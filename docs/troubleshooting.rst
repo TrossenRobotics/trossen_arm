@@ -60,7 +60,7 @@ The Arm Controller and joint LEDs are the fastest way to read the arm's state.
         -   Error during operation. The arm joints are brake-on and the gripper closes with a safe force; the joint motor LEDs stay green. See :doc:`troubleshooting/errors`.
     *   -   Joint motor
         -   Off
-        -   The arm is powered off.
+        -   The arm is not powered.
     *   -   Joint motor
         -   Red
         -   Motors are disabled. This is normal briefly during boot-up, before the Arm Controller enables them. If it persists, the motors never finished enabling.

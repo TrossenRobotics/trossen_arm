@@ -92,13 +92,12 @@ Check that the IP address in the driver's configuration matches the address the 
 
 .. tip::
 
-    Use the ``trossen-arm`` CLI to find Arm Controllers on your network:
+    Use the ``trossen-arm`` :doc:`/software_tools/cli` to find Arm Controllers on your network:
 
     .. code-block:: bash
 
         trossen-arm discover
 
-    See :doc:`/software_tools/cli` for details.
     As a fallback, you can scan a subnet with nmap, for example if the Arm Controller's IP address is in the ``192.168.1.X`` subnet:
 
     .. code-block:: bash
@@ -111,16 +110,16 @@ Misconfigured Network Settings
 The driver and Arm Controller must be on the same network to communicate with each other.
 
 -   If there are multiple network interfaces such as Ethernet and Wi-Fi, check that the one connected to the Arm Controller is configured with an IP address in the same subnet as the Arm Controller's IP address.
--   If the driver is running on a virtual machine or a docker container, check that the traffic is directly routed to the subnet that the Arm Controller is on, e.g., `host network driver in Docker`_ and `bridged network driver in VirtualBox`_.
+    Additionally, check that multiple interfaces are not configured to use the same subnet, which can cause routing issues.
+-   If the driver is running on a virtual machine or a docker container, check that the traffic is directly routed to the subnet that the Arm Controller is on, e.g., `host network driver in Docker`_.
 -   If there is a firewall enabled on the host machine, check that TCP and UDP traffic are allowed.
 
 .. tip::
 
-    When running the driver inside Docker, start the container with ``--network=host``.
+    When running the driver inside Docker, start the container with ``--network=host`` if using the Docker CLI, or ``network_mode: "host"`` if using Docker Compose.
     The default bridge network does not forward the controller's UDP state stream, so the driver connects over TCP but then fails to receive state.
 
 .. _`host network driver in Docker`: https://docs.docker.com/network/host/
-.. _`bridged network driver in VirtualBox`: https://www.virtualbox.org/manual/ch06.html#network_bridged
 
 Incompatible Driver Version
 ---------------------------

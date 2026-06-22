@@ -119,7 +119,7 @@ The driver and Arm Controller must be on the same network to communicate with ea
     When running the driver inside Docker, start the container with ``--network=host`` if using the Docker CLI, or ``network_mode: "host"`` if using Docker Compose.
     The default bridge network does not forward the controller's UDP state stream, so the driver connects over TCP but then fails to receive state.
 
-.. _`host network driver in Docker`: https://docs.docker.com/network/host/
+.. _`host network driver in Docker`: https://docs.docker.com/engine/network/drivers/host/
 
 Incompatible Driver Version
 ---------------------------

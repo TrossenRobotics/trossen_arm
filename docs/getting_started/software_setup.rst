@@ -113,7 +113,7 @@ To install and use the Python driver, follow these steps.
 
     -   `uv <https://docs.astral.sh/uv/>`_
     -   `venv <https://docs.python.org/3/library/venv.html>`_
-    -   `virtualenv <https://virtualenv.pypa.io/en/latest/installation.html>`_
+    -   `virtualenv <https://virtualenv.pypa.io/en/latest/>`_
     -   `conda <https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html>`_
 
 #.  Install the driver

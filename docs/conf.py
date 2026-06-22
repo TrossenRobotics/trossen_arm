@@ -37,6 +37,15 @@ redirects = {
     "getting_started/touchscreen": "../tutorials/touchscreen.html",
 }
 
+# URLs that reject automated linkcheck requests (403/400/auth) but are valid for users.
+linkcheck_ignore = [
+    r"https://claude\.ai",
+    r"https://chatgpt\.com",
+    r"https://help\.openai\.com/.*",
+    r"https://developers\.meta\.com/.*",
+    r"https://huggingface\.co/settings/tokens",
+]
+
 # Enable AutoSectionLabel
 autosectionlabel_prefix_document = True
 

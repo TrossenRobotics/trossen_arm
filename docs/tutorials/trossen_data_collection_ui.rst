@@ -24,7 +24,7 @@ Before installing the application, complete the following setup steps:
 #. Install Miniconda:
 
    Download and install Miniconda, a minimal installer for Conda. It simplifies package management and deployment of Python environments.
-   `Download Miniconda <https://www.anaconda.com/docs/getting-started/miniconda/install#basic-install-instructionsl>`_
+   `Download Miniconda <https://www.anaconda.com/docs/getting-started/miniconda/install>`_
 
 #. Create a Virtual Environment:
 

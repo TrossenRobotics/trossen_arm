@@ -24,7 +24,7 @@ Touchscreen Display
 
 **Specifications:**
 
-- **Model**: `JUNEBOX 13.3" Portable Touch Screen Monitor <https://a.co/d/0eyPT16z>`_
+- **Model**: `JUNEBOX 13.3" Portable Touch Screen Monitor <https://www.amazon.com/dp/B0D8WCKWGP>`_
 - **Size**: 13.3"
 - **Resolution**: 1080 FHD
 - **Touch Type**: Capacitive Multi-Touch

@@ -12,7 +12,7 @@ Overview
 The Trossen Docs MCP server gives AI assistants direct access to the Trossen Arm documentation and API reference.
 Instead of searching the web or copy-pasting docs, ask your assistant questions and it retrieves the answers from the official documentation automatically.
 
-It works with any assistant that supports the `Model Context Protocol <https://modelcontextprotocol.io/>`_, including `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_, `GitHub Copilot in VS Code <https://code.visualstudio.com/docs/copilot/customization/mcp-servers>`_, `Claude.ai <https://claude.ai>`_, and `ChatGPT <https://chatgpt.com>`_.
+It works with any assistant that supports the `Model Context Protocol <https://modelcontextprotocol.io/>`_, including `Claude Code <https://code.claude.com/docs>`_, `GitHub Copilot in VS Code <https://code.visualstudio.com/docs/agent-customization/mcp-servers>`_, `Claude.ai <https://claude.ai>`_, and `ChatGPT <https://chatgpt.com>`_.
 
 The server provides the following tools:
 
@@ -116,11 +116,11 @@ The assistant launches the container on demand and talks to it over stdio.
 Prerequisites
 -------------
 
-- `Docker <https://docs.docker.com/get-docker/>`_ installed and running
+- `Docker <https://docs.docker.com/get-started/get-docker/>`_ installed and running
 - An AI coding assistant with MCP support installed, such as
 
-  - `Claude Code <https://docs.anthropic.com/en/docs/claude-code>`_
-  - `GitHub Copilot in VS Code <https://code.visualstudio.com/docs/copilot/customization/mcp-servers>`_
+  - `Claude Code <https://code.claude.com/docs>`_
+  - `GitHub Copilot in VS Code <https://code.visualstudio.com/docs/agent-customization/mcp-servers>`_
 
 Get the image
 -------------

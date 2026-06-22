@@ -37,7 +37,7 @@ Installation
 Prerequisites
 -------------
 
-Install Isaac Lab 2.3.0 following the `official installation guide <https://isaac-sim.github.io/IsaacLab/release/2.3.0/source/setup/installation/index.html>`_.
+Install Isaac Lab 2.3.0 following the `official installation guide <https://isaac-sim.github.io/IsaacLab/v2.3.0/source/setup/installation/index.html>`_.
 This will also install Isaac Sim 5.1.0.
 
 .. note::
@@ -396,6 +396,6 @@ Related Links
 * `Trossen Robotics <https://www.trossenrobotics.com/>`_
 * `Trossen Arm Documentation <https://docs.trossenrobotics.com/trossen_arm/>`_
 * `Trossen Arm Description (URDF) <https://github.com/TrossenRobotics/trossen_arm_description>`_
-* `NVIDIA Isaac Sim <https://developer.nvidia.com/isaac-sim>`_
+* `NVIDIA Isaac Sim <https://developer.nvidia.com/isaac/sim>`_
 * `NVIDIA Isaac Lab <https://isaac-sim.github.io/IsaacLab>`_
 * `RSL-RL <https://github.com/leggedrobotics/rsl_rl>`_

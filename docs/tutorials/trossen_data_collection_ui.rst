@@ -24,7 +24,7 @@ Before installing the application, complete the following setup steps:
 #. Install Miniconda:
 
    Download and install Miniconda, a minimal installer for Conda. It simplifies package management and deployment of Python environments.
-   `Download Miniconda <https://www.anaconda.com/docs/getting-started/miniconda/install#basic-install-instructionsl>`_
+   `Download Miniconda <https://www.anaconda.com/docs/getting-started/miniconda/install>`_
 
 #. Create a Virtual Environment:
 
@@ -100,7 +100,7 @@ Once the desktop icon is created, right-click on it and select **Allow Launching
 
 .. note::
 
-    **Touchscreen Interface Setup**: If you plan to use a touchscreen display with the Trossen AI Data Collection UI, refer to the :doc:`../getting_started/touchscreen` guide for complete hardware setup, cable connections, and touchscreen mapping configuration.
+    **Touchscreen Interface Setup**: If you plan to use a touchscreen display with the Trossen AI Data Collection UI, refer to the :doc:`touchscreen` guide for complete hardware setup, cable connections, and touchscreen mapping configuration.
 
 Updating the Application
 ========================
@@ -675,7 +675,7 @@ The Trossen AI Data Collection UI offers a variety of features designed to simpl
 
 #. Configuration Management
 
-    - Edit Robot Configuration: The robot's YAML settings—like camera serial numbers and arm IP addresses—can be easily updated through the GUI, giving users detailed control over the robot's configuration.
+    - Edit Robot Configuration: The robot's YAML settings (like camera serial numbers and arm IP addresses) can be easily updated through the GUI, giving users detailed control over the robot's configuration.
     - Edit Task Configuration: Task-specific parameters can be adjusted via a YAML editor to tailor the task according to experiment requirements.
 
 #. Quit Button

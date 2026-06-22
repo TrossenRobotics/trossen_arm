@@ -17,7 +17,7 @@ On your computer:
 #. Install Miniconda:
 
     We use Miniconda to manage Python environments and dependencies.
-    To install Miniconda, download the installer for your Linux operating system from the `Miniconda Installation Guide <https://www.anaconda.com/docs/getting-started/miniconda/install#quickstart-install-instructions>`_.
+    To install Miniconda, download the installer for your Linux operating system from the `Miniconda Installation Guide <https://www.anaconda.com/docs/getting-started/miniconda/install>`_.
 
 #. Create and activate a fresh Conda environment for LeRobot:
 
@@ -80,8 +80,8 @@ On your computer:
         - **Linux only**: Manually install FFmpeg build dependencies and compile FFmpeg from source with `libsvtav1` support:
             Refer to the official guides below:
 
-            - `FFmpeg build dependencies <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#GettheDependencies>`_
-            - `Compile FFmpeg with libsvtav1 <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#libsvtav1>`_
+            - `FFmpeg build dependencies <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu>`_
+            - `Compile FFmpeg with libsvtav1 <https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu>`_
 
         After installation, confirm you're using the correct FFmpeg binary with:
 

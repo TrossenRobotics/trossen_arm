@@ -7,7 +7,7 @@ This section describes the ``trossen-arm`` CLI tool, which provides a simple way
 What You Need
 =============
 
-To get started, please make sure you have gone through the :doc:`software_setup` and installed the Python driver.
+To get started, please make sure you have gone through the :doc:`/getting_started/software_setup` and installed the Python driver.
 
 Installation
 ============
@@ -37,6 +37,16 @@ Run ``trossen-arm --help`` to see all available commands:
 
     trossen-arm --help
 
+.. tip::
+
+    To run the CLI without installing it, use `uvx <https://docs.astral.sh/uv/>`_, which fetches the package into a temporary environment.
+    Pass the ``[cli]`` extra with ``--from``, then append the command, for example:
+
+    .. code-block:: bash
+
+        uvx --from "trossen-arm[cli]" trossen-arm discover
+        uvx --from "trossen-arm[cli]" trossen-arm identify --ip 192.168.1.2
+
 Run ``trossen-arm usage`` for quick usage examples:
 
 .. code-block:: bash
@@ -61,7 +71,7 @@ Commands
 discover
 --------
 
-Scans a subnet for connected Trossen Arm controllers and prints a table of results.
+Scans a subnet for connected Arm Controllers and prints a table of results.
 
 .. code-block:: bash
 
@@ -110,7 +120,7 @@ identify
 --------
 
 Connects to an arm at a given IP address and identifies it by opening and closing its gripper.
-The controller box LED will also change color during identification.
+The Arm Controller box LED will also change color during identification.
 This is useful for confirming which physical arm corresponds to a given IP address.
 
 .. code-block:: bash
@@ -128,7 +138,7 @@ This is useful for confirming which physical arm corresponds to a given IP addre
       - Description
     * - ``--ip``
       - *(required)*
-      - IP address of the arm controller
+      - IP address of the Arm Controller
     * - ``--model``
       - ``wxai_v0``
       - Arm model

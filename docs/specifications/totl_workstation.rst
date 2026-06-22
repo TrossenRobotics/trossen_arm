@@ -6,7 +6,7 @@ For applications that demand significant onboard compute, such as training and r
 
 .. note::
 
-  For login credentials, pre-installed software, and redeployment instructions, see :doc:`/getting_started/totl`.
+  For login credentials, pre-installed software, and redeployment instructions, see :doc:`/tutorials/totl`.
 
 Specifications
 ==============

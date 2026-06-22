@@ -22,7 +22,7 @@ Trossen Arm Driver
 - Added :func:`trossen_arm::TrossenArmDriver::discover`, a static method that scans a subnet for reachable arm controllers and returns a :class:`trossen_arm::DiscoverResult` for each one with its model, firmware version, IP, and error state.
   Demonstrated in the :ref:`getting_started/demo_scripts:`arm_discovery`_` demo.
 - Promoted :enum:`trossen_arm::ErrorState` and the :var:`trossen_arm::ERROR_INFORMATION`, :var:`trossen_arm::MODEL_NAME`, and :var:`trossen_arm::MODE_NAME` maps from private to public so user code can render error and identifier strings.
-- Added a ``trossen-arm`` :doc:`command-line tool <getting_started/cli>` with ``discover``, ``identify``, and ``usage`` subcommands.
+- Added a ``trossen-arm`` :doc:`command-line tool <software_tools/cli>` with ``discover``, ``identify``, and ``usage`` subcommands.
   Install it alongside the Python package via ``pip install "trossen_arm[cli]"``.
 - :func:`trossen_arm::TrossenArmDriver::configure` now respects small ``timeout`` values without depending on operating system's TCP connection timeout.
 - Added :func:`trossen_arm::TrossenArmDriver::clear_error`, a convenience method that internally calls :func:`trossen_arm::TrossenArmDriver::cleanup` with ``reboot_controller = false`` and then :func:`trossen_arm::TrossenArmDriver::configure` with ``clear_error = true``.

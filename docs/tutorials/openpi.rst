@@ -80,7 +80,7 @@ This tutorial walks you through:
     This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
 
     The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
-    `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
+    `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen>`_
 
 Collect Episodes using LeRobot
 ==============================
@@ -102,7 +102,7 @@ We collect episodes using ``Interbotix/lerobot`` (LeRobot v2.1). For more inform
 
 Here is a recorded dataset using the above instructions:
 
-- `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/bimanual-widowxai-handover-cube>`_
+- `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/trossen_ai_stationary_handover_cube>`_
 
 You can also visualize the dataset using the following link. Just paste the dataset name in the input box.
 
@@ -350,8 +350,8 @@ Checkpoints are stored in the ``checkpoints`` folder at the root of your project
 
 To use a pretrained policy, download and extract the following checkpoint into your ``checkpoints`` directory:
 
-- `π0 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0_trossen_transfer_block>`_
-- `π0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
+- `π0 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0-block-transfer-trossen-ai-openpi>`_
+- `π0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05-block-transfer-trossen-ai-openpi>`_
 
 Running Inference with Your Trained Policy
 ==========================================

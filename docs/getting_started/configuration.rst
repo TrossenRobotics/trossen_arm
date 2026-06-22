@@ -159,6 +159,10 @@ If the ``factory_reset_flag`` is set to true, all configurations are reset to th
 
 Choices: ``bool``
 
+.. tip::
+
+    See the :ref:`getting_started/demo_scripts:`set_factory_reset_flag`_` demo for an example.
+
 Ethernet Configuration
 ----------------------
 
@@ -195,10 +199,18 @@ If the IP method is set to :enumerator:`trossen_arm::IPMethod::manual`, the manu
 
 Ranges: valid IPv4 addresses as strings
 
+.. tip::
+
+    See the :ref:`getting_started/demo_scripts:`set_ip_method`_` and :ref:`getting_started/demo_scripts:`set_manual_ip`_` demos for configuring the network.
+
 Joint Characteristics
 ---------------------
 
 The joint characteristics affect the behavior of each joint.
+
+.. tip::
+
+    See the :ref:`getting_started/demo_scripts:`set_joint_characteristics`_` and :ref:`getting_started/demo_scripts:`joint_characteristics_finetune`_` demos for setting and tuning these.
 
 effort_corrections
 ~~~~~~~~~~~~~~~~~~
@@ -377,6 +389,10 @@ The joint modes define the mode of operation of each joint.
 
 Choices: :enum:`trossen_arm::Mode`
 
+.. tip::
+
+    See the :ref:`getting_started/demo_scripts:`set_mode`_` demo for setting joint modes.
+
 Joint Limits
 ------------
 
@@ -439,6 +455,10 @@ For reference, we can choose the limits as follows.
     -   the tolerances to be some positive values to avoid false positives
 
 Range: :math:`\mathbb{R}`
+
+.. tip::
+
+    See the :ref:`getting_started/demo_scripts:`set_joint_limits`_` demo for an example.
 
 Motor Parameters
 ----------------

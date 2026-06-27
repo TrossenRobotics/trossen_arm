@@ -1,4 +1,22 @@
-{% extends "!layout.html" %}
+{%- extends "!layout.html" %}
+
+{# 1. Override the title block to dynamically append the active version/branch name #}
+{%- block htmltitle %}
+  {% if current_version %}
+    <title>{{ title|striptags|e }} ({{ current_version.name }}) — {{ project }}</title>
+  {% else %}
+    <title>{{ title|striptags|e }} — {{ project }}</title>
+  {% endif %}
+{%- endblock %}
+
+{# 2. Override linktags to force canonical link of historical versions to the maintained v1.9 version #}
+{%- block linktags %}
+  {{ super() }}
+  {% if current_version %}
+    <link rel="canonical" href="https://docs.trossenrobotics.com/trossen_arm/v1.9/{{ pagename }}.html" />
+  {% endif %}
+{%- endblock %}
+
 {%- block sidebartitle %}
   <div class="sidebartitle-docs-home">
     <a href="https://docs.trossenrobotics.com/" target="_blank" class="icon icon-home">

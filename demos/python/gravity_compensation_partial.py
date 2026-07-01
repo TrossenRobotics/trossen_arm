@@ -41,9 +41,10 @@
 # 6. The user can stop the loop with Ctrl+C
 
 import numpy as np
+
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Configure what portion of gravity to compensate
     # 0.0 means no compensation, 1.0 means full compensation
     GRAVITY_COMPENSATION_FACTOR = 0.5
@@ -56,7 +57,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Start gravity compensation
@@ -66,9 +67,10 @@ if __name__=='__main__':
         while True:
             robot_output = driver.get_robot_output()
             driver.set_all_efforts(
-                np.array(robot_output.joint.all.compensation_efforts) * GRAVITY_COMPENSATION_FACTOR,
+                np.array(robot_output.joint.all.compensation_efforts)
+                * GRAVITY_COMPENSATION_FACTOR,
                 goal_time=0.0,
-                blocking=False
+                blocking=False,
             )
     except KeyboardInterrupt:
         print("Gravity compensation ended.")

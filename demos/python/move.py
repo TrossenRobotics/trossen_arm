@@ -51,7 +51,7 @@ from scipy.interpolate import PchipInterpolator
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     print("Initializing the drivers...")
     driver = trossen_arm.TrossenArmDriver()
 
@@ -59,8 +59,8 @@ if __name__=='__main__':
     driver.configure(
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
-        '192.168.1.2',
-        False
+        "192.168.1.2",
+        False,
     )
 
     print("Moving to home positions...")
@@ -68,10 +68,19 @@ if __name__=='__main__':
 
     sleep_positions = np.array(driver.get_all_positions())
     home_positions = np.zeros(driver.get_num_joints())
-    home_positions[1] = np.pi/2
-    home_positions[2] = np.pi/2
+    home_positions[1] = np.pi / 2
+    home_positions[2] = np.pi / 2
 
-    waypoints = np.array([sleep_positions, sleep_positions, home_positions, home_positions, sleep_positions, sleep_positions])
+    waypoints = np.array(
+        [
+            sleep_positions,
+            sleep_positions,
+            home_positions,
+            home_positions,
+            sleep_positions,
+            sleep_positions,
+        ]
+    )
     timepoints = np.array([0, 1, 3, 4, 6, 7])
 
     interpolator_position = PchipInterpolator(timepoints, waypoints, axis=0)
@@ -79,11 +88,11 @@ if __name__=='__main__':
     interpolator_feedforward_acceleration = interpolator_feedforward_velocity.derivative()
 
     log_dict = {
-        'time': [],
-        'positions': [],
-        'velocities': [],
-        'efforts': [],
-        'external_efforts': [],
+        "time": [],
+        "positions": [],
+        "velocities": [],
+        "efforts": [],
+        "external_efforts": [],
     }
 
     start_time = time.time()
@@ -98,29 +107,25 @@ if __name__=='__main__':
         feedforward_acceleration = interpolator_feedforward_acceleration(current_time)
 
         driver.set_all_positions(
-            positions,
-            0.0,
-            False,
-            feedforward_velocity,
-            feedforward_acceleration
+            positions, 0.0, False, feedforward_velocity, feedforward_acceleration
         )
 
-        log_dict['time'].append(current_time)
-        log_dict['positions'].append(driver.get_all_positions())
-        log_dict['velocities'].append(driver.get_all_velocities())
-        log_dict['efforts'].append(driver.get_all_efforts())
-        log_dict['external_efforts'].append(driver.get_all_external_efforts())
+        log_dict["time"].append(current_time)
+        log_dict["positions"].append(driver.get_all_positions())
+        log_dict["velocities"].append(driver.get_all_velocities())
+        log_dict["efforts"].append(driver.get_all_efforts())
+        log_dict["external_efforts"].append(driver.get_all_external_efforts())
 
     plt.subplot(2, 2, 1)
-    plt.plot(log_dict['time'], log_dict['positions'])
-    plt.title('Positions')
+    plt.plot(log_dict["time"], log_dict["positions"])
+    plt.title("Positions")
     plt.subplot(2, 2, 2)
-    plt.plot(log_dict['time'], log_dict['velocities'])
-    plt.title('Velocities')
+    plt.plot(log_dict["time"], log_dict["velocities"])
+    plt.title("Velocities")
     plt.subplot(2, 2, 3)
-    plt.plot(log_dict['time'], log_dict['efforts'])
-    plt.title('Efforts')
+    plt.plot(log_dict["time"], log_dict["efforts"])
+    plt.title("Efforts")
     plt.subplot(2, 2, 4)
-    plt.plot(log_dict['time'], log_dict['external_efforts'])
-    plt.title('External Efforts')
-    plt.savefig('move.png')
+    plt.plot(log_dict["time"], log_dict["external_efforts"])
+    plt.title("External Efforts")
+    plt.savefig("move.png")

@@ -41,7 +41,7 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
@@ -67,101 +67,59 @@ int main(int argc, char** argv)
 
   // Move the end effector up by 0.1m
   cartesian_positions[2] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector up by 0.1m
   cartesian_positions[2] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector left by 0.1m
   cartesian_positions[1] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector forward by 0.1m
   cartesian_positions[0] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Rotate the end effector about the z-axis by 0.5 rad
   cartesian_positions[5] += 0.5;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Rotate the end effector about the y-axis by 0.5 rad
   cartesian_positions[4] += 0.5;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Rotate the end effector about the x-axis by 0.5 rad
   cartesian_positions[3] += 0.5;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Rotate the end effector about the z-axis by -0.5 rad
   cartesian_positions[5] -= 0.5;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Rotate the end effector about the y-axis by -0.5 rad
   cartesian_positions[4] -= 0.5;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Rotate the end effector about the x-axis by -0.5 rad
   cartesian_positions[3] -= 0.5;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector down by 0.1m
   cartesian_positions[2] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector right by 0.1m
   cartesian_positions[1] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector back by 0.1m
   cartesian_positions[0] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector down by 0.1m
   cartesian_positions[2] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   return 0;
 }

@@ -54,30 +54,14 @@ def print_configurations(driver: trossen_arm.TrossenArmDriver):
     print("EEPROM Joint characteristics:")
     for i, joint_characteristic in enumerate(joint_characteristics):
         print(f"  Joint {i}:")
+        print("    Effort correction:", joint_characteristic.effort_correction)
+        print("    Friction constant term:", joint_characteristic.friction_constant_term)
         print(
-            "    Effort correction:",
-            joint_characteristic.effort_correction
+            "    Friction transition velocity:", joint_characteristic.friction_transition_velocity
         )
-        print(
-            "    Friction constant term:",
-            joint_characteristic.friction_constant_term
-        )
-        print(
-            "    Friction transition velocity:",
-            joint_characteristic.friction_transition_velocity
-        )
-        print(
-            "    Friction coulomb coefficient:",
-            joint_characteristic.friction_coulomb_coef
-        )
-        print(
-            "    Friction viscous coefficient:",
-            joint_characteristic.friction_viscous_coef
-        )
-        print(
-            "    Position offset:",
-            joint_characteristic.position_offset
-        )
+        print("    Friction coulomb coefficient:", joint_characteristic.friction_coulomb_coef)
+        print("    Friction viscous coefficient:", joint_characteristic.friction_viscous_coef)
+        print("    Position offset:", joint_characteristic.position_offset)
     print("Modes:", [mode.value for mode in driver.get_modes()])
 
     end_effector = driver.get_end_effector()
@@ -131,11 +115,29 @@ def print_configurations(driver: trossen_arm.TrossenArmDriver):
                 f"kd: {param.velocity.kd}, imax: {param.velocity.imax}"
             )
 
+    links = driver.get_links()
+    print("Link properties:")
+    for i, link in enumerate(links):
+        print(f"  Link {i}:")
+        print("    mass:", link.mass)
+        print("    inertia:", list(link.inertia))
+        print("    origin xyz:", list(link.origin_xyz))
+        print("    origin rpy:", list(link.origin_rpy))
+
+    joints = driver.get_joints()
+    print("Joint properties:")
+    for i, joint in enumerate(joints):
+        print(f"  Joint {i}:")
+        print("    axis:", list(joint.axis))
+        print("    origin xyz:", list(joint.origin_xyz))
+        print("    origin rpy:", list(joint.origin_rpy))
+
     algorithm_parameter = driver.get_algorithm_parameter()
     print("Algorithm parameter:")
     print("  singularity threshold:", algorithm_parameter.singularity_threshold)
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -144,7 +146,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Print the configurations

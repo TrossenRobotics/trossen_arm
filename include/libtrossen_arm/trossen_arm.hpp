@@ -129,7 +129,8 @@ public:
     double goal_time = 2.0,
     bool blocking = true,
     const std::optional<std::vector<double>> & goal_feedforward_velocities = std::nullopt,
-    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt
+  );
 
   /**
    * @brief Set the positions of the arm joints
@@ -158,7 +159,8 @@ public:
     double goal_time = 2.0,
     bool blocking = true,
     const std::optional<std::vector<double>> & goal_feedforward_velocities = std::nullopt,
-    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt
+  );
 
   /**
    * @brief Set the position of the gripper
@@ -185,7 +187,8 @@ public:
     double goal_time = 2.0,
     bool blocking = true,
     std::optional<double> goal_feedforward_velocity = std::nullopt,
-    std::optional<double> goal_feedforward_acceleration = std::nullopt);
+    std::optional<double> goal_feedforward_acceleration = std::nullopt
+  );
 
   /**
    * @brief Set the position of a joint
@@ -289,7 +292,8 @@ public:
     const std::vector<double> & goal_velocities,
     double goal_time = 2.0,
     bool blocking = true,
-    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt
+  );
 
   /**
    * @brief Set the velocities of the arm joints
@@ -316,7 +320,8 @@ public:
     const std::vector<double> & goal_velocities,
     double goal_time = 2.0,
     bool blocking = true,
-    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt);
+    const std::optional<std::vector<double>> & goal_feedforward_accelerations = std::nullopt
+  );
 
   /**
    * @brief Set the velocity of the gripper
@@ -590,11 +595,7 @@ public:
    *
    * - else, no interpolation is used and the goal values are applied immediately
    */
-  void set_gripper_effort(
-    double goal_effort,
-    double goal_time = 2.0,
-    bool blocking = true
-  );
+  void set_gripper_effort(double goal_effort, double goal_time = 2.0, bool blocking = true);
 
   /**
    * @brief Set the effort of a joint
@@ -842,6 +843,22 @@ public:
    * @param motor_parameters Motor parameters of all modes of all joints
    */
   void set_motor_parameters(const std::vector<std::map<Mode, MotorParameter>> & motor_parameters);
+
+  /**
+   * @brief Set the link inertial properties
+   *
+   * @param links Link inertial properties of the base link, every arm link, the palm,
+   * and both finger links (size = number of joints + 2)
+   */
+  void set_links(const std::vector<Link> & links);
+
+  /**
+   * @brief Set the joint kinematic properties
+   *
+   * @param joints Joint kinematic properties of every arm joint and both finger joints
+   * (size = number of joints + 1)
+   */
+  void set_joints(const std::vector<Joint> & joints);
 
   /**
    * @brief Set the algorithm parameter
@@ -1286,6 +1303,22 @@ public:
   std::vector<std::map<Mode, MotorParameter>> get_motor_parameters();
 
   /**
+   * @brief Get the link inertial properties
+   *
+   * @return Link inertial properties of the base link, every arm link, the palm, and both finger
+   * links (size = number of joints + 2)
+   */
+  std::vector<Link> get_links();
+
+  /**
+   * @brief Get the joint kinematic properties
+   *
+   * @return Joint kinematic properties of every arm joint and both finger joints
+   * (size = number of joints + 1)
+   */
+  std::vector<Joint> get_joints();
+
+  /**
    * @brief Get the algorithm parameter
    *
    * @return Parameter used for robotic algorithms
@@ -1392,7 +1425,9 @@ private:
     /**
      * @brief Default constructor
      */
-    LinkRaw() : inertia{}, origin_xyz{}, origin_rpy{} {}
+    LinkRaw() : inertia{}, origin_xyz{}, origin_rpy{}
+    {
+    }
 
     /**
      * @brief Convert Link to LinkRaw
@@ -1432,6 +1467,35 @@ private:
      * @return The converted EndEffector
      */
     EndEffector from_raw() const;
+  };
+
+  // Raw counterpart of Joint
+  struct JointRaw
+  {
+    float axis[6];
+    float origin_xyz[3];
+    float origin_rpy[3];
+
+    /**
+     * @brief Default constructor
+     */
+    JointRaw() : axis{}, origin_xyz{}, origin_rpy{}
+    {
+    }
+
+    /**
+     * @brief Convert Joint to JointRaw
+     *
+     * @param joint The Joint to convert
+     */
+    void to_raw(const Joint & joint);
+
+    /**
+     * @brief Convert JointRaw to Joint
+     *
+     * @return The converted Joint
+     */
+    Joint from_raw() const;
   };
 
   // Raw counterpart of JointLimit
@@ -1530,9 +1594,11 @@ private:
     /// @brief The mode of the joint input
     /// @note If this mode is different from the configured mode, the robot will enter error state
     Mode mode{Mode::idle};
-    union Command {
+    union Command
+    {
       /// @brief Joint input corresponding to the position mode
-      struct Position {
+      struct Position
+      {
         /// @brief Position in rad for arm joints or m for the gripper joint
         float position{0.0f};
         /// @brief Feedforward velocity in rad/s for arm joints or m/s for the gripper joint
@@ -1541,19 +1607,22 @@ private:
         float feedforward_acceleration{0.0f};
       } position{};
       /// @brief Joint input corresponding to the velocity mode
-      struct Velocity {
+      struct Velocity
+      {
         /// @brief Velocity in rad/s for arm joints or m/s for the gripper joint
         float velocity{0.0f};
         /// @brief Feedforward acceleration in rad/s^2 for arm joints or m/s^2 for the gripper joint
         float feedforward_acceleration{0.0f};
       } velocity;
       /// @brief Joint input corresponding to the external_effort mode
-      struct ExternalEffort {
+      struct ExternalEffort
+      {
         /// @brief external effort in Nm for arm joints or N for the gripper joint
         float external_effort{0.0f};
       } external_effort;
       /// @brief Joint input corresponding to the effort mode
-      struct Effort {
+      struct Effort
+      {
         /// @brief Effort in Nm for arm joints or N for the gripper joint
         float effort{0.0f};
       } effort;
@@ -1678,8 +1747,7 @@ private:
   struct RobotCommandIndicator
   {
     /** @brief Commands transmitted over UDP */
-    enum class UDP : uint8_t
-    {
+    enum class UDP : uint8_t {
       /** @brief Set robot input command */
       set_robot_input,
       /** @brief Get robot output command */
@@ -1687,8 +1755,7 @@ private:
     };
 
     /** @brief Commands transmitted over TCP */
-    enum class TCP : uint8_t
-    {
+    enum class TCP : uint8_t {
       /** @brief Handshake command */
       handshake,
       /** @brief Set home command */
@@ -1721,6 +1788,8 @@ private:
     end_effector,
     joint_limits,
     motor_parameters,
+    links,
+    joints,
     // Local configurations
     algorithm_parameter,
   };
@@ -1898,10 +1967,7 @@ private:
    * @param buffer The buffer containing the error state
    * @param clear_error Whether to clear the error state without throwing an exception
    */
-  void check_error_state(
-    const std::vector<uint8_t> & buffer,
-    bool clear_error
-  );
+  void check_error_state(const std::vector<uint8_t> & buffer, bool clear_error);
 
   /**
    * @brief Reset the error state of the robot
@@ -1926,8 +1992,9 @@ private:
     EndEffector,
     std::vector<JointLimit>,
     std::vector<std::map<Mode, MotorParameter>>,
-    AlgorithmParameter
-  >;
+    std::vector<Link>,
+    std::vector<Joint>,
+    AlgorithmParameter>;
 
   /**
    * @brief Set a configuration

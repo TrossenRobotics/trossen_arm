@@ -45,7 +45,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
 
@@ -59,11 +60,7 @@ int main() {
 
   // Start gravity compensation
   driver.set_all_modes(trossen_arm::Mode::external_effort);
-  driver.set_all_external_efforts(
-    {0, 0, 0, 0, 0, 0, 0},
-    0.0f,
-    false
-  );
+  driver.set_all_external_efforts({0, 0, 0, 0, 0, 0, 0}, 0.0f, false);
 
   // Wait until the user presses enter
   std::cout << "Press Enter to end gravity compensation..." << std::endl;

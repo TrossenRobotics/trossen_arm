@@ -43,14 +43,16 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-void print_motor_parameters(const std::vector<std::map<trossen_arm::Mode, trossen_arm::MotorParameter>>& motor_parameters)
+void print_motor_parameters(
+  const std::vector<std::map<trossen_arm::Mode, trossen_arm::MotorParameter>> & motor_parameters
+)
 {
   std::cout << "Motor parameters:" << std::endl;
   for (size_t i = 0; i < motor_parameters.size(); ++i) {
-    const std::map<trossen_arm::Mode, trossen_arm::MotorParameter>& motor_parameter =
+    const std::map<trossen_arm::Mode, trossen_arm::MotorParameter> & motor_parameter =
       motor_parameters.at(i);
     std::cout << "  Joint " << i << ":" << std::endl;
-    for (const auto& [mode, parameter] : motor_parameter) {
+    for (const auto & [mode, parameter] : motor_parameter) {
       std::cout << "    Mode " << static_cast<int>(mode) << ":" << std::endl;
       std::cout << "      Position loop:";
       std::cout << " kp: " << parameter.position.kp;

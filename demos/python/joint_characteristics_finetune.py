@@ -46,7 +46,7 @@
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -55,7 +55,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Change this to the 0-based joint index you want to finetune
@@ -64,11 +64,7 @@ if __name__=='__main__':
     modes = [trossen_arm.Mode.idle] * driver.get_num_joints()
     modes[INDEX] = trossen_arm.Mode.external_effort
     driver.set_joint_modes(modes)
-    driver.set_joint_external_effort(
-        INDEX,
-        0.0,
-        False
-    )
+    driver.set_joint_external_effort(INDEX, 0.0, False)
 
     print("Recommended increment:")
     print("1) start with very small value like 1e-3")
@@ -102,8 +98,7 @@ if __name__=='__main__':
             # print(joint_characteristics[INDEX].position_offset)
 
             increment = input(
-                "Enter the increment "
-                "(default 0.0, positive to increase, negative to decrease): "
+                "Enter the increment (default 0.0, positive to increase, negative to decrease): "
             )
             if increment == "":
                 increment = 0.0

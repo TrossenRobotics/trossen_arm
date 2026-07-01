@@ -43,7 +43,7 @@
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -52,14 +52,14 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Print the current effort corrections via joint characteristics
     joint_characteristics = driver.get_joint_characteristics()
     print(
         "Current effort corrections: ",
-        [joint_characteristic.effort_correction for joint_characteristic in joint_characteristics]
+        [joint_characteristic.effort_correction for joint_characteristic in joint_characteristics],
     )
 
     # Set the effort corrections via joint characteristics
@@ -77,7 +77,7 @@ if __name__=='__main__':
     joint_characteristics = driver.get_joint_characteristics()
     print(
         "New effort corrections: ",
-        [joint_characteristic.effort_correction for joint_characteristic in joint_characteristics]
+        [joint_characteristic.effort_correction for joint_characteristic in joint_characteristics],
     )
 
     # Print the current effort corrections via dedicated helper function
@@ -97,7 +97,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Print the effort corrections after reboot

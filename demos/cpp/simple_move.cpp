@@ -47,7 +47,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   std::cout << "Initializing the drivers..." << std::endl;
   trossen_arm::TrossenArmDriver driver;
 
@@ -65,11 +66,7 @@ int main() {
 
   std::cout << "Moving the arm..." << std::endl;
   driver.set_arm_modes(trossen_arm::Mode::position);
-  driver.set_arm_positions(
-    {0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0},
-    2.0f,
-    true
-  );
+  driver.set_arm_positions({0.0, M_PI_2, M_PI_2, 0.0, 0.0, 0.0}, 2.0f, true);
 
   std::cout << "Closing the gripper..." << std::endl;
   driver.set_gripper_mode(trossen_arm::Mode::external_effort);
@@ -77,11 +74,7 @@ int main() {
 
   std::cout << "Moving the arm again..." << std::endl;
   driver.set_arm_modes(trossen_arm::Mode::position);
-  driver.set_arm_positions(
-    std::vector<double>(driver.get_num_joints() - 1, 0.0),
-    2.0f,
-    true
-  );
+  driver.set_arm_positions(std::vector<double>(driver.get_num_joints() - 1, 0.0), 2.0f, true);
 
   return 0;
 }

@@ -39,6 +39,7 @@
 
 import trossen_arm
 
+
 def print_motor_parameters(motor_parameters):
     print("Motor parameters:")
     for i, motor_param in enumerate(motor_parameters):
@@ -56,7 +57,8 @@ def print_motor_parameters(motor_parameters):
                 f"kd: {param.velocity.kd}, imax: {param.velocity.imax}"
             )
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -65,7 +67,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Get the current motor parameters

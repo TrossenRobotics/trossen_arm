@@ -57,7 +57,8 @@ def print_joint_limits(driver: trossen_arm.TrossenArmDriver):
         print("    effort max:", joint_limit.effort_max)
         print("    effort tolerance:", joint_limit.effort_tolerance)
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -66,7 +67,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Print the current joint limits of the robot

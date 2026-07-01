@@ -50,9 +50,9 @@ from scipy.interpolate import PchipInterpolator
 
 import trossen_arm
 
-if __name__=='__main__':
-    leader_server_ip = '192.168.1.2'
-    follower_server_ip = '192.168.1.3'
+if __name__ == "__main__":
+    leader_server_ip = "192.168.1.2"
+    follower_server_ip = "192.168.1.3"
 
     print("Initializing the drivers...")
     leader_driver = trossen_arm.TrossenArmDriver()
@@ -63,13 +63,13 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         leader_server_ip,
-        False
+        False,
     )
     follower_driver.configure(
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_follower,
         follower_server_ip,
-        False
+        False,
     )
 
     print("Moving to home positions...")
@@ -79,8 +79,8 @@ if __name__=='__main__':
     leader_sleep_positions = np.array(leader_driver.get_all_positions())
     follower_sleep_positions = np.array(follower_driver.get_all_positions())
     home_positions = np.zeros(leader_driver.get_num_joints())
-    home_positions[1] = np.pi/2
-    home_positions[2] = np.pi/2
+    home_positions[1] = np.pi / 2
+    home_positions[2] = np.pi / 2
 
     leader_waypoints = np.array(
         [
@@ -130,12 +130,12 @@ if __name__=='__main__':
             0.0,
             False,
             feedforward_velocities_leader,
-            feedforward_accelerations_leader
+            feedforward_accelerations_leader,
         )
         follower_driver.set_all_positions(
             positions_follower,
             0.0,
             False,
             feedforward_velocities_follower,
-            feedforward_accelerations_follower
+            feedforward_accelerations_follower,
         )

@@ -45,7 +45,7 @@ import numpy as np
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     print("Initializing the drivers...")
     driver = trossen_arm.TrossenArmDriver()
 
@@ -54,7 +54,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     print("Opening the gripper...")
@@ -63,11 +63,7 @@ if __name__=='__main__':
 
     print("Moving the arm...")
     driver.set_arm_modes(trossen_arm.Mode.position)
-    driver.set_arm_positions(
-        np.array([0.0, np.pi/2, np.pi/2, 0.0, 0.0, 0.0]),
-        2.0,
-        True
-    )
+    driver.set_arm_positions(np.array([0.0, np.pi / 2, np.pi / 2, 0.0, 0.0, 0.0]), 2.0, True)
 
     print("Closing the gripper...")
     driver.set_gripper_mode(trossen_arm.Mode.external_effort)
@@ -75,8 +71,4 @@ if __name__=='__main__':
 
     print("Moving the arm again...")
     driver.set_arm_modes(trossen_arm.Mode.position)
-    driver.set_arm_positions(
-        np.zeros(driver.get_num_joints() - 1),
-        2.0,
-        True
-    )
+    driver.set_arm_positions(np.zeros(driver.get_num_joints() - 1), 2.0, True)

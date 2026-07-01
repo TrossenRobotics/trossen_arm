@@ -63,11 +63,8 @@ enum class LogLevel : uint8_t {
  * @param name Logger name (e.g. "trossen_arm_driver" or "wxai_v0@192.168.1.2")
  * @param message Formatted log message
  */
-using LogCallback = std::function<void(
-  LogLevel level,
-  const std::string & name,
-  const std::string & message
-)>;
+using LogCallback =
+  std::function<void(LogLevel level, const std::string & name, const std::string & message)>;
 
 /// @brief Operation modes of a joint
 enum class Mode : uint8_t {
@@ -128,7 +125,7 @@ struct JointCharacteristic
   double position_offset{0.0};
 };
 
-/// @brief Link properties
+/// @brief Link inertial properties
 struct Link
 {
   /// @brief Mass in kg
@@ -138,6 +135,18 @@ struct Link
   /// @brief Inertia frame translation measured in link frame in m
   std::array<double, 3> origin_xyz{};
   /// @brief Inertia frame RPY angles measured in link frame in rad
+  std::array<double, 3> origin_rpy{};
+};
+
+/// @brief Joint kinematic properties
+struct Joint
+{
+  /// @brief Unit twist of the joint expressed in the joint frame
+  /// @note The first 3 elements are the angular component and the last 3 elements are the linear component
+  std::array<double, 6> axis{};
+  /// @brief Translation from the parent link frame to the joint frame in m
+  std::array<double, 3> origin_xyz{};
+  /// @brief RPY angles from the parent link frame to the joint frame in rad
   std::array<double, 3> origin_rpy{};
 };
 
@@ -205,7 +214,7 @@ struct MotorParameter
   PIDParameter velocity{};
 };
 
-  /** @brief Parameter used for robotic algorithms */
+/** @brief Parameter used for robotic algorithms */
 struct AlgorithmParameter
 {
   /** @brief Threshold for singularity detection */
@@ -352,9 +361,11 @@ class AlgorithmInterface;
 class Logger;
 
 /// @brief End effector properties for the standard variants
-struct StandardEndEffector {
-  /// @brief WXAI V0 base variant
-  static constexpr EndEffector wxai_v0_base{
+struct StandardEndEffector
+{
+  // clang-format off
+  /// @brief WXAI V0 base variant first used in 2025-05-09
+  static constexpr EndEffector wxai_v0_base_20250509{
     .palm = {
       .mass = 0.53780000,
       .inertia = {
@@ -391,8 +402,46 @@ struct StandardEndEffector {
     .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
-  /// @brief WXAI V0 leader variant
-  static constexpr EndEffector wxai_v0_leader{
+  /// @brief WXAI V0 base variant first used in 2026-06-26
+  static constexpr EndEffector wxai_v0_base_20260626{
+    .palm = {
+      .mass = 0.55984146,
+      .inertia = {
+        0.00083660, -0.00000073, 0.00000358,
+        -0.00000073, 0.00038094, -0.00000017,
+        0.00000358, -0.00000017, 0.00097121
+      },
+      .origin_xyz = {0.04530754, -0.00004231, 0.00021128},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_left = {
+      .mass = 0.07283511,
+      .inertia = {
+        0.00002514, 0.00000487, -0.00000253,
+        0.00000487, 0.00003633, -0.00000144,
+        -0.00000253, -0.00000144, 0.00004148
+      },
+      .origin_xyz = {0.00300468, -0.00699875, -0.00383403},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_right = {
+      .mass = 0.07283530,
+      .inertia = {
+        0.00002578, -0.00000487, 0.00000496,
+        -0.00000487, 0.00003697, -0.00000055,
+        0.00000496, -0.00000055, 0.00004148
+      },
+      .origin_xyz = {0.00300470, 0.00699864, 0.00244362},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .offset_finger_left = 0.02449818,
+    .offset_finger_right = -0.02450182,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
+  };
+
+  /// @brief WXAI V0 leader variant first used in 2025-05-09
+  static constexpr EndEffector wxai_v0_leader_20250509{
     .palm = {
       .mass = 0.59570000,
       .inertia = {
@@ -429,8 +478,46 @@ struct StandardEndEffector {
     .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
-  /// @brief WXAI V0 follower variant
-  static constexpr EndEffector wxai_v0_follower{
+  /// @brief WXAI V0 leader variant first used in 2026-06-26
+  static constexpr EndEffector wxai_v0_leader_20260626{
+    .palm = {
+      .mass = 0.65411940,
+      .inertia = {
+        0.00141948, -0.00000068, -0.00008034,
+        -0.00000068, 0.00097213, 0.00000008,
+        -0.00008034, 0.00000008, 0.00100814
+      },
+      .origin_xyz = {0.04351475, -0.00003630, -0.01014018},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_left = {
+      .mass = 0.06566254,
+      .inertia = {
+        0.00004150, -0.00000254, 0.00000037,
+        -0.00000254, 0.00003063, 0.00000328,
+        0.00000037, 0.00000328, 0.00001893
+      },
+      .origin_xyz = {-0.00510623, -0.00176708, -0.01245444},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_right = {
+      .mass = 0.06566254,
+      .inertia = {
+        0.00004970, 0.00000254, 0.00000415,
+        0.00000254, 0.00003882, -0.00000767,
+        0.00000415, -0.00000767, 0.00001893
+      },
+      .origin_xyz = {-0.00510588, 0.00176675, -0.00547648},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .offset_finger_left = 0.01859818,
+    .offset_finger_right = -0.01860182,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
+  };
+
+  /// @brief WXAI V0 follower variant first used in 2025-05-09
+  static constexpr EndEffector wxai_v0_follower_20250509{
     .palm = {
       .mass = 0.64230000,
       .inertia = {
@@ -467,8 +554,46 @@ struct StandardEndEffector {
     .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
 
-  /// @brief VXAI V0 base variant
-  static constexpr EndEffector vxai_v0_base{
+  /// @brief WXAI V0 follower variant first used in 2026-06-26
+  static constexpr EndEffector wxai_v0_follower_20260626{
+    .palm = {
+      .mass = 0.67244176,
+      .inertia = {
+        0.00115274, -0.00000008, -0.00001266,
+        -0.00000008, 0.00067665, -0.00001573,
+        -0.00001266, -0.00001573, 0.00101644
+      },
+      .origin_xyz = {0.04557269, 0.00040888, 0.00893526},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_left = {
+      .mass = 0.07283511,
+      .inertia = {
+        0.00002514, 0.00000487, -0.00000253,
+        0.00000487, 0.00003633, -0.00000144,
+        -0.00000253, -0.00000144, 0.00004148
+      },
+      .origin_xyz = {0.00300468, -0.00699875, -0.00383403},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .finger_right = {
+      .mass = 0.07283530,
+      .inertia = {
+        0.00002578, -0.00000487, 0.00000496,
+        -0.00000487, 0.00003697, -0.00000055,
+        0.00000496, -0.00000055, 0.00004148
+      },
+      .origin_xyz = {0.00300470, 0.00699864, 0.00244362},
+      .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    .offset_finger_left = 0.02449818,
+    .offset_finger_right = -0.02450182,
+    .pitch_circle_radius = 0.00875,
+    .t_flange_tool = {0.156062, 0.0, 0.0, 0.0, 0.0, 0.0}
+  };
+
+  /// @brief VXAI V0 base variant first used in 2025-05-09
+  static constexpr EndEffector vxai_v0_base_20250509{
     .palm = {
       .mass = 0.57903811,
       .inertia = {
@@ -505,8 +630,8 @@ struct StandardEndEffector {
     .t_flange_tool = {-0.021, 0, -0.200062, 0.0, 0.0, 0.0}
   };
 
-  /// @brief no gripper variant
-  static constexpr EndEffector no_gripper{
+  /// @brief no gripper variant first used in 2025-05-09
+  static constexpr EndEffector no_gripper_20250509{
     .palm = {
       .mass = 0.0,
       .inertia = {
@@ -542,10 +667,28 @@ struct StandardEndEffector {
     .pitch_circle_radius = 0.00875,
     .t_flange_tool = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
   };
+  // clang-format on
+
+  /// @brief WXAI V0 base variant
+  static inline const EndEffector & wxai_v0_base{wxai_v0_base_20260626};
+
+  /// @brief WXAI V0 leader variant
+  static inline const EndEffector & wxai_v0_leader{wxai_v0_leader_20260626};
+
+  /// @brief WXAI V0 follower variant
+  static inline const EndEffector & wxai_v0_follower{wxai_v0_follower_20260626};
+
+  /// @brief VXAI V0 base variant
+  static inline const EndEffector & vxai_v0_base{vxai_v0_base_20250509};
+
+  /// @brief no gripper variant
+  static inline const EndEffector & no_gripper{no_gripper_20250509};
 };
 
 /// @brief Motor parameters commonly used
-struct StandardMotorParameters {
+struct StandardMotorParameters
+{
+  // clang-format off
   /**
    * @brief WXAI V0 motor parameters first used in 2025-05-09
    * @details Manually chosen parameters at the beginning of the development
@@ -1079,16 +1222,403 @@ struct StandardMotorParameters {
       },
     },
   };
+  // clang-format on
 
   /// @brief Latest motor parameters for WXAI V0
-  static inline const std::vector<
-    std::map<Mode, MotorParameter>
-  >& wxai_v0_latest{wxai_v0_20260317};
+  static inline const std::vector<std::map<Mode, MotorParameter>> & wxai_v0_latest{
+    wxai_v0_20260317
+  };
 
   /// @brief Default motor parameters for WXAI V0
-  static inline const std::vector<
-    std::map<Mode, MotorParameter>
-  >& wxai_v0_default{wxai_v0_20260317};
+  static inline const std::vector<std::map<Mode, MotorParameter>> & wxai_v0_default{
+    wxai_v0_20260317
+  };
+};
+
+/// @brief Link inertial properties commonly used
+struct StandardLinks
+{
+  /**
+   * @brief WXAI V0 link inertial properties first used in 2025-05-09
+   * @details Order is base link, arm links 1-6, finger_left, finger_right
+   */
+  static inline const std::vector<Link> wxai_v0_20250509{
+    {// Base link
+     .mass = 0.45000000,
+     .inertia =
+       {0.00040781,
+        0.00000011,
+        -0.00000444,
+        0.00000011,
+        0.00043949,
+        -0.00000076,
+        -0.00000444,
+        -0.00000076,
+        0.00020951},
+     .origin_xyz = {-0.00014175, -0.00005228, 0.03175177},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 1
+     .mass = 0.14930000,
+     .inertia =
+       {0.00018096,
+        -0.00000187,
+        -0.00001404,
+        -0.00000187,
+        0.00008172,
+        -0.00000127,
+        -0.00001404,
+        -0.00000127,
+        0.00018791},
+     .origin_xyz = {-0.00011075, 0.00171176, 0.02044592},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 2
+     .mass = 1.18560000,
+     .inertia =
+       {0.00105519,
+        -0.00000328,
+        -0.00002754,
+        -0.00000328,
+        0.01784952,
+        -0.00000198,
+        -0.00002754,
+        -0.00000198,
+        0.01844965},
+     .origin_xyz = {-0.13121451, -0.00292583, 0.00021345},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 3
+     .mass = 0.69280000,
+     .inertia =
+       {0.00065456,
+        0.00009210,
+        -0.00052467,
+        0.00009210,
+        0.00552297,
+        0.00001169,
+        -0.00052467,
+        0.00001169,
+        0.00566525},
+     .origin_xyz = {0.18083602, -0.00094090, 0.05554937},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 4
+     .mass = 0.47700000,
+     .inertia =
+       {0.00056085,
+        0.00000719,
+        -0.00018922,
+        0.00000719,
+        0.00068897,
+        0.00000754,
+        -0.00018922,
+        0.00000754,
+        0.00043873},
+     .origin_xyz = {0.05797842, 0.00027145, 0.05884447},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 5
+     .mass = 0.36400000,
+     .inertia =
+       {0.00018761,
+        -0.00000045,
+        0.00000089,
+        -0.00000045,
+        0.00031805,
+        0.00000003,
+        0.00000089,
+        0.00000003,
+        0.00026536},
+     .origin_xyz = {0.00412447, -0.00001138, -0.04283184},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 6
+     .mass = 0.58390000,
+     .inertia =
+       {0.00086769,
+        -0.00000054,
+        0.00000011,
+        -0.00000054,
+        0.00051326,
+        0.00000004,
+        0.00000011,
+        0.00000004,
+        0.00114318},
+     .origin_xyz = {0.04572768, -0.00000726, 0.00001402},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger left
+     .mass = 0.05945000,
+     .inertia =
+       {0.00001875,
+        0.00000309,
+        -0.00000149,
+        0.00000309,
+        0.00002614,
+        -0.00000124,
+        -0.00000149,
+        -0.00000124,
+        0.00002995},
+     .origin_xyz = {0.00169016, -0.00592796, -0.00365701},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger right
+     .mass = 0.05945000,
+     .inertia =
+       {0.00001930,
+        -0.00000309,
+        0.00000359,
+        -0.00000309,
+        0.00002670,
+        -0.00000064,
+        0.00000359,
+        -0.00000064,
+        0.00002995},
+     .origin_xyz = {0.00169015, 0.00592793, 0.00201818},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    }
+  };
+
+  /**
+   * @brief WXAI V0 link inertial properties first used in 2026-06-26
+   * @details Order is base link, arm links 1-6, finger_left, finger_right
+   */
+  static inline const std::vector<Link> wxai_v0_20260626{
+    {// Base link
+     .mass = 0.46273356,
+     .inertia =
+       {0.00022947,
+        0.00000013,
+        -0.00000488,
+        0.00000013,
+        0.00026286,
+        -0.00000028,
+        -0.00000488,
+        -0.00000028,
+        0.00023167},
+     .origin_xyz = {-0.00020063, -0.00003382, 0.03051419},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 1
+     .mass = 0.15008228,
+     .inertia =
+       {0.00018088,
+        -0.00000118,
+        -0.00001396,
+        -0.00000118,
+        0.00008194,
+        -0.00000042,
+        -0.00001396,
+        -0.00000042,
+        0.00018797},
+     .origin_xyz = {-0.00018072, 0.00138124, 0.02037991},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 2
+     .mass = 1.13581111,
+     .inertia =
+       {0.00064547,
+        -0.00000050,
+        -0.00001069,
+        -0.00000050,
+        0.01736392,
+        -0.00000063,
+        -0.00001069,
+        -0.00000063,
+        0.01753333},
+     .origin_xyz = {-0.13172378, -0.00180325, 0.00008127},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 3
+     .mass = 0.67178383,
+     .inertia =
+       {0.00053201,
+        0.00008141,
+        -0.00053779,
+        0.00008141,
+        0.00543866,
+        0.00001195,
+        -0.00053779,
+        0.00001195,
+        0.00545384},
+     .origin_xyz = {0.18204373, -0.00049130, 0.05541290},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 4
+     .mass = 0.47899686,
+     .inertia =
+       {0.00045072,
+        0.00001099,
+        -0.00019411,
+        0.00001099,
+        0.00058606,
+        0.00001185,
+        -0.00019411,
+        0.00001185,
+        0.00045456},
+     .origin_xyz = {0.05845470, 0.00047346, 0.05984125},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 5
+     .mass = 0.36818897,
+     .inertia =
+       {0.00019188,
+        -0.00000044,
+        0.00000121,
+        -0.00000044,
+        0.00019906,
+        -0.00000010,
+        0.00000121,
+        -0.00000010,
+        0.00014673},
+     .origin_xyz = {0.00357317, -0.00006705, -0.04271537},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Link 6
+     .mass = 0.65411940,
+     .inertia =
+       {0.00141948,
+        -0.00000068,
+        -0.00008034,
+        -0.00000068,
+        0.00097213,
+        0.00000008,
+        -0.00008034,
+        0.00000008,
+        0.00100814},
+     .origin_xyz = {0.04351475, -0.00003630, -0.01014018},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger left
+     .mass = 0.06566254,
+     .inertia =
+       {0.00004150,
+        -0.00000254,
+        0.00000037,
+        -0.00000254,
+        0.00003063,
+        0.00000328,
+        0.00000037,
+        0.00000328,
+        0.00001893},
+     .origin_xyz = {-0.00510623, -0.00176708, -0.01245444},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger right
+     .mass = 0.06566254,
+     .inertia =
+       {0.00004970,
+        0.00000254,
+        0.00000415,
+        0.00000254,
+        0.00003882,
+        -0.00000767,
+        0.00000415,
+        -0.00000767,
+        0.00001893},
+     .origin_xyz = {-0.00510588, 0.00176675, -0.00547648},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    }
+  };
+};
+
+/// @brief Joint kinematic properties commonly used
+struct StandardJoints
+{
+  /**
+   * @brief WXAI V0 joint kinematic properties first used in 2025-05-09
+   * @details Order is arm joints 0-5, finger_left, finger_right
+   */
+  static inline const std::vector<Joint> wxai_v0_20250509{
+    {// Joint 0
+     .axis = {0.0, 0.0, 1.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.0, 0.0, 0.05725},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 1
+     .axis = {0.0, 1.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.02, 0.0, 0.04625},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 2
+     .axis = {0.0, -1.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {-0.264, 0.0, 0.0},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 3
+     .axis = {0.0, -1.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.245, 0.0, 0.06},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 4
+     .axis = {0.0, 0.0, -1.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.06775, 0.0, 0.0455},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 5
+     .axis = {1.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.02895, 0.0, -0.0455},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger left
+     .axis = {0.0, 0.0, 0.0, 0.0, 1.0, 0.0},
+     .origin_xyz = {0.078, 0.01485, 0.0},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger right
+     .axis = {0.0, 0.0, 0.0, 0.0, -1.0, 0.0},
+     .origin_xyz = {0.078, -0.01485, 0.0},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    }
+  };
+
+  /**
+   * @brief WXAI V0 joint kinematic properties first used in 2026-06-26
+   * @details Order is arm joints 0-5, finger_left, finger_right
+   */
+  static inline const std::vector<Joint> wxai_v0_20260626{
+    {// Joint 0
+     .axis = {0.0, 0.0, 1.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.00000000, 0.00000000, 0.05725000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 1
+     .axis = {0.0, 1.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.02000000, 0.00000000, 0.04625000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 2
+     .axis = {0.0, -1.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {-0.26400000, 0.00000000, 0.00000000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 3
+     .axis = {0.0, -1.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.24500000, 0.00000000, 0.06000000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 4
+     .axis = {0.0, 0.0, -1.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.06775000, -0.00005000, 0.04550000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Joint 5
+     .axis = {1.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+     .origin_xyz = {0.02895000, 0.00000000, -0.04550000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger left
+     .axis = {0.0, 0.0, 0.0, 0.0, 1.0, 0.0},
+     .origin_xyz = {0.08650000, 0.01859818, 0.00000000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    },
+    {// Finger right
+     .axis = {0.0, 0.0, 0.0, 0.0, -1.0, 0.0},
+     .origin_xyz = {0.08650000, -0.01860182, 0.00000000},
+     .origin_rpy = {0.0, 0.0, 0.0}
+    }
+  };
 };
 
 /// @brief Notices
@@ -1151,10 +1681,8 @@ inline const std::map<ErrorState, std::string> ERROR_INFORMATION = {
   {ErrorState::invalid_mode, "Invalid mode command received"},
   {ErrorState::invalid_robot_command, "Invalid robot command indicator received"},
   {ErrorState::invalid_configuration_address, "Invalid configuration address"},
-  {
-    ErrorState::robot_input_mode_mismatch,
-    "Robot input with modes different than configured modes received"
-  },
+  {ErrorState::robot_input_mode_mismatch,
+   "Robot input with modes different than configured modes received"},
   {ErrorState::joint_limit_exceeded, "Joint limit exceeded"},
   {ErrorState::robot_input_infinite, "Robot input with infinite values received"}
 };

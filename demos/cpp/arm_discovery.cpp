@@ -48,25 +48,18 @@ int main()
   const uint8_t ip_end = 254;
   const double timeout = 0.01;
 
-  std::cout << "Scanning " << subnet << "." << static_cast<int>(ip_start)
-            << " - " << subnet << "." << static_cast<int>(ip_end)
-            << " (timeout=" << timeout << "s)..." << std::endl;
+  std::cout << "Scanning " << subnet << "." << static_cast<int>(ip_start) << " - " << subnet << "."
+            << static_cast<int>(ip_end) << " (timeout=" << timeout << "s)..." << std::endl;
 
   const auto discover_results =
-    trossen_arm::TrossenArmDriver::discover(
-      subnet, ip_start, ip_end, timeout
-    );
+    trossen_arm::TrossenArmDriver::discover(subnet, ip_start, ip_end, timeout);
 
   std::cout << "\nFound " << discover_results.size() << " arm(s):" << std::endl;
   for (const auto & discover_result : discover_results) {
     std::cout << "  ip=" << discover_result.ip
-              << "  model="
-              << trossen_arm::MODEL_NAME.at(discover_result.model)
+              << "  model=" << trossen_arm::MODEL_NAME.at(discover_result.model)
               << "  firmware=" << discover_result.firmware_version
-              << "  error_state="
-              << trossen_arm::ERROR_INFORMATION.at(
-                   discover_result.error_state
-                 )
+              << "  error_state=" << trossen_arm::ERROR_INFORMATION.at(discover_result.error_state)
               << std::endl;
   }
 

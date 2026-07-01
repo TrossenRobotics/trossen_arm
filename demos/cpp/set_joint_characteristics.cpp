@@ -45,7 +45,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
 
@@ -59,13 +60,14 @@ int main() {
 
   // Print the current effort corrections via joint characteristics
   std::cout << "Current effort corrections: ";
-  for (const auto& joint_characteristic : driver.get_joint_characteristics()) {
+  for (const auto & joint_characteristic : driver.get_joint_characteristics()) {
     std::cout << joint_characteristic.effort_correction << " ";
   }
   std::cout << std::endl;
 
   // Set the effort corrections via joint characteristics
-  std::vector<trossen_arm::JointCharacteristic> joint_characteristics = driver.get_joint_characteristics();
+  std::vector<trossen_arm::JointCharacteristic> joint_characteristics =
+    driver.get_joint_characteristics();
   joint_characteristics[0].effort_correction = 1.1;
   joint_characteristics[1].effort_correction = 1.1;
   joint_characteristics[2].effort_correction = 1.1;
@@ -77,14 +79,14 @@ int main() {
 
   // Print the new effort corrections via joint characteristics
   std::cout << "New effort corrections: ";
-  for (const auto& joint_characteristic : driver.get_joint_characteristics()) {
+  for (const auto & joint_characteristic : driver.get_joint_characteristics()) {
     std::cout << joint_characteristic.effort_correction << " ";
   }
   std::cout << std::endl;
 
   // Print the current effort corrections via dedicated helper function
   std::cout << "Current effort corrections: ";
-  for (const auto& correction : driver.get_effort_corrections()) {
+  for (const auto & correction : driver.get_effort_corrections()) {
     std::cout << correction << " ";
   }
   std::cout << std::endl;
@@ -95,7 +97,7 @@ int main() {
 
   // Print the new effort corrections via dedicated helper function
   std::cout << "New effort corrections: ";
-  for (const auto& correction : driver.get_effort_corrections()) {
+  for (const auto & correction : driver.get_effort_corrections()) {
     std::cout << correction << " ";
   }
   std::cout << std::endl;
@@ -113,7 +115,7 @@ int main() {
 
   // Print the effort corrections after reboot
   std::cout << "Effort corrections after reboot: ";
-  for (const auto& joint_characteristic : driver.get_joint_characteristics()) {
+  for (const auto & joint_characteristic : driver.get_joint_characteristics()) {
     std::cout << joint_characteristic.effort_correction << " ";
   }
   std::cout << std::endl;

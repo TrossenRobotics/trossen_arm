@@ -49,7 +49,7 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
@@ -70,17 +70,11 @@ int main(int argc, char** argv)
 
   // Move the end effector up by 0.1m
   cartesian_positions[2] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector forward by 0.1m
   cartesian_positions[0] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Declare running variables
   trossen_arm::RobotOutput robot_output_temp;
@@ -88,8 +82,8 @@ int main(int argc, char** argv)
   // Set the proportional gains
   // Improper gains will make the arm unstable, please modify with caution
   // Low stiffness on y-axis translation
-  std::array<double, 6> virtual_stiffness = { 200.0, 40.0, 200.0, 20.0, 20.0, 20.0 };
-  std::array<double, 6> virtual_damping = { 2.0, 0.4, 2.0, 0.2, 0.2, 0.2 };
+  std::array<double, 6> virtual_stiffness = {200.0, 40.0, 200.0, 20.0, 20.0, 20.0};
+  std::array<double, 6> virtual_damping = {2.0, 0.4, 2.0, 0.2, 0.2, 0.2};
 
   // Set the arm joints to external effort mode
   driver.set_arm_modes(trossen_arm::Mode::external_effort);
@@ -105,9 +99,9 @@ int main(int argc, char** argv)
 
     // Get the external efforts
     for (size_t i = 0; i < 6; ++i) {
-      robot_output_temp.cartesian.external_efforts.at(i) = virtual_stiffness.at(i) * (
-        cartesian_positions.at(i) - robot_output_temp.cartesian.positions.at(i)
-      ) - virtual_damping.at(i) * robot_output_temp.cartesian.velocities.at(i);
+      robot_output_temp.cartesian.external_efforts.at(i) = virtual_stiffness.at(i) *
+          (cartesian_positions.at(i) - robot_output_temp.cartesian.positions.at(i)) -
+        virtual_damping.at(i) * robot_output_temp.cartesian.velocities.at(i);
     }
 
     // Set the external efforts
@@ -124,17 +118,11 @@ int main(int argc, char** argv)
 
   // Move the end effector back by 0.1m
   cartesian_positions[0] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector down by 0.1m
   cartesian_positions[2] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   return 0;
 }

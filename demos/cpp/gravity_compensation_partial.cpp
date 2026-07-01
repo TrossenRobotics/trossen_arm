@@ -49,11 +49,13 @@
 
 std::atomic<bool> keep_running(true);
 
-void signal_handler(int) {
+void signal_handler(int)
+{
   keep_running = false;
 }
 
-int main() {
+int main()
+{
   // Configure what portion of gravity to compensate
   // 0.0 means no compensation, 1.0 means full compensation
   const double GRAVITY_COMPENSATION_FACTOR = 0.5;
@@ -82,11 +84,7 @@ int main() {
       // Apply the compensation efforts scaled by the factor
       robot_output.joint.all.compensation_efforts[i] *= GRAVITY_COMPENSATION_FACTOR;
     }
-    driver.set_all_efforts(
-      robot_output.joint.all.compensation_efforts,
-      0.0,
-      false
-    );
+    driver.set_all_efforts(robot_output.joint.all.compensation_efforts, 0.0, false);
   }
   std::cout << "Gravity compensation stopped." << std::endl;
 }

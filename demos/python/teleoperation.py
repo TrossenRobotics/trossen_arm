@@ -53,10 +53,10 @@ import numpy as np
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Specify the IP addresses of the arms, the time for teleoperation, and the force feedback gain
-    server_ip_leader = '192.168.1.2'
-    server_ip_follower = '192.168.1.3'
+    server_ip_leader = "192.168.1.2"
+    server_ip_follower = "192.168.1.3"
     teleoperation_time = 20
     force_feedback_gain = 0.1
 
@@ -69,27 +69,23 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         server_ip_leader,
-        False
+        False,
     )
     driver_follower.configure(
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_follower,
         server_ip_follower,
-        False
+        False,
     )
 
     print("Moving to home positions...")
     driver_leader.set_all_modes(trossen_arm.Mode.position)
     driver_leader.set_all_positions(
-        np.array([0.0, np.pi/2, np.pi/2, 0.0, 0.0, 0.0, 0.0]),
-        2.0,
-        True
+        np.array([0.0, np.pi / 2, np.pi / 2, 0.0, 0.0, 0.0, 0.0]), 2.0, True
     )
     driver_follower.set_all_modes(trossen_arm.Mode.position)
     driver_follower.set_all_positions(
-        np.array([0.0, np.pi/2, np.pi/2, 0.0, 0.0, 0.0, 0.0]),
-        2.0,
-        True
+        np.array([0.0, np.pi / 2, np.pi / 2, 0.0, 0.0, 0.0, 0.0]), 2.0, True
     )
 
     print("Starting to teleoperate the robots...")
@@ -108,36 +104,21 @@ if __name__=='__main__':
         )
         # Feed the positions from the leader robot to the follower robot
         driver_follower.set_all_positions(
-            driver_leader.get_all_positions(),
-            0.0,
-            False,
-            driver_leader.get_all_velocities()
+            driver_leader.get_all_positions(), 0.0, False, driver_leader.get_all_velocities()
         )
 
     print("Moving to home positions...")
     driver_leader.set_all_modes(trossen_arm.Mode.position)
     driver_leader.set_all_positions(
-        np.array([0.0, np.pi/2, np.pi/2, 0.0, 0.0, 0.0, 0.0]),
-        2.0,
-        True
+        np.array([0.0, np.pi / 2, np.pi / 2, 0.0, 0.0, 0.0, 0.0]), 2.0, True
     )
     driver_follower.set_all_modes(trossen_arm.Mode.position)
     driver_follower.set_all_positions(
-        np.array([0.0, np.pi/2, np.pi/2, 0.0, 0.0, 0.0, 0.0]),
-        2.0,
-        True
+        np.array([0.0, np.pi / 2, np.pi / 2, 0.0, 0.0, 0.0, 0.0]), 2.0, True
     )
 
     print("Moving to sleep positions...")
     driver_leader.set_all_modes(trossen_arm.Mode.position)
-    driver_leader.set_all_positions(
-        np.zeros(driver_leader.get_num_joints()),
-        2.0,
-        True
-    )
+    driver_leader.set_all_positions(np.zeros(driver_leader.get_num_joints()), 2.0, True)
     driver_follower.set_all_modes(trossen_arm.Mode.position)
-    driver_follower.set_all_positions(
-        np.zeros(driver_follower.get_num_joints()),
-        2.0,
-        True
-    )
+    driver_follower.set_all_positions(np.zeros(driver_follower.get_num_joints()), 2.0, True)

@@ -43,7 +43,7 @@
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -52,16 +52,12 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Start gravity compensation
     driver.set_all_modes(trossen_arm.Mode.external_effort)
-    driver.set_all_external_efforts(
-        [0, 0, 0, 0, 0, 0, 0],
-        0.0,
-        False
-    )
+    driver.set_all_external_efforts([0, 0, 0, 0, 0, 0, 0], 0.0, False)
 
     # Wait until the user presses enter
     input("Press Enter to end gravity compensation...")

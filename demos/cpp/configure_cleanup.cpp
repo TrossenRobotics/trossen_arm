@@ -52,7 +52,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-void print_states(trossen_arm::TrossenArmDriver& driver) {
+void print_states(trossen_arm::TrossenArmDriver & driver)
+{
   std::cout << "Number of joints: " << static_cast<int>(driver.get_num_joints()) << std::endl;
   std::cout << "EEPROM factory reset flag: " << driver.get_factory_reset_flag() << std::endl;
   std::cout << "EEPROM IP method: " << static_cast<int>(driver.get_ip_method()) << std::endl;
@@ -64,32 +65,18 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
     driver.get_joint_characteristics();
   std::cout << "EEPROM Joint characteristics:" << std::endl;
   for (size_t i = 0; i < joint_characteristics.size(); ++i) {
-    const trossen_arm::JointCharacteristic& joint_characteristic = joint_characteristics.at(i);
+    const trossen_arm::JointCharacteristic & joint_characteristic = joint_characteristics.at(i);
     std::cout << "  Joint " << i << ":" << std::endl;
-    std::cout <<
-      "    Effort correction: " <<
-      joint_characteristic.effort_correction <<
-      std::endl;
-    std::cout <<
-      "    Friction constant term: " <<
-      joint_characteristic.friction_constant_term <<
-      std::endl;
-    std::cout <<
-      "    Friction transition velocity: " <<
-      joint_characteristic.friction_transition_velocity <<
-      std::endl;
-    std::cout <<
-      "    Friction coulomb coefficient: " <<
-      joint_characteristic.friction_coulomb_coef <<
-      std::endl;
-    std::cout <<
-      "    Friction viscous coefficient: " <<
-      joint_characteristic.friction_viscous_coef <<
-      std::endl;
-    std::cout <<
-      "    Position offset: " <<
-      joint_characteristic.position_offset <<
-      std::endl;
+    std::cout << "    Effort correction: " << joint_characteristic.effort_correction << std::endl;
+    std::cout << "    Friction constant term: " << joint_characteristic.friction_constant_term
+              << std::endl;
+    std::cout << "    Friction transition velocity: "
+              << joint_characteristic.friction_transition_velocity << std::endl;
+    std::cout << "    Friction coulomb coefficient: " << joint_characteristic.friction_coulomb_coef
+              << std::endl;
+    std::cout << "    Friction viscous coefficient: " << joint_characteristic.friction_viscous_coef
+              << std::endl;
+    std::cout << "    Position offset: " << joint_characteristic.position_offset << std::endl;
   }
   std::cout << "Error information: " << driver.get_error_information() << std::endl;
   std::cout << "Modes: ";
@@ -161,7 +148,7 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
   std::vector<trossen_arm::JointLimit> joint_limits = driver.get_joint_limits();
   std::cout << "Joint limits:" << std::endl;
   for (size_t i = 0; i < joint_limits.size(); ++i) {
-    const trossen_arm::JointLimit& joint_limit = joint_limits.at(i);
+    const trossen_arm::JointLimit & joint_limit = joint_limits.at(i);
     std::cout << "  Joint " << i << ":" << std::endl;
     std::cout << "    position min: " << joint_limit.position_min << std::endl;
     std::cout << "    position max: " << joint_limit.position_max << std::endl;
@@ -175,10 +162,10 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
     driver.get_motor_parameters();
   std::cout << "Motor parameters:" << std::endl;
   for (size_t i = 0; i < motor_parameters.size(); ++i) {
-    const std::map<trossen_arm::Mode, trossen_arm::MotorParameter>& motor_parameter =
+    const std::map<trossen_arm::Mode, trossen_arm::MotorParameter> & motor_parameter =
       motor_parameters.at(i);
     std::cout << "  Joint " << i << ":" << std::endl;
-    for (const auto& [mode, parameter] : motor_parameter) {
+    for (const auto & [mode, parameter] : motor_parameter) {
       std::cout << "    Mode " << static_cast<int>(mode) << ":" << std::endl;
       std::cout << "      Position loop:";
       std::cout << " kp: " << parameter.position.kp;
@@ -191,6 +178,49 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
       std::cout << ", kd: " << parameter.velocity.kd;
       std::cout << ", imax: " << parameter.velocity.imax << std::endl;
     }
+  }
+  std::vector<trossen_arm::Link> links = driver.get_links();
+  std::cout << "Link properties:" << std::endl;
+  for (size_t i = 0; i < links.size(); ++i) {
+    const trossen_arm::Link & link = links.at(i);
+    std::cout << "  Link " << i << ":" << std::endl;
+    std::cout << "    mass: " << link.mass << std::endl;
+    std::cout << "    inertia:";
+    for (double v : link.inertia) {
+      std::cout << " " << v;
+    }
+    std::cout << std::endl;
+    std::cout << "    origin xyz:";
+    for (double v : link.origin_xyz) {
+      std::cout << " " << v;
+    }
+    std::cout << std::endl;
+    std::cout << "    origin rpy:";
+    for (double v : link.origin_rpy) {
+      std::cout << " " << v;
+    }
+    std::cout << std::endl;
+  }
+  std::vector<trossen_arm::Joint> joints = driver.get_joints();
+  std::cout << "Joint properties:" << std::endl;
+  for (size_t i = 0; i < joints.size(); ++i) {
+    const trossen_arm::Joint & joint = joints.at(i);
+    std::cout << "  Joint " << i << ":" << std::endl;
+    std::cout << "    axis:";
+    for (double v : joint.axis) {
+      std::cout << " " << v;
+    }
+    std::cout << std::endl;
+    std::cout << "    origin xyz:";
+    for (double v : joint.origin_xyz) {
+      std::cout << " " << v;
+    }
+    std::cout << std::endl;
+    std::cout << "    origin rpy:";
+    for (double v : joint.origin_rpy) {
+      std::cout << " " << v;
+    }
+    std::cout << std::endl;
   }
   trossen_arm::RobotOutput robot_output = driver.get_robot_output();
   std::cout << "Robot output:" << std::endl;
@@ -260,7 +290,7 @@ void print_states(trossen_arm::TrossenArmDriver& driver) {
   std::cout << algorithm_parameter.singularity_threshold << std::endl;
 }
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;

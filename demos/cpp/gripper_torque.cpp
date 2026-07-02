@@ -43,44 +43,45 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
-    std::cout << "Initializing the drivers..." << std::endl;
-    trossen_arm::TrossenArmDriver driver;
+int main()
+{
+  std::cout << "Initializing the drivers..." << std::endl;
+  trossen_arm::TrossenArmDriver driver;
 
-    std::cout << "Configuring the drivers..." << std::endl;
-    driver.configure(
-        trossen_arm::Model::wxai_v0,
-        trossen_arm::StandardEndEffector::wxai_v0_leader,
-        "192.168.1.2",
-        false
-    );
+  std::cout << "Configuring the drivers..." << std::endl;
+  driver.configure(
+    trossen_arm::Model::wxai_v0,
+    trossen_arm::StandardEndEffector::wxai_v0_leader,
+    "192.168.1.2",
+    false
+  );
 
-    std::cout << "Press Enter to open the gripper..." << std::endl;
-    std::cin.get();
-    std::cout << "Open gripper with 20N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
-    driver.set_gripper_external_effort(20.0, 0.0, false);
+  std::cout << "Press Enter to open the gripper..." << std::endl;
+  std::cin.get();
+  std::cout << "Open gripper with 20N..." << std::endl;
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(20.0, 0.0, false);
 
-    std::cout << "Press Enter to increase the external effort..." << std::endl;
-    std::cin.get();
-    std::cout << "Increase external effort to 100N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
-    driver.set_gripper_external_effort(100.0, 5.0, true);
+  std::cout << "Press Enter to increase the external effort..." << std::endl;
+  std::cin.get();
+  std::cout << "Increase external effort to 100N..." << std::endl;
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(100.0, 5.0, true);
 
-    std::cout << "Press Enter to close the gripper..." << std::endl;
-    std::cin.get();
-    std::cout << "Close gripper with 20N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
-    driver.set_gripper_external_effort(-20.0, 0.0, false);
+  std::cout << "Press Enter to close the gripper..." << std::endl;
+  std::cin.get();
+  std::cout << "Close gripper with 20N..." << std::endl;
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(-20.0, 0.0, false);
 
-    std::cout << "Press Enter to increase the external effort..." << std::endl;
-    std::cin.get();
-    std::cout << "Increase external effort to 100N..." << std::endl;
-    driver.set_gripper_mode(trossen_arm::Mode::external_effort);
-    driver.set_gripper_external_effort(-100.0, 5.0, true);
+  std::cout << "Press Enter to increase the external effort..." << std::endl;
+  std::cin.get();
+  std::cout << "Increase external effort to 100N..." << std::endl;
+  driver.set_gripper_mode(trossen_arm::Mode::external_effort);
+  driver.set_gripper_external_effort(-100.0, 5.0, true);
 
-    std::cout << "Press Enter to end the demo..." << std::endl;
-    std::cin.get();
+  std::cout << "Press Enter to end the demo..." << std::endl;
+  std::cin.get();
 
-    return 0;
+  return 0;
 }

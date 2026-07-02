@@ -43,7 +43,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
 

@@ -45,7 +45,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   std::cout << "Initializing the drivers..." << std::endl;
   trossen_arm::TrossenArmDriver driver;
 
@@ -75,8 +76,8 @@ int main() {
   driver.set_gripper_mode(trossen_arm::Mode::external_effort);
   driver.set_gripper_external_effort(20);
 
-  p.at(0)-= 0.1;
-  p.at(2)-= 0.2;
+  p.at(0) -= 0.1;
+  p.at(2) -= 0.2;
   driver.set_cartesian_positions(p, trossen_arm::InterpolationSpace::joint);
 
   driver.set_gripper_external_effort(-20);

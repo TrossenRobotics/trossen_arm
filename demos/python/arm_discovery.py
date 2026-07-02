@@ -38,18 +38,13 @@
 
 import trossen_arm
 
-if __name__=='__main__':
-
+if __name__ == "__main__":
     subnet = "192.168.1"
     ip_start = 1
     ip_end = 254
     timeout = 0.01
 
-    print(
-        f"Scanning {subnet}.{ip_start}"
-        f" - {subnet}.{ip_end}"
-        f" (timeout={timeout}s)..."
-    )
+    print(f"Scanning {subnet}.{ip_start} - {subnet}.{ip_end} (timeout={timeout}s)...")
 
     discover_results = trossen_arm.TrossenArmDriver.discover(
         subnet=subnet,

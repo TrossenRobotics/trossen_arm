@@ -41,7 +41,7 @@
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -50,7 +50,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Print the current IP address
@@ -70,7 +70,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.3",
-        False
+        False,
     )
 
     # Print the IP address after reboot

@@ -49,7 +49,8 @@
 
 #include <libtrossen_arm/trossen_arm.hpp>
 
-int main() {
+int main()
+{
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
 
@@ -67,16 +68,13 @@ int main() {
   std::vector<trossen_arm::Mode> modes(driver.get_num_joints(), trossen_arm::Mode::idle);
   modes[INDEX] = trossen_arm::Mode::external_effort;
   driver.set_joint_modes(modes);
-  driver.set_joint_external_effort(
-    INDEX,
-    0.0,
-    false
-  );
+  driver.set_joint_external_effort(INDEX, 0.0, false);
 
   std::cout << "Recommended increment:" << std::endl;
   std::cout << "1) start with very small value like 1e-3" << std::endl;
   std::cout << "2) multiply the INCREMENT (NOT THE JOINT CHARACTERISTIC) by factor of 2 "
-    "until there's noticeable behavioral change when applying the increment" << std::endl;
+               "until there's noticeable behavioral change when applying the increment"
+            << std::endl;
   std::cout << "3) use this increment to adjust the joint characteristic" << std::endl;
 
   while (true) {
@@ -103,7 +101,7 @@ int main() {
       // std::cout << joint_characteristics[INDEX].position_offset << std::endl;
 
       std::cout << "Enter the increment "
-        "(default 0.0, positive to increase, negative to decrease): ";
+                   "(default 0.0, positive to increase, negative to decrease): ";
       std::string input;
       std::getline(std::cin, input);
       float increment = 0.0;
@@ -124,7 +122,7 @@ int main() {
       // joint_characteristics[INDEX].position_offset += increment;
 
       driver.set_joint_characteristics(joint_characteristics);
-    } catch (const std::exception& e) {
+    } catch (const std::exception & e) {
       break;
     }
   }

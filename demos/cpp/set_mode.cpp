@@ -44,7 +44,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
 
@@ -61,7 +62,7 @@ int main() {
 
   // Print the modes of the gripper joints
   std::cout << "Modes: ";
-  for (const auto& mode : driver.get_modes()) {
+  for (const auto & mode : driver.get_modes()) {
     std::cout << static_cast<int>(mode) << " ";
   }
   std::cout << std::endl;
@@ -75,7 +76,7 @@ int main() {
 
   // Print the modes of the arm joints
   std::cout << "Modes: ";
-  for (const auto& mode : driver.get_modes()) {
+  for (const auto & mode : driver.get_modes()) {
     std::cout << static_cast<int>(mode) << " ";
   }
   std::cout << std::endl;
@@ -89,7 +90,7 @@ int main() {
 
   // Print the modes of all joints
   std::cout << "Modes: ";
-  for (const auto& mode : driver.get_modes()) {
+  for (const auto & mode : driver.get_modes()) {
     std::cout << static_cast<int>(mode) << " ";
   }
   std::cout << std::endl;

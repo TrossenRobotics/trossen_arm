@@ -51,7 +51,7 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   // Initialize the driver
   trossen_arm::TrossenArmDriver driver;
@@ -72,17 +72,11 @@ int main(int argc, char** argv)
 
   // Move the end effector up by 0.1m
   cartesian_positions[2] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector forward by 0.1m
   cartesian_positions[0] += 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Declare the running variables
   trossen_arm::RobotOutput robot_output_temp;
@@ -90,9 +84,9 @@ int main(int argc, char** argv)
   // Set the properties of the virtual second order system
   // Improper gains will make the arm unstable, please modify with caution
   // Low stiffness on y-axis translation
-  std::array<double, 6> virtual_mass = { 0.5, 0.5, 0.5, 0.05, 0.05, 0.05 };
-  std::array<double, 6> virtual_stiffness = { 1000.0, 200.0, 1000.0, 200.0, 200.0, 200.0 };
-  std::array<double, 6> virtual_damping = { 100.0, 20.0, 100.0, 20.0, 20.0, 20.0 };
+  std::array<double, 6> virtual_mass = {0.5, 0.5, 0.5, 0.05, 0.05, 0.05};
+  std::array<double, 6> virtual_stiffness = {1000.0, 200.0, 1000.0, 200.0, 200.0, 200.0};
+  std::array<double, 6> virtual_damping = {100.0, 20.0, 100.0, 20.0, 20.0, 20.0};
 
   // Set the arm joints to velocity mode
   driver.set_arm_modes(trossen_arm::Mode::velocity);
@@ -105,27 +99,24 @@ int main(int argc, char** argv)
   constexpr auto dt_duration = std::chrono::duration<double>(dt);
 
   // Start the velocity control loop
-  while (true)
-  {
+  while (true) {
     // Get the loop start time
     loop_start_time = std::chrono::steady_clock::now();
 
     // Check if the end time has been reached
-    if (loop_start_time > end_time)
-    {
+    if (loop_start_time > end_time) {
       break;
     }
 
     // Get the cartesian velocities
     robot_output_temp = driver.get_robot_output();
-    for (size_t i = 0; i < 6; ++i)
-    {
-      robot_output_temp.cartesian.velocities.at(i) += dt * (
-        virtual_stiffness.at(i) * (
-          cartesian_positions.at(i) - robot_output_temp.cartesian.positions.at(i)
-        ) - virtual_damping.at(i) * robot_output_temp.cartesian.velocities.at(i)
-        - robot_output_temp.cartesian.external_efforts.at(i)
-      ) / virtual_mass.at(i);
+    for (size_t i = 0; i < 6; ++i) {
+      robot_output_temp.cartesian.velocities.at(i) += dt *
+        (virtual_stiffness.at(i) *
+           (cartesian_positions.at(i) - robot_output_temp.cartesian.positions.at(i)) -
+         virtual_damping.at(i) * robot_output_temp.cartesian.velocities.at(i) -
+         robot_output_temp.cartesian.external_efforts.at(i)) /
+        virtual_mass.at(i);
     }
 
     // Set the cartesian velocities
@@ -140,16 +131,13 @@ int main(int argc, char** argv)
     auto elapsed_time = std::chrono::steady_clock::now() - loop_start_time;
 
     // Check if the loop is taking too long
-    if (elapsed_time > dt_duration)
-    {
+    if (elapsed_time > dt_duration) {
       std::cerr << "Warning: Loop took too long, aborting" << std::endl;
       break;
     }
 
     // Sleep for the remaining time
-    std::this_thread::sleep_for(
-      dt_duration - elapsed_time
-    );
+    std::this_thread::sleep_for(dt_duration - elapsed_time);
   }
 
   // Set the arm joints to position mode
@@ -157,17 +145,11 @@ int main(int argc, char** argv)
 
   // Move the end effector back by 0.1m
   cartesian_positions[0] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   // Move the end effector down by 0.1m
   cartesian_positions[2] -= 0.1;
-  driver.set_cartesian_positions(
-    cartesian_positions,
-    trossen_arm::InterpolationSpace::cartesian
-  );
+  driver.set_cartesian_positions(cartesian_positions, trossen_arm::InterpolationSpace::cartesian);
 
   return 0;
 }

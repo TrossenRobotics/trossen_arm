@@ -54,7 +54,8 @@
 
 #include "libtrossen_arm/trossen_arm.hpp"
 
-int main() {
+int main()
+{
   const trossen_arm::Model MODEL = trossen_arm::Model::wxai_v0;
   const std::string SERV_IP = "192.168.1.2";
 
@@ -62,19 +63,13 @@ int main() {
 
   // Set up spdlog with stdout and file sinks
   auto stdout_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-  auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
-    "error_recovery_and_logging.log",
-    true
-  );
+  auto file_sink =
+    std::make_shared<spdlog::sinks::basic_file_sink_mt>("error_recovery_and_logging.log", true);
   spdlog::sinks_init_list sinks{stdout_sink, file_sink};
 
   // Route all library log messages through spdlog using set_logger_backend
   trossen_arm::TrossenArmDriver::set_logger_backend(
-    [sinks](
-      trossen_arm::LogLevel level,
-      const std::string & name,
-      const std::string & message)
-    {
+    [sinks](trossen_arm::LogLevel level, const std::string & name, const std::string & message) {
       auto logger = spdlog::get(name);
       if (!logger) {
         logger = std::make_shared<spdlog::logger>(name, sinks);
@@ -108,12 +103,7 @@ int main() {
   trossen_arm::TrossenArmDriver driver;
 
   std::cout << "Configuring the driver..." << std::endl;
-  driver.configure(
-    MODEL,
-    trossen_arm::StandardEndEffector::wxai_v0_leader,
-    SERV_IP,
-    false
-  );
+  driver.configure(MODEL, trossen_arm::StandardEndEffector::wxai_v0_leader, SERV_IP, false);
 
   driver.set_all_modes(trossen_arm::Mode::position);
 
@@ -136,7 +126,7 @@ int main() {
 
     std::cout << "Moving the arm to the sleep position..." << std::endl;
     driver.set_all_positions(sleep_positions);
-  } catch (const std::exception &e) {
+  } catch (const std::exception & e) {
     std::cout << "An error occurred: " << e.what() << std::endl;
     std::cout << "Recovering from the error..." << std::endl;
 

@@ -43,7 +43,7 @@
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     print("Initializing the drivers...")
     driver = trossen_arm.TrossenArmDriver()
 
@@ -52,7 +52,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Interpolation space transitions

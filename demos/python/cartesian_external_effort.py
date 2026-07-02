@@ -51,7 +51,7 @@ import numpy as np
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     # Initialize the driver
     driver = trossen_arm.TrossenArmDriver()
 
@@ -60,7 +60,7 @@ if __name__=='__main__':
         trossen_arm.Model.wxai_v0,
         trossen_arm.StandardEndEffector.wxai_v0_leader,
         "192.168.1.2",
-        False
+        False,
     )
 
     # Set the arm joints to position mode
@@ -71,17 +71,11 @@ if __name__=='__main__':
 
     # Move the end effector up by 0.1m
     cartesian_positions[2] += 0.1
-    driver.set_cartesian_positions(
-        cartesian_positions,
-        trossen_arm.InterpolationSpace.cartesian
-    )
+    driver.set_cartesian_positions(cartesian_positions, trossen_arm.InterpolationSpace.cartesian)
 
     # Move the end effector forward by 0.1m
     cartesian_positions[0] += 0.1
-    driver.set_cartesian_positions(
-        cartesian_positions,
-        trossen_arm.InterpolationSpace.cartesian
-    )
+    driver.set_cartesian_positions(cartesian_positions, trossen_arm.InterpolationSpace.cartesian)
 
     # Declare running variables
     robot_output_temp = driver.get_robot_output()
@@ -105,16 +99,17 @@ if __name__=='__main__':
         robot_output_temp = driver.get_robot_output()
 
         # Get the external efforts
-        robot_output_temp.cartesian.external_efforts = virtual_stiffness * (
-            cartesian_positions - robot_output_temp.cartesian.positions
-        ) - virtual_damping * robot_output_temp.cartesian.velocities
+        robot_output_temp.cartesian.external_efforts = (
+            virtual_stiffness * (cartesian_positions - robot_output_temp.cartesian.positions)
+            - virtual_damping * robot_output_temp.cartesian.velocities
+        )
 
         # Set the external efforts
         driver.set_cartesian_external_efforts(
             robot_output_temp.cartesian.external_efforts,
             trossen_arm.InterpolationSpace.cartesian,
             0.0,
-            False
+            False,
         )
 
     # Set the arm joints to position mode
@@ -122,14 +117,8 @@ if __name__=='__main__':
 
     # Move the end effector back by 0.1m
     cartesian_positions[0] -= 0.1
-    driver.set_cartesian_positions(
-        cartesian_positions,
-        trossen_arm.InterpolationSpace.cartesian
-    )
+    driver.set_cartesian_positions(cartesian_positions, trossen_arm.InterpolationSpace.cartesian)
 
     # Move the end effector down by 0.1m
     cartesian_positions[2] -= 0.1
-    driver.set_cartesian_positions(
-        cartesian_positions,
-        trossen_arm.InterpolationSpace.cartesian
-    )
+    driver.set_cartesian_positions(cartesian_positions, trossen_arm.InterpolationSpace.cartesian)

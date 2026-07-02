@@ -48,9 +48,9 @@ import numpy as np
 
 import trossen_arm
 
-if __name__=='__main__':
+if __name__ == "__main__":
     MODEL = trossen_arm.Model.wxai_v0
-    SERV_IP = '192.168.1.2'
+    SERV_IP = "192.168.1.2"
     USE_LOGURU = False  # Set to False to use Python's built-in logging module
 
     print("Configuring logging...")
@@ -91,23 +91,17 @@ if __name__=='__main__':
         import logging
 
         formatter = logging.Formatter(
-            '[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s',
-            '%Y-%m-%d %H:%M:%S'
+            "[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s", "%Y-%m-%d %H:%M:%S"
         )
         stream_handler = logging.StreamHandler()
         stream_handler.setFormatter(formatter)
-        file_handler = logging.FileHandler('error_recovery_and_logging.log')
+        file_handler = logging.FileHandler("error_recovery_and_logging.log")
         file_handler.setFormatter(formatter)
         default_logger = logging.getLogger(trossen_arm.TrossenArmDriver.get_default_logger_name())
         default_logger.setLevel(logging.INFO)
         default_logger.addHandler(stream_handler)
         default_logger.addHandler(file_handler)
-        logger = logging.getLogger(
-            trossen_arm.TrossenArmDriver.get_logger_name(
-                MODEL,
-                SERV_IP
-            )
-        )
+        logger = logging.getLogger(trossen_arm.TrossenArmDriver.get_logger_name(MODEL, SERV_IP))
         logger.setLevel(logging.INFO)
         logger.addHandler(stream_handler)
         logger.addHandler(file_handler)
@@ -116,19 +110,14 @@ if __name__=='__main__':
     driver = trossen_arm.TrossenArmDriver()
 
     print("Configuring the driver...")
-    driver.configure(
-        MODEL,
-        trossen_arm.StandardEndEffector.wxai_v0_leader,
-        SERV_IP,
-        False
-    )
+    driver.configure(MODEL, trossen_arm.StandardEndEffector.wxai_v0_leader, SERV_IP, False)
 
     driver.set_all_modes(trossen_arm.Mode.position)
 
     sleep_positions = np.array(driver.get_all_positions())
     home_positions = np.zeros(driver.get_num_joints())
-    home_positions[1] = np.pi/2
-    home_positions[2] = np.pi/2
+    home_positions[1] = np.pi / 2
+    home_positions[2] = np.pi / 2
 
     try:
         print("Moving the arm to the home position...")
@@ -150,8 +139,8 @@ if __name__=='__main__':
         driver.configure(
             trossen_arm.Model.wxai_v0,
             trossen_arm.StandardEndEffector.wxai_v0_leader,
-            '192.168.1.2',
-            True
+            "192.168.1.2",
+            True,
         )
         # Simply calling driver.clear_error() would accomplish the same thing
         # driver.clear_error()

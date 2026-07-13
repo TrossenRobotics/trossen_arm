@@ -19,6 +19,14 @@ Install it with the ``cli`` extra:
 
     pip install "trossen-arm[cli]"
 
+.. tip::
+
+    To run the CLI without installing it, use `uvx <https://docs.astral.sh/uv/>`_:
+
+    .. code-block:: bash
+
+        uvx --from "trossen-arm[cli]" trossen-arm --help
+
 .. note::
 
     If you install ``trossen_arm`` without the ``[cli]`` extra, the ``trossen-arm`` command will still be available in your PATH but will print an error message if run:
@@ -36,16 +44,6 @@ Run ``trossen-arm --help`` to see all available commands:
 .. code-block:: bash
 
     trossen-arm --help
-
-.. tip::
-
-    To run the CLI without installing it, use `uvx <https://docs.astral.sh/uv/>`_, which fetches the package into a temporary environment.
-    Pass the ``[cli]`` extra with ``--from``, then append the command, for example:
-
-    .. code-block:: bash
-
-        uvx --from "trossen-arm[cli]" trossen-arm discover
-        uvx --from "trossen-arm[cli]" trossen-arm identify --ip 192.168.1.2
 
 Run ``trossen-arm usage`` for quick usage examples:
 

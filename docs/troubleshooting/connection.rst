@@ -77,28 +77,31 @@ The causes below are ordered roughly from most to least common.
 Arm Controller Not Powered On
 -----------------------------
 
-Check that the Arm Controller is powered on and its status LED is solid green or blue (not red).
+The Arm Controller is off or has not finished booting.
+
+-   Confirm it is powered on and its status LED is solid green or blue (not red).
 
 Arm Controller Not Connected to the Network
 -------------------------------------------
 
-Check that the Arm Controller is on the network and the cable is firmly seated on both ends.
-Inspect the M12 Ethernet connector for bent pins or other damage.
+The Arm Controller is not reachable on the network.
+
+-   Confirm the Ethernet cable is firmly seated on both ends.
+-   Inspect the M12 Ethernet connector for bent pins or other damage.
 
 Misconfigured Arm Controller IP Address
 ---------------------------------------
 
-Check that the IP address in the driver's configuration matches the address the Arm Controller is actually using.
+The IP address in the driver's configuration does not match the address the Arm Controller is actually using.
 
-.. tip::
-
-    Use the ``trossen-arm`` :doc:`/software_tools/cli` to find Arm Controllers on your network:
+-   Confirm the configured IP matches the Arm Controller's address.
+-   Discover controllers on your network with the ``trossen-arm`` CLI (see :doc:`/software_tools/cli`):
 
     .. code-block:: bash
 
         trossen-arm discover
 
-    As a fallback, you can scan a subnet with nmap, for example if the Arm Controller's IP address is in the ``192.168.1.X`` subnet:
+-   As a fallback, scan the subnet with nmap, for example:
 
     .. code-block:: bash
 
@@ -124,32 +127,34 @@ The driver and Arm Controller must be on the same network to communicate with ea
 Incompatible Driver Version
 ---------------------------
 
-The driver and Arm Controller firmware must share the same minor version number to be compatible.
+The driver and Arm Controller firmware have different minor versions.
 
-See the guide on updating the Arm Controller firmware in :doc:`/getting_started/firmware_upgrade` for more information.
+-   Update so the driver and firmware share the same minor version (see :doc:`/getting_started/firmware_upgrade`).
 
 Another Driver Owning the Arm Controller
 ----------------------------------------
 
-A driver that was configured but never cleaned up or destroyed keeps ownership of the Arm Controller, which blocks other instances from connecting.
-Make sure no other driver instance is still connected.
+A previous driver was configured but never cleaned up, so it still owns the Arm Controller and blocks new connections.
+
+-   Make sure no other driver instance is still connected.
 
 Resource Limitations
 --------------------
 
-If the host machine runs low on CPU, memory, or network bandwidth, the driver may not maintain a stable connection.
-Check that the host has sufficient free resources.
+The host machine is low on CPU, memory, or network bandwidth, so the driver cannot maintain a stable connection.
+
+-   Free up resources on the host.
 
 Outdated Arm Controller Firmware
 --------------------------------
 
-If the driver is killed in exceptional circumstances, Arm Controller firmware older than 1.9.2 inclusively is known to hang and not respond to the driver until it is power cycled.
+Arm Controller firmware 1.9.2 and older can hang after the driver is killed, and stays unresponsive until it is power-cycled.
 
-To resolve this, update the firmware to version 1.9.3 or later.
+-   Update the firmware to version 1.9.3 or later.
 
 Outdated Driver
 ---------------
 
-Drivers older than 1.9.0 inclusively will hang forever in cases like the Arm Controller being unresponsive or the Arm Controller being owned by another driver.
+Drivers 1.9.0 and older hang forever when the Arm Controller is unresponsive or owned by another driver.
 
-To resolve this, update the driver to version 1.9.1 or later, which will throw an exception instead of hanging forever.
+-   Update the driver to version 1.9.1 or later, which raises an exception instead of hanging.

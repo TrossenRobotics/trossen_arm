@@ -17,7 +17,7 @@ Required Hardware Components
 Touchscreen Display
 ^^^^^^^^^^^^^^^^^^^
 
-.. image:: touchscreen/images/touchscreen.jpg
+.. image:: images/touchscreen.jpg
    :width: 60%
    :alt: Touchscreen Display
    :align: center
@@ -34,7 +34,7 @@ Touchscreen Display
 Power Supply
 ^^^^^^^^^^^^
 
-.. image:: touchscreen/images/power_supply.jpg
+.. image:: images/power_supply.jpg
    :width: 40%
    :alt: Power Supply
    :align: center
@@ -49,7 +49,7 @@ Power Supply
 HDMI Cable
 ^^^^^^^^^^
 
-.. image:: touchscreen/images/hdmi_cable.jpg
+.. image:: images/hdmi_cable.jpg
    :width: 40%
    :alt: HDMI Cable
    :align: center
@@ -63,7 +63,7 @@ HDMI Cable
 USB Cable
 ^^^^^^^^^
 
-.. image:: touchscreen/images/usb_cable.jpg
+.. image:: images/usb_cable.jpg
    :width: 40%
    :alt: USB Cable for Touch Input
    :align: center
@@ -78,7 +78,7 @@ Physical Connection
 -------------------
 
 
-.. image:: touchscreen/images/ports.jpg
+.. image:: images/ports.jpg
    :width: 80%
    :alt: Connection Diagram showing cable connections
    :align: center

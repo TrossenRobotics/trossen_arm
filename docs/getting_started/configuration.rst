@@ -17,8 +17,13 @@ To get started, please make sure you have gone through the :doc:`software_setup`
 Overview
 ========
 
-The configurations fall into four categories, based on two factors: when the change takes effect, and whether it resets to default at the next boot.
-The categories are summarized in the following table.
+The configurations fall into four categories.
+Which category a configuration belongs to depends on two factors:
+
+-   when the change takes effect: immediately, or at the next boot
+-   whether it resets to default at the next boot
+
+These categories are summarized in the following table.
 
 .. list-table::
     :width: 100%

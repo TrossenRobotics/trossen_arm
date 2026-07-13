@@ -2,7 +2,11 @@
 Software Setup
 ==============
 
-This section walks you through preparing the host PC, the computer that runs your control software and communicates with the Arm Controller, by configuring its network and installing the Trossen Arm driver.
+This section prepares the host PC, the computer that runs your control software and communicates with the Arm Controller.
+It has two parts:
+
+-   **Network setup** for the host PC
+-   **Driver installation** (C++ or Python)
 
 .. contents::
     :local:

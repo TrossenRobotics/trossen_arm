@@ -8,7 +8,7 @@ What You Need
 =============
 
 To get started, please make sure you have gone through the :doc:`configuration`.
-For the driver's model and how a script is structured, see the :doc:`/programming_guide` (:doc:`/programming_guide/concepts` and :doc:`/programming_guide/writing_a_script`).
+For the driver's concepts and how a script is structured, see the :doc:`/programming_guide` (:doc:`/programming_guide/concepts` and :doc:`/programming_guide/writing_a_script`).
 
 Demos
 =====

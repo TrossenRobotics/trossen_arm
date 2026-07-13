@@ -92,9 +92,9 @@ We collect episodes using ``Interbotix/lerobot`` (LeRobot v2.1). For more inform
     We use ``Interbotix/lerobot`` (LeRobot v2.1) for data collection because it saves episodes in the LeRobot Dataset v2 format.
     This Dataset v2 format is compatible with OpenPI's training scripts, which use LeRobot v0.1.0.
     Newer dataset formats (v3.0+) have breaking changes that are not compatible with OpenPI's training pipeline.
-    
+
     **Version Summary:**
-    
+
     - LeRobot v2.1 → Produces Dataset v2 format → Compatible with OpenPI training (LeRobot v0.1.0)
 
 #. :ref:`tutorials/lerobot_plugin/setup:LeRobot Installation Guide`
@@ -328,7 +328,7 @@ Run this command from the project root:
 
 **Command Arguments Explained:**
 
-- **XLA_PYTHON_CLIENT_MEM_FRACTION=0.9**: Environment variable that limits JAX/XLA GPU memory usage to 90% of available VRAM. 
+- **XLA_PYTHON_CLIENT_MEM_FRACTION=0.9**: Environment variable that limits JAX/XLA GPU memory usage to 90% of available VRAM.
 - **<your_custom_config_name>**: Replace with the ``name`` field from your ``TrainConfig`` (e.g., ``pi0_trossen_transfer_block``)
 - **--exp-name**: A friendly name for this training run. Checkpoints will be saved to ``checkpoints/<exp-name>/``
 - **--overwrite**: If a checkpoint directory with the same name exists, overwrite it. Remove this flag if you want to resume training from an existing checkpoint.

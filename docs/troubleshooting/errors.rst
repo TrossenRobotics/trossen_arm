@@ -23,8 +23,7 @@ When a runtime error occurs, the Arm Controller sets all joints to idle as a saf
 
 .. note::
 
-    **Joint numbering.** Joints and motors are 0-indexed, and the gripper is the last joint (for example ``Joint 6`` on the 6-DOF WidowX AI).
-    So ``Joint 0`` is the first arm joint and the highest index is always the gripper.
+    **Joint numbering.** Joints are 0-indexed and the gripper is the last joint. See :ref:`programming_guide/concepts:joints and indexing` for details.
 
 .. tip::
 
@@ -51,8 +50,11 @@ The *Reported text* column is the exact string returned by ``get_error_informati
 Startup Errors
 --------------
 
-The Arm Controller could not bring up a hardware interface while booting, and will not accept control commands.
-Check cabling and power-cycle the Arm Controller; if the error persists, submit a support ticket.
+The Arm Controller could not bring up a hardware interface while booting, so it will not accept control commands.
+
+-   Check the cabling.
+-   Power-cycle the Arm Controller.
+-   If the error persists, submit a support ticket.
 
 .. list-table::
     :header-rows: 1
@@ -74,13 +76,13 @@ Check cabling and power-cycle the Arm Controller; if the error persists, submit 
 Controller-to-Arm Communication and Motor Faults
 ------------------------------------------------
 
-The Arm Controller could not exchange messages with a joint motor over the CAN bus, or a motor reported a fault.
+The Arm Controller could not exchange messages with a joint motor over the CAN bus, or a motor reported an error.
 These almost always point to the controller-to-arm cabling, the cabling inside the arm, or an individual motor.
+The log names the specific motor, and motors are 0-indexed (so ``motor 0`` is the first joint).
 
-The log names the specific motor, and the motors are 0-indexed (so ``motor 0`` is the first joint).
-Trace the cable running to that motor and reseat its connectors on both ends, then power-cycle the Arm Controller.
-If the error persists, replace that motor's cable, see the cable replacement guides in :doc:`/service`.
-If a specific joint keeps faulting after reseating and replacing its cable, submit a support ticket.
+-   Trace the cable to that motor and reseat its connectors on both ends, then power-cycle the Arm Controller.
+-   If the error persists, replace that motor's cable (see the cable replacement guides in :doc:`/service`).
+-   If a specific joint keeps failing after reseating and replacing its cable, submit a support ticket.
 
 .. list-table::
     :header-rows: 1
@@ -139,8 +141,10 @@ Driver and Firmware Protocol Errors
 -----------------------------------
 
 The Arm Controller received a command it does not recognize.
-This most often means the driver and Arm Controller firmware versions are mismatched, but it can also happen if another device on the network is sending unrecognized packets to the Arm Controller.
-Make sure the driver and firmware share the same minor version (see :doc:`/getting_started/firmware_upgrade`), and that no other device is sending traffic to it.
+This most often means the driver and firmware versions are mismatched, but it can also happen if another device on the network sends unrecognized packets to the Arm Controller.
+
+-   Make sure the driver and Arm Controller firmware share the same minor version (see :doc:`/getting_started/firmware_upgrade`).
+-   Make sure no other device is sending traffic to the Arm Controller.
 
 .. list-table::
     :header-rows: 1
@@ -166,9 +170,10 @@ Make sure the driver and firmware share the same minor version (see :doc:`/getti
 Command and Input Errors
 ------------------------
 
-The Arm Controller rejected an input you sent.
-These are usually scripting issues.
-The log names the joint and the offending value.
+The Arm Controller rejected an input you sent, usually because of a scripting issue.
+
+-   Read the log; it names the joint and the offending value.
+-   Correct the input in your script using the per-code guidance below.
 
 .. list-table::
     :header-rows: 1

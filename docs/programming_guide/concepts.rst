@@ -25,11 +25,11 @@ The Driver Lifecycle
 Every application follows the same arc:
 
 #.  **Construct** a :class:`trossen_arm::TrossenArmDriver`.
-#.  **Configure** it with ``configure(model, end_effector, serv_ip, clear_error, timeout)``, passing the robot :enum:`trossen_arm::Model`, the :class:`trossen_arm::EndEffector` properties, and the Arm Controller's IP address.
+#.  **Configure** it with :cpp:func:`~trossen_arm::TrossenArmDriver::configure`, passing the robot :enum:`trossen_arm::Model`, the :class:`trossen_arm::EndEffector` properties, and the Arm Controller's IP address.
     This opens the connection and, if ``clear_error`` is true, clears any existing error state.
 #.  **Use** the arm: set modes, send commands, read state.
-#.  **Clean up** with ``cleanup()`` (or let the destructor do it).
-    ``cleanup(true)`` or ``reboot_controller()`` also reboots the controller.
+#.  **Clean up** with :cpp:func:`~trossen_arm::TrossenArmDriver::cleanup` (or let the destructor do it).
+    Passing ``true`` to it, or calling :cpp:func:`~trossen_arm::TrossenArmDriver::reboot_controller`, also reboots the controller.
 
 Joints and Indexing
 ===================
@@ -67,7 +67,7 @@ Each joint is always in one of five modes, set independently:
 
 In any mode other than ``idle`` the Arm Controller's LED is solid blue (see :ref:`troubleshooting:LED Status`).
 
-Set modes with ``set_all_modes``, ``set_arm_modes``, ``set_gripper_mode``, or ``set_joint_modes`` (see the :doc:`/api/library_root`).
+Set modes with :cpp:func:`~trossen_arm::TrossenArmDriver::set_all_modes`, :cpp:func:`~trossen_arm::TrossenArmDriver::set_arm_modes`, :cpp:func:`~trossen_arm::TrossenArmDriver::set_gripper_mode`, or :cpp:func:`~trossen_arm::TrossenArmDriver::set_joint_modes`.
 The inputs you send must match the mode each joint is configured in, otherwise the Arm Controller rejects them (see :doc:`/troubleshooting/errors`).
 
 Commanding Motion
@@ -85,14 +85,14 @@ Cartesian commands additionally take an :enum:`trossen_arm::InterpolationSpace` 
         -   Joint space
         -   Cartesian space
     *   -   Position
-        -   ``set_all_positions``
-        -   ``set_cartesian_positions``
+        -   :cpp:func:`~trossen_arm::TrossenArmDriver::set_all_positions`
+        -   :cpp:func:`~trossen_arm::TrossenArmDriver::set_cartesian_positions`
     *   -   Velocity
-        -   ``set_all_velocities``
-        -   ``set_cartesian_velocities``
+        -   :cpp:func:`~trossen_arm::TrossenArmDriver::set_all_velocities`
+        -   :cpp:func:`~trossen_arm::TrossenArmDriver::set_cartesian_velocities`
     *   -   Effort
-        -   ``set_all_efforts``, ``set_all_external_efforts``
-        -   ``set_cartesian_external_efforts``
+        -   :cpp:func:`~trossen_arm::TrossenArmDriver::set_all_efforts`, :cpp:func:`~trossen_arm::TrossenArmDriver::set_all_external_efforts`
+        -   :cpp:func:`~trossen_arm::TrossenArmDriver::set_cartesian_external_efforts`
 
 The joint-space commands above use the ``all`` scope; ``arm``, ``gripper``, and ``joint`` variants exist for each (see the :doc:`/api/library_root`).
 
@@ -148,7 +148,7 @@ Cartesian quantities are 6-element vectors measured relative to the base frame:
 Reading State
 =============
 
-``get_robot_output()`` returns a :class:`trossen_arm::RobotOutput` snapshot:
+:cpp:func:`~trossen_arm::TrossenArmDriver::get_robot_output` returns a :class:`trossen_arm::RobotOutput` snapshot:
 
 .. list-table::
     :header-rows: 1
@@ -163,7 +163,7 @@ Reading State
     *   -   ``cartesian``
         -   End effector positions, velocities, and external efforts, in the base frame.
 
-For convenience, the same values are reachable through getters like ``get_arm_positions()``, ``get_cartesian_positions()``, or ``get_joint_effort(index)`` without handling the full struct.
+For convenience, the same values are reachable through getters like :cpp:func:`~trossen_arm::TrossenArmDriver::get_arm_positions`, :cpp:func:`~trossen_arm::TrossenArmDriver::get_cartesian_positions`, or :cpp:func:`~trossen_arm::TrossenArmDriver::get_joint_effort` without handling the full struct.
 
 Gravity and Friction Compensation
 =================================
@@ -183,7 +183,7 @@ Logging
 =======
 
 By default the driver logs to ``stderr`` in C++ and to Python's ``logging`` module.
-Set the verbosity with ``set_log_level(...)`` using a :enum:`trossen_arm::LogLevel` from ``trace`` to ``critical``, or route output to your own handler with ``set_logger_backend(...)`` (see the :doc:`/api/library_root`).
+Set the verbosity with :cpp:func:`~trossen_arm::TrossenArmDriver::set_log_level` using a :enum:`trossen_arm::LogLevel` from ``trace`` to ``critical``, or route output to your own handler with :cpp:func:`~trossen_arm::TrossenArmDriver::set_logger_backend`.
 The :ref:`getting_started/demo_scripts:`error_recovery_and_logging`_` demo shows both in practice.
 
 Configuration
@@ -192,7 +192,7 @@ Configuration
 Beyond motion, the driver exposes the arm's configuration: joint characteristics, end effector properties, joint limits, motor parameters, IP settings, and more.
 Some changes apply immediately, others at the next boot, and some persist across power cycles while others reset.
 The complete reference, including which is which, is in :doc:`/getting_started/configuration`.
-Configurations can be saved to and loaded from YAML with ``save_configs_to_file`` and ``load_configs_from_file``.
+Configurations can be saved to and loaded from YAML with :cpp:func:`~trossen_arm::TrossenArmDriver::save_configs_to_file` and :cpp:func:`~trossen_arm::TrossenArmDriver::load_configs_from_file`.
 
 What's Next
 ===========

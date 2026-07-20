@@ -71,6 +71,12 @@ Build C++ Demos (Optional)
 Build Python Bindings (Optional)
 ---------------------------------
 
+Install the Python development headers required by CMake's Python detection:
+
+.. code-block:: bash
+
+    sudo apt install -y python3-dev
+
 .. code-block:: bash
 
     # Create Python environment
@@ -200,6 +206,14 @@ Configuring the IP Address
 
 Enter the IP address of the PC running the trossen_vr application or demo in the **Robot PC IP Address** field, then press **Connect**.
 The headset and PC must be on the same network.
+
+.. note::
+
+    If the headset can't connect, allow the receiver UDP port through the PC's firewall (default: ``9000/udp``; update this if you changed ``ReceiverConfig.port``):
+
+    .. code-block:: bash
+
+        sudo ufw allow 9000/udp
 
 Ways of Operating
 =================

@@ -8,6 +8,7 @@ Tools and interfaces for working with Trossen Arm controllers beyond the core dr
 *   :doc:`software_tools/mcp_server` - Connect the documentation, API reference, and demo scripts to your AI assistant via the Trossen Arm MCP server.
 
 .. toctree::
+    :hidden:
     :maxdepth: 1
     :caption: Contents:
 

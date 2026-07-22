@@ -31,7 +31,7 @@ Before digging into the detailed guides, run through these checks:
     See :doc:`/getting_started/firmware_upgrade`.
 #.  **Single owner.** No other driver instance is currently connected to the Arm Controller.
 
-If the arm has faulted (solid or flashing red LED), see :doc:`troubleshooting/errors`.
+If the arm has errored (solid or flashing red LED), see :doc:`troubleshooting/errors`.
 
 LED Status
 ==========

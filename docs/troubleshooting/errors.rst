@@ -2,7 +2,7 @@
 Error Codes
 ===========
 
-When the arm detects a fault, it stops and reports an error code.
+When the arm detects an error, it stops and reports an error code.
 For how to read the arm's state from its LEDs, see :ref:`troubleshooting:LED Status`.
 
 Reading an Error
@@ -10,10 +10,9 @@ Reading an Error
 
 There are two levels of detail available when an error occurs:
 
--   **The error code** (the summary state, e.g. *Joint Limit Exceeded*).
-    Query the current error from the driver with ``get_error_information()``, which returns the exact text shown in the *Reported text* column of the `Error Code Reference`_ below.
+-   **The error code** (the summary state, e.g. *Joint Limit Exceeded*), shown in the log and listed in the *Reported text* column of the `Error Code Reference`_ below.
 -   **The detailed log line.** For runtime errors the Arm Controller also logs a message that names the *specific joint* and the *offending value* (for example the allowed range and what the motor actually reported).
-    Read it to pinpoint which joint faulted and by how much, e.g.
+    Read it to pinpoint which joint errored and by how much, e.g.
 
     .. code-block:: text
 
@@ -37,7 +36,7 @@ Clearing an Error
 After applying the relevant solution from the `Error Code Reference`_ below, do one of the following to clear the error:
 
 -   Restart the Arm Controller (recommended).
--   Clear the error at the driver's ``configure(...)`` call.
+-   Clear the error at the driver's ``configure(...)`` call or with ``clear_error()``.
 
 If the problem persists, please submit a support ticket at `Trossen Robotics Support <https://www.trossenrobotics.com/support>`_.
 
@@ -45,7 +44,7 @@ Error Code Reference
 ====================
 
 The codes are grouped into families that share a root cause and fix.
-The *Reported text* column is the exact string returned by ``get_error_information()``.
+The *Reported text* column is the exact error string the Arm Controller reports.
 
 Startup Errors
 --------------
@@ -63,15 +62,15 @@ The Arm Controller could not bring up a hardware interface while booting, so it 
     *   -   Code
         -   Name
         -   Reported text
-        -   What it means and what to do
+        -   What it means
     *   -   1
         -   Ethernet Init Failed
         -   ``Controller's Ethernet manager failed to initialize``
-        -   The Arm Controller's Ethernet manager failed to initialize at boot. Check the network cabling, then power-cycle the Arm Controller.
+        -   The Arm Controller's Ethernet manager failed to initialize at boot.
     *   -   2
         -   CAN Init Failed
         -   ``Controller's CAN interface failed to initialize``
-        -   The Arm Controller could not bring up the CAN bus to the arm at boot. Check that the controller-to-arm cable is fully seated on both ends and undamaged, then power-cycle. While in this state the Arm Controller only answers handshake and log requests, so you may also see code 12.
+        -   The Arm Controller could not bring up the CAN bus to the arm at boot. While in this state it only answers handshake and log requests, so you may also see code 12.
 
 Controller-to-Arm Communication and Motor Faults
 ------------------------------------------------

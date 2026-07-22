@@ -126,7 +126,7 @@ Joint quantities use these units:
         -   Nm
         -   N
 
-Cartesian quantities are 6-element vectors measured relative to the base frame:
+Cartesian quantities are 6-element vectors:
 
 .. list-table::
     :header-rows: 1
@@ -136,14 +136,14 @@ Cartesian quantities are 6-element vectors measured relative to the base frame:
         -   Layout
         -   Frame
     *   -   Position
-        -   ``[x, y, z]`` in m, then the rotation in angle-axis form (rad)
-        -   end effector pose in the base frame
+        -   translation (m), then angle-axis rotation (rad)
+        -   end effector frame, measured in the base frame
     *   -   Velocity
-        -   linear (m/s) then angular (rad/s)
-        -   base frame
+        -   linear (m/s), then angular (rad/s)
+        -   end effector frame, with respect to the base frame
     *   -   External effort
-        -   force (N) then torque (Nm)
-        -   applied at the end effector, in the base frame
+        -   force (N), then torque (Nm)
+        -   applied to the end effector frame, measured in the base frame
 
 Reading State
 =============

@@ -7,7 +7,7 @@ Properly configuring the arm for your application is crucial to ensure the arm o
 
 .. contents::
     :local:
-    :depth: 2
+    :depth: 1
 
 What You Need
 =============

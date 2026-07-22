@@ -3,10 +3,6 @@ Software Setup
 ==============
 
 This section prepares the host PC, the computer that runs your control software and communicates with the Arm Controller.
-It has two parts:
-
--   **Network setup** for the host PC
--   **Driver installation** (C++ or Python)
 
 .. contents::
     :local:

@@ -123,6 +123,11 @@ The log names the specific motor, and motors are 0-indexed (so ``motor 0`` is th
 Thermal Protection
 ------------------
 
+A motor overheated, and the Arm Controller set the arm to idle to protect it.
+
+-   Power off the Arm Controller and let the joint cool down.
+-   For sustained high-effort tasks, reduce the payload or duty cycle, or improve cooling.
+
 .. list-table::
     :header-rows: 1
     :widths: 5 18 32 45
@@ -130,11 +135,11 @@ Thermal Protection
     *   -   Code
         -   Name
         -   Reported text
-        -   What it means and what to do
+        -   What it means
     *   -   10
         -   Joint Overheated
         -   ``Joint overheated``
-        -   A motor's driver or rotor temperature exceeded its limit, and the Arm Controller set the arm to idle to protect it. Power off the Arm Controller and let the joint cool down. For sustained high-effort tasks, reduce the payload or duty cycle, or improve cooling.
+        -   A motor's driver or rotor temperature exceeded its limit.
 
 Driver and Firmware Protocol Errors
 -----------------------------------
@@ -170,9 +175,11 @@ Command and Input Errors
 ------------------------
 
 The Arm Controller rejected an input you sent, usually because of a scripting issue.
+The log names the joint and the offending value.
 
--   Read the log; it names the joint and the offending value.
--   Correct the input in your script using the per-code guidance below.
+-   Make sure each joint is in the mode your input targets before sending it.
+-   Keep inputs within the configured joint limits (see :ref:`getting_started/configuration:joint limits`).
+-   Guard against non-finite values (NaN or infinity), and avoid commanding near singular configurations in Cartesian space.
 
 .. list-table::
     :header-rows: 1
@@ -181,19 +188,19 @@ The Arm Controller rejected an input you sent, usually because of a scripting is
     *   -   Code
         -   Name
         -   Reported text
-        -   What it means and what to do
+        -   What it means
     *   -   14
         -   Robot Input Mode Mismatch
         -   ``Robot input with modes different than configured modes received``
-        -   The modes in your robot input do not match the configured modes. Set the joints to the intended modes before sending inputs, and make every input match the configured mode.
+        -   The modes in your robot input do not match the configured modes.
     *   -   15
         -   Joint Limit Exceeded
         -   ``Joint limit exceeded``
-        -   A joint's position, velocity, or effort went outside its configured limit (plus tolerance), and the Arm Controller set the arm to idle. The log states which joint, which limit, the allowed range, and the reported value. Keep inputs within the limits, see :ref:`getting_started/configuration:joint limits`. Note that velocities and efforts can spike near singular configurations in Cartesian space.
+        -   A joint's position, velocity, or effort went outside its configured limit (plus tolerance), and the Arm Controller set the arm to idle. The log states which joint, which limit, the allowed range, and the reported value.
     *   -   16
         -   Robot Input Infinite
         -   ``Robot input with infinite values received``
-        -   An input contained a non-finite value (NaN or infinity); the Arm Controller rejected it and kept the previous inputs. Check your scripting for uninitialized values or division by zero, and avoid commanding near singular configurations in Cartesian space.
+        -   An input contained a non-finite value (NaN or infinity); the Arm Controller rejected it and kept the previous inputs.
 
 .. note::
 

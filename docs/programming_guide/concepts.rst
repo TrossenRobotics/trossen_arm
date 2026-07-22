@@ -140,7 +140,7 @@ Cartesian quantities are 6-element vectors:
         -   end effector frame, measured in the base frame
     *   -   Velocity
         -   linear (m/s), then angular (rad/s)
-        -   end effector frame, with respect to the base frame
+        -   end effector frame, with respect to the base frame, measured in the base frame
     *   -   External effort
         -   force (N), then torque (Nm)
         -   applied to the end effector frame, measured in the base frame

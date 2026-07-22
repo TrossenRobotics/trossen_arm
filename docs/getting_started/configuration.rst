@@ -148,8 +148,8 @@ The default values are given in `default_configurations_wxai_v0.yaml`_.
 
 .. note:: The default value of the :ref:`getting_started/configuration:joint characteristics` is calibrated at manufacturing and different for each arm.
 
-How Configurations Work
-=======================
+Configuration Parameters
+========================
 
 Here is a breakdown of how the configurations affect the behavior of the arm.
 

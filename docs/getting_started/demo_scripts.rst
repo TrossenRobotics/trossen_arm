@@ -8,211 +8,12 @@ What You Need
 =============
 
 To get started, please make sure you have gone through the :doc:`configuration`.
-
-Scripting Philosophy
-====================
-
-A high level overview of scripting with the Trossen Arm driver is given here.
-The driver is designed to be flexible and easy to use for a wide range of applications.
-
-.. tabs::
-
-    .. code-tab:: c++
-
-        // Include the header files
-        #include "libtrossen_arm/trossen_arm.hpp"
-
-        int main(int argc, char** argv)
-        {
-          // Create a driver object
-          trossen_arm::TrossenArmDriver driver;
-
-          // Configure the driver
-          driver.configure(...);
-
-          // Beginning of an action
-
-          //   Get the modes of all joints if needed
-          //   Here xxxs are the modes of all the joints where xxx can be
-          //   - trossen_arm::Mode::position
-          //   - trossen_arm::Mode::velocity
-          //   - trossen_arm::Mode::external_effort
-          //   - trossen_arm::Mode::effort
-          auto xxxs = driver.get_modes();
-
-          //   Set the mode[s] of the joint[s]
-          //   Here yyy can be arm, gripper, all, or joint where
-          //   - all includes all the joints
-          //   - arm includes all joints but the gripper joint
-          //   - gripper includes just the gripper joint
-          //   - joint includes a specific zero-indexed joint
-          driver.set_yyy_mode[s](xxx);
-
-          //   Start moving the joint[s]
-
-          //     Some logic
-
-          //     Command the joint[s]
-          //
-          //     A joint command includes
-          //     - goal[s]
-          //     - time to reach the goal[s]
-          //     - whether to block until reaching goal[s]
-          //     - optionally the goal derivative[s]
-          //     where yyy and zzz must be compatible with the mode set above
-          //
-          //     Alternatively, if the arm joints all have one of the following modes
-          //     - trossen_arm::Mode::position
-          //       pose of the tool frame measured in the base frame
-          //     - trossen_arm::Mode::velocity
-          //       linear and angular velocities of the tool frame measured in the base frame
-          //     - trossen_arm::Mode::external_effort
-          //       linear and angular efforts to be applied at the tool frame
-          //       measured in the base frame while compensating for gravity and friction
-          //     We can also command the arm joints to move in Cartesian space
-          //     The Cartesian command includes an additional argument: interpolation space
-          //     - trossen_arm::InterpolationSpace::joint
-          //       Interpolate from start to goal state in joint space
-          //     - trossen_arm::InterpolationSpace::cartesian
-          //       Interpolate from start to goal state in Cartesian space
-          //
-          //     To avoid numerical issues, interpolation type used is determined automatically
-          //     based on the time to reach the goal[s]
-          //     - if longer than 0.2s, quintic polynomial interpolation is used for
-          //       position commands, cubic interpolation is used for velocity commands, and
-          //       linear interpolation is used for effort and external effort commands, with
-          //       goal derivatives defaulted to zero if not specified
-          //     - else if longer than 0.001s, linear interpolation is used
-          //     - else, no interpolation is used and the goal values are applied immediately
-          driver.set_yyy_zzz[s](...); | driver.set_cartesian_zzzs(...);
-
-          //     Get the robot outputs if needed
-          //     The robot output includes
-          //     - header
-          //       - id
-          //       - timestamp
-          //     - joint space states
-          //       - positions
-          //       - velocities
-          //       - external_efforts
-          //       - efforts
-          //       - compensation_efforts
-          //       - rotor_temperatures
-          //       - driver_temperatures
-          //     - Cartesian space states
-          //       - positions
-          //       - velocities
-          //       - external_efforts
-          trossen_arm::RobotOutput robot_output = driver.get_robot_output();
-
-          //     Some more logic
-
-          //   Stop moving the joint[s]
-
-          // End of an action
-
-          // More actions if needed
-        }
-
-    .. code-tab:: py
-
-        # Import the driver
-        import trossen_arm
-
-        if __name__ == "__main__":
-            # Create a driver object
-            driver = trossen_arm.TrossenArmDriver()
-
-            # Configure the driver
-            driver.configure(...)
-
-            # Beginning of an action
-
-            #     Get the modes of all joints if needed
-            #     Here xxxs are the modes of all the joints where xxx can be
-            #     - trossen_arm.Mode.position
-            #     - trossen_arm.Mode.velocity
-            #     - trossen_arm.Mode.external_effort
-            #     - trossen_arm.Mode.effort
-            xxxs = driver.get_modes()
-
-            #     Set the mode[s] of the joint[s]
-            #     Here yyy can be arm, gripper, all, or joint where
-            #     - all includes all the joints
-            #     - arm includes all joints but the gripper joint
-            #     - gripper includes just the gripper joint
-            #     - joint includes a specific zero-indexed joint
-            driver.set_yyy_mode[s](xxx)
-
-            #     Start moving the joint[s]
-
-            #         Some logic
-
-            #         Command the joint[s]
-            #
-            #         A joint command includes
-            #         - goal[s]
-            #         - time to reach the goal[s]
-            #         - whether to block until reaching goal[s]
-            #         - optionally the goal derivative[s]
-            #         where yyy and zzz must be compatible with the mode set above
-            #
-            #         Alternatively, if the arm joints all have one of the following modes
-            #         - trossen_arm.Mode.position
-            #           pose of the tool frame measured in the base frame
-            #         - trossen_arm.Mode.velocity
-            #           linear and angular velocities of the tool frame measured in the base frame
-            #         - trossen_arm.Mode.external_effort
-            #           linear and angular efforts to be applied at the tool frame
-            #           measured in the base frame while compensating for gravity and friction
-            #         We can also command the arm joints to move in Cartesian space
-            #         The Cartesian command includes an additional argument: interpolation space
-            #         - trossen_arm.InterpolationSpace.joint
-            #           Interpolate from start to goal state in joint space
-            #         - trossen_arm.InterpolationSpace.cartesian
-            #           Interpolate from start to goal state in Cartesian space
-            #
-            #         To avoid numerical issues, interpolation type used is determined automatically
-            #         based on the time to reach the goal[s]
-            #         - if longer than 0.2s, quintic polynomial interpolation is used for
-            #           position commands, cubic interpolation is used for velocity commands, and
-            #           linear interpolation is used for effort and external effort commands, with
-            #           goal derivatives defaulted to zero if not specified
-            #         - else if longer than 0.001s, linear interpolation is used
-            #         - else, no interpolation is used and the goal values are applied immediately
-            driver.set_yyy_zzz[s](...) | driver.set_cartesian_zzzs(...)
-
-            #         Get the robot outputs if needed
-            #         The robot output includes
-            #         - header
-            #           - id
-            #           - timestamp
-            #         - joint space states
-            #           - positions
-            #           - velocities
-            #           - external_efforts
-            #           - efforts
-            #           - compensation_efforts
-            #           - rotor_temperatures
-            #           - driver_temperatures
-            #         - Cartesian space states
-            #           - positions
-            #           - velocities
-            #           - external_efforts
-            robot_output: trossen_arm.RobotOutput = driver.get_robot_output()
-
-            #         Some more logic
-
-            #     Stop moving the joint[s]
-
-            # End of an action
-
-            # More actions if needed
+For the driver's concepts and how a script is structured, see the :doc:`/programming_guide` (:doc:`/programming_guide/concepts` and :doc:`/programming_guide/writing_a_script`).
 
 Demos
 =====
 
-After understanding the scripting philosophy, specific demos are provided to ground the concepts.
+These demos ground the concepts from the :doc:`/programming_guide` in ready-to-run examples.
 Demos of three levels of complexity are provided with the driver.
 
 .. contents::
@@ -265,7 +66,7 @@ This script tests transitions of the interpolation space.
 `arm_discovery`_
 ^^^^^^^^^^^^^^^^
 
-This script discovers all arm controllers connected on a given subnet.
+This script discovers all Arm Controllers connected on a given subnet.
 
 Intermediate
 ------------
@@ -352,54 +153,54 @@ This script demonstrates how to finetune the joint characteristic of one joint.
 
 This script demonstrates how to set the motor parameters of the arm.
 
-.. _`arm_discovery`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/arm_discovery.py
+.. _`arm_discovery`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/arm_discovery.py
 
-.. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_external_effort.py
+.. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/cartesian_external_effort.py
 
-.. _`cartesian_position`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_position.py
+.. _`cartesian_position`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/cartesian_position.py
 
-.. _`cartesian_velocity`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/cartesian_velocity.py
+.. _`cartesian_velocity`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/cartesian_velocity.py
 
-.. _`configuration_in_yaml`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/configuration_in_yaml.py
+.. _`configuration_in_yaml`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/configuration_in_yaml.py
 
-.. _`configure_cleanup`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/configure_cleanup.py
+.. _`configure_cleanup`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/configure_cleanup.py
 
-.. _`error_recovery_and_logging`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/error_recovery_and_logging.py
+.. _`error_recovery_and_logging`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/error_recovery_and_logging.py
 
 .. _`joint_characteristics_finetune`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/joint_characteristics_finetune.py
 
-.. _`gravity_compensation`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gravity_compensation.py
+.. _`gravity_compensation`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/gravity_compensation.py
 
-.. _`gravity_compensation_partial`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gravity_compensation_partial.py
+.. _`gravity_compensation_partial`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/gravity_compensation_partial.py
 
-.. _`gripper_torque`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/gripper_torque.py
+.. _`gripper_torque`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/gripper_torque.py
 
-.. _`mixed_interpolation_space`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/mixed_interpolation_space.py
+.. _`mixed_interpolation_space`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/mixed_interpolation_space.py
 
-.. _`move_two`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/move_two.py
+.. _`move_two`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/move_two.py
 
-.. _`move`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/move.py
+.. _`move`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/move.py
 
-.. _`set_factory_reset_flag`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_factory_reset_flag.py
+.. _`set_factory_reset_flag`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_factory_reset_flag.py
 
-.. _`set_ip_method`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_ip_method.py
+.. _`set_ip_method`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_ip_method.py
 
-.. _`set_joint_limits`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_joint_limits.py
+.. _`set_joint_limits`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_joint_limits.py
 
-.. _`set_manual_ip`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_manual_ip.py
+.. _`set_manual_ip`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_manual_ip.py
 
-.. _`set_mode`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_mode.py
+.. _`set_mode`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_mode.py
 
-.. _`set_joint_characteristics`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_joint_characteristics.py
+.. _`set_joint_characteristics`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_joint_characteristics.py
 
-.. _`set_motor_parameters`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/set_motor_parameters.py
+.. _`set_motor_parameters`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_motor_parameters.py
 
-.. _`simple_move`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/simple_move.py
+.. _`simple_move`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/simple_move.py
 
-.. _`teleoperation`: https://github.com/TrossenRobotics/trossen_arm/tree/main/demos/python/teleoperation.py
+.. _`teleoperation`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/teleoperation.py
 
 What's Next
 ===========
 
-Hopefully, the provided demos have put you at a good starting point for developing your own applications.
+These demos give you a foundation for developing your own applications.
 For more details on the driver API, please refer to the :doc:`/api/library_root`.

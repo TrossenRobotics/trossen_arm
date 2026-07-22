@@ -18,6 +18,7 @@ extensions = [
     'exhale',
     'sphinx_copybutton',
     'sphinx_multiversion',
+    'sphinx_reredirects',
     'sphinx_tabs.tabs',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.extlinks',
@@ -25,6 +26,24 @@ extensions = [
     'sphinxcontrib.mermaid',
     'sphinxcontrib.youtube',
     'sphinxcontrib.video',
+]
+
+# Redirects for pages that moved, so existing links to the old URLs do not break.
+# Generates meta-refresh stub HTML at each old path (works over file:// and http).
+redirects = {
+    "getting_started/cli": "../software_tools/cli.html",
+    "getting_started/mcp_server": "../software_tools/mcp_server.html",
+    "getting_started/totl": "../tutorials/totl.html",
+    "getting_started/touchscreen": "../tutorials/touchscreen.html",
+}
+
+# URLs that reject automated linkcheck requests (403/400/auth) but are valid for users.
+linkcheck_ignore = [
+    r"https://claude\.ai",
+    r"https://chatgpt\.com",
+    r"https://help\.openai\.com/.*",
+    r"https://developers\.meta\.com/.*",
+    r"https://huggingface\.co/settings/tokens",
 ]
 
 # Enable AutoSectionLabel

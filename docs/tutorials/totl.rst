@@ -106,7 +106,7 @@ You are now running a live environment.
     - Search for **Disks**
     - Open **Disks** (GNOME Disks)
 
-#.  In the left sidebar, select the internal SSD (Confirm by size — e.g., 2 TB NVMe)
+#.  In the left sidebar, select the internal SSD (confirm by size, for example 2 TB NVMe)
 #.  Click the **⋮** (three dots) menu → **Format Disk**
 #.  Use these settings:
 

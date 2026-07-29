@@ -800,5 +800,5 @@ Related Links
 - `Trossen Robotics <https://www.trossenrobotics.com/>`_
 - `Trossen Arm Documentation <https://docs.trossenrobotics.com/trossen_arm/>`_
 - `Trossen Arm Description (URDF) <https://github.com/TrossenRobotics/trossen_arm_description>`_
-- `MuJoCo Documentation <https://mujoco.readthedocs.io/>`_
+- `MuJoCo Documentation <https://mujoco.readthedocs.io/en/stable/>`_
 - `MuJoCo Python Bindings <https://mujoco.readthedocs.io/en/stable/python.html>`_

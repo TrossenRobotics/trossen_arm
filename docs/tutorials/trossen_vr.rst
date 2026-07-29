@@ -99,14 +99,14 @@ Installing the APK
 The Trossen VR Teleop app can be sideloaded onto a Meta Quest headset.
 First, enable Developer Mode on the headset (Settings > System > Developer), then use one of the methods below.
 
-Using Meta Quest Developer Hub — Windows only
+Using Meta Quest Developer Hub (Windows only)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Download and install `Meta Quest Developer Hub <https://developers.meta.com/horizon/downloads/package/oculus-developer-hub-win/>`_
 2. Connect the headset to your PC via USB
 3. In MQDH, go to **Device Manager** > **Apps** > **Install APK** and select ``assets/VR_Teleop.apk``
 
-Using ADB — Linux / Ubuntu
+Using ADB (Linux / Ubuntu)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Install ADB:
@@ -134,7 +134,7 @@ Using ADB — Linux / Ubuntu
    Disconnect and reconnect the headset USB cable after running these commands.
 
 3. Connect the headset to your PC via USB.
-   Put the headset on — a prompt will appear inside asking you to Allow USB Debugging.
+   Put the headset on. A prompt will appear inside asking you to Allow USB Debugging.
    Select Always allow from this computer and confirm.
 
 4. Verify the headset is detected:
@@ -224,21 +224,21 @@ Passthrough Mode
 ----------------
 
 Press the Passthrough button in the UI to enable the headset's cameras so you can see the real world around you.
-The UI panel will disappear when passthrough is active — press the Left Menu Button on the left controller to bring it back.
+The UI panel will disappear when passthrough is active. Press the Left Menu Button on the left controller to bring it back.
 
 Direct View (Headset Removed)
 ------------------------------
 
-Remove the headset and place it somewhere with a clear view of the controllers — overhead is recommended.
+Remove the headset and place it somewhere with a clear view of the controllers (overhead is recommended).
 This lets you observe the robot directly without a screen.
 
 .. warning::
 
-    **Proximity sensor limitation:** Meta does not currently provide a built-in option to disable the proximity sensor from within the app — the headset will go to sleep immediately when removed.
+    **Proximity sensor limitation:** Meta does not currently provide a built-in option to disable the proximity sensor from within the app, so the headset will go to sleep immediately when removed.
     We will update the app once Meta adds support for this.
     In the meantime, two workarounds are available:
 
-    * **Meta Quest Developer Hub — Windows only (up to 8 hours)**: Connect the headset to your PC via USB, open `Meta Quest Developer Hub <https://developers.meta.com/horizon/downloads/package/oculus-developer-hub-win/>`_, and disable the proximity sensor under Device Manager > Device actions.
+    * **Meta Quest Developer Hub (Windows only, up to 8 hours)**: Connect the headset to your PC via USB, open `Meta Quest Developer Hub <https://developers.meta.com/horizon/downloads/package/oculus-developer-hub-win/>`_, and disable the proximity sensor under Device Manager > Device actions.
       This keeps the display on for up to 8 hours.
     * **White tape method**: Cover the proximity sensor (located inside the headset near the nose bridge) with a small piece of white tape to trick the sensor into thinking the headset is worn.
 

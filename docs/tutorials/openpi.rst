@@ -80,7 +80,7 @@ This tutorial walks you through:
     This setup works because ``uv`` manages dependencies in isolated virtual environments for each project.
 
     The LeRobot BYOH Hardware Plugin source code for integrating Trossen AI arms (including BiWidowXAIFollower support) is available at:
-    `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen.git>`_
+    `TrossenRobotics/lerobot_trossen - main <https://github.com/TrossenRobotics/lerobot_trossen>`_
 
 Collect Episodes using LeRobot
 ==============================
@@ -92,9 +92,9 @@ We collect episodes using ``Interbotix/lerobot`` (LeRobot v2.1). For more inform
     We use ``Interbotix/lerobot`` (LeRobot v2.1) for data collection because it saves episodes in the LeRobot Dataset v2 format.
     This Dataset v2 format is compatible with OpenPI's training scripts, which use LeRobot v0.1.0.
     Newer dataset formats (v3.0+) have breaking changes that are not compatible with OpenPI's training pipeline.
-    
+
     **Version Summary:**
-    
+
     - LeRobot v2.1 → Produces Dataset v2 format → Compatible with OpenPI training (LeRobot v0.1.0)
 
 #. :ref:`tutorials/lerobot_plugin/setup:LeRobot Installation Guide`
@@ -102,7 +102,7 @@ We collect episodes using ``Interbotix/lerobot`` (LeRobot v2.1). For more inform
 
 Here is a recorded dataset using the above instructions:
 
-- `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/bimanual-widowxai-handover-cube>`_
+- `Bimanual WidowX-AI Handover Cube <https://huggingface.co/datasets/TrossenRoboticsCommunity/trossen_ai_stationary_handover_cube>`_
 
 You can also visualize the dataset using the following link. Just paste the dataset name in the input box.
 
@@ -328,7 +328,7 @@ Run this command from the project root:
 
 **Command Arguments Explained:**
 
-- **XLA_PYTHON_CLIENT_MEM_FRACTION=0.9**: Environment variable that limits JAX/XLA GPU memory usage to 90% of available VRAM. 
+- **XLA_PYTHON_CLIENT_MEM_FRACTION=0.9**: Environment variable that limits JAX/XLA GPU memory usage to 90% of available VRAM.
 - **<your_custom_config_name>**: Replace with the ``name`` field from your ``TrainConfig`` (e.g., ``pi0_trossen_transfer_block``)
 - **--exp-name**: A friendly name for this training run. Checkpoints will be saved to ``checkpoints/<exp-name>/``
 - **--overwrite**: If a checkpoint directory with the same name exists, overwrite it. Remove this flag if you want to resume training from an existing checkpoint.
@@ -350,8 +350,8 @@ Checkpoints are stored in the ``checkpoints`` folder at the root of your project
 
 To use a pretrained policy, download and extract the following checkpoint into your ``checkpoints`` directory:
 
-- `π0 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0_trossen_transfer_block>`_
-- `π0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05_trossen_transfer_block>`_
+- `π0 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi0-block-transfer-trossen-ai-openpi>`_
+- `π0.5 Fine-Tuned Checkpoint on Hugging Face <https://huggingface.co/TrossenRoboticsCommunity/pi05-block-transfer-trossen-ai-openpi>`_
 
 Running Inference with Your Trained Policy
 ==========================================

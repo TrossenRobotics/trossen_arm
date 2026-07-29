@@ -5,6 +5,7 @@ pip
 sphinx
 sphinx-copybutton
 sphinx-multiversion
+sphinx-reredirects
 sphinx-rtd-theme
 sphinx-tabs
 sphinxcontrib-mermaid

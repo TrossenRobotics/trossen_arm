@@ -38,7 +38,7 @@ Download the assembly guide or watch the YouTube video for your arm model and va
 
 .. warning::
 
-    If using a network switch to interface with multiple arms, make sure to only the connect the devices required by your application.
+    If using a network switch to interface with multiple arms, connect only the devices your application requires.
     Low-quality connections can cause degraded performance.
 
 .. note::

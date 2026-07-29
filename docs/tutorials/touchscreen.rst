@@ -24,7 +24,7 @@ Touchscreen Display
 
 **Specifications:**
 
-- **Model**: `JUNEBOX 13.3" Portable Touch Screen Monitor <https://a.co/d/0eyPT16z>`_
+- **Model**: `JUNEBOX 13.3" Portable Touch Screen Monitor <https://www.amazon.com/dp/B0D8WCKWGP>`_
 - **Size**: 13.3"
 - **Resolution**: 1080 FHD
 - **Touch Type**: Capacitive Multi-Touch
@@ -94,8 +94,8 @@ Follow these steps to physically connect the touchscreen display:
 #. **Connect the USB Cable for Touch Input**
 
    - Locate the USB input port on the touchscreen display.
-   - Connect the USB Type-A end to the touchscreen display
-   - Connect the USB Type-B end to an available USB port on your computer
+   - Connect the USB Type-B end to the USB input port on the touchscreen display
+   - Connect the USB Type-A end to an available USB port on your computer
 
 #. **Connect the Power Supply**
 

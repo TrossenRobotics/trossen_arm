@@ -55,7 +55,8 @@ If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``
         .. code-block:: bash
 
             python lerobot/scripts/visualize_dataset_html.py \
-                --repo-id <local_dir_name>/trossen_ai_stationary_test \
+                --repo-id ${HF_USER}/trossen_ai_stationary_test \
+                --root /path/to/trossen_ai_stationary_test \
                 --load-from-hf-hub 0
 
     .. group-tab:: Trossen AI Mobile
@@ -63,7 +64,8 @@ If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``
         .. code-block:: bash
 
             python lerobot/scripts/visualize_dataset_html.py \
-                --repo-id <local_dir_name>/trossen_ai_mobile_test \
+                --repo-id ${HF_USER}/trossen_ai_mobile_test \
+                --root /path/to/trossen_ai_mobile_test \
                 --load-from-hf-hub 0
 
     .. group-tab:: Trossen AI Solo
@@ -71,5 +73,9 @@ If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``
         .. code-block:: bash
 
             python lerobot/scripts/visualize_dataset_html.py \
-                --repo-id <local_dir_name>/trossen_ai_solo_test \
+                --repo-id ${HF_USER}/trossen_ai_solo_test \
+                --root /path/to/trossen_ai_solo_test \
                 --load-from-hf-hub 0
+
+``--repo-id`` remains the dataset identifier stored in its metadata. Set ``--root``
+to the same custom local path used when recording the dataset.

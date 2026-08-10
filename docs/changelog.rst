@@ -307,6 +307,16 @@ Trossen Arm Driver
 Trossen Arm Controller Firmware
 ===============================
 
+1.11.0
+------
+
+- Moved :ref:`getting_started/configuration:links` and :ref:`getting_started/configuration:joints` to EEPROM so they persist across power cycles.
+- Set the :member:`trossen_arm::StandardEndEffector::wxai_v0_leader_20260626` end effector as default.
+- The links and joints differ by how an Arm Controller reaches this firmware:
+
+  - Upgraded over an existing EEPROM: :member:`trossen_arm::StandardLinks::wxai_v0_20250509` and :member:`trossen_arm::StandardJoints::wxai_v0_20250509`.
+  - Flashed at manufacture over a blank EEPROM: :member:`trossen_arm::StandardLinks::wxai_v0_20260626` and :member:`trossen_arm::StandardJoints::wxai_v0_20260626`, set and saved as default.
+
 1.10.0
 ------
 

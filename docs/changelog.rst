@@ -310,8 +310,7 @@ Trossen Arm Controller Firmware
 1.11.1
 ------
 
-- Pinned the build toolchain, the PlatformIO core, and every library dependency, so a clean checkout of a release tag rebuilds the published firmware image byte for byte.
-  No functional change from v1.11.0.
+- Pinned build dependencies.
 
 1.11.0
 ------

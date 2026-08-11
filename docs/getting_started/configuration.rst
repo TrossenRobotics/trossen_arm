@@ -518,7 +518,7 @@ Links
 New in version :ref:`changelog:1.11.0`.
 
 The links define the inertial properties of every link of the arm: the base link, every arm link, the palm, and both finger links, in that order.
-The Arm Controller feeds them to its inverse dynamics model, so they determine how well gravity and inertia are compensated.
+The Arm Controller feeds the properties to its inverse dynamics model, so they specify how gravity and inertia are compensated.
 
 The definition of :class:`trossen_arm::Link` follows the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_, same as the :ref:`getting_started/configuration:link properties` of the end effector.
 

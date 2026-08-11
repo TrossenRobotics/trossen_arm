@@ -534,7 +534,7 @@ The definition of :class:`trossen_arm::Link` follows the `URDF convention <https
 
 .. note::
 
-    The standard links are nominal values from the CAD model of an arm variant, so they only approximate the arm at hand.
+    The standard links are nominal values from the CAD model of an arm variant, so they only approximate any specific arm.
     Measure or identify them per arm if the compensation accuracy matters for your application.
 
 Ranges:

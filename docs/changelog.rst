@@ -60,6 +60,12 @@ Trossen Arm Driver
           -   ``20250509``, ``20260626``
           -   no undated name
 
+1.10.1
+------
+
+- Log messages now render ``bool`` as ``true`` and ``false``, and 8-bit integers as decimals instead of characters.
+- Added wheel builds for Python 3.14 on Linux (x86_64 and arm64) and macOS (Apple Silicon).
+
 1.10.0
 ------
 

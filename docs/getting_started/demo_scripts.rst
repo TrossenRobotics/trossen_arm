@@ -153,6 +153,16 @@ This script demonstrates how to finetune the joint characteristic of one joint.
 
 This script demonstrates how to set the motor parameters of the arm.
 
+`set_links`_
+^^^^^^^^^^^^
+
+This script demonstrates how to set the link inertial properties of the arm.
+
+`set_joints`_
+^^^^^^^^^^^^^
+
+This script demonstrates how to set the joint kinematic properties of the arm.
+
 .. _`arm_discovery`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/arm_discovery.py
 
 .. _`cartesian_external_effort`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/cartesian_external_effort.py
@@ -186,6 +196,10 @@ This script demonstrates how to set the motor parameters of the arm.
 .. _`set_ip_method`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_ip_method.py
 
 .. _`set_joint_limits`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_joint_limits.py
+
+.. _`set_joints`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_joints.py
+
+.. _`set_links`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_links.py
 
 .. _`set_manual_ip`: https://github.com/TrossenRobotics/trossen_arm/blob/main/demos/python/set_manual_ip.py
 

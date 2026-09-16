@@ -37,6 +37,8 @@ These categories are summarized in the following table.
         -   Applied at Next Boot
     *   -   Remain Unchanged After Reboot
         -   -   :ref:`getting_started/configuration:joint characteristics`
+            -   :ref:`getting_started/configuration:links`
+            -   :ref:`getting_started/configuration:joints`
         -   -   :ref:`getting_started/configuration:ip_method`
             -   :ref:`getting_started/configuration:manual_ip, dns, gateway, subnet`
     *   -   Reset to Default After Reboot
@@ -89,6 +91,8 @@ An example of a configuration script is given here.
           // - joint_modes
           // - joint_limits
           // - motor_parameters
+          // - links
+          // - joints
           // - algorithm_parameter
           auto xxx = driver.get_xxx(...);
           driver.set_xxx(...);
@@ -130,6 +134,8 @@ An example of a configuration script is given here.
             # - joint_modes
             # - joint_limits
             # - motor_parameters
+            # - links
+            # - joints
             # - algorithm_parameter
             xxx = driver.get_xxx(...)
             driver.set_xxx(...)
@@ -505,6 +511,70 @@ A guideline to tune the motor parameters is given below.
     2.  Zero out the velocity loop :member:`trossen_arm::PIDParameter::ki` and :member:`trossen_arm::PIDParameter::imax`
 
 Ranges: :math:`\mathbb{R}`
+
+Links
+-----
+
+New in version :ref:`changelog:1.11.0`.
+
+The links define the inertial properties of every link of the arm: the base link, every arm link, the palm, and both finger links, in that order.
+The Arm Controller feeds the properties to its inverse dynamics model, so they specify how gravity and inertia are compensated.
+
+The definition of :class:`trossen_arm::Link` follows the `URDF convention <https://wiki.ros.org/urdf/XML/link>`_, same as the :ref:`getting_started/configuration:link properties` of the end effector.
+
+.. tip::
+
+    Commonly used links are provided in :class:`trossen_arm::StandardLinks`.
+    Check out the :ref:`getting_started/demo_scripts:`set_links`_` demo for details.
+
+.. note::
+
+    The last three links, i.e., the palm and both finger links, are overwritten from the :ref:`getting_started/configuration:end effector` configuration whenever the driver configures.
+    Set those three through the end effector instead, and use this configuration for the base link and the arm links.
+
+.. note::
+
+    The standard links are nominal values from the CAD model of an arm variant, so they only approximate any specific arm.
+    Measure or identify them per arm if the compensation accuracy matters for your application.
+
+Ranges:
+
+-   :member:`trossen_arm::Link::mass`: :math:`[0, \infty)`
+-   :member:`trossen_arm::Link::inertia`: :math:`\mathbb{R}^9`
+-   :member:`trossen_arm::Link::origin_xyz`: :math:`\mathbb{R}^3`
+-   :member:`trossen_arm::Link::origin_rpy`: :math:`\mathbb{R}^3`
+
+Joints
+------
+
+New in version :ref:`changelog:1.11.0`.
+
+The joints define the kinematic properties of every arm joint and both finger joints, in that order.
+Together with the :ref:`getting_started/configuration:links`, they define the kinematic chain used for forward and inverse kinematics as well as inverse dynamics.
+
+Each :class:`trossen_arm::Joint` places the joint frame relative to its parent link frame via :member:`trossen_arm::Joint::origin_xyz` and :member:`trossen_arm::Joint::origin_rpy`, and describes the motion it allows via :member:`trossen_arm::Joint::axis`, the unit twist of the joint expressed in the joint frame.
+The first three elements of the axis are the angular component and the last three are the linear component, e.g., a joint rotating about the frame's z axis has an axis of :math:`(0, 0, 1, 0, 0, 0)`.
+
+.. tip::
+
+    Commonly used joints are provided in :class:`trossen_arm::StandardJoints`.
+    Check out the :ref:`getting_started/demo_scripts:`set_joints`_` demo for details.
+
+.. note::
+
+    The lateral placement of both finger joints comes from :member:`trossen_arm::EndEffector::offset_finger_left` and :member:`trossen_arm::EndEffector::offset_finger_right`, which override the second element of the corresponding :member:`trossen_arm::Joint::origin_xyz` stored here.
+    See :ref:`getting_started/configuration:finger offsets`.
+
+.. warning::
+
+    The joints define where the arm believes its own links are.
+    Inaccurate values degrade Cartesian tracking and gravity compensation everywhere, so change them only with a measurement to back the change.
+
+Ranges:
+
+-   :member:`trossen_arm::Joint::axis`: :math:`\mathbb{R}^6`
+-   :member:`trossen_arm::Joint::origin_xyz`: :math:`\mathbb{R}^3`
+-   :member:`trossen_arm::Joint::origin_rpy`: :math:`\mathbb{R}^3`
 
 Algorithm Parameter
 -------------------

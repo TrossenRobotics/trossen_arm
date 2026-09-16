@@ -5,6 +5,61 @@ Changelog
 Trossen Arm Driver
 ==================
 
+1.11.0
+------
+
+- Moved :ref:`getting_started/configuration:links` and :ref:`getting_started/configuration:joints` to EEPROM so they persist across power cycles.
+
+  .. list-table::
+      :header-rows: 1
+      :align: center
+
+      *   -   Configuration
+          -   Class
+          -   Setter
+          -   Getter
+      *   -   Links
+          -   :class:`trossen_arm::Link`
+          -   :func:`trossen_arm::TrossenArmDriver::set_links`
+          -   :func:`trossen_arm::TrossenArmDriver::get_links`
+      *   -   Joints
+          -   :class:`trossen_arm::Joint`
+          -   :func:`trossen_arm::TrossenArmDriver::set_joints`
+          -   :func:`trossen_arm::TrossenArmDriver::get_joints`
+
+  Both are exchanged via the configuration YAML file and demonstrated in the :ref:`getting_started/demo_scripts:`set_links`_` and :ref:`getting_started/demo_scripts:`set_joints`_` demos.
+- Added :class:`trossen_arm::StandardLinks` and :class:`trossen_arm::StandardJoints`, and dated the members of :class:`trossen_arm::StandardEndEffector`.
+  For more details, see :ref:`getting_started/configuration:end effector`.
+
+  .. list-table::
+      :header-rows: 1
+      :align: center
+
+      *   -   Standard set
+          -   Dated suffixes
+          -   Undated name resolves to
+      *   -   :member:`trossen_arm::StandardEndEffector::wxai_v0_base`
+          -   ``20250509``, ``20260626``
+          -   ``20260626``
+      *   -   :member:`trossen_arm::StandardEndEffector::wxai_v0_leader`
+          -   ``20250509``, ``20260626``
+          -   ``20260626``
+      *   -   :member:`trossen_arm::StandardEndEffector::wxai_v0_follower`
+          -   ``20250509``, ``20260626``
+          -   ``20260626``
+      *   -   :member:`trossen_arm::StandardEndEffector::vxai_v0_base`
+          -   ``20250509``
+          -   ``20250509``
+      *   -   :member:`trossen_arm::StandardEndEffector::no_gripper`
+          -   ``20250509``
+          -   ``20250509``
+      *   -   :class:`trossen_arm::StandardLinks` ``wxai_v0``
+          -   ``20250509``, ``20260626``
+          -   no undated name
+      *   -   :class:`trossen_arm::StandardJoints` ``wxai_v0``
+          -   ``20250509``, ``20260626``
+          -   no undated name
+
 1.10.0
 ------
 
@@ -251,6 +306,21 @@ Trossen Arm Driver
 
 Trossen Arm Controller Firmware
 ===============================
+
+1.11.1
+------
+
+- Pinned build dependencies.
+
+1.11.0
+------
+
+- Moved :ref:`getting_started/configuration:links` and :ref:`getting_started/configuration:joints` to EEPROM so they persist across power cycles.
+- Set the :member:`trossen_arm::StandardEndEffector::wxai_v0_leader_20260626` end effector as default.
+- The links and joints differ by how an Arm Controller reaches this firmware:
+
+  - Upgraded over an existing EEPROM: :member:`trossen_arm::StandardLinks::wxai_v0_20250509` and :member:`trossen_arm::StandardJoints::wxai_v0_20250509`.
+  - Flashed at manufacture over a blank EEPROM: :member:`trossen_arm::StandardLinks::wxai_v0_20260626` and :member:`trossen_arm::StandardJoints::wxai_v0_20260626`, set and saved as default.
 
 1.10.0
 ------

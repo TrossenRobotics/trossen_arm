@@ -11,9 +11,7 @@ First-party Trossen applications and interfaces.
 
 .. toctree::
     :maxdepth: 1
-    :caption: Trossen Applications:
 
-    tutorials/trossen_data_collection_ui.rst
     tutorials/touchscreen.rst
     tutorials/trossen_vr.rst
     tutorials/totl.rst
@@ -25,7 +23,6 @@ Collect data and train imitation learning policies.
 
 .. toctree::
     :maxdepth: 1
-    :caption: Learning Frameworks:
 
     tutorials/lerobot_plugin.rst
     tutorials/lerobot.rst
@@ -38,7 +35,6 @@ Simulate the Trossen Arm for development, testing, and sim-to-real workflows.
 
 .. toctree::
     :maxdepth: 1
-    :caption: Simulation:
 
     tutorials/trossen_arm_mujoco.rst
     tutorials/trossen_ai_isaac.rst
@@ -50,6 +46,5 @@ Use the Trossen Arm with the ROS 2 ecosystem.
 
 .. toctree::
     :maxdepth: 1
-    :caption: ROS 2:
 
     tutorials/ros2.rst

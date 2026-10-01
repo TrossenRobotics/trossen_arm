@@ -100,7 +100,6 @@ The log names the specific motor, and motors are 0-indexed (so ``motor 0`` is th
         -   Joint Feedback Failed
         -   ``Controller's CAN interface failed to receive a message``
         -   The Arm Controller stopped receiving feedback from a motor.
-            It is reported after 2 consecutive losses, with a log line such as ``2 consecutive feedback losses for J4310_24V motor 4.``
     *   -   5
         -   Joint Clear Error Failed
         -   ``Joint clear error command failed``

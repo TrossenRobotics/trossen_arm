@@ -127,11 +127,6 @@ Damaged or Loose Cable
 
 A cable is damaged or loose, so it loses contact at some positions.
 When the arm reaches one of those positions, a motor stops responding to the Arm Controller.
-After two missed replies in a row, the controller reports an error such as:
-
-.. code-block:: text
-
-    [Motor Interface] 2 consecutive feedback losses for J4310_24V motor 4.
 
 To find which joint has the bad cable:
 

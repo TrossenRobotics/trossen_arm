@@ -15,7 +15,7 @@ Cable Replacement Guides
 ========================
 
 See the `cable replacement guides`_ for detailed instructions on how to replace the cables in the Trossen Arm.
-To find which cable is damaged, see :ref:`troubleshooting/errors:Damaged Cable`.
+To find which cable is damaged or loose, see :ref:`troubleshooting/errors:Damaged or Loose Cable`.
 
 .. _cable replacement guides: https://drive.google.com/drive/folders/1fTkOV6DC5rlOQEOLTlptDM7j4ATTRVNL
 

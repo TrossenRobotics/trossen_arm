@@ -80,7 +80,7 @@ These almost always point to the controller-to-arm cabling, the cabling inside t
 The log names the specific motor, and motors are 0-indexed (so ``motor 0`` is the first joint).
 
 -   Trace the cable to that motor and reseat its connectors on both ends, then power-cycle the Arm Controller.
--   If the error appears when the arm moves, see `Damaged Cable`_ to find the bad cable.
+-   If the error appears when the arm moves, see `Damaged or Loose Cable`_ to find the bad cable.
 -   If the error persists, replace that motor's cable (see the cable replacement guides in :doc:`/service`).
 -   If a specific joint keeps failing after reseating and replacing its cable, submit a support ticket.
 
@@ -123,10 +123,10 @@ The log names the specific motor, and motors are 0-indexed (so ``motor 0`` is th
         -   A motor reported that it disabled itself; the Arm Controller sets it to idle.
             Check the log for the motor's own error code.
 
-Damaged Cable
-^^^^^^^^^^^^^
+Damaged or Loose Cable
+^^^^^^^^^^^^^^^^^^^^^^
 
-A cable is damaged or loosely connected, so it loses contact at some positions.
+A cable is damaged or loose, so it loses contact at some positions.
 When the arm reaches one of those positions, a motor stops responding to the Arm Controller.
 After two missed replies in a row, the controller reports an error such as:
 
@@ -141,9 +141,9 @@ To find which joint has the bad cable:
 #.  Move each joint one at a time through its full range of motion.
 #.  Lightly disturb cables that are visible and accessible, especially at the connector ends.
 #.  Watch the driver output or the Arm Controller's status LED which turns solid red on an error (see :ref:`troubleshooting:LED Status`).
-    When an error appears, note the joint.
+#.  If the error appears multiple times for the same joint, the cable is likely damaged or loose.
 
-If the error appears multiple times for the same joint, the cable is likely damaged or loose.
+Given a damaged or loose cable, we recommend the following:
 
 -   Reseat the cable's connectors on both ends, then power-cycle the Arm Controller.
 -   If the error continues, replace the cable (see :doc:`/service`).

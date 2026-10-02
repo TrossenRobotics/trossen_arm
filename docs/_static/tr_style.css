@@ -222,3 +222,8 @@ label.static-container:hover .static {
 .centered-table td {
     text-align: center;
 }
+
+/* shrink small mermaid diagrams */
+pre.mermaid svg {
+    max-height: 500px;
+}

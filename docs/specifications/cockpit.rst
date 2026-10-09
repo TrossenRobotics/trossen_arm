@@ -29,7 +29,7 @@ The Cockpit is a rolling teleoperation stand that holds two :doc:`Glides <glide>
             +------------------+--------------------------------------------+
             | Weight           | 9 kg                                       |
             +------------------+--------------------------------------------+
-            | Input voltage    | 24 V                                       |
+            | Input Voltage    | 24 V                                       |
             +------------------+--------------------------------------------+
             | Display          | 10" touchscreen, connected by HDMI and USB |
             +------------------+--------------------------------------------+
@@ -37,5 +37,5 @@ The Cockpit is a rolling teleoperation stand that holds two :doc:`Glides <glide>
             +------------------+--------------------------------------------+
             | Ports            | User network access and user USB           |
             +------------------+--------------------------------------------+
-            | Onboard computer | Raspberry Pi 5                             |
+            | Onboard Computer | Raspberry Pi 5                             |
             +------------------+--------------------------------------------+

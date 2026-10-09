@@ -106,11 +106,11 @@ The controller base has three M12 connectors with different functions.
 
   * - Coding
     - Carries
-  * - X code
+  * - X Code
     - Network
-  * - A code
+  * - A Code
     - GPIO
-  * - L code
+  * - L Code
     - Power
 
 The base also has the arm's power switch, a status LED, and a small screen that can display and manage the arm's state and configuration.

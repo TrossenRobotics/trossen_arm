@@ -2,8 +2,10 @@
 Stationary AI Kit
 =================
 
-Drawings
+Overview
 ========
+
+Dimension drawing for the Stationary AI Kit.
 
 .. image:: images/stationary_ai.png
   :alt: Stationary AI Kit

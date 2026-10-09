@@ -46,3 +46,13 @@ docs-multiversion: clean
 	sphinx-multiversion -D 'exhale_args.containmentFolder=$${sourcedir}/api' docs docs/build/html
 	@echo "<html><head><meta http-equiv=\"refresh\" content=\"0; url=main/index.html\" /></head></html>" > docs/build/html/index.html
 .PHONY: docs-multiversion
+
+# Serve the docs at http://localhost:$(DOCS_PORT)
+DOCS_PORT ?= 8899
+
+docs-serve:
+	cd docs && uv run --no-project --with-requirements requirements.txt --with sphinx-autobuild \
+		sphinx-autobuild . build/html --port $(DOCS_PORT) \
+		--ignore "$(CURDIR)/docs/api/*" \
+		--ignore "$(CURDIR)/docs/build/*"
+.PHONY: docs-serve

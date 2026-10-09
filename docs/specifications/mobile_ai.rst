@@ -2,8 +2,10 @@
 Mobile AI Kit
 =============
 
-Drawings
+Overview
 ========
+
+Dimension drawings for the Mobile AI Kit, in its minimum and maximum configurations.
 
 Minimum Configuration
 =====================

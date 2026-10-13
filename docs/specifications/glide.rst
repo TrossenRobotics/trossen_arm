@@ -23,19 +23,19 @@ The handle has a trigger, buttons, a joystick, and a vibration motor.
       - .. table::
             :align: center
 
-            +--------------------------------------------------------------+
-            | **Glide**                                                    |
-            +====================+=========================================+
-            | Degrees of Freedom | 6 passive joints + actuated trigger     |
-            +--------------------+-----------------------------------------+
-            | Held Weight        | About 280 g, with cam and spring assist |
-            +--------------------+-----------------------------------------+
-            | Nominal Voltage    | 24 V                                    |
-            +--------------------+-----------------------------------------+
-            | Encoder Resolution | 14-bit                                  |
-            +--------------------+-----------------------------------------+
-            | Communication      | Ethernet                                |
-            +--------------------+-----------------------------------------+
+            +-------------------------------------------------------------+
+            | **Glide**                                                   |
+            +====================+========================================+
+            | Degrees of Freedom | 6 passive joints + actuated trigger    |
+            +--------------------+----------------------------------------+
+            | Held Weight        | About 280 g with cam and spring assist |
+            +--------------------+----------------------------------------+
+            | Nominal Voltage    | 24 V                                   |
+            +--------------------+----------------------------------------+
+            | Encoder Resolution | 14-bit                                 |
+            +--------------------+----------------------------------------+
+            | Communication      | Ethernet                               |
+            +--------------------+----------------------------------------+
 
 Handle I/O
 ==========
@@ -47,7 +47,7 @@ Handle I/O
   * - Feature
     - Value
   * - Trigger
-    - Position, normalized 0 (closed) to 1 (open), or absolute in rad
+    - Normalized position 0 (closed) to 1 (open); absolute position in rad
   * - Joystick
     - 2-axis, 0 to 4095 per axis
   * - Buttons

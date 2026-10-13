@@ -9,7 +9,7 @@ Workbench
 Overview
 ========
 
-The Workbench is a portable, bimanual platform with two WidowX arms and an onboard computer.
+The Workbench is a portable, bimanual platform with two :doc:`WidowX arms <arms>` and an onboard computer.
 It can be clamped or bolted to a work surface.
 
 .. list-table::

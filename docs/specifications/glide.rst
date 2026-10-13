@@ -53,7 +53,7 @@ Handle I/O
   * - Buttons
     - 5: 4 LED buttons and 1 joystick press
   * - Button LEDs
-    - Off, solid, or breathing; brightness 0 to 255
+    - Off, solid, or breathing modes; brightness 0 to 255
   * - Vibration Motor
     - Intensity 0 to 255
 

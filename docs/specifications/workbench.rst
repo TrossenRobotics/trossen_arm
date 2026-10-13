@@ -36,7 +36,5 @@ It can be clamped or bolted to a work surface.
             +---------------+-------------------------------+
             | Display       | Touchscreen                   |
             +---------------+-------------------------------+
-            | Connectivity  | Wired or wireless             |
-            +---------------+-------------------------------+
             | User Ports    | RJ45 Ethernet                 |
             +---------------+-------------------------------+

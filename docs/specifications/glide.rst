@@ -47,7 +47,7 @@ Handle I/O
   * - Feature
     - Value
   * - Trigger
-    - Normalized or Absolute Position, 0 (fully closed) to 1 (fully open), or 0 rad to configured max angle
+    - Position, normalized 0 (closed) to 1 (open), or absolute in rad
   * - Joystick
     - 2-axis, 0 to 4095 per axis
   * - Buttons

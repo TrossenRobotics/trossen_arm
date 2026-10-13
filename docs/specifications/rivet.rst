@@ -9,7 +9,7 @@ Rivet
 Overview
 ========
 
-Rivet is a mobile system with two WidowX Core or Pro arms on a lift, a three-wheel swerve base, and an onboard computer.
+The Rivet is a mobile system with two WidowX Core or Pro arms on a lift, a three-wheel swerve base, and an onboard computer.
 
 .. list-table::
     :align: center

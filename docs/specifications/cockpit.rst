@@ -33,7 +33,5 @@ The Cockpit is a rolling teleoperation stand that holds two :doc:`Glides <glide>
             +---------------+------------------------+
             | Display       | 10" touchscreen        |
             +---------------+------------------------+
-            | Connectivity  | Wired or wireless      |
-            +---------------+------------------------+
             | User Ports    | RJ45 Ethernet          |
             +---------------+------------------------+

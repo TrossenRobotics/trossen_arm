@@ -61,7 +61,7 @@ Glide
 =====
 
 The :doc:`Glide <glide>` is a passive teleoperation device that an operator moves to control a follower arm.
-The handle has a trigger, buttons, a joystick, and a vibration motor for haptic feedback.
+The handle has a trigger, buttons, a joystick, and a vibration motor.
 
 .. image:: images/glide_hero.webp
     :align: center

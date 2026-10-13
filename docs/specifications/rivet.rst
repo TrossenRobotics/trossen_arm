@@ -47,7 +47,7 @@ Rivet is a mobile system with two WidowX Core or Pro arms on a lift, a three-whe
             +-------------------------+----------------------------------------------------------------+
             | User Power Breakouts    | VBat (24 V nominal), 12 V                                      |
             +-------------------------+----------------------------------------------------------------+
-            | User Ports              | USB-C, Ethernet                                                |
+            | User Ports              | USB-C, RJ45 Ethernet                                           |
             +-------------------------+----------------------------------------------------------------+
             | Safety                  | E-stop button and perimeter safety bumper, both trigger E-stop |
             +-------------------------+----------------------------------------------------------------+

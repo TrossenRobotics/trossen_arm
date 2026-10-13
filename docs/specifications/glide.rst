@@ -10,7 +10,7 @@ Overview
 ========
 
 The Glide is a passive teleoperation device that an operator moves to control a follower arm.
-The handle has a trigger, buttons, a joystick, and haptic feedback.
+The handle has a trigger, buttons, a joystick, and a vibration motor for haptic feedback.
 
 .. list-table::
     :align: center
@@ -23,19 +23,19 @@ The handle has a trigger, buttons, a joystick, and haptic feedback.
       - .. table::
             :align: center
 
-            +-------------------------------------------------------------+
-            | **Glide**                                                   |
-            +====================+========================================+
-            | Degrees of Freedom | 6 + Trigger                            |
-            +--------------------+----------------------------------------+
-            | Held Weight        | About 280 g, with gravity compensation |
-            +--------------------+----------------------------------------+
-            | Nominal Voltage    | 24 V                                   |
-            +--------------------+----------------------------------------+
-            | Encoder Resolution | 14-bit                                 |
-            +--------------------+----------------------------------------+
-            | Communication      | Ethernet                               |
-            +--------------------+----------------------------------------+
+            +--------------------------------------------------------------+
+            | **Glide**                                                    |
+            +====================+=========================================+
+            | Degrees of Freedom | 6 passive joints + actuated trigger     |
+            +--------------------+-----------------------------------------+
+            | Held Weight        | About 280 g, with cam and spring assist |
+            +--------------------+-----------------------------------------+
+            | Nominal Voltage    | 24 V                                    |
+            +--------------------+-----------------------------------------+
+            | Encoder Resolution | 14-bit                                  |
+            +--------------------+-----------------------------------------+
+            | Communication      | Ethernet                                |
+            +--------------------+-----------------------------------------+
 
 Handle I/O
 ==========
@@ -47,13 +47,15 @@ Handle I/O
   * - Feature
     - Value
   * - Trigger
-    - Position, 0 to configured max position
+    - Normalized or Absolute Position, 0 (fully closed) to 1 (fully open), or 0 rad to configured max angle
   * - Joystick
     - 2-axis, 0 to 4095 per axis
   * - Buttons
-    - 4, each with an LED (off, solid, or breathing)
-  * - Haptic Feedback
-    - Vibration, intensity 0 to 255
+    - 5: 4 LED buttons and 1 joystick press
+  * - Button LEDs
+    - Off, solid, or breathing; brightness 0 to 255
+  * - Vibration Motor
+    - Intensity 0 to 255
 
 Controller Base
 ===============

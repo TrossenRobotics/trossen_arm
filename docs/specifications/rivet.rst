@@ -43,7 +43,11 @@ The Rivet is a mobile system with two :doc:`WidowX Core <wxcore>` or :doc:`Widow
             +-------------------------+--------------------------------------------------------------+
             | Battery                 | 24 V, 60 Ah LiFePO4; user-swappable                          |
             +-------------------------+--------------------------------------------------------------+
-            | Compute                 | NVIDIA Jetson AGX Orin 64 GB                                 |
+            | Compute                 | `NVIDIA Jetson AGX Orin`_ 64 GB                              |
+            +-------------------------+--------------------------------------------------------------+
+            | Display                 | 13.3" touchscreen                                            |
+            +-------------------------+--------------------------------------------------------------+
+            | Cameras                 | ZED X Mini (scene); ZED X Nano (wrists)                      |
             +-------------------------+--------------------------------------------------------------+
             | User Power Breakouts    | VBat (24 V nominal); 12 V                                    |
             +-------------------------+--------------------------------------------------------------+
@@ -51,3 +55,5 @@ The Rivet is a mobile system with two :doc:`WidowX Core <wxcore>` or :doc:`Widow
             +-------------------------+--------------------------------------------------------------+
             | Safety                  | E-stop button; perimeter safety bumper (both trigger E-stop) |
             +-------------------------+--------------------------------------------------------------+
+
+.. _NVIDIA Jetson AGX Orin: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/

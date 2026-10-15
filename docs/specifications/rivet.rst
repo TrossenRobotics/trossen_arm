@@ -47,7 +47,7 @@ The Rivet is a mobile system with two :doc:`WidowX Core <wxcore>` or :doc:`Widow
             +-------------------------+--------------------------------------------------------------+
             | Display                 | 13.3" touchscreen                                            |
             +-------------------------+--------------------------------------------------------------+
-            | Cameras                 | ZED X Mini (scene); ZED X Nano (wrists)                      |
+            | Cameras                 | `ZED X Mini`_ (scene); `ZED X Nano`_ (wrists)                |
             +-------------------------+--------------------------------------------------------------+
             | User Power Breakouts    | VBat (24 V nominal); 12 V                                    |
             +-------------------------+--------------------------------------------------------------+
@@ -57,3 +57,5 @@ The Rivet is a mobile system with two :doc:`WidowX Core <wxcore>` or :doc:`Widow
             +-------------------------+--------------------------------------------------------------+
 
 .. _NVIDIA Jetson AGX Orin: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+.. _ZED X Mini: https://www.stereolabs.com/products/zed-x
+.. _ZED X Nano: https://www.stereolabs.com/products/zed-x-nano

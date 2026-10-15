@@ -1,6 +1,6 @@
-====
-Kits
-====
+=======
+Systems
+=======
 
 .. toctree::
     :maxdepth: 1

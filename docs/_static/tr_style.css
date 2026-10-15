@@ -222,3 +222,10 @@ label.static-container:hover .static {
 .centered-table td {
     text-align: center;
 }
+
+
+/* merged column text centering */
+.spec-merged td[colspan],
+.spec-merged th[colspan] {
+    text-align: center;
+}

@@ -2,29 +2,29 @@
 WidowX AI
 =========
 
-Overall Specifications
-======================
+Overview
+========
 
-.. list-table::
-  :align: center
-  :header-rows: 1
+.. table::
+    :align: center
 
-  * - Specification
-    - Value
-  * - Degrees of Freedom
-    - 6
-  * - Payload Capacity
-    - 1.5 kg
-  * - Weight
-    - 4kg
-  * - Reach
-    - 0.769m
-  * - Nominal Voltage
-    - 24 V
-  * - Peak Current
-    - 15 A
-  * - Communication
-    - Ethernet
+    +----------------------------------+
+    | **WidowX AI**                    |
+    +====================+=============+
+    | Degrees of Freedom | 6 + Gripper |
+    +--------------------+-------------+
+    | Payload Capacity   | 1.5 kg      |
+    +--------------------+-------------+
+    | Weight             | 4 kg        |
+    +--------------------+-------------+
+    | Reach              | 0.769 m     |
+    +--------------------+-------------+
+    | Nominal Voltage    | 24 V        |
+    +--------------------+-------------+
+    | Peak Current       | 15 A        |
+    +--------------------+-------------+
+    | Communication      | Ethernet    |
+    +--------------------+-------------+
 
 Joint Limits
 ============
@@ -82,19 +82,16 @@ Joint Limits
 
 .. note::
 
-  These effort limits are nominal values. The actual limits are computed
-  with the following formula:
+  These effort limits are nominal values.
+  The actual limits are computed with the following formula:
 
   .. math::
 
     \text{effort}_\max = \frac{\text{effort}_\text{max_nominal}}{\text{effort_correction}}
 
-  where :math:`\text{effort_nominal}` is the nominal effort limit of a joint,
-  :math:`\text{effort_correction}` is the effort correction factor of this joint
-  , and :math:`\text{effort}_\max` is the actual effort limit of this joint.
+  where :math:`\text{effort_nominal}` is the nominal effort limit of a joint, :math:`\text{effort_correction}` is the effort correction factor of this joint, and :math:`\text{effort}_\max` is the actual effort limit of this joint.
 
-  The effort corrections can be retrieved with
-  :func:`trossen_arm::TrossenArmDriver::get_effort_corrections`.
+  The effort corrections can be retrieved with :func:`trossen_arm::TrossenArmDriver::get_effort_corrections`.
 
 Workspace
 =========

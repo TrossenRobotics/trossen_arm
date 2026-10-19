@@ -12,6 +12,7 @@ First-party Trossen applications and interfaces.
 .. toctree::
     :maxdepth: 1
 
+    tutorials/trossen_sdk.rst
     tutorials/touchscreen.rst
     tutorials/trossen_vr.rst
     tutorials/totl.rst

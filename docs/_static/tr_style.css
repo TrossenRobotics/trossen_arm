@@ -223,6 +223,10 @@ label.static-container:hover .static {
     text-align: center;
 }
 
+/* shrink small mermaid diagrams */
+pre.mermaid svg {
+    max-height: 500px;
+}
 
 /* merged column text centering */
 .spec-merged td[colspan],

@@ -227,3 +227,9 @@ label.static-container:hover .static {
 pre.mermaid svg {
     max-height: 500px;
 }
+
+/* merged column text centering */
+.spec-merged td[colspan],
+.spec-merged th[colspan] {
+    text-align: center;
+}

@@ -1,5 +1,13 @@
 # Building the docs
 
+## Prerequisites
+
+The API reference is generated with Doxygen, so install it first:
+
+```bash
+$ sudo apt install doxygen
+```
+
 ## Current Version
 
 To build the current version of the docs, run the following commands from the repository root:

@@ -2,34 +2,34 @@
 High Performance Laptop
 =======================
 
+Overview
+========
+
 For applications that demand significant onboard compute, such as training and running inference with learned policies, Trossen Robotics offers a pre-configured high performance laptop.
 The laptop is a Lenovo Legion Pro 7i Gen 10.
 
-Specifications
-==============
+.. table::
+    :align: center
 
-.. list-table::
-  :align: center
-  :header-rows: 1
-
-  * - Component
-    - Specification
-  * - Operating System
-    - Ubuntu 24.04 LTS (preloaded)
-  * - Processor
-    - Intel Core Ultra 9 275HX (24 cores)
-  * - Graphics
-    - NVIDIA GeForce RTX 5090 Laptop GPU, 24 GB
-  * - Memory
-    - 64 GB DDR5 6400 MHz
-  * - Storage
-    - 2 TB Gen4 M.2 SSD
-  * - Display
-    - 16" QHD+ 240 Hz OLED
-  * - Wireless
-    - WiFi 7 + Bluetooth 5.4
-  * - Battery
-    - 99 Whr
+    +--------------------------------------------------------------+
+    | **High Performance Laptop**                                  |
+    +==================+===========================================+
+    | Operating System | Ubuntu 24.04 LTS (preloaded)              |
+    +------------------+-------------------------------------------+
+    | Processor        | Intel Core Ultra 9 275HX (24 cores)       |
+    +------------------+-------------------------------------------+
+    | Graphics         | NVIDIA GeForce RTX 5090 Laptop GPU, 24 GB |
+    +------------------+-------------------------------------------+
+    | Memory           | 64 GB DDR5 6400 MHz                       |
+    +------------------+-------------------------------------------+
+    | Storage          | 2 TB Gen4 M.2 SSD                         |
+    +------------------+-------------------------------------------+
+    | Display          | 16" QHD+ 240 Hz OLED                      |
+    +------------------+-------------------------------------------+
+    | Wireless         | WiFi 7 + Bluetooth 5.4                    |
+    +------------------+-------------------------------------------+
+    | Battery          | 99 Whr                                    |
+    +------------------+-------------------------------------------+
 
 Ports
 =====

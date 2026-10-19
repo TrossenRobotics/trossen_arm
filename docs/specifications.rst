@@ -2,13 +2,11 @@
 Specifications
 ==============
 
-This page contains specifications for the Trossen Arms and kits.
+This page contains specifications for the Trossen Arms, systems, and compute.
 
 .. toctree::
-  :maxdepth: 1
+    :maxdepth: 2
 
-  specifications/wxai.rst
-  specifications/mobile_ai.rst
-  specifications/stationary_ai.rst
-  specifications/totl_workstation.rst
-  specifications/high_performance_laptop.rst
+    specifications/arms.rst
+    specifications/systems.rst
+    specifications/compute.rst

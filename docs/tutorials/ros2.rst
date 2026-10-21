@@ -17,3 +17,4 @@ Trossen Robotics supports the following ROS 2 distributions:
     ros2/description.rst
     ros2/bringup.rst
     ros2/moveit.rst
+    ros2/controllers.rst

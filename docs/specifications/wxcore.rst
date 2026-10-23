@@ -105,19 +105,21 @@ The shaded area is where the gripper fingertips can reach.
 Reach is measured horizontally from the base rotation axis (the joint 0 axis) to the fingertips.
 All dimensions are in meters.
 
-.. figure:: images/wxcore_workspace_side.webp
-    :align: center
-    :alt: WidowX Core workspace, side view
-    :class: workspace-image
+.. tabs::
 
-    Side view
+    .. group-tab:: Top
 
-.. figure:: images/wxcore_workspace_top.webp
-    :align: center
-    :alt: WidowX Core workspace, top view
-    :class: workspace-image
+        .. image:: images/wxcore_workspace_top.webp
+            :align: center
+            :alt: WidowX Core workspace, top view
+            :class: workspace-image
 
-    Top view
+    .. group-tab:: Side
+
+        .. image:: images/wxcore_workspace_side.webp
+            :align: center
+            :alt: WidowX Core workspace, side view
+            :class: workspace-image
 
 Controller Base
 ===============

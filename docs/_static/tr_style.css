@@ -233,3 +233,13 @@ pre.mermaid svg {
 .spec-merged th[colspan] {
     text-align: center;
 }
+
+/* workspace diagrams: fit within one screen height */
+img.workspace-image {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 60vh;
+}

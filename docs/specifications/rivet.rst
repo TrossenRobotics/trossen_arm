@@ -63,8 +63,8 @@ The Rivet is a mobile system with two :doc:`WidowX Core <wxcore>` or :doc:`Widow
 Workspace
 =========
 
-The shaded areas are where a point along each arm's gripper can reach with the base parked, swept over the full lift travel.
-Reach is measured horizontally from the base rotation axis (the joint 0 axis) to that point.
+The shaded areas are where each arm's gripper fingertips can reach with the base parked, swept over the full lift travel.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to the fingertips.
 All dimensions are in meters.
 
 .. tabs::

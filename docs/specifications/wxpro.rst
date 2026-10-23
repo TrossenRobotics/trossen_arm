@@ -31,7 +31,7 @@ See :doc:`arms` to compare the WidowX arms.
             +--------------------+-------------+
             | Weight             | 6 kg        |
             +--------------------+-------------+
-            | Reach              | 0.700 m     |
+            | Reach              | 0.80 m      |
             +--------------------+-------------+
             | Gripper Stroke     | 90 mm       |
             +--------------------+-------------+
@@ -101,8 +101,8 @@ Joint Limits
 Workspace
 =========
 
-The shaded area is where a point along the gripper can reach.
-Reach is measured horizontally from the base rotation axis (the joint 0 axis) to that point.
+The shaded area is where the gripper fingertips can reach.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to the fingertips.
 All dimensions are in meters.
 
 .. figure:: images/wxpro_workspace_side.webp

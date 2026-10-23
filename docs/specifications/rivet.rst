@@ -64,7 +64,7 @@ Workspace
 =========
 
 The shaded areas are where a point along each arm's gripper can reach with the base parked, swept over the full lift travel.
-Reach is measured from the shoulder (the joint 1 axis) to that point.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to that point.
 All dimensions are in meters.
 
 .. tabs::

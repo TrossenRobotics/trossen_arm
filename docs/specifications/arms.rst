@@ -57,7 +57,7 @@ The WidowX Core, Pro, and Heavy use the same joint layout, end effector, and con
     | Communication      | Ethernet                                |
     +--------------------+-------------+-------------+-------------+
 
-Reach is measured from the shoulder (the joint 1 axis) to a point along the gripper.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to a point along the gripper.
 
 Glide
 =====

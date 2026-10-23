@@ -102,7 +102,7 @@ Workspace
 =========
 
 The shaded area is where a point along the gripper can reach.
-Reach is measured from the shoulder (the joint 1 axis) to that point.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to that point.
 All dimensions are in meters.
 
 .. figure:: images/wxheavy_workspace_side.webp

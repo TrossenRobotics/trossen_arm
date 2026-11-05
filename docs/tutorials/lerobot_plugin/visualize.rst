@@ -52,11 +52,14 @@ If you didn't upload the dataset (i.e., you used ``--control.push_to_hub=false``
 .. code-block:: bash
 
     uv run lerobot-dataset-viz \
-        --repo-id <local_dir_name>/<dataset-id> \
+        --repo-id ${HF_USER}/<dataset-id> \
+        --root /path/to/local/dataset \
         --mode local \
         --episode-index 0
 
 .. note::
 
-    The default path for locally stored datasets is ``.cache/huggingface/lerobot/``.
-    If you specified a different path during recording, use that path instead.
+    The default path for locally stored datasets is ``~/.cache/huggingface/lerobot/``.
+    If you set ``--dataset.root`` while recording, pass that same path here with
+    ``--root``. Keep ``--repo-id`` set to the dataset identifier stored in its
+    metadata; do not replace it with the filesystem path.

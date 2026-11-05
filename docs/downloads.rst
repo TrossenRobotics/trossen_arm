@@ -56,6 +56,18 @@ You can find description files for the Trossen Arms in the `trossen_arm_descript
 STEP Files / CAD Solids
 =======================
 
+WidowX Arm STEP Files
+---------------------
+
+-   :download:`WidowX Core STEP</_downloads/wxcore_steps.zip>`
+-   :download:`WidowX Pro STEP</_downloads/wxpro_steps.zip>`
+-   :download:`WidowX Heavy STEP</_downloads/wxheavy_steps.zip>`
+
+Glide STEP Files
+----------------
+
+-   :download:`Glide STEPs (Left and Right)</_downloads/glide_steps.zip>`
+
 WidowX AI STEP Files
 --------------------
 

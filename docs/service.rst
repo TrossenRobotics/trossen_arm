@@ -67,6 +67,13 @@ The homing process is as follows:
 
 #.  Power on the arm.
 #.  Download, unzip, and run the :download:`Trossen Arm Homing script </_downloads/trossen_arm_homing.zip>`.
+    The script connects to ``192.168.1.2`` by default.
+    For an arm controller at another IP address, pass it with ``--ip``:
+
+    .. code-block:: bash
+
+        python3 trossen_arm_homing.py --ip 192.168.1.5
+
 #.  Follow the instructions in the script to home the arm.
 #.  Power off the arm.
 #.  Remove the homing jigs from the base and wrist rotate motors.

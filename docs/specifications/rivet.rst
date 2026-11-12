@@ -59,3 +59,62 @@ The Rivet is a mobile system with two :doc:`WidowX Core <wxcore>` or :doc:`Widow
 .. _NVIDIA Jetson AGX Orin: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
 .. _ZED X Mini: https://www.stereolabs.com/products/zed-x
 .. _ZED X Nano: https://www.stereolabs.com/products/zed-x-nano
+
+Workspace
+=========
+
+The shaded areas are where each arm's gripper fingertips can reach with the base parked, swept over the full lift travel.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to the fingertips.
+All dimensions are in meters.
+
+.. tabs::
+
+    .. group-tab:: WidowX Core
+
+        .. tabs::
+
+            .. group-tab:: Top
+
+                .. image:: images/rivet_core_workspace_top.webp
+                    :align: center
+                    :alt: Rivet with WidowX Core arms, workspace top view
+                    :class: workspace-image
+
+            .. group-tab:: Side
+
+                .. image:: images/rivet_core_workspace_side.webp
+                    :align: center
+                    :alt: Rivet with WidowX Core arms, workspace side view of the left arm
+                    :class: workspace-image
+
+            .. group-tab:: Front
+
+                .. image:: images/rivet_core_workspace_front.webp
+                    :align: center
+                    :alt: Rivet with WidowX Core arms, workspace front view
+                    :class: workspace-image
+
+    .. group-tab:: WidowX Pro
+
+        .. tabs::
+
+            .. group-tab:: Top
+
+                .. image:: images/rivet_pro_workspace_top.webp
+                    :align: center
+                    :alt: Rivet with WidowX Pro arms, workspace top view
+                    :class: workspace-image
+
+            .. group-tab:: Side
+
+                .. image:: images/rivet_pro_workspace_side.webp
+                    :align: center
+                    :alt: Rivet with WidowX Pro arms, workspace side view of the left arm
+                    :class: workspace-image
+
+            .. group-tab:: Front
+
+                .. image:: images/rivet_pro_workspace_front.webp
+                    :align: center
+                    :alt: Rivet with WidowX Pro arms, workspace front view
+                    :class: workspace-image

@@ -57,7 +57,7 @@ The Arm Controller and joint LEDs are the fastest way to read the arm's state.
         -   Error at startup. Joints output no torque and the joint motor LEDs are solid red. See :doc:`troubleshooting/errors`.
     *   -   Arm Controller
         -   Solid red
-        -   Error during operation. The arm joints are brake-on and the gripper closes with a safe force; the joint motor LEDs stay green. See :doc:`troubleshooting/errors`.
+        -   Error during operation. Joints are set to idle; the joint motor LEDs stay green. See :doc:`troubleshooting/errors`.
     *   -   Joint motor
         -   Off
         -   The arm is not powered.

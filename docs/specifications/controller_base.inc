@@ -46,7 +46,7 @@ GPIO
   * - 2
     - GND
   * - 3
-    - Not used
+    - Reserved
   * - 4
     - GND
   * - 5

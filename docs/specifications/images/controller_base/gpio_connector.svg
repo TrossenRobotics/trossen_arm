@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" width="280" height="280">
+<rect width="280" height="280" fill="#FFFFFF"/>
+<g transform="translate(140.0 140.0)">
+<polygon points="110.9,64.0 0.0,128.0 -110.9,64.0 -110.9,-64.0 -0.0,-128.0 110.9,-64.0" fill="none" stroke="#1C2026" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="0.0" cy="0.0" r="110.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="0.0" cy="0.0" r="96.0" fill="none" stroke="#1C2026" stroke-width="2.5"/>
+<circle cx="0.0" cy="0.0" r="90.0" fill="none" stroke="#1C2026" stroke-width="0.8"/>
+<circle cx="0.0" cy="0.0" r="85.0" fill="none" stroke="#1C2026" stroke-width="0.8"/>
+<circle cx="0.0" cy="0.0" r="76.0" fill="none" stroke="#1C2026" stroke-width="2"/>
+<path d="M -9 -76 L -9 -69 A 9 9 0 0 0 9 -69 L 9 -76" fill="none" stroke="#1C2026" stroke-width="2"/>
+<circle cx="16.3" cy="-33.8" r="8.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="16.3" cy="-33.8" r="4.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="36.6" cy="-8.3" r="8.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="36.6" cy="-8.3" r="4.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="29.3" cy="23.4" r="8.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="29.3" cy="23.4" r="4.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="-29.3" cy="23.4" r="8.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="-29.3" cy="23.4" r="4.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="-36.6" cy="-8.3" r="8.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="-36.6" cy="-8.3" r="4.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="-16.3" cy="-33.8" r="8.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="-16.3" cy="-33.8" r="4.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<text x="24.1" y="-49.0" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1C2026" text-anchor="middle" dominant-baseline="middle">2</text>
+<text x="54.1" y="-11.3" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1C2026" text-anchor="middle" dominant-baseline="middle">3</text>
+<text x="43.4" y="35.6" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1C2026" text-anchor="middle" dominant-baseline="middle">4</text>
+<text x="-43.4" y="35.6" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1C2026" text-anchor="middle" dominant-baseline="middle">6</text>
+<text x="-54.1" y="-11.3" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1C2026" text-anchor="middle" dominant-baseline="middle">7</text>
+<text x="-24.1" y="-49.0" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#1C2026" text-anchor="middle" dominant-baseline="middle">1</text>
+</g>
+</svg>

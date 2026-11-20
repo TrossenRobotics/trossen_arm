@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" width="280" height="280">
+<rect width="280" height="280" fill="#FFFFFF"/>
+<g transform="translate(140.0 140.0)">
+<polygon points="110.9,64.0 0.0,128.0 -110.9,64.0 -110.9,-64.0 -0.0,-128.0 110.9,-64.0" fill="none" stroke="#1C2026" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="0.0" cy="0.0" r="110.0" fill="none" stroke="#1C2026" stroke-width="1.2"/>
+<circle cx="0.0" cy="0.0" r="96.0" fill="none" stroke="#1C2026" stroke-width="2.5"/>
+<circle cx="0.0" cy="0.0" r="90.0" fill="none" stroke="#1C2026" stroke-width="0.8"/>
+<circle cx="0.0" cy="0.0" r="82.6" fill="none" stroke="#1C2026" stroke-width="2"/>
+<circle cx="0.0" cy="0.0" r="67.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
+<path d="M 48.7 -46.0 L 30.0 -45.0 L 20.0 -21.5 L -20.0 -21.5 L -26.0 -42.0 L -27.0 -61.3" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M -6.5 -21.5 L -6.5 -3.1 L -65.1 15.6" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M -62.2 24.9 L -5.0 6.6 L -5.0 66.8" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M 6.5 -21.5 L 6.5 -3.1 L 65.1 15.6" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M 62.2 24.9 L 5.0 6.6 L 5.0 66.8" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="-43.7" cy="-14.4" r="19.3" fill="#FFFFFF" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="-43.7" cy="-14.4" r="11.8" fill="#1C2026"/>
+<text x="-43.7" y="-13.4" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">1</text>
+<circle cx="43.7" cy="-14.4" r="19.3" fill="#FFFFFF" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="43.7" cy="-14.4" r="11.8" fill="#1C2026"/>
+<text x="43.7" y="-13.4" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">4</text>
+<circle cx="-26.8" cy="37.1" r="19.3" fill="#FFFFFF" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="-26.8" cy="37.1" r="11.8" fill="#1C2026"/>
+<text x="-26.8" y="38.1" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">2</text>
+<circle cx="26.8" cy="37.1" r="19.3" fill="#FFFFFF" stroke="#1C2026" stroke-width="1.8"/>
+<circle cx="26.8" cy="37.1" r="11.8" fill="#1C2026"/>
+<text x="26.8" y="38.1" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle" dominant-baseline="middle">3</text>
+</g>
+</svg>

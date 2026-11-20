@@ -20,7 +20,7 @@ The base also has the arm's power rocker switch, a status LED, and a touchscreen
     - M12 X-coded, 8-pin, male, to RJ45 (IEC 61076-2-109).
   * - GPIO
     - M12 A-coded, 6-pin, female
-    - M12 A-coded, 6-pin, male, with contacts in positions 1, 2, 3, 4, 6, and 7 (IEC 61076-2-101).
+    - M12 A-coded, 6-pin, male (IEC 61076-2-101).
   * - 24 V power
     - M12 L-coded, 4-pin, male
     - M12 L-coded, 4-pin, female (IEC 61076-2-111).

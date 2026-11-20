@@ -101,19 +101,4 @@ Joint Limits
 Controller Base
 ===============
 
-The controller base has three M12 connectors with different functions.
-
-.. list-table::
-  :align: center
-  :header-rows: 1
-
-  * - Coding
-    - Carries
-  * - X Code
-    - Network
-  * - A Code
-    - GPIO
-  * - L Code
-    - Power
-
-The base also has the arm's power switch, a status LED, and a small screen that can display and manage the arm's state and configuration.
+.. include:: controller_base.inc

@@ -18,7 +18,6 @@ The base also has the arm's power rocker switch, a status LED, and a touchscreen
   * - Ethernet
     - M12 X-coded, 8-pin, female
     - M12 X-coded, 8-pin, male, to RJ45 (IEC 61076-2-109).
-      Standard Cat6A M12 to RJ45 Ethernet cables fit.
   * - GPIO
     - M12 A-coded, 6-pin, female
     - M12 A-coded, 6-pin, male, with contacts in positions 1, 2, 3, 4, 6, and 7 (IEC 61076-2-101).

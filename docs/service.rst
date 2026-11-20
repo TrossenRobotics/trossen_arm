@@ -19,7 +19,8 @@ To find which cable is damaged or loose, see :ref:`troubleshooting/errors:Damage
 
 .. _cable replacement guides: https://drive.google.com/drive/folders/1fTkOV6DC5rlOQEOLTlptDM7j4ATTRVNL
 
-Cable routing diagrams can be seen below:
+Cable Routing Diagrams
+----------------------
 
 .. image:: service/images/cables_side.png
     :align: center
@@ -28,6 +29,45 @@ Cable routing diagrams can be seen below:
 .. image:: service/images/cables_top.png
     :align: center
     :width: 800px
+
+Cable Specifications
+--------------------
+
+.. list-table::
+    :widths: 58 42
+    :class: cable-specs
+
+    * - .. image:: service/images/cables_pinout.png
+            :width: 100%
+
+      - .. list-table::
+            :header-rows: 1
+            :widths: 40 30 30
+
+            * - Cable Name
+              - Length
+              - Jacket
+            * - Servo 1-2
+              - 325 mm
+              - Braided
+            * - Servo 2-3
+              - 300 mm
+              - None
+            * - Servo 3-4
+              - 350 mm
+              - Braided
+            * - Servo 4-5
+              - 175 mm
+              - Braided
+            * - Servo 5-YPCB
+              - 35 mm
+              - None
+            * - YPCB-Servo 6
+              - 150 mm
+              - Molded
+            * - YPCB-Servo 7
+              - 240 mm
+              - Molded
 
 Motor Replacement Guides
 ========================

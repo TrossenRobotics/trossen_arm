@@ -243,3 +243,21 @@ img.workspace-image {
     max-width: 100%;
     max-height: 60vh;
 }
+
+/* Pinout image beside the cable table on the service page */
+.rst-content table.cable-specs,
+.rst-content table.cable-specs > tbody > tr > td {
+    border: none;
+    background: none;
+    vertical-align: middle;
+}
+.rst-content table.cable-specs td table td {
+    white-space: nowrap;
+}
+/* Stack the image above the table where both don't fit side by side */
+@media screen and (max-width: 1100px) {
+    .rst-content table.cable-specs > tbody > tr > td {
+        display: block;
+        width: 100%;
+    }
+}

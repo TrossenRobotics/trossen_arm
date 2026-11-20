@@ -15,7 +15,7 @@
 <circle cx="0.0" cy="0.0" r="90.0" fill="none" stroke="#1C2026" stroke-width="0.8"/>
 <circle cx="0.0" cy="0.0" r="85.0" fill="none" stroke="#1C2026" stroke-width="0.8"/>
 <circle cx="0.0" cy="0.0" r="76.0" fill="none" stroke="#1C2026" stroke-width="2"/>
-<path d="M -3.5 -73 L 3.5 -73 L 3.5 -3.5 L 73 -3.5 L 73 3.5 L 3.5 3.5 L 3.5 73 L -3.5 73 L -3.5 17 L -17 17 L -17 3.5 L -73 3.5 L -73 -3.5 L -3.5 -3.5 Z" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M -3.5 -73 L 3.5 -73 L 3.5 -17 L 17 -17 L 17 -3.5 L 73 -3.5 L 73 3.5 L 3.5 3.5 L 3.5 73 L -3.5 73 L -3.5 3.5 L -73 3.5 L -73 -3.5 L -3.5 -3.5 Z" fill="none" stroke="#1C2026" stroke-width="1.8" stroke-linejoin="round"/>
 <circle cx="-21.0" cy="-42.0" r="7.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>
 <circle cx="-21.0" cy="-42.0" r="3.5" fill="none" stroke="#1C2026" stroke-width="1.2"/>
 <circle cx="21.0" cy="-42.0" r="7.0" fill="none" stroke="#1C2026" stroke-width="1.8"/>

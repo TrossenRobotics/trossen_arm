@@ -46,7 +46,7 @@ The WidowX Core, Pro, and Heavy use the same joint layout, end effector, and con
     +--------------------+-------------+-------------+-------------+
     | Weight             | 5.5 kg      | 6 kg        | 8 kg        |
     +--------------------+-------------+-------------+-------------+
-    | Reach              | 0.790 m                   | 1.114 m     |
+    | Reach              | 0.79 m      | 0.80 m      | 1.13 m      |
     +--------------------+-------------+-------------+-------------+
     | Gripper Stroke     | 90 mm                                   |
     +--------------------+-------------+-------------+-------------+
@@ -56,6 +56,8 @@ The WidowX Core, Pro, and Heavy use the same joint layout, end effector, and con
     +--------------------+-------------+-------------+-------------+
     | Communication      | Ethernet                                |
     +--------------------+-------------+-------------+-------------+
+
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to the gripper fingertips.
 
 Glide
 =====

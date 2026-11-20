@@ -31,7 +31,7 @@ See :doc:`arms` to compare the WidowX arms.
             +--------------------+-------------+
             | Weight             | 5.5 kg      |
             +--------------------+-------------+
-            | Reach              | 0.790 m     |
+            | Reach              | 0.79 m      |
             +--------------------+-------------+
             | Gripper Stroke     | 90 mm       |
             +--------------------+-------------+
@@ -97,6 +97,29 @@ Joint Limits
   where :math:`\text{effort_nominal}` is the nominal effort limit of a joint, :math:`\text{effort_correction}` is the effort correction factor of this joint, and :math:`\text{effort}_\max` is the actual effort limit of this joint.
 
   The effort corrections can be retrieved with :func:`trossen_arm::TrossenArmDriver::get_effort_corrections`.
+
+Workspace
+=========
+
+The shaded area is where the gripper fingertips can reach.
+Reach is measured horizontally from the base rotation axis (the joint 0 axis) to the fingertips.
+All dimensions are in meters.
+
+.. tabs::
+
+    .. group-tab:: Top
+
+        .. image:: images/wxcore_workspace_top.webp
+            :align: center
+            :alt: WidowX Core workspace, top view
+            :class: workspace-image
+
+    .. group-tab:: Side
+
+        .. image:: images/wxcore_workspace_side.webp
+            :align: center
+            :alt: WidowX Core workspace, side view
+            :class: workspace-image
 
 Controller Base
 ===============

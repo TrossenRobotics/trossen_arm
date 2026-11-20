@@ -29,6 +29,42 @@ Cable routing diagrams can be seen below:
     :align: center
     :width: 800px
 
+Additional Cable Specifications: 
+.. image:: service/images/cables_pinout.png
+    :align: center
+    :width: 800px
+
+.. list-table::
+    :align: center
+    :header-rows: 1
+    :widths: 40 30 30
+
+    * - Cable Name
+      - Length
+      - Jacket
+    * - Servo 1-2
+      - 325mm
+      - Braided
+    * - Servo 2-3
+      - 300mm
+      - None
+    * - Servo 3-4
+      - 350mm
+      - Braided
+    * - Servo 4-5
+      - 175mm
+      - Braided
+    * - Servo 5-YPCB
+      - 35mm
+      - None
+    * - YPCB-Servo 6
+      - 150mm
+      - Molded
+    * - YPCB-Servo 7
+      - 240mm
+      - Molded
+
+
 Motor Replacement Guides
 ========================
 

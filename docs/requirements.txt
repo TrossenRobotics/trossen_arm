@@ -1,5 +1,5 @@
 breathe
-docutils
+docutils<0.23
 exhale
 pip
 sphinx

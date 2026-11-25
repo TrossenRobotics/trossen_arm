@@ -9,6 +9,11 @@ This section covers common issues while using the Trossen Arm and their solution
     Seeing a ``[CRITICAL]`` or ``[WARNING]`` message about connecting to the Arm Controller?
     Start with the `Quick Checks`_ below, then see :doc:`troubleshooting/connection` for the specific error.
 
+.. tip::
+
+    On macOS? Several parts of the toolchain assume Linux.
+    See :doc:`troubleshooting/macos` for the platform-specific issues and their fixes.
+
 Quick Checks
 ============
 
@@ -78,3 +83,4 @@ See :doc:`troubleshooting/errors` for the full list of error codes and how to cl
     troubleshooting/connection.rst
     troubleshooting/errors.rst
     troubleshooting/motion.rst
+    troubleshooting/macos.rst
